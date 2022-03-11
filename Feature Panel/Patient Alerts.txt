@@ -1,0 +1,1 @@
+if patient is alergic to latex gives warning popup to the modality operator
