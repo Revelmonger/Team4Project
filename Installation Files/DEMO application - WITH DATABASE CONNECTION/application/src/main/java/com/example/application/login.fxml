@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane  maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" fx:controller="com.example.application.Controller" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="Login_Scene" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" fx:controller="com.example.application.LoginController" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" prefHeight="360.0" prefWidth="680.0" style="-fx-background-color: #cccccc;" BorderPane.alignment="CENTER">
          <children>
@@ -27,7 +27,7 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <TextField id="UsernameFieldID" prefHeight="35.0" prefWidth="245.0" />
+                  <TextField prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
@@ -39,12 +39,12 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <PasswordField id="PasswordFieldID" prefHeight="35.0" prefWidth="245.0" />
+                  <PasswordField prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
             <Pane prefHeight="17.0" prefWidth="470.0" />
-            <Button id="Login_ButtonID" alignment="CENTER" mnemonicParsing="false"  prefHeight="42.0" prefWidth="83.0"  style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
+            <Button id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0"  style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
