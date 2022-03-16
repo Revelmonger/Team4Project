@@ -66,76 +66,78 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
          if ( password.equals(PassField.getText())) {
            
 
+            
+
 
 
 
             DatabaseConnection connectNow = new DatabaseConnection();
             Connection connectDB = connectNow.getConnection(); 
-            String  loginQuery = "select * from db_ris.users where username = " + "'" + NameField.getText() + "'";
+            String  loginQuery = "select user_id from db_ris.users where username = " + "'" + NameField.getText() + "'";
             try {
                 Statement statement = connectDB.createStatement();             
                 ResultSet queryOutput = statement.executeQuery(loginQuery);                 
                 while (queryOutput.next()) {        
-                String user_id = queryOutput.getString("user_id");
+                String user_id = queryOutput.getString("user_id").trim();
+                System.out.println(user_id);
                 queryOutput.close();
-              
 
 
-               
-                loginQuery = "select * from db_ris.user_roles where user_id = " + user_id;
-               
+          loginQuery = "select role_id from db_ris.users_roles where user_id = " + "'" + user_id + "'";
+          try {
+              statement = connectDB.createStatement();             
+              queryOutput = statement.executeQuery(loginQuery);                 
+              while (queryOutput.next()) {        
+              String role_id = queryOutput.getString("role_id").trim();
+              System.out.println(role_id);
+              queryOutput.close();
+
+
+                loginQuery = "select name from db_ris.roles where role_id = " + "'" + role_id + "'";
                 try {
-                   
-                    connectNow = new DatabaseConnection();
-                    connectDB = connectNow.getConnection(); 
-                     statement = connectDB.createStatement();         
+                  statement = connectDB.createStatement();             
+                  queryOutput = statement.executeQuery(loginQuery);                 
+                  while (queryOutput.next()) {        
+                  String role_name = queryOutput.getString("name").trim();
+                  System.out.println(role_name);
+                  queryOutput.close();
 
-                    ResultSet queryOutput2 = statement.executeQuery(loginQuery); 
-                    System.out.println("No");                
-                    while (queryOutput.next()) {    
-                        System.out.println("Hello");    
-                    String role_id = queryOutput.getString("role_id");
-                    queryOutput2.close();
-                    System.out.println("World");
-    
-    
-                    loginQuery = "select * from db_ris.roles where role_id = " + role_id;
+                 
                     try {
-                        connectNow = new DatabaseConnection();
-                        connectDB = connectNow.getConnection(); 
-                        statement = connectDB.createStatement();             
-                        ResultSet queryOutput3 = statement.executeQuery(loginQuery);                 
-                        while (queryOutput.next()) {        
-                        String role_name = queryOutput.getString("name");
-                        queryOutput3.close();
-                            
                         FXApp.setRoot(role_name);
-        
-        
-        
-        
-        
-        
-                       
-                        }
+                    
+                     
                     } catch (Exception e) {
-                        e.getStackTrace();
-                    }       
-    
-    
-                   
+                        System.out.println("There isn't a user role fxml for that type");
                     }
-                } catch (Exception e) {
-                    e.getStackTrace();
-                }       
+                    
+                
 
 
-
-               
-                }
+        }
             } catch (Exception e) {
                 e.getStackTrace();
-            }       
+            } 
+
+
+
+    }
+        } catch (Exception e) {
+            e.getStackTrace();
+        } 
+
+
+    }   
+        } catch (Exception e) {
+            e.getStackTrace();
+        } 
+
+
+        
+        
+               
+               
+
 
 
 
