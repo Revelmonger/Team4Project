@@ -27,7 +27,7 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <TextField prefHeight="35.0" prefWidth="245.0" />
+                  <TextField fx:id="NameField" prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
@@ -39,12 +39,12 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <PasswordField prefHeight="35.0" prefWidth="245.0" />
+                  <PasswordField fx:id="PassField" prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
             <Pane prefHeight="17.0" prefWidth="470.0" />
-            <Button id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0"  style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
+            <Button fx:id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0"  style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

@@ -17,7 +17,7 @@ public Connection databaselink;
         String url = "jdbc:mysql://localhost/" + datbaseName; 
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            
             databaselink = DriverManager.getConnection(url, datbaseUser, databasePassword);
         } catch (Exception e) {
             e.printStackTrace();
