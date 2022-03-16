@@ -19,9 +19,9 @@
                   <Font name="Arial Bold" size="40.0" />
                </font>
             </Label>
-            <Label fx:id="warningLabel" alignment="CENTER" textFill="RED">
+            <Label fx:id="warningLabel" textFill="RED">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Arial" size="14.0" />
                </font>
             </Label>
             <Label alignment="CENTER" prefHeight="40.0" prefWidth="470.0" text="Username:">
@@ -32,7 +32,7 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <TextField fx:id="NameField" prefHeight="35.0" prefWidth="245.0" />
+                  <TextField fx:id="usernameField" prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
@@ -44,12 +44,12 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <PasswordField fx:id="PassField" prefHeight="35.0" prefWidth="245.0" />
+                  <PasswordField fx:id="passwordField" prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
             <Pane prefHeight="17.0" prefWidth="470.0" />
-            <Button fx:id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
+            <Button id="LoginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="Login_Scene" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.LoginController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.Controller.java">
    <center>
       <VBox alignment="CENTER" prefHeight="360.0" prefWidth="680.0" style="-fx-background-color: #cccccc;" BorderPane.alignment="CENTER">
          <children>
@@ -19,9 +19,9 @@
                   <Font name="Arial Bold" size="40.0" />
                </font>
             </Label>
-            <Label fx:id="warningLabel" alignment="CENTER" textFill="RED">
+            <Label fx:id="warningLabel" alignment="CENTER" prefHeight="17.0" prefWidth="524.0" textFill="RED">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Arial" size="15.0" />
                </font>
             </Label>
             <Label alignment="CENTER" prefHeight="40.0" prefWidth="470.0" text="Username:">
@@ -32,7 +32,7 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <TextField fx:id="NameField" prefHeight="35.0" prefWidth="245.0" />
+                  <TextField id="UsernameFieldID" fx:id="UsernameFieldID" prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
@@ -44,12 +44,12 @@
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <PasswordField fx:id="PassField" prefHeight="35.0" prefWidth="245.0" />
+                  <PasswordField id="PasswordFieldID" fx:id="PasswordFieldID" prefHeight="35.0" prefWidth="245.0" />
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
             <Pane prefHeight="17.0" prefWidth="470.0" />
-            <Button fx:id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
+            <Button id="Login_ButtonID" fx:id="Login_ButtonID" alignment="CENTER" mnemonicParsing="false" onAction="#LogInUser" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
