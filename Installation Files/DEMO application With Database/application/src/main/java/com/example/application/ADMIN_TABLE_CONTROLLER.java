@@ -34,72 +34,28 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
    ObservableList<PlacedOrdersTableController> PlacedOrdersTableObservableList =  FXCollections.observableArrayList();
 
-
-
-
-   
-
     @Override
     public void initialize(URL url, ResourceBundle resource) {
        
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
-        String PlacedOrdersTableQuery = "SELECT patient, modality, notes, status FROM db_ris.orders";
+        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
 
         try {
 
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
 
-
-
             while (queryOutput.next()) {
 
-                Integer patientquery = queryOutput.getInt("patient");
-                Integer modalityquery = queryOutput.getInt("modality");
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String modalityquery = queryOutput.getString("name");
                 String notesquery = queryOutput.getString("notes").trim();
-                Integer statusquery = queryOutput.getInt("status");
-            
-
-/*
-
-             
-                //Query to find Patient Name from patient ID
-                PlacedOrdersTableQuery = "SELECT first_name, last_name FROM db_ris.patients";
-                
-                    statement = connectDB.createStatement();
-                    queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
-                
-                    String patientquerystring = "";
-                    while (queryOutput.next()){
-                        patientquerystring= queryOutput.getString("first_name");
-                        patientquerystring =  patientquerystring + " " + queryOutput.getString("last_name");
-        
-                        break;
-
-                    }
-            
-
-                    //Query to find Patient Name from patient ID
-                PlacedOrdersTableQuery = "SELECT name FROM db_ris.modalities where modality_id = " + "'" + modalityquery.getText() + "'";
-                
-                statement = connectDB.createStatement();
-                queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
-            
-                String patientquerystring = "";
-                while (queryOutput.next()){
-                    patientquerystring= queryOutput.getString("first_name");
-                    patientquerystring =  patientquerystring + " " + queryOutput.getString("last_name");
-    
-                    break;
-
-                }
+                String statusquery = queryOutput.getString("order_name");
 
 
-*/
-                
-
+                //query for patient name modality name and status stirng reassign to values to be placed into the contructor
 
                 PlacedOrdersTableObservableList.add(new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery));
             }
@@ -117,9 +73,8 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
             
         } catch (Exception e) {
-            e.getStackTrace();
+          System.out.println("error");
         }
-
 
 
 

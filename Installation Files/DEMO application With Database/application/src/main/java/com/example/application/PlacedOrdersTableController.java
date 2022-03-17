@@ -5,12 +5,12 @@ package com.example.application;
 
 public class PlacedOrdersTableController {
 
-    Integer patient;
-    Integer modality;
+    String patient;
+    String modality;
     String notes;
-    Integer status;
+    String status;
 
-    public PlacedOrdersTableController (Integer patient, Integer modality, String notes, Integer status){
+    public PlacedOrdersTableController (String patient, String modality, String notes, String status){
 
         this.patient = patient;
         this.modality = modality;
@@ -18,7 +18,7 @@ public class PlacedOrdersTableController {
         this.status = status;
     }
 
-    public Integer getModality() {
+    public String getModality() {
 
         return modality;
     }
@@ -29,22 +29,22 @@ public class PlacedOrdersTableController {
         return notes;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
 
         return status;
     }
 
-    public Integer getPatient() {
+    public String getPatient() {
 
         return patient;
     }
 
 
-public void setPatient(Integer patient) {
+public void setPatient(String patient) {
     this.patient = patient;
 }
 
-public void setModality(Integer modality) {
+public void setModality(String modality) {
     this.modality = modality;
 }
 
@@ -52,7 +52,7 @@ public void setNotes(String notes) {
     this.notes = notes;
 }
 
-public void setStatus(Integer status) {
+public void setStatus(String status) {
     this.status = status;
 }
 
