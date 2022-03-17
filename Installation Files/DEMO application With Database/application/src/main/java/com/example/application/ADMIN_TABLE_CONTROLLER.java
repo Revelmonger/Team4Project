@@ -34,9 +34,19 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
    ObservableList<PlacedOrdersTableController> PlacedOrdersTableObservableList =  FXCollections.observableArrayList();
 
+
+
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-       
+
+
+
+
+
+
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
@@ -54,6 +64,9 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
                 String notesquery = queryOutput.getString("notes").trim();
                 String statusquery = queryOutput.getString("order_name");
 
+
+
+                
 
                 //query for patient name modality name and status stirng reassign to values to be placed into the contructor
 
