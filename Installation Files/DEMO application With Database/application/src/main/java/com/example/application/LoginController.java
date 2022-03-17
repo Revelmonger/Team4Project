@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -79,7 +80,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
                 ResultSet queryOutput = statement.executeQuery(loginQuery);                 
                 while (queryOutput.next()) {        
                 String user_id = queryOutput.getString("user_id").trim();
-                System.out.println(user_id);
+                
                 queryOutput.close();
 
 
@@ -89,7 +90,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
               queryOutput = statement.executeQuery(loginQuery);                 
               while (queryOutput.next()) {        
               String role_id = queryOutput.getString("role_id").trim();
-              System.out.println(role_id);
+             
               queryOutput.close();
 
 
@@ -99,7 +100,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
                   queryOutput = statement.executeQuery(loginQuery);                 
                   while (queryOutput.next()) {        
                   String role_name = queryOutput.getString("name").trim();
-                  System.out.println(role_name);
+                  
                   queryOutput.close();
 
                  
