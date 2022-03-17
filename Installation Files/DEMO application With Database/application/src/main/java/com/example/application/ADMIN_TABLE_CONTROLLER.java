@@ -37,11 +37,16 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
 
 
-   
+
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-       
+
+
+
+
+
+
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
@@ -62,42 +67,8 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
                 Integer statusquery = queryOutput.getInt("status");
             
 
-/*
-
-             
-                //Query to find Patient Name from patient ID
-                PlacedOrdersTableQuery = "SELECT first_name, last_name FROM db_ris.patients";
-                
-                    statement = connectDB.createStatement();
-                    queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
-                
-                    String patientquerystring = "";
-                    while (queryOutput.next()){
-                        patientquerystring= queryOutput.getString("first_name");
-                        patientquerystring =  patientquerystring + " " + queryOutput.getString("last_name");
-        
-                        break;
-
-                    }
-            
-
-                    //Query to find Patient Name from patient ID
-                PlacedOrdersTableQuery = "SELECT name FROM db_ris.modalities where modality_id = " + "'" + modalityquery.getText() + "'";
-                
-                statement = connectDB.createStatement();
-                queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
-            
-                String patientquerystring = "";
-                while (queryOutput.next()){
-                    patientquerystring= queryOutput.getString("first_name");
-                    patientquerystring =  patientquerystring + " " + queryOutput.getString("last_name");
-    
-                    break;
-
-                }
 
 
-*/
                 
 
 
