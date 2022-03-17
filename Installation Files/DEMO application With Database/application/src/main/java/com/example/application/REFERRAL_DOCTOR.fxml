@@ -1,16 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
-    <children>
-        <Label text="REFERRAL_DOCTOR View" />
-        
-    </children>
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-</VBox>
+<ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMIN_TABLE_CONTROLLER">
+   <content>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1980.0" style="-fx-background-color: #212529;">
+         <left>
+            <Pane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="130.0" prefWidth="1420.0" style="-fx-background-color: #cccccc;">
+                     <children>
+                        <Pane prefHeight="130.0" prefWidth="150.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="Home">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="150.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="User Info">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="150.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="Admin">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="150.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="Referrals">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="190.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="190.0" text="Appointments">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="145.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="145.0" text="Orders">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="100.0">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="220.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="130.0" prefWidth="220.0" text="Logged in: admin ">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Line endY="-63.66666793823242" layoutX="220.0" layoutY="105.0" startY="-14.333335876464844" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="160.0">
+                           <children>
+                              <Label contentDisplay="CENTER" prefHeight="130.0" prefWidth="160.0" text=" Logout">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #333333;" />
+                  <BorderPane prefHeight="2510.0" prefWidth="1480.0" style="-fx-background-color: #cccccc;">
+                     <top>
+                        <Pane prefHeight="35.0" prefWidth="1480.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <center>
+                        <VBox prefHeight="1726.0" prefWidth="1430.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1220.0" text="Placed Orders">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <TableView fx:id="PlacedOrdersTable" prefHeight="400.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="placed_orders_Patient" editable="false" prefWidth="336.6666564941406" text="Patient" />
+                                    <TableColumn fx:id="placed_orders_Modality" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="Modality" />
+                                    <TableColumn fx:id="placed_orders_Notes" prefWidth="601.6666870117188" text="Notes" />
+                                    <TableColumn id="placed_orders_Status" fx:id="placed_orders_Status" editable="false" prefWidth="235.0" text="Status" />
+                                 </columns>
+                              </TableView>
+                              <Pane prefHeight="25.0" prefWidth="1220.0" style="-fx-background-color: #cccccc;" />
+                              <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1220.0" text="Checked-In Appointments">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <TableView fx:id="CheckedInAppointmentsTable" prefHeight="400.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="CheckedInAppointments_Patient" editable="false" prefWidth="230.0" text="Patient" />
+                                    <TableColumn fx:id="CheckedInAppointments_Modality" editable="false" minWidth="0.0" prefWidth="230.0" text="Modality" />
+                                    <TableColumn fx:id="CheckedInAppointments_Price" editable="false" prefWidth="500.0" text="Price" />
+                                    <TableColumn fx:id="CheckedInAppointments_DateandTime" editable="false" prefWidth="259.0" text="Date and Time" />
+                                    <TableColumn fx:id="CheckedInAppointments_Radiologist" prefWidth="75.0" text="Radiologist" />
+                                    <TableColumn fx:id="CheckedInAppointments_Technician" prefWidth="75.0" text="Technician" />
+                                 </columns>
+                              </TableView>
+                              <Pane prefHeight="25.0" prefWidth="1220.0" style="-fx-background-color: #cccccc;" />
+                              <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1220.0" text="Today's Appointments">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <TableView fx:id="TodaysAppointmentsTable" prefHeight="400.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="TodaysAppointments_Patient1" editable="false" prefWidth="230.0" text="Patient" />
+                                    <TableColumn fx:id="TodaysAppointmentsTable_Modality" editable="false" minWidth="0.0" prefWidth="230.0" text="Modality" />
+                                    <TableColumn fx:id="TodaysAppointmentsTable_Prices" editable="false" prefWidth="500.0" text="Price" />
+                                    <TableColumn fx:id="TodaysAppointmentsTable_DateandTime" editable="false" prefWidth="259.0" text="Date and Time" />
+                                    <TableColumn fx:id="TodaysAppointmentsTable_Radiologist" prefWidth="75.0" text="Radiologist" />
+                                    <TableColumn fx:id="TodaysAppointmentsTable_Technician" prefWidth="75.0" text="Technician" />
+                                 </columns>
+                              </TableView>
+                              <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+                              <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1220.0" text="Unscheduled Orders">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <TableView fx:id="UnscheduledOrdersTable" prefHeight="400.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="UnscheduledOrdersTable_Patient" editable="false" prefWidth="230.0" text="Patient" />
+                                    <TableColumn fx:id="UnscheduledOrdersTable_ReferralMD" editable="false" minWidth="0.0" prefWidth="230.0" text="Referal MD" />
+                                    <TableColumn fx:id="UnscheduledOrdersTable_Modality" editable="false" prefWidth="500.0" text="Modality" />
+                                    <TableColumn fx:id="UnscheduledOrdersTable_Notes" editable="false" prefWidth="259.0" text="Notes" />
+                                 </columns>
+                              </TableView>
+                              <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+                              <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1220.0" text="Review Imaging Orders">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <TableView fx:id="ReviewImagingOrdersTable" prefHeight="400.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="ReviewImagingOrdersTable_Patient" editable="false" prefWidth="230.0" text="Patient" />
+                                    <TableColumn fx:id="ReviewImagingOrdersTable_RefferalMD" editable="false" minWidth="0.0" prefWidth="230.0" text="Referral MD" />
+                                    <TableColumn fx:id="ReviewImagingOrdersTable_Modality" editable="false" prefWidth="500.0" text="Modality" />
+                                    <TableColumn fx:id="ReviewImagingOrdersTable_Notes" editable="false" prefWidth="259.0" text="Notes" />
+                                 </columns>
+                              </TableView>
+                              <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+                           </children>
+                        </VBox>
+                     </center>
+                     <left>
+                        <Pane prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Pane prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
+                     </right>
+                     <bottom>
+                        <Pane prefHeight="100.0" prefWidth="1480.0" style="-fx-background-color: #212529;" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <Pane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </content>
+</ScrollPane>
