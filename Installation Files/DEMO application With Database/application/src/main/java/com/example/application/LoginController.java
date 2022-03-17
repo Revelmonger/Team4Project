@@ -109,7 +109,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
                     
                      
                     } catch (Exception e) {
-                        System.out.println("There isn't a user role fxml for that type");
+                        e.getStackTrace();
                     }
                     
                 
