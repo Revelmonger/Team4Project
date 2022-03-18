@@ -12,7 +12,7 @@ public Connection databaselink;
     public Connection getConnection(){
         String datbaseName = "db_ris";
         String datbaseUser = "root";
-        String databasePassword = "0288";
+        String databasePassword = "1234";
 
         String url = "jdbc:mysql://localhost/" + datbaseName; 
 

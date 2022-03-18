@@ -30,6 +30,7 @@ public class FXApp extends Application {
                     case ESCAPE:
                     stage.close();
                     break;
+
                 }
             }
         });

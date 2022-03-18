@@ -1,5 +1,6 @@
 package com.example.application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,12 +11,16 @@ import org.hibernate.boot.jaxb.hbm.internal.GenerationTimingConverter;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.*;
+import javafx.event.ActionEvent;
 
 public class ADMIN_TABLE_CONTROLLER  implements Initializable {
+    
 
     @FXML 
     private TableView<PlacedOrdersTableController> PlacedOrdersTable;
@@ -31,6 +36,21 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
    @FXML
    private TableColumn<PlacedOrdersTableController, Integer> placed_orders_Status;
+
+   @FXML
+   private Button logoutButton;
+
+   @FXML
+   private Label logoutLabel;
+
+   @FXML
+   public void ButtonEntered(){
+       logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+   }
+   @FXML
+   public void ButtonExited(){
+    logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+   }
 
    ObservableList<PlacedOrdersTableController> PlacedOrdersTableObservableList =  FXCollections.observableArrayList();
 
@@ -94,6 +114,12 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
         
         
+    }
+
+
+
+    public void logout(ActionEvent e) throws IOException{
+        FXApp.setRoot("login");
     }
 
     
