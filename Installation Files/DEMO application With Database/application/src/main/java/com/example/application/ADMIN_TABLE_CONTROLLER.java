@@ -59,70 +59,115 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
  
  
     @FXML
+
     public void ButtonEntered(){
+        
         logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
     }
+
     @FXML
+
     public void ButtonExited(){
          logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
     }
  
  
     @FXML
+
     public void HomeButtonEntered(){
+
      HomeButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+
     }
+
     @FXML
+
+
     public void HomeButtonExited(){
+
      HomeButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
     }
+
  
     @FXML
+
     public void UserInfoButtonEntered(){
+
      UserInfoButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
     }
+
     @FXML
+
+
     public void UserInfoButtonExited(){
+
      UserInfoButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
     }
  
     @FXML
+
     public void AdminButtonEntered(){
+
      AdminButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+
     }
+
     @FXML
+
     public void AdminButtonExited(){
+
      AdminButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
     }
  
     @FXML
+
+
     public void ReferralsButtonEntered(){
+
+
      ReferralsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
     }
     @FXML
+
     public void ReferralsButtonExited(){
+
      ReferralsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
     }
  
+
     @FXML
+
     public void AppointentsButtonEntered(){
+
      AppointmentsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
     }
+
     @FXML
+
     public void AppointmentsButtonExited(){
+
      AppointmentsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
     }
  
+
     @FXML
+
     public void OrdersButtonEntered(){
+
      OrdersButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
     }
+
+
     @FXML
     public void OrdersButtonExited(){
+
      OrdersButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
     }
  
-
+//Hello World
 
 
 
