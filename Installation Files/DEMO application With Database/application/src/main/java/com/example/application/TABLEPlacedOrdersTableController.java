@@ -3,14 +3,14 @@ package com.example.application;
 
 
 
-public class PlacedOrdersTableController {
+public class TABLEPlacedOrdersTableController {
 
     String patient;
     String modality;
     String notes;
     String status;
 
-    public PlacedOrdersTableController (String patient, String modality, String notes, String status){
+    public TABLEPlacedOrdersTableController (String patient, String modality, String notes, String status){
 
         this.patient = patient;
         this.modality = modality;

@@ -3,7 +3,7 @@ package com.example.application;
 
 import java.sql.Date;
 
-public class TodaysAppointmentsTableController {
+public class TABLECheckedInAppointmentsTableController {
 
     Integer patient;
     Integer modality;
@@ -11,7 +11,7 @@ public class TodaysAppointmentsTableController {
     Integer radiologist;
     Integer technician;
 
-    public TodaysAppointmentsTableController (Integer patient, Integer modality, Date date_time, Integer radiologist, Integer technician){
+    public TABLECheckedInAppointmentsTableController (Integer patient, Integer modality, Date date_time, Integer radiologist, Integer technician){
 
         this.patient = patient;
         this.modality = modality;
