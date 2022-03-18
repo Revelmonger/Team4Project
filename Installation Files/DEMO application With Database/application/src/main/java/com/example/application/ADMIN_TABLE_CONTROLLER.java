@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 
 public class ADMIN_TABLE_CONTROLLER  implements Initializable {
@@ -162,6 +163,10 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
 
         PlacedOrdersTable.setItems(null);
         PlacedOrdersTable.setItems(PlacedOrdersTableObservableList);
+
+            //Adding Search Bar Filter Here
+            FilteredList<PlacedOrdersTableController> filteredData = new FilteredList<>(PlacedOrdersTableObservableList);
+
 
             
         } catch (Exception e) {
