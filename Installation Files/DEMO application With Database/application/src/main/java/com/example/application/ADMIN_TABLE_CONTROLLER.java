@@ -20,7 +20,7 @@ import javafx.event.ActionEvent;
 
 public class ADMIN_TABLE_CONTROLLER  implements Initializable {
     
-
+    //Placed Orders Table Imports
     @FXML 
     private TableView<PlacedOrdersTableController> PlacedOrdersTable;
 
@@ -36,45 +36,110 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
    @FXML
    private TableColumn<PlacedOrdersTableController, Integer> placed_orders_Status;
 
-   @FXML
-   private Button logoutButton;
-
-   @FXML
-   private Label logoutLabel;
-
-   @FXML
-   public void ButtonEntered(){
-       logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-   }
-   @FXML
-   public void ButtonExited(){
-    logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-   }
-
    ObservableList<PlacedOrdersTableController> PlacedOrdersTableObservableList =  FXCollections.observableArrayList();
 
 
+   
+   // Logout Button Logic
+    // Button Logic
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Button HomeButton;
+    @FXML
+    private Button UserInfoButton;
+    @FXML
+    private Button AdminButton;
+    @FXML
+    private Button ReferralsButton;
+    @FXML
+    private Button AppointmentsButton;
+    @FXML
+    private Button OrdersButton;
+ 
+ 
+    @FXML
+    public void ButtonEntered(){
+        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void ButtonExited(){
+         logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
+ 
+    @FXML
+    public void HomeButtonEntered(){
+     HomeButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void HomeButtonExited(){
+     HomeButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
+    @FXML
+    public void UserInfoButtonEntered(){
+     UserInfoButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void UserInfoButtonExited(){
+     UserInfoButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
+    @FXML
+    public void AdminButtonEntered(){
+     AdminButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void AdminButtonExited(){
+     AdminButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
+    @FXML
+    public void ReferralsButtonEntered(){
+     ReferralsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void ReferralsButtonExited(){
+     ReferralsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
+    @FXML
+    public void AppointentsButtonEntered(){
+     AppointmentsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void AppointmentsButtonExited(){
+     AppointmentsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
+    @FXML
+    public void OrdersButtonEntered(){
+     OrdersButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+    @FXML
+    public void OrdersButtonExited(){
+     OrdersButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+ 
 
 
 
 
+
+
+
+   // Table Population and Scene Controls
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-
-
-
-
-
-        
-
-
 
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
 
+        // Populates the Placed Orders Table
+        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
         try {
 
             Statement statement = connectDB.createStatement();
@@ -87,21 +152,12 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
                 String notesquery = queryOutput.getString("notes").trim();
                 String statusquery = queryOutput.getString("order_name");
 
-
-
-                
-
-                //query for patient name modality name and status stirng reassign to values to be placed into the contructor
-
                 PlacedOrdersTableObservableList.add(new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery));
             }
 
         placed_orders_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
         placed_orders_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
         placed_orders_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
-        
         placed_orders_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         PlacedOrdersTable.setItems(null);
@@ -112,17 +168,19 @@ public class ADMIN_TABLE_CONTROLLER  implements Initializable {
           System.out.println("error");
         }
 
+        // ADD other tables logic here
 
 
 
-        
-        
     }
 
 
 
+
+
+    // Logout actiion
     public void logout(ActionEvent e) throws IOException{
-        FXApp.setRoot("login");
+        FXApp.setRoot("LOGIN");
     }
 
     

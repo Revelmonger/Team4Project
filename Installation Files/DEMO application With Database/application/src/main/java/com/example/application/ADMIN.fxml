@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -25,56 +26,36 @@
                      <children>
                         <Pane prefHeight="130.0" prefWidth="150.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="Home">
+                              <Button fx:id="HomeButton" mnemonicParsing="false" onAction="#logout" onMouseEntered="#HomeButtonEntered" onMouseExited="#HomeButtonExited" prefHeight="130.0" prefWidth="152.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="Home">
                                  <font>
                                     <Font name="System Bold" size="23.0" />
                                  </font>
-                              </Label>
+                              </Button>
                            </children>
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="150.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="User Info">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="UserInfoButton" mnemonicParsing="false" onAction="#logout" onMouseEntered="#UserInfoButtonEntered" onMouseExited="#UserInfoButtonExited" prefHeight="131.0" prefWidth="152.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="User Info" />
                            </children>
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="150.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="Admin">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="AdminButton" mnemonicParsing="false" onAction="#logout" onMouseEntered="#AdminButtonEntered" onMouseExited="#AdminButtonExited" prefHeight="132.0" prefWidth="149.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="Admin" />
                            </children>
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="150.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="150.0" text="Referrals">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="ReferralsButton" mnemonicParsing="false" onAction="#logout" onMouseEntered="#ReferralsButtonEntered" onMouseExited="#ReferralsButtonExited" prefHeight="131.0" prefWidth="151.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="Referrals" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="130.0" prefWidth="190.0">
+                        <Pane prefHeight="130.0" prefWidth="200.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="190.0" text="Appointments">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="AppointmentsButton" mnemonicParsing="false" onAction="#logout" onMouseEntered="#AppointentsButtonEntered" onMouseExited="#AppointmentsButtonExited" prefHeight="130.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="Appointments" />
                            </children>
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="145.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="145.0" text="Orders">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="OrdersButton" layoutY="-2.0" mnemonicParsing="false" onAction="#logout" onMouseEntered="#OrdersButtonEntered" onMouseExited="#OrdersButtonExited" prefHeight="133.0" prefWidth="147.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="Orders" />
                            </children>
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="100.0">
@@ -98,11 +79,6 @@
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="160.0">
                            <children>
-                              <Label fx:id="logoutLabel" contentDisplay="CENTER" opacity="0.0" prefHeight="130.0" prefWidth="160.0" text=" Logout">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                              </Label>
                               <Button fx:id="logoutButton" layoutY="41.0" mnemonicParsing="false" onAction="#logout" onMouseEntered="#ButtonEntered" onMouseExited="#ButtonExited" prefHeight="48.0" prefWidth="120.0" style="-fx-background-color: transparent; -fx-font: normal bold 23px 'arial'" text="Logout">
                                  </Button>
                            </children>
@@ -119,11 +95,17 @@
                            <children>
                               <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1220.0" text="Placed Orders">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="1429.0" text="Placed Orders">
                                        <font>
                                           <Font name="System Bold" size="36.0" />
                                        </font>
                                     </Label>
+                                    <Label layoutX="1184.0" prefHeight="51.0" prefWidth="83.0" text="Search:">
+                                       <font>
+                                          <Font name="System Bold" size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="PlacedOrdersFilter" layoutX="1267.0" layoutY="13.0" />
                                  </children>
                               </Pane>
                               <TableView fx:id="PlacedOrdersTable" prefHeight="400.0" prefWidth="200.0">
