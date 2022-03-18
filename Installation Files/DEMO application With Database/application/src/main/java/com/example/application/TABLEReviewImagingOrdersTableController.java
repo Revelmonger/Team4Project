@@ -4,14 +4,14 @@ package com.example.application;
 
 
 
-public class ReviewImagingOrdersTableController {
+public class TABLEReviewImagingOrdersTableController {
 
     String patient;
     String referral_md;
     String modality;
     String notes;
 
-    public ReviewImagingOrdersTableController (String patient, String referral_md, String modality, String notes){
+    public TABLEReviewImagingOrdersTableController (String patient, String referral_md, String modality, String notes){
 
         this.patient = patient;
         this.referral_md = referral_md;

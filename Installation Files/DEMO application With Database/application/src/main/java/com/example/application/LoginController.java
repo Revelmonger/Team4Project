@@ -155,26 +155,3 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
 }
 
 
-
-/*
-
-/
-
-             
-    DatabaseConnection connectNow = new DatabaseConnection();
-    Connection connectDB = connectNow.getConnection(); 
-  
-    String  loginQuery = "select users.username, users_roles.role_id, roles.name from users left join users_roles ON users.user_id = users_roles.user_id right join roles on roles.role_id = users_roles.role_idwhere username = " + "'" + NameField.getText() + "'";
-        try {
-            String role_id = resultSet.getString("role_id");
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(loginQuery);
-            writeResultSet(queryOutput);
-            FXApp.setRoot(role_id);
-
-        } catch (Exception e) {
-
-            e.getStackTrace();
-        }       
-
-*/
