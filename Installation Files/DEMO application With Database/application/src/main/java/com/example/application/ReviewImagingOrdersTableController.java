@@ -3,19 +3,19 @@ package com.example.application;
 
 
 
-public class PlacedOrdersTableController {
+public class ReviewImagingOrdersTableController {
 
     String patient;
+    String referral_md;
     String modality;
     String notes;
-    String status;
 
-    public PlacedOrdersTableController (String patient, String modality, String notes, String status){
+    public ReviewImagingOrdersTableController (String patient, String referral_md, String modality, String notes){
 
         this.patient = patient;
+        this.referral_md = referral_md;
         this.modality = modality;
         this.notes = notes;
-        this.status = status;
     }
 
     public String getModality() {
@@ -29,9 +29,9 @@ public class PlacedOrdersTableController {
         return notes;
     }
 
-    public String getStatus() {
+    public String getReferral_md() {
 
-        return status;
+        return referral_md;
     }
 
     public String getPatient() {
@@ -52,8 +52,8 @@ public void setNotes(String notes) {
     this.notes = notes;
 }
 
-public void setStatus(String status) {
-    this.status = status;
+public void setReferral_md(String referral_md) {
+    this.referral_md = referral_md;
 }
 
 
