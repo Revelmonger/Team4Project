@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+
 public class FXApp extends Application {
 
 
@@ -16,6 +17,8 @@ public class FXApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+
 
    
         scene = new Scene(loadFXML("LOGIN"), 640, 480);
@@ -25,11 +28,12 @@ public class FXApp extends Application {
             
             @Override
             public void handle(KeyEvent event){
-
+                
                 switch(event.getCode()){
                     case ESCAPE:
                     stage.close();
                     break;
+
                 }
             }
         });

@@ -1,0 +1,15 @@
+Use prepared statements to stop sql injections
+
+
+
+Set up security functions inside the main app.hava
+
+
+loggedinusercontructor 
+
+user_id
+
+
+logout clear the user_id
+
+
