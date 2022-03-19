@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <Pane prefHeight="109.0" prefWidth="800.0">
+               <children>
+                  <Label layoutX="25.0" layoutY="27.0" prefHeight="55.0" prefWidth="281.0" text="Patient Overview">
+                     <font>
+                        <Font name="Arial Bold" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Line endX="700.0" startX="-100.0" />
+            <Pane prefHeight="41.0" prefWidth="800.0" />
+            <Pane prefHeight="94.0" prefWidth="800.0">
+               <children>
+                  <Label layoutX="35.0" prefHeight="55.0" prefWidth="128.0" text="First Name: ">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="35.0" layoutY="43.0" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: lightgray;" />
+                  <TextField layoutX="543.0" layoutY="43.0" prefHeight="35.0" prefWidth="210.0" />
+                  <TextField layoutX="287.0" layoutY="43.0" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: lightgray;" />
+                  <Label layoutX="287.0" prefHeight="55.0" prefWidth="128.0" text="Last Name:">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="543.0" prefHeight="55.0" prefWidth="128.0" text="Date of Birth:">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

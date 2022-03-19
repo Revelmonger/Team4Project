@@ -202,7 +202,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                     public void handle(ActionEvent event) {
 
                         System.out.println(firstnamequery);
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditUserInfo.fxml"));
                         Parent root1;
                         try {
                             root1 = (Parent) fxmlLoader.load();
