@@ -355,7 +355,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id order by date_time;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
                                                                                                                                           // to
                                                                                                                                           // just
                                                                                                                                           // like
@@ -403,7 +403,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
          * 
          */
 
-        String TodaysAppointmentsTableQuery = "SELECT patient, modality, date_time, radiologist, technician FROM db_ris.appointments";
+        String TodaysAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where date(date_time) = (select date(now()))  order by date_time;";
 
         // date time for todays date!
 
@@ -414,14 +414,14 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             while (queryOutput.next()) {
 
-                Integer patientquery = queryOutput.getInt("patient");
-                Integer modalityquery = queryOutput.getInt("modality");
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String modalityquery = queryOutput.getString("name");
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
-                Integer radiologistquery = queryOutput.getInt("radiologist");
-                Integer technicianquery = queryOutput.getInt("technician");
+                String radiologistquery = queryOutput.getString("full_name");
+                String pricequery = queryOutput.getString("price");
 
                 TodaysAppointmentsObservableList.add(new TABLETodaysAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, technicianquery));
+                        modalityquery, date_timequery, radiologistquery, pricequery));
             }
 
             TodaysAppointments_Patient1.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -432,7 +432,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             TodaysAppointmentsTable_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
-            TodaysAppointmentsTable_Technician.setCellValueFactory(new PropertyValueFactory<>("technician"));
+            TodaysAppointmentsTable_Prices.setCellValueFactory(new PropertyValueFactory<>("price"));
 
             TodaysAppointmentsTable.setItems(null);
             TodaysAppointmentsTable.setItems(TodaysAppointmentsObservableList);
