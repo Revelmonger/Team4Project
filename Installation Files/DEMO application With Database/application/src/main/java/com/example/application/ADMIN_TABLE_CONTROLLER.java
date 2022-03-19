@@ -539,8 +539,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
      */
 
     public void logout(ActionEvent e) throws IOException {
-
-        //setCurrentUser(null)
+       
         FXApp.setRoot("LOGIN");
     }
 

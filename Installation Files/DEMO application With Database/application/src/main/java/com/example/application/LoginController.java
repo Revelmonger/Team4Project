@@ -103,6 +103,8 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
                   
                   queryOutput.close();
 
+                  
+
                  
                     try {
                         FXApp.setRoot(role_name);
@@ -138,7 +140,6 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
         
                
                
-
 
 
 
