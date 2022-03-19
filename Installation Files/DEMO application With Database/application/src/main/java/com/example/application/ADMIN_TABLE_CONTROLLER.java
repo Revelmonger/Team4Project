@@ -186,9 +186,6 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     @FXML
     private TableColumn<TABLECheckedInAppointmentsTableController, Integer> CheckedInAppointments_Radiologist;
 
-    @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> CheckedInAppointments_Technician;
-
     ObservableList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsObservableList = FXCollections
             .observableArrayList();
     /*
@@ -358,7 +355,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "SELECT patient, modality, date_time, radiologist, technician FROM db_ris.appointments"; // change
+        String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id order by date_time;"; // change
                                                                                                                                           // to
                                                                                                                                           // just
                                                                                                                                           // like
@@ -373,14 +370,14 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             while (queryOutput.next()) {
 
-                Integer patientquery = queryOutput.getInt("patient");
-                Integer modalityquery = queryOutput.getInt("modality");
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String modalityquery = queryOutput.getString("name");
+                String pricequery = queryOutput.getString("price");
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
-                Integer radiologistquery = queryOutput.getInt("radiologist");
-                Integer technicianquery = queryOutput.getInt("technician");
+                String radiologistquery = queryOutput.getString("full_name");
 
                 CheckedInAppointmentsObservableList.add(new TABLECheckedInAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, technicianquery));
+                        modalityquery, date_timequery, radiologistquery, pricequery));
             }
 
             CheckedInAppointments_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -391,7 +388,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
-            CheckedInAppointments_Technician.setCellValueFactory(new PropertyValueFactory<>("technician"));
+            CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
 
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
