@@ -10,40 +10,40 @@ public class TABLEReferralsTableController {
 
     public TABLEReferralsTableController (Date dob, String firstname, String lastname){
 
+        this.dob = dob;             
         this.firstname = firstname;
         this.lastname = lastname;
-        this.dob = dob;             
     }
 
-    public String getFirstName() {
+    public String getFirstname() {
 
         return firstname;
     }
 
 
-    public Date getDOB() {
+    public Date getDob() {
 
         return dob;
     }
 
-    public String getLastName() {
+    public String getLastname() {
 
         return lastname;
     }
 
 
 
-public void setFirstName(String firstname) {
+    public void setFirstname(String firstname) {
     this.firstname = firstname;
-}
+    }
 
-public void setLastName(String lastname) {
+    public void setLastname(String lastname) {
     this.lastname = lastname;
-}
+    }
 
-public void setDOB(Date dob) {
+    public void setDob(Date dob) {
     this.dob = dob;
-}
+    }
 
 
 }

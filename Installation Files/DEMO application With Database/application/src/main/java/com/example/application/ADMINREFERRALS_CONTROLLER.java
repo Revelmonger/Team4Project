@@ -154,7 +154,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
     @FXML
     private TextField searchPlacedOrders;
 
-    ObservableList<TABLEReferralsTableController> PlacedOrdersTableObservableList = FXCollections
+    ObservableList<TABLEReferralsTableController> ReferralsTableObservableList = FXCollections
             .observableArrayList();
 
     @Override
@@ -177,8 +177,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                 String firstnamequery = queryOutput.getString("first_name");
                 String lastnamequery = queryOutput.getString("last_name");
 
-                PlacedOrdersTableObservableList.add(
-                        new TABLEReferralsTableController(dobquery, firstnamequery, lastnamequery));
+                ReferralsTableObservableList.add(new TABLEReferralsTableController(dobquery, firstnamequery, lastnamequery));
             }
 
             patients_date.setCellValueFactory(new PropertyValueFactory<>("dob"));
@@ -188,49 +187,9 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
             patients_lastName.setCellValueFactory(new PropertyValueFactory<>("lastname"));
 
             AllPatientsTable.setItems(null);
-            AllPatientsTable.setItems(PlacedOrdersTableObservableList);
+            AllPatientsTable.setItems(ReferralsTableObservableList);
 
-            // Search Bar Functionality
-            /*FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
-                    PlacedOrdersTableObservableList);
-
-            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-
-                    String searchKeyword = newValue.toLowerCase();
-
-                    if (TABLEPlacedOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEPlacedOrdersTableController.getModality().toLowerCase()
-                            .indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEPlacedOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEPlacedOrdersTableController.getStatus().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else {
-                        return false; // no match found
-                    }
-
-                });
-
-            });
-
-            SortedList<TABLEPlacedOrdersTableController> PlacedOrdersSortedData = new SortedList<>(
-                    PlacedOrdersFilteredData);
-
-            // Binds the sorted resultswith the Table
-            PlacedOrdersSortedData.comparatorProperty().bind(PlacedOrdersTable.comparatorProperty());
-
-            PlacedOrdersTable.setItems(PlacedOrdersSortedData);
-*/
+            
         } catch (Exception e) {
             System.out.println("error");
         }
