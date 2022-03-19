@@ -560,7 +560,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMINREFERRALS");
     }
 
     public void orders(ActionEvent e) throws IOException {
@@ -568,7 +568,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     }
 
     public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMINAPPOINTMENTS");
     }
 
 }
