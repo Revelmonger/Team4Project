@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 public class FXApp extends Application {
@@ -37,12 +39,16 @@ public class FXApp extends Application {
 
 
 
-       
-        stage.setTitle("RIS");
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+      
+    
+
+    stage.setFullScreenExitHint(null);
+    stage.setTitle("RIS");
+   stage.setMaximized(true);
+    stage.initStyle(StageStyle.UNDECORATED);
+    stage.setResizable(false);
+    stage.setScene(scene);
+    stage.show();
 
 
     

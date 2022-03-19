@@ -9,16 +9,29 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.application.*;
 
 public class ADMINREFERRALS_CONTROLLER implements Initializable {
 
@@ -152,6 +165,10 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
     private TableColumn<TABLEReferralsTableController, Integer> patients_lastName;
 
     @FXML
+    private TableColumn<TABLEReferralsTableController, Button> ModifyButton;
+    
+
+    @FXML
     private TextField searchPlacedOrders;
 
     ObservableList<TABLEReferralsTableController> ReferralsTableObservableList = FXCollections
@@ -176,8 +193,82 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                 Date dobquery = queryOutput.getDate("dob");
                 String firstnamequery = queryOutput.getString("first_name");
                 String lastnamequery = queryOutput.getString("last_name");
+                Button button = new Button("Modify");
 
-                ReferralsTableObservableList.add(new TABLEReferralsTableController(dobquery, firstnamequery, lastnamequery));
+
+                button.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        System.out.println(firstnamequery);
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+                        Parent root1;
+                        try {
+                            root1 = (Parent) fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setResizable(false);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.setTitle("Edit User Information");
+                        stage.setScene(new Scene(root1, 800, 600));
+
+                        root1.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent t) {
+                                KeyCode key = t.getCode();
+                                if (key == KeyCode.ESCAPE){
+                                    stage.close();
+                                }
+                            }
+                        });
+                        stage.show();
+                        } catch (IOException e) {
+                           
+                            e.printStackTrace();
+                        }
+                        
+                       
+
+
+
+
+
+                        /*
+
+                        
+                        StackPane secondaryLayout = new StackPane();
+                       
+                        Scene secondScene = new Scene(secondaryLayout, 600, 400);
+
+                      */
+
+
+        /*
+                        // New window (Stage)
+                        Stage newWindow = new Stage();
+                        //newWindow.initStyle(StageStyle.UNDECORATED);
+                        newWindow.setResizable(false);
+                        newWindow.initModality(Modality.APPLICATION_MODAL);
+                        newWindow.setTitle("Second Stage");
+                        newWindow.setScene(secondScene);
+
+
+                        secondScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent t) {
+                                KeyCode key = t.getCode();
+                                if (key == KeyCode.ESCAPE){
+                                    newWindow.close();
+                                }
+                            }
+                        });
+                        
+        
+                        newWindow.show();*/
+                    }
+                });
+  
+                ReferralsTableObservableList.add(new TABLEReferralsTableController(dobquery, firstnamequery, lastnamequery, button));
             }
 
             patients_date.setCellValueFactory(new PropertyValueFactory<>("dob"));
@@ -185,6 +276,10 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
             patients_firstName.setCellValueFactory(new PropertyValueFactory<>("firstname"));
 
             patients_lastName.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+            ModifyButton.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+
+
 
             AllPatientsTable.setItems(null);
             AllPatientsTable.setItems(ReferralsTableObservableList);

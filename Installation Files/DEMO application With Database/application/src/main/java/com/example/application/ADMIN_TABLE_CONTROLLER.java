@@ -303,7 +303,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
             PlacedOrdersTable.setItems(null);
             PlacedOrdersTable.setItems(PlacedOrdersTableObservableList);
 
-            // Search Bar Functionality
+            // Search Bar Functionality Start
             FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
                     PlacedOrdersTableObservableList);
 
@@ -343,6 +343,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
             PlacedOrdersSortedData.comparatorProperty().bind(PlacedOrdersTable.comparatorProperty());
 
             PlacedOrdersTable.setItems(PlacedOrdersSortedData);
+            // Search Bar Functionality End
 
         } catch (Exception e) {
             System.out.println("error");

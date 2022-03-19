@@ -2,17 +2,21 @@ package com.example.application;
 
 import java.sql.Date;
 
+import javafx.scene.control.Button;
+
 public class TABLEReferralsTableController {
     
     String firstname;
     String lastname;
-    Date dob;                             //price
+    Date dob;    
+    Button button;                         //price
 
-    public TABLEReferralsTableController (Date dob, String firstname, String lastname){
+    public TABLEReferralsTableController (Date dob, String firstname, String lastname, Button button){
 
         this.dob = dob;             
         this.firstname = firstname;
         this.lastname = lastname;
+        this.button = button;
     }
 
     public String getFirstname() {
@@ -31,7 +35,14 @@ public class TABLEReferralsTableController {
         return lastname;
     }
 
+    public Button getButton() {
 
+        return button;
+    }
+
+
+
+    
 
     public void setFirstname(String firstname) {
     this.firstname = firstname;
@@ -44,6 +55,8 @@ public class TABLEReferralsTableController {
     public void setDob(Date dob) {
     this.dob = dob;
     }
-
+    public void setButton(Button button) {
+        this.button = button;
+        }
 
 }
