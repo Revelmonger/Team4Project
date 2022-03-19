@@ -136,7 +136,7 @@
                                     <TableColumn fx:id="all_appointments_patient" editable="false" prefWidth="336.6666564941406" text="Patient" />
                                     <TableColumn fx:id="all_appointments_Modality" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="Modality" />
                                     <TableColumn fx:id="all_appointments_dateandtime" prefWidth="601.6666870117188" text="Date and Time" />
-                                    <TableColumn id="placed_orders_Status" fx:id="all_appointments_radiologist" editable="false" prefWidth="235.0" text="Radiologist" />
+                                    <TableColumn fx:id="all_appointments_radiologist" editable="false" prefWidth="235.0" text="Radiologist" />
                                     <TableColumn prefWidth="75.0" text="DROP THIS NOW" />
                                  </columns>
                                  <columnResizePolicy>

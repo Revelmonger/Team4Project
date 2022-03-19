@@ -72,7 +72,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (1,13,1,1,'2022-03-18 16:53:33',1,5,'11','k','fe','1','efad',_binary '\0',_binary '\0'),(2,1,2,2,'2022-03-18 16:53:28',1,5,'22','ff','frd','2','gfd',_binary '',_binary '\0');
+INSERT INTO `appointments` VALUES (1,13,1,1,'2022-03-18 16:53:33',1,5,'11','k','fe','1','efad',_binary '\0',_binary '\0'),(2,1,2,2,'2022-03-19 16:53:28',1,5,'22','ff','frd','2','gfd',_binary '',_binary '\0');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +222,9 @@ CREATE TABLE `orders` (
   `notes` varchar(250) DEFAULT NULL,
   `status` int DEFAULT NULL,
   `report` int DEFAULT NULL,
-  PRIMARY KEY (`order_id`)
+  PRIMARY KEY (`order_id`),
+  KEY `referral_md` (`referral_md`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`referral_md`) REFERENCES `referralmds` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -232,7 +234,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,13,1,1,1,'sdf',1,1),(2,1,1,2,2,'yo',3,1);
+INSERT INTO `orders` VALUES (1,13,1,1,1,'sdf',1,1),(2,1,1,2,2,'yo',3,1),(3,2,1,3,NULL,'gadg',4,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +263,7 @@ CREATE TABLE `patients` (
 
 LOCK TABLES `patients` WRITE;
 /*!40000 ALTER TABLE `patients` DISABLE KEYS */;
-INSERT INTO `patients` VALUES (1,'JOhn','doe','1111-11-11','male','White','Not Hispanic or Latino'),(13,'Cole','Jarrett','2001-08-29','male','White','Not Hispanic or Latino');
+INSERT INTO `patients` VALUES (1,'JOhn','doe','1111-11-11','male','White','Not Hispanic or Latino'),(2,'james','oejejfld','2222-02-22','female','White','Hispanic or Latino'),(13,'Cole','Jarrett','2001-08-29','male','White','Not Hispanic or Latino');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,6 +319,31 @@ LOCK TABLES `radiologists` WRITE;
 /*!40000 ALTER TABLE `radiologists` DISABLE KEYS */;
 INSERT INTO `radiologists` VALUES (1,'test radiologist','test@radiologist.com');
 /*!40000 ALTER TABLE `radiologists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `referralmds`
+--
+
+DROP TABLE IF EXISTS `referralmds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `referralmds` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `referralmds`
+--
+
+LOCK TABLES `referralmds` WRITE;
+/*!40000 ALTER TABLE `referralmds` DISABLE KEYS */;
+INSERT INTO `referralmds` VALUES (1,'test doc','doc@doc.com');
+/*!40000 ALTER TABLE `referralmds` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -410,4 +437,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-18 17:59:44
+-- Dump completed on 2022-03-18 21:42:32

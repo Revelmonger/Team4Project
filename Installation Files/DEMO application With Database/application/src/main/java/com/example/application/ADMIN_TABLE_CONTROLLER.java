@@ -447,7 +447,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
          * 
          */
 
-        String UnscheduledOrdersTableQuery = "SELECT patient, referral_md, modality, notes FROM db_ris.orders"; // change
+        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
                                                                                                                 // to
                                                                                                                 // just
                                                                                                                 // like
@@ -462,9 +462,9 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             while (queryOutput.next()) {
 
-                String patientquery = queryOutput.getString("patient");
-                String referral_mdquery = queryOutput.getString("referral_md");
-                String modalityquery = queryOutput.getString("modality"); // might need to change types
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String referral_mdquery = queryOutput.getString("full_name");
+                String modalityquery = queryOutput.getString("name"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
 
                 UnscheduledOrdersObservableList.add(new TABLEUnscheduledOrdersTableController(patientquery,

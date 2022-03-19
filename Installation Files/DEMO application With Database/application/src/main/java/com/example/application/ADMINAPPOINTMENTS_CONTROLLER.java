@@ -140,24 +140,24 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
 
  
     @FXML
-    private TableView<TABLEPlacedOrdersTableController> PlacedOrdersTable;
+    private TableView<TABLEAllAppointmentsTableController> AllAppointmentsTable;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Patient;
+    private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_patient;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Modality;
+    private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_Modality;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, String> placed_orders_Notes;
+    private TableColumn<TABLEAllAppointmentsTableController, Date> all_appointments_dateandtime;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Status;
+    private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_radiologist;
 
     @FXML
     private TextField searchPlacedOrders;
 
-    ObservableList<TABLEPlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
+    ObservableList<TABLEAllAppointmentsTableController> PlacedOrdersTableObservableList = FXCollections
             .observableArrayList();
 
     @Override
@@ -167,7 +167,7 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
         Connection connectDB = connectNow.getConnection();
         
 
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
+        String PlacedOrdersTableQuery = "select p.first_name, p.last_name, m.name, a.date_time, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id;";
 
         try {
 
@@ -178,26 +178,26 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
 
                 String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
                 String modalityquery = queryOutput.getString("name");
-                String notesquery = queryOutput.getString("notes").trim();
-                String statusquery = queryOutput.getString("order_name");
+                Date datequery = queryOutput.getDate("date_time");
+                String radiologistquery = queryOutput.getString("full_name");
 
                 PlacedOrdersTableObservableList.add(
-                        new TABLEPlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery));
+                        new TABLEAllAppointmentsTableController(patientquery, modalityquery, datequery, radiologistquery));
             }
 
-            placed_orders_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+            all_appointments_patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
 
-            placed_orders_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
+            all_appointments_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
 
-            placed_orders_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+            all_appointments_dateandtime.setCellValueFactory(new PropertyValueFactory<>("date_time"));
 
-            placed_orders_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
+            all_appointments_radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
-            PlacedOrdersTable.setItems(null);
-            PlacedOrdersTable.setItems(PlacedOrdersTableObservableList);
+            AllAppointmentsTable.setItems(null);
+            AllAppointmentsTable.setItems(PlacedOrdersTableObservableList);
 
             // Search Bar Functionality
-            FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
+            /*FilteredList<TABLEAllAppointmentsTableController> PlacedOrdersFilteredData = new FilteredList<>(
                     PlacedOrdersTableObservableList);
 
             searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -236,7 +236,7 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
             PlacedOrdersSortedData.comparatorProperty().bind(PlacedOrdersTable.comparatorProperty());
 
             PlacedOrdersTable.setItems(PlacedOrdersSortedData);
-
+*/
         } catch (Exception e) {
             System.out.println("error");
         }
