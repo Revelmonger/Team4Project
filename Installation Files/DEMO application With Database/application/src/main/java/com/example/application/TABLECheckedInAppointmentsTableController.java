@@ -5,22 +5,22 @@ import java.sql.Date;
 
 public class TABLECheckedInAppointmentsTableController {
 
-    Integer patient;
-    Integer modality;
+    String patient;
+    String modality;
+    String price;
     Date date_time;                             //price
-    Integer radiologist;
-    Integer technician;
+    String radiologist;
 
-    public TABLECheckedInAppointmentsTableController (Integer patient, Integer modality, Date date_time, Integer radiologist, Integer technician){
+    public TABLECheckedInAppointmentsTableController (String patient, String modality, Date date_time, String radiologist, String price){
 
         this.patient = patient;
         this.modality = modality;
         this.date_time = date_time;             //price
         this.radiologist = radiologist;
-        this.technician = technician;
+        this.price = price;
     }
 
-    public Integer getModality() {
+    public String getModality() {
 
         return modality;
     }
@@ -31,27 +31,27 @@ public class TABLECheckedInAppointmentsTableController {
         return date_time;
     }
 
-    public Integer getRadiologist() {
+    public String getRadiologist() {
 
         return radiologist;
     }
 
-    public Integer getTechnician() {
+    public String getPrice() {
 
-        return technician;
+        return price;
     }
 
-    public Integer getPatient() {
+    public String getPatient() {
 
         return patient;
     }
 
 
-public void setPatient(Integer patient) {
+public void setPatient(String patient) {
     this.patient = patient;
 }
 
-public void setModality(Integer modality) {
+public void setModality(String modality) {
     this.modality = modality;
 }
 
@@ -59,12 +59,12 @@ public void setDate_time(Date date_time) {
     this.date_time = date_time;
 }
 
-public void setRadiologist(Integer radiologist) {
+public void setRadiologist(String radiologist) {
     this.radiologist = radiologist;
 }
 
-public void setTechnician(Integer technician) {
-    this.technician = technician;
+public void setPrice(String price) {
+    this.price = price;
 }
 
 

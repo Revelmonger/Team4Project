@@ -72,6 +72,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (1,13,1,1,'2022-03-18 16:53:33',1,5,'11','k','fe','1','efad',_binary '\0',_binary '\0'),(2,1,2,2,'2022-03-18 16:53:28',1,5,'22','ff','frd','2','gfd',_binary '',_binary '\0');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,6 +295,31 @@ LOCK TABLES `patients_alerts` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `radiologists`
+--
+
+DROP TABLE IF EXISTS `radiologists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `radiologists` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `radiologists`
+--
+
+LOCK TABLES `radiologists` WRITE;
+/*!40000 ALTER TABLE `radiologists` DISABLE KEYS */;
+INSERT INTO `radiologists` VALUES (1,'test radiologist','test@radiologist.com');
+/*!40000 ALTER TABLE `radiologists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `roles`
 --
 
@@ -384,4 +410,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-17 15:44:53
+-- Dump completed on 2022-03-18 17:59:44
