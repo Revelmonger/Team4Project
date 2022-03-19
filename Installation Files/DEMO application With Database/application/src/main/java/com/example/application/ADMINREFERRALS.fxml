@@ -13,8 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:controller="com.example.application.ADMINREFERRALS_CONTROLLER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMINREFERRALS_CONTROLLER">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
@@ -129,7 +128,7 @@
                                           <Font name="System Bold" size="23.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="searchAllAppointments" layoutX="1267.0" layoutY="15.0" />
+                                    <TextField fx:id="searchAdminReferrals" layoutX="1267.0" layoutY="15.0" />
                                     <Button layoutX="14.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="New" textFill="#001eff">
                                        <font>
                                           <Font name="System Bold" size="24.0" />
@@ -139,10 +138,10 @@
                               </Pane>
                               <TableView fx:id="AllPatientsTable" prefHeight="786.0" prefWidth="1430.0">
                                  <columns>
-                                    <TableColumn fx:id="placed_orders_Patient" editable="false" prefWidth="336.6666564941406" text="Date of Birth" />
-                                    <TableColumn fx:id="placed_orders_Modality" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="First Name" />
-                                    <TableColumn fx:id="placed_orders_Notes" prefWidth="601.6666870117188" text="Last Name" />
-                                    <TableColumn prefWidth="75.0" />
+                                    <TableColumn fx:id="patients_date" editable="false" prefWidth="336.6666564941406" text="Date of Birth" />
+                                    <TableColumn fx:id="patients_firstName" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="First Name" />
+                                    <TableColumn fx:id="patients_lastName" prefWidth="601.6666870117188" text="Last Name" />
+                                    <TableColumn fx:id="ModifyButton" prefWidth="75.0" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
