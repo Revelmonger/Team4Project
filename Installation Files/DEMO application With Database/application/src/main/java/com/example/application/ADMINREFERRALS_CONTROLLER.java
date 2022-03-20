@@ -5,10 +5,13 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -190,7 +193,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
         Connection connectDB = connectNow.getConnection();
         
 
-        String PlacedOrdersTableQuery = "select p.dob, p.first_name, p.last_name, p.patient_id from patients as p;";
+        String PlacedOrdersTableQuery = "select * from patients;";
 
         try {
 
@@ -201,13 +204,18 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                 
                 Integer patient_id = queryOutput.getInt("patient_id");
                 java.sql.Date dobquery = queryOutput.getDate("dob");
-               String firstnamequery = queryOutput.getString("first_name");
-               String lastnamequery = queryOutput.getString("last_name");
-              Button  button = new Button("Modify");
-              
+                String firstnamequery = queryOutput.getString("first_name");
+                String lastnamequery = queryOutput.getString("last_name");
+                Button  button = new Button("Modify");
+              String patientsex  = queryOutput.getString("sex");
+           String patientrace= queryOutput.getString("race");
+           String patientethnicity = queryOutput.getString("ethnicity");
 
 
+    
 
+    
+           
            
 
 
@@ -260,6 +268,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     FirstName.setMinHeight(55);
                                     FirstName.setMinWidth(128);
                                     FirstName.setLayoutX(35);
+                                  
                                     
                                 
 
@@ -282,6 +291,8 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     firstNameField.setLayoutX(35);
                                     firstNameField.setLayoutY(43);
                                     firstNameField.setText(firstnamequery);
+                                    firstNameField.setEditable(false);
+
 
                                 TextField lastNamefield = new TextField();
                                     lastNamefield.setMinHeight(35);
@@ -289,15 +300,17 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     lastNamefield.setLayoutX(287);
                                     lastNamefield.setLayoutY(43);
                                     lastNamefield.setText(lastnamequery);
+                                    lastNamefield.setEditable(false);
 
-                               DatePicker dateofbirth = new DatePicker();
-                                dateofbirth.setMinHeight(35);
-                                dateofbirth.setMinWidth(210);
-                                dateofbirth.setLayoutX(543);
-                                dateofbirth.setLayoutY(43);
-                                dateofbirth.setValue(dobquery.toLocalDate());
-
-
+                                    TextField dateofbirth = new TextField();
+                                    dateofbirth.setMinHeight(35);
+                                    dateofbirth.setMinWidth(210);
+                                    dateofbirth.setLayoutX(543);
+                                    dateofbirth.setLayoutY(43);
+                                    dateofbirth.setText(dobquery.toLocalDate().toString());
+                                    dateofbirth.setEditable(false);
+    
+                       
 
                             NamesPane.getChildren().add(FirstName);
                             NamesPane.getChildren().add(LastName);
@@ -316,6 +329,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                             Sex.setMinHeight(55);
                             Sex.setMinWidth(128);
                             Sex.setLayoutX(35);
+                          
                             
 
                             Label Race = new Label("Race:");
@@ -323,14 +337,13 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                             Race.setMinHeight(55);
                             Race.setMinWidth(128);
                             Race.setLayoutX(196);
-                        
-
+                   
                             Label Ethnicity = new Label("Ethnicity:");
                             Ethnicity.setStyle("-fx-font: normal bold 16px 'arial';");
                             Ethnicity.setMinHeight(55);
                             Ethnicity.setMinWidth(128);
                             Ethnicity.setLayoutX(493);
-
+                            
 
                                 ChoiceBox<String> sexChange = new ChoiceBox<String>();
                                     sexChange.setPrefHeight(35);
@@ -341,6 +354,10 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     sexChange.getItems().add("Male");
                                     sexChange.getItems().add("Female");
                                     sexChange.getItems().add("Other");
+                                    sexChange.setValue(patientsex);
+                                    sexChange.setDisable(true);
+
+
 
                                 ChoiceBox<String> RaceChange = new ChoiceBox<String>();
                                     RaceChange.setPrefHeight(35);
@@ -348,11 +365,14 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     RaceChange.setLayoutX(196);
                                     RaceChange.setLayoutY(43);
 
+
                                     RaceChange.getItems().add("White");
                                     RaceChange.getItems().add("African American");
                                     RaceChange.getItems().add("American Indian");
                                     RaceChange.getItems().add("Asian");
                                     RaceChange.getItems().add("Native Hawaiian");
+                                    RaceChange.setValue(patientrace);
+                                    RaceChange.setDisable(true);
 
                                 ChoiceBox<String> EthnicityChange = new ChoiceBox<String>();
                                     EthnicityChange.setPrefHeight(35);
@@ -361,7 +381,9 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     EthnicityChange.setLayoutY(43);
 
                                     EthnicityChange.getItems().add("Hispanic or Latino");
-                                    EthnicityChange.getItems().add(" Not Hispanic or Latino");
+                                    EthnicityChange.getItems().add("Not Hispanic or Latino");
+                                    EthnicityChange.setValue(patientethnicity);
+                                    EthnicityChange.setDisable(true);
                             
                             SexPane.getChildren().add(Sex);
                             SexPane.getChildren().add(Race);
@@ -375,16 +397,263 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                 BottomPane.setPrefHeight(223);
                                 NamesPane.setPrefWidth(800);
 
-                                Button SubmitButton = new Button("Submit");
-                                SubmitButton.setPrefHeight(42);
-                                SubmitButton.setPrefWidth(102);
-                                SubmitButton.setLayoutX(509);
-                                SubmitButton.setLayoutY(147);
-                                SubmitButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+                                Button StartOrderButton = new Button("Start Order");
+                                StartOrderButton.setPrefHeight(42);
+                                StartOrderButton.setPrefWidth(102);
+                                StartOrderButton.setLayoutX(509);
+                                StartOrderButton.setLayoutY(147);
+                                StartOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
-                                SubmitButton.setOnAction(new EventHandler<ActionEvent>() {
+                                StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override public void handle(ActionEvent e) {
-                                        SubmitButton.setText("Submitted");
+                                        Stage stage = (Stage) StartOrderButton.getScene().getWindow();
+                                        stage.close();
+
+                                        VBox vbox = new VBox();
+
+                                        Pane newPane = new Pane();
+                                            newPane.setLayoutX(0);
+                                            newPane.setLayoutY(0);
+                                            newPane.setPrefHeight(109);
+                                            newPane.setPrefWidth(800);
+                                         
+            
+                                            Label PatientOverviewLabe = new Label("Start Order");
+                                            PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                                            PatientOverviewLabe.setLayoutX(25);
+                                            PatientOverviewLabe.setLayoutY(27);
+                                            PatientOverviewLabe.setMinHeight(55);
+                                            PatientOverviewLabe.setMinWidth(281);
+            
+            
+                                            Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
+                                            horizontalline.setTranslateX(100);
+                                            horizontalline.setTranslateY(110);
+            
+                                        newPane.getChildren().add(PatientOverviewLabe);
+                                        newPane.getChildren().add(horizontalline);
+            
+                                        Pane Filler = new Pane();
+                                            Filler.setLayoutX(0);
+                                            Filler.setLayoutY(0);
+                                            Filler.setPrefHeight(41);
+                                         
+            
+                                        Pane NamesPane = new Pane();
+                                            NamesPane.setPrefHeight(114);
+                                            NamesPane.setPrefWidth(800);
+                                         
+            
+                                            Label FirstName = new Label("First Name:");
+                                                FirstName.setStyle("-fx-font: normal bold 16px 'arial';");
+                                                FirstName.setMinHeight(55);
+                                                FirstName.setMinWidth(128);
+                                                FirstName.setLayoutX(35);
+                                              
+                                                
+                                            
+            
+                                            Label LastName = new Label("Last Name:");
+                                                LastName.setStyle("-fx-font: normal bold 16px 'arial';");
+                                                LastName.setMinHeight(55);
+                                                LastName.setMinWidth(128);
+                                                LastName.setLayoutX(287);
+                                        
+            
+                                            Label Date_of_Birth = new Label("Date of Birth:");
+                                                Date_of_Birth.setStyle("-fx-font: normal bold 16px 'arial';");
+                                                Date_of_Birth.setMinHeight(55);
+                                                Date_of_Birth.setMinWidth(128);
+                                                Date_of_Birth.setLayoutX(543);
+                                                     
+                                            TextField firstNameField = new TextField();
+                                                firstNameField.setMinHeight(35);
+                                                firstNameField.setMinWidth(210);
+                                                firstNameField.setLayoutX(35);
+                                                firstNameField.setLayoutY(43);
+                                                firstNameField.setText(firstnamequery);
+                                                firstNameField.setEditable(false);
+            
+            
+                                            TextField lastNamefield = new TextField();
+                                                lastNamefield.setMinHeight(35);
+                                                lastNamefield.setMinWidth(210);
+                                                lastNamefield.setLayoutX(287);
+                                                lastNamefield.setLayoutY(43);
+                                                lastNamefield.setText(lastnamequery);
+                                                lastNamefield.setEditable(false);
+            
+                                                TextField dateofbirth = new TextField();
+                                                dateofbirth.setMinHeight(35);
+                                                dateofbirth.setMinWidth(210);
+                                                dateofbirth.setLayoutX(543);
+                                                dateofbirth.setLayoutY(43);
+                                                dateofbirth.setText(dobquery.toLocalDate().toString());
+                                                dateofbirth.setEditable(false);
+                
+                                   
+            
+                                        NamesPane.getChildren().add(FirstName);
+                                        NamesPane.getChildren().add(LastName);
+                                        NamesPane.getChildren().add(Date_of_Birth);
+                                        NamesPane.getChildren().add(firstNameField);
+                                        NamesPane.getChildren().add(lastNamefield);
+                                        NamesPane.getChildren().add(dateofbirth);
+            
+                                        Pane SexPane = new Pane();
+                                        NamesPane.setPrefHeight(114);
+                                        NamesPane.setPrefWidth(800);
+                                     
+            
+                                        Label Sex = new Label("Sex:");
+                                        Sex.setStyle("-fx-font: normal bold 16px 'arial';");
+                                        Sex.setMinHeight(55);
+                                        Sex.setMinWidth(128);
+                                        Sex.setLayoutX(35);
+                                      
+                                        
+            
+                                        Label Race = new Label("Race:");
+                                        Race.setStyle("-fx-font: normal bold 16px 'arial';");
+                                        Race.setMinHeight(55);
+                                        Race.setMinWidth(128);
+                                        Race.setLayoutX(196);
+                               
+                                        Label Ethnicity = new Label("Ethnicity:");
+                                        Ethnicity.setStyle("-fx-font: normal bold 16px 'arial';");
+                                        Ethnicity.setMinHeight(55);
+                                        Ethnicity.setMinWidth(128);
+                                        Ethnicity.setLayoutX(493);
+                                        
+            
+                                            ChoiceBox<String> sexChange = new ChoiceBox<String>();
+                                                sexChange.setPrefHeight(35);
+                                                sexChange.setPrefWidth(128);
+                                                sexChange.setLayoutX(35);
+                                                sexChange.setLayoutY(43);
+            
+                                                sexChange.getItems().add("Male");
+                                                sexChange.getItems().add("Female");
+                                                sexChange.getItems().add("Other");
+                                                sexChange.setValue(patientsex);
+                                                sexChange.setDisable(true);
+            
+            
+            
+                                            ChoiceBox<String> RaceChange = new ChoiceBox<String>();
+                                                RaceChange.setPrefHeight(35);
+                                                RaceChange.setPrefWidth(259);
+                                                RaceChange.setLayoutX(196);
+                                                RaceChange.setLayoutY(43);
+            
+            
+                                                RaceChange.getItems().add("White");
+                                                RaceChange.getItems().add("African American");
+                                                RaceChange.getItems().add("American Indian");
+                                                RaceChange.getItems().add("Asian");
+                                                RaceChange.getItems().add("Native Hawaiian");
+                                                RaceChange.setValue(patientrace);
+                                                RaceChange.setDisable(true);
+            
+                                            ChoiceBox<String> EthnicityChange = new ChoiceBox<String>();
+                                                EthnicityChange.setPrefHeight(35);
+                                                EthnicityChange.setPrefWidth(259);
+                                                EthnicityChange.setLayoutX(493);
+                                                EthnicityChange.setLayoutY(43);
+            
+                                                EthnicityChange.getItems().add("Hispanic or Latino");
+                                                EthnicityChange.getItems().add("Not Hispanic or Latino");
+                                                EthnicityChange.setValue(patientethnicity);
+                                                EthnicityChange.setDisable(true);
+                                        
+                                        SexPane.getChildren().add(Sex);
+                                        SexPane.getChildren().add(Race);
+                                        SexPane.getChildren().add(Ethnicity);
+                                        SexPane.getChildren().add(sexChange);
+                                        SexPane.getChildren().add(RaceChange);
+                                        SexPane.getChildren().add(EthnicityChange);
+            
+            
+                                        Pane BottomPane = new Pane();
+                                            BottomPane.setPrefHeight(223);
+                                            NamesPane.setPrefWidth(800);
+            
+                                            Button StartOrderButton = new Button("Start Order");
+                                            StartOrderButton.setPrefHeight(42);
+                                            StartOrderButton.setPrefWidth(102);
+                                            StartOrderButton.setLayoutX(509);
+                                            StartOrderButton.setLayoutY(147);
+                                            StartOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+            
+                                            StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+                                                @Override public void handle(ActionEvent e) {
+                                                    StartOrderButton.setText("Submitted");
+                                                }
+                                            });
+            
+            
+                                            Button CancelButton = new Button("Cancel");
+                                            CancelButton.setPrefHeight(42);
+                                            CancelButton.setPrefWidth(102);
+                                            CancelButton.setLayoutX(654);
+                                            CancelButton.setLayoutY(147);
+                                            CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+            
+                                            CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                                @Override public void handle(ActionEvent e) {
+                                                    Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                                    stage.close();
+                                                }
+                                            });
+            
+            
+                                        BottomPane.getChildren().add(StartOrderButton);
+                                        BottomPane.getChildren().add(CancelButton);
+            
+            
+                                    vbox.getChildren().add(newPane);
+                                    vbox.getChildren().add(Filler);
+                                    vbox.getChildren().add(NamesPane);
+                                    vbox.getChildren().add(SexPane);
+                                    vbox.getChildren().add(BottomPane);
+            
+            
+            
+            
+            
+            
+            
+                                    Scene scene = new Scene(vbox, 800, 600);
+                                    
+            
+            
+            
+            
+            
+                                    Stage newWindow = new Stage();
+                                    newWindow.setScene(scene);
+                                    newWindow.initStyle(StageStyle.UNDECORATED);
+                                    newWindow.setResizable(false);
+                                    newWindow.initModality(Modality.APPLICATION_MODAL);
+                                    newWindow.setTitle("Edit User INfo");
+            
+            
+            
+            
+                                    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                        @Override
+                                        public void handle(KeyEvent t) {
+                                            KeyCode key = t.getCode();
+                                            if (key == KeyCode.ESCAPE){
+                                                newWindow.close();
+                                            }
+                                        }
+                                    });
+                                    newWindow.show();
+
+
+
+
                                     }
                                 });
 
@@ -404,7 +673,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                 });
 
 
-                            BottomPane.getChildren().add(SubmitButton);
+                            BottomPane.getChildren().add(StartOrderButton);
                             BottomPane.getChildren().add(CancelButton);
 
 
@@ -514,4 +783,291 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
         FXApp.setRoot("ADMINAPPOINTMENTS");
     }
 
+
+    public void NewPatientGeneration() throws IOException {
+        
+
+
+
+
+
+           
+
+            VBox vbox = new VBox();
+
+                Pane newPane = new Pane();
+                    newPane.setLayoutX(0);
+                    newPane.setLayoutY(0);
+                    newPane.setPrefHeight(109);
+                    newPane.setPrefWidth(800);
+                 
+
+                    Label PatientOverviewLabe = new Label("Patient Overview");
+                    PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                    PatientOverviewLabe.setLayoutX(25);
+                    PatientOverviewLabe.setLayoutY(27);
+                    PatientOverviewLabe.setMinHeight(55);
+                    PatientOverviewLabe.setMinWidth(281);
+
+
+                    Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
+                    horizontalline.setTranslateX(100);
+                    horizontalline.setTranslateY(110);
+
+                newPane.getChildren().add(PatientOverviewLabe);
+                newPane.getChildren().add(horizontalline);
+
+                Pane Filler = new Pane();
+                    Filler.setLayoutX(0);
+                    Filler.setLayoutY(0);
+                    Filler.setPrefHeight(41);
+                 
+
+                Pane NamesPane = new Pane();
+                    NamesPane.setPrefHeight(114);
+                    NamesPane.setPrefWidth(800);
+                 
+
+                    Label FirstName = new Label("First Name:");
+                        FirstName.setStyle("-fx-font: normal bold 16px 'arial';");
+                        FirstName.setMinHeight(55);
+                        FirstName.setMinWidth(128);
+                        FirstName.setLayoutX(35);
+                      
+                        
+                    
+
+                    Label LastName = new Label("Last Name:");
+                        LastName.setStyle("-fx-font: normal bold 16px 'arial';");
+                        LastName.setMinHeight(55);
+                        LastName.setMinWidth(128);
+                        LastName.setLayoutX(287);
+                
+
+                    Label Date_of_Birth = new Label("Date of Birth:");
+                        Date_of_Birth.setStyle("-fx-font: normal bold 16px 'arial';");
+                        Date_of_Birth.setMinHeight(55);
+                        Date_of_Birth.setMinWidth(128);
+                        Date_of_Birth.setLayoutX(543);
+                             
+                    TextField firstNameField = new TextField();
+                        firstNameField.setMinHeight(35);
+                        firstNameField.setMinWidth(210);
+                        firstNameField.setLayoutX(35);
+                        firstNameField.setLayoutY(43);
+                    
+                        firstNameField.setEditable(true);
+
+
+                    TextField lastNamefield = new TextField();
+                        lastNamefield.setMinHeight(35);
+                        lastNamefield.setMinWidth(210);
+                        lastNamefield.setLayoutX(287);
+                        lastNamefield.setLayoutY(43);
+                 
+                        lastNamefield.setEditable(true);
+
+                        DatePicker dateofbirth = new DatePicker();
+                        dateofbirth.setMinHeight(35);
+                        dateofbirth.setMinWidth(210);
+                        dateofbirth.setLayoutX(543);
+                        dateofbirth.setLayoutY(43);
+                        dateofbirth.setEditable(true);
+
+           
+
+                NamesPane.getChildren().add(FirstName);
+                NamesPane.getChildren().add(LastName);
+                NamesPane.getChildren().add(Date_of_Birth);
+                NamesPane.getChildren().add(firstNameField);
+                NamesPane.getChildren().add(lastNamefield);
+                NamesPane.getChildren().add(dateofbirth);
+
+                Pane SexPane = new Pane();
+                NamesPane.setPrefHeight(114);
+                NamesPane.setPrefWidth(800);
+             
+
+                Label Sex = new Label("Sex:");
+                Sex.setStyle("-fx-font: normal bold 16px 'arial';");
+                Sex.setMinHeight(55);
+                Sex.setMinWidth(128);
+                Sex.setLayoutX(35);
+              
+                
+
+                Label Race = new Label("Race:");
+                Race.setStyle("-fx-font: normal bold 16px 'arial';");
+                Race.setMinHeight(55);
+                Race.setMinWidth(128);
+                Race.setLayoutX(196);
+       
+                Label Ethnicity = new Label("Ethnicity:");
+                Ethnicity.setStyle("-fx-font: normal bold 16px 'arial';");
+                Ethnicity.setMinHeight(55);
+                Ethnicity.setMinWidth(128);
+                Ethnicity.setLayoutX(493);
+                
+
+                    ChoiceBox<String> sexChange = new ChoiceBox<String>();
+                        sexChange.setPrefHeight(35);
+                        sexChange.setPrefWidth(128);
+                        sexChange.setLayoutX(35);
+                        sexChange.setLayoutY(43);
+
+                        sexChange.getItems().add("Male");
+                        sexChange.getItems().add("Female");
+                        sexChange.getItems().add("Other");
+                     
+                        sexChange.setDisable(false);
+
+
+
+                    ChoiceBox<String> RaceChange = new ChoiceBox<String>();
+                        RaceChange.setPrefHeight(35);
+                        RaceChange.setPrefWidth(259);
+                        RaceChange.setLayoutX(196);
+                        RaceChange.setLayoutY(43);
+
+
+                        RaceChange.getItems().add("White");
+                        RaceChange.getItems().add("African American");
+                        RaceChange.getItems().add("American Indian");
+                        RaceChange.getItems().add("Asian");
+                        RaceChange.getItems().add("Native Hawaiian");
+                 
+                        RaceChange.setDisable(false);
+
+                    ChoiceBox<String> EthnicityChange = new ChoiceBox<String>();
+                        EthnicityChange.setPrefHeight(35);
+                        EthnicityChange.setPrefWidth(259);
+                        EthnicityChange.setLayoutX(493);
+                        EthnicityChange.setLayoutY(43);
+
+                        EthnicityChange.getItems().add("Hispanic or Latino");
+                        EthnicityChange.getItems().add("Not Hispanic or Latino");
+                     
+                        EthnicityChange.setDisable(false);
+                
+                SexPane.getChildren().add(Sex);
+                SexPane.getChildren().add(Race);
+                SexPane.getChildren().add(Ethnicity);
+                SexPane.getChildren().add(sexChange);
+                SexPane.getChildren().add(RaceChange);
+                SexPane.getChildren().add(EthnicityChange);
+
+
+                Pane BottomPane = new Pane();
+                    BottomPane.setPrefHeight(223);
+                    NamesPane.setPrefWidth(800);
+
+                    Button StartOrderButton = new Button("Add Patient");
+                    StartOrderButton.setPrefHeight(42);
+                    StartOrderButton.setPrefWidth(102);
+                    StartOrderButton.setLayoutX(509);
+                    StartOrderButton.setLayoutY(147);
+                    StartOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+                    StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override public void handle(ActionEvent e) {
+                            
+
+
+
+
+
+
+
+
+
+
+                               
+                                
+                                    try {
+                                        DatabaseConnection connectNow = new DatabaseConnection();
+                                        Connection connectDB = connectNow.getConnection();
+                                        String PlacedOrdersTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"+ firstNameField.getText() +"', '"+ lastNamefield.getText() +"', '"+ dateofbirth.getValue()+"', '"+sexChange.getValue() +"', '"+RaceChange.getValue() +"', '"+ EthnicityChange.getValue()+"');";
+                                
+                                        Statement statement = connectDB.createStatement();
+                                        ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
+                                    } catch (SQLException e1) {
+                                       
+                                        e1.printStackTrace();
+                                    }
+                        
+                        
+                        
+                    }});
+
+
+                    Button CancelButton = new Button("Cancel");
+                    CancelButton.setPrefHeight(42);
+                    CancelButton.setPrefWidth(102);
+                    CancelButton.setLayoutX(654);
+                    CancelButton.setLayoutY(147);
+                    CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+                    CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override public void handle(ActionEvent e) {
+                            Stage stage = (Stage) CancelButton.getScene().getWindow();
+                            stage.close();
+                        }
+                    });
+
+
+                BottomPane.getChildren().add(StartOrderButton);
+                BottomPane.getChildren().add(CancelButton);
+
+
+            vbox.getChildren().add(newPane);
+            vbox.getChildren().add(Filler);
+            vbox.getChildren().add(NamesPane);
+            vbox.getChildren().add(SexPane);
+            vbox.getChildren().add(BottomPane);
+
+
+
+
+
+
+
+            Scene scene = new Scene(vbox, 800, 600);
+            
+
+
+
+
+
+            Stage newWindow = new Stage();
+            newWindow.setScene(scene);
+            newWindow.initStyle(StageStyle.UNDECORATED);
+            newWindow.setResizable(false);
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.setTitle("Edit User INfo");
+
+
+
+
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent t) {
+                    KeyCode key = t.getCode();
+                    if (key == KeyCode.ESCAPE){
+                        newWindow.close();
+                    }
+                }
+            });
+            newWindow.show();
+        
+
+
+
+
+
+
+       
+    
+      
 }
+}
+
