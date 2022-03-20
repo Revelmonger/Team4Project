@@ -226,6 +226,9 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     @FXML
     private TableColumn<TABLECheckedInAppointmentsTableController, Integer> CheckedInAppointments_Radiologist;
 
+    @FXML
+    private TextField searchCheckedInAppointments;
+
     ObservableList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsObservableList = FXCollections
             .observableArrayList();
     /*
@@ -254,6 +257,9 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     @FXML
     private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointmentsTable_Technician;
 
+    @FXML
+    private TextField searchTodaysAppointments;
+
     ObservableList<TABLETodaysAppointmentsTableController> TodaysAppointmentsObservableList = FXCollections
             .observableArrayList();
 
@@ -276,6 +282,9 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
     @FXML
     private TableColumn<TABLEUnscheduledOrdersTableController, String> UnscheduledOrdersTable_Notes;
+
+    @FXML
+    private TextField searchUnscheduledOrders;
 
     ObservableList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersObservableList = FXCollections
             .observableArrayList();
@@ -300,6 +309,9 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
     @FXML
     private TableColumn<TABLEReviewImagingOrdersTableController, String> ReviewImagingOrdersTable_Notes;
+    
+    @FXML
+    private TextField searchReviewImagineOrders;
 
     ObservableList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersObservableList = FXCollections
             .observableArrayList();
@@ -434,6 +446,52 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
 
+            // Search Bar Functionality Start
+            FilteredList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsFilteredData = new FilteredList<>(
+                CheckedInAppointmentsObservableList);
+
+                searchCheckedInAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
+                    CheckedInAppointmentsFilteredData.setPredicate(TABLECheckedInAppointmentsTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLECheckedInAppointmentsTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLECheckedInAppointmentsTableController.getModality().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*else if (TABLECheckedInAppointmentsTableController.getDate_time().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    }*/ else if (TABLECheckedInAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+                    }
+                      else if (TABLECheckedInAppointmentsTableController.getPrice().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+    
+                    }
+
+                     else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsSortedData = new SortedList<>(
+                CheckedInAppointmentsFilteredData);
+
+            // Binds the sorted resultswith the Table
+            CheckedInAppointmentsSortedData.comparatorProperty().bind(CheckedInAppointmentsTable.comparatorProperty());
+
+            CheckedInAppointmentsTable.setItems(CheckedInAppointmentsSortedData);
+            // Search Bar Functionality End
+
         } catch (Exception e) {
             System.out.println("error");
         }
@@ -477,6 +535,51 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             TodaysAppointmentsTable.setItems(null);
             TodaysAppointmentsTable.setItems(TodaysAppointmentsObservableList);
+
+            // Search Bar Functionality Start
+            FilteredList<TABLETodaysAppointmentsTableController> TodaysAppointmentsFilteredData = new FilteredList<>(
+                TodaysAppointmentsObservableList);
+
+                searchTodaysAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
+                    TodaysAppointmentsFilteredData.setPredicate(TABLETodaysAppointmentsTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLETodaysAppointmentsTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLETodaysAppointmentsTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*else if (TABLETodaysAppointmentsTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    }*/ else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+                    }
+                        else if (TABLETodaysAppointmentsTableController.getPrice().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLETodaysAppointmentsTableController> TodaysAppointmentsSortedData = new SortedList<>(
+                TodaysAppointmentsFilteredData);
+
+            // Binds the sorted resultswith the Table
+            TodaysAppointmentsSortedData.comparatorProperty().bind(TodaysAppointmentsTable.comparatorProperty());
+
+            TodaysAppointmentsTable.setItems(TodaysAppointmentsSortedData);
+            // Search Bar Functionality End
 
         } catch (Exception e) {
             System.out.println("error");
@@ -523,6 +626,51 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
             UnscheduledOrdersTable.setItems(null);
             UnscheduledOrdersTable.setItems(UnscheduledOrdersObservableList);
 
+                    // Search Bar Functionality Start
+            FilteredList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersFilteredData = new FilteredList<>(
+                UnscheduledOrdersObservableList);
+
+                searchUnscheduledOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                    UnscheduledOrdersFilteredData.setPredicate(TABLEUnscheduledOrdersTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLEUnscheduledOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLEUnscheduledOrdersTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*else if (TABLEUnscheduledOrdersTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    }*/ else if (TABLEUnscheduledOrdersTableController.getReferral_md().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+                    }
+                        else if (TABLEUnscheduledOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersSortedData = new SortedList<>(
+                UnscheduledOrdersFilteredData);
+
+            // Binds the sorted resultswith the Table
+            UnscheduledOrdersSortedData.comparatorProperty().bind(UnscheduledOrdersTable.comparatorProperty());
+
+            UnscheduledOrdersTable.setItems(UnscheduledOrdersSortedData);
+            // Search Bar Functionality End
+
         } catch (Exception e) {
             System.out.println("error");
         }
@@ -566,6 +714,53 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
             ReviewImagingOrdersTable.setItems(null);
             ReviewImagingOrdersTable.setItems(ReviewImagingOrdersObservableList);
+
+            // Search Bar Functionality Start
+            FilteredList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersFilteredData = new FilteredList<>(
+                ReviewImagingOrdersObservableList);
+
+                searchReviewImagineOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                    ReviewImagingOrdersFilteredData.setPredicate(TABLEReviewImagingOrdersTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLEReviewImagingOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLEReviewImagingOrdersTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*else if (TABLEReviewImagingOrdersTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    }*/ else if (TABLEReviewImagingOrdersTableController.getReferral_md().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+                    }
+                        else if (TABLEReviewImagingOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersSortedData = new SortedList<>(
+                ReviewImagingOrdersFilteredData);
+
+            // Binds the sorted resultswith the Table
+            ReviewImagingOrdersSortedData.comparatorProperty().bind(ReviewImagingOrdersTable.comparatorProperty());
+
+            ReviewImagingOrdersTable.setItems(ReviewImagingOrdersSortedData);
+            // Search Bar Functionality End
+
+            
 
         } catch (Exception e) {
             System.out.println("error");
