@@ -776,7 +776,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
     }
 
     public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN_AllOrders");
     }
 
     public void appointments(ActionEvent e) throws IOException {
