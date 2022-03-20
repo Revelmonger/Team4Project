@@ -18,6 +18,10 @@ public class LoginController {
 
     Boolean CertifiedLoggedIn = false;
 
+    public static String LoggedInUserID ="";
+
+
+
     @FXML
     private Button LoginButton;
 
@@ -34,6 +38,8 @@ public class LoginController {
 public void connectButton(ActionEvent event) {
   
     DatabaseConnection connectNow = new DatabaseConnection();
+
+   
     
     Connection connectDB = connectNow.getConnection(); 
     String connectQuery = "select * from db_ris.users where username = " + "'" + NameField.getText() + "'";
@@ -48,6 +54,7 @@ public void connectButton(ActionEvent event) {
         ResultSet queryOutput = statement.executeQuery(connectQuery);
         writeResultSet(queryOutput);
 
+        connectDB.close();
         
     } catch (Exception e) {
         e.getStackTrace();
@@ -66,10 +73,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
          String password = resultSet.getString("password");
          if ( password.equals(PassField.getText())) {
            
-
-            
-
-
+       
 
 
             DatabaseConnection connectNow = new DatabaseConnection();
@@ -80,7 +84,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
                 ResultSet queryOutput = statement.executeQuery(loginQuery);                 
                 while (queryOutput.next()) {        
                 String user_id = queryOutput.getString("user_id").trim();
-                
+                LoggedInUserID = user_id;
                 queryOutput.close();
 
 
@@ -94,6 +98,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
               queryOutput.close();
 
 
+
                 loginQuery = "select name from db_ris.roles where role_id = " + "'" + role_id + "'";
                 try {
                   statement = connectDB.createStatement();             
@@ -104,8 +109,8 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
                   queryOutput.close();
 
                   
+                  
 
-                 
                     try {
                         FXApp.setRoot(role_name);
                     
@@ -144,7 +149,7 @@ private void writeResultSet(ResultSet resultSet) throws SQLException, IOExceptio
 
 
 
-
+connectDB.close();
         }
         else{
         warningLabel.setText("Please enter valid username and password");

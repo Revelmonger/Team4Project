@@ -3,7 +3,7 @@ package com.example.application;
 
 
 
-public class LoggedInUser {
+public class LoggedInUser extends LoginController{
 
  
     public String user_id;

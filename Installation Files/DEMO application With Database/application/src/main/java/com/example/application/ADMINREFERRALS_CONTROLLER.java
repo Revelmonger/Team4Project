@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -40,10 +42,7 @@ import javafx.event.EventHandler;
 import javafx.application.*;
 
 public class ADMINREFERRALS_CONTROLLER implements Initializable {
-    Date dobquery  ;
-    String firstnamequery = "";
-    String lastnamequery  = "";
-    Button button ;
+
 
     /*
      * 
@@ -200,10 +199,10 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
 
             while (queryOutput.next()) {
 
-                dobquery = queryOutput.getDate("dob");
-                firstnamequery = queryOutput.getString("first_name");
-                lastnamequery = queryOutput.getString("last_name");
-                button = new Button("Modify");
+                java.sql.Date dobquery = queryOutput.getDate("dob");
+               String firstnamequery = queryOutput.getString("first_name");
+               String lastnamequery = queryOutput.getString("last_name");
+              Button  button = new Button("Modify");
 
 
 
@@ -214,6 +213,8 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
 
                     @Override
                     public void handle(ActionEvent event) {
+
+
 
                        
 
@@ -257,6 +258,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     FirstName.setMinHeight(55);
                                     FirstName.setMinWidth(128);
                                     FirstName.setLayoutX(35);
+                                    
                                 
 
                                 Label LastName = new Label("Last Name:");
@@ -277,18 +279,22 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                     firstNameField.setMinWidth(210);
                                     firstNameField.setLayoutX(35);
                                     firstNameField.setLayoutY(43);
+                                    firstNameField.setText(firstnamequery);
 
                                 TextField lastNamefield = new TextField();
                                     lastNamefield.setMinHeight(35);
                                     lastNamefield.setMinWidth(210);
                                     lastNamefield.setLayoutX(287);
                                     lastNamefield.setLayoutY(43);
+                                    lastNamefield.setText(lastnamequery);
 
                                DatePicker dateofbirth = new DatePicker();
                                 dateofbirth.setMinHeight(35);
                                 dateofbirth.setMinWidth(210);
                                 dateofbirth.setLayoutX(543);
                                 dateofbirth.setLayoutY(43);
+                                dateofbirth.setValue(dobquery.toLocalDate());
+
 
 
                             NamesPane.getChildren().add(FirstName);
@@ -441,7 +447,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                         newWindow.show();
                     }
                 });
-  
+
                 ReferralsTableObservableList.add(new TABLEReferralsTableController(dobquery, firstnamequery, lastnamequery, button));
             }
 
@@ -507,36 +513,3 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
     }
 
 }
-/*
-FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditUserInfo.fxml"));
-Parent root1;
-try {
-    root1 = (Parent) fxmlLoader.load();
-    Stage stage = new Stage();
-    stage.initStyle(StageStyle.UNDECORATED);
-    stage.setResizable(false);
-    stage.initModality(Modality.APPLICATION_MODAL);
-    stage.setTitle("Edit User Information");
-stage.setScene(new Scene(root1, 800, 600));
-
-stage.show();
-} catch (IOException e) {
-   
-    e.printStackTrace();
-}
-
-/*
-
-sexdropdown.getItems().add("Male");
-sexdropdown.getItems().add("Female");
-sexdropdown.getItems().add("Other");
-
-racedropdown.getItems().add("White");
-racedropdown.getItems().add("African American");
-racedropdown.getItems().add("American Indian");
-racedropdown.getItems().add("Asian");
-racedropdown.getItems().add("Native Hawaiian");
-
-ethnicitydropdown.getItems().add("Hispanic or Latino");
-ethnicitydropdown.getItems().add(" Not Hispanic or Latino");
-*/

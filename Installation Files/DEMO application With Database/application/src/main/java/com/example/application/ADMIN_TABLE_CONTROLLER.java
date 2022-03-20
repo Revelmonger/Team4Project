@@ -22,6 +22,9 @@ import javafx.event.ActionEvent;
 
 public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
+    String user_id1 = LoginController.LoggedInUserID;
+   
+    
     /*
      * 
      * Button Imports
@@ -42,6 +45,43 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     @FXML
     private Button OrdersButton;
 
+
+     /*
+     * 
+     * Button Logic
+     * 
+     */
+
+    public void logout(ActionEvent e) throws IOException {
+       
+        FXApp.setRoot("LOGIN");
+    }
+
+    public void home(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN");
+    }
+
+    public void userInfo(ActionEvent e) throws IOException {
+        System.out.println("The Current user is " + user_id1);
+        FXApp.setRoot("LOGIN");
+    }
+
+    public void admin(ActionEvent e) throws IOException {
+        FXApp.setRoot("LOGIN");
+    }
+
+    public void referrals(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMINREFERRALS");
+    }
+
+    public void orders(ActionEvent e) throws IOException {
+        FXApp.setRoot("LOGIN");
+    }
+
+    public void appointments(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMINAPPOINTMENTS");
+    }
+
     /*
      * 
      * Button Listener Events
@@ -50,7 +90,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
     @FXML
     public void HomeButtonEntered() {
-
+       
         HomeButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
 
     }
@@ -533,39 +573,6 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
 
     }
 
-    /*
-     * 
-     * Button Logic
-     * 
-     */
-
-    public void logout(ActionEvent e) throws IOException {
-       
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN");
-    }
-
-    public void userInfo(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINREFERRALS");
-    }
-
-    public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINAPPOINTMENTS");
-    }
+   
 
 }
