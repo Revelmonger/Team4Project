@@ -190,7 +190,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
         Connection connectDB = connectNow.getConnection();
         
 
-        String PlacedOrdersTableQuery = "select p.dob, p.first_name, p.last_name from patients as p;";
+        String PlacedOrdersTableQuery = "select p.dob, p.first_name, p.last_name, p.patient_id from patients as p;";
 
         try {
 
@@ -198,11 +198,13 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
             ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
 
             while (queryOutput.next()) {
-
+                
+                Integer patient_id = queryOutput.getInt("patient_id");
                 java.sql.Date dobquery = queryOutput.getDate("dob");
                String firstnamequery = queryOutput.getString("first_name");
                String lastnamequery = queryOutput.getString("last_name");
               Button  button = new Button("Modify");
+              
 
 
 
