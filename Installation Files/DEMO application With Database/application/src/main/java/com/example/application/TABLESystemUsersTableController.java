@@ -4,74 +4,75 @@ import javafx.scene.control.Button;
 
 public class TABLESystemUsersTableController {
 
-    Integer userID;
-    String username;
-    String displayname;
-    String email;                             //price
-    String role;
-    Button button;
+    Integer Userid;
+    String Username;
+    String Displayname;
+    String Email;                           
+    String Role;
+    Button Button;
 
-    public TABLESystemUsersTableController (Integer userID, String username, String displayname, String email, String role, Button button){
+    public TABLESystemUsersTableController (Integer Userid, String Username, String Displayname, String Email, String Role, Button Button){
 
-        this.userID = userID;
-        this.username = username;
-        this.displayname = displayname;             //price
-        this.email = email;
-        this.role = role;
+        this.Userid = Userid;
+        this.Username = Username;
+        this.Displayname = Displayname;            
+        this.Email = Email;
+        this.Role = Role;
+        this.Button = Button;
     }
 
     public String getUsername() {
 
-        return username;
+        return Username;
     }
 
 
-    public String getDisplayName() {
+    public String getDisplayname() {
 
-        return displayname;
+        return Displayname;
     }
 
-    public String getemail() {
+    public String getEmail() {
 
-        return email;
+        return Email;
     }
 
     public String getRole() {
 
-        return role;
+        return Role;
     }
 
-    public Integer getuserID() {
+    public Integer getUserid() {
 
-        return userID;
+        return Userid;
     }
 
     public Button getButton() {
-        return button;
+        return Button;
     }
 
 
-public void setuserID(Integer userID) {
-    this.userID = userID;
+public void setUserid(Integer Userid) {
+    this.Userid = Userid;
 }
 
-public void setUsername(String username) {
-    this.username = username;
+public void setUsername(String Username) {
+    this.Username = Username;
 }
 
-public void setDisplayName(String displayname) {
-    this.displayname = displayname;
+public void setDisplayname(String Displayname) {
+    this.Displayname = Displayname;
 }
 
-public void setEmail(String email) {
-    this.email = email;
+public void setEmail(String Email) {
+    this.Email = Email;
 }
 
-public void setRole(String role) {
-    this.role = role;
+public void setRole(String Role) {
+    this.Role = Role;
 }
 
-public void setButton(Button button) {
-    this.button = button;
+public void setButton(Button Button) {
+    this.Button = Button;
 }
 }

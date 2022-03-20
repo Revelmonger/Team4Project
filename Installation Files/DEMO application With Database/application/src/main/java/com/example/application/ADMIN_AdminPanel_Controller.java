@@ -65,6 +65,29 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.application.*;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+
+
+
 public class ADMIN_AdminPanel_Controller implements Initializable{
 
    
@@ -228,15 +251,84 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
     @FXML
     private Button NewPatient;
 
-    public void LoadNewPatient(ActionEvent e) throws IOException {
-        
-    }
 
+    
+    @FXML
+    private TableView<TABLESystemUsersTableController> SystemUsersTable;
+
+    @FXML
+    private TableColumn<TABLESystemUsersTableController, Integer> Users_UserId;
+
+    @FXML
+    private TableColumn<TABLESystemUsersTableController, String> UsersUsername;
+
+    @FXML
+    private TableColumn<TABLESystemUsersTableController, String> UsersDisplayName;
+
+    @FXML
+    private TableColumn<TABLESystemUsersTableController, String> UsersEmail;
+
+    @FXML
+    private TableColumn<TABLESystemUsersTableController, Integer> UsersRole;
+
+    @FXML
+    private TableColumn<TABLESystemUsersTableController, Button> UsersModifyButton;
+
+    @FXML
+    private TextField searchUsers;
+
+    ObservableList<TABLESystemUsersTableController> UsersTableObservableList = FXCollections
+            .observableArrayList();
+
+
+
+
+    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
     
 
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        
 
+        String UsersTableQuery = "select u.user_id, u.full_name, u.username, u.email, ur.role_id, r.name from users as u left join users_roles as ur on ur.user_id = u.user_id left join roles as r on r.role_id = ur.role_id;";
+
+        try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(UsersTableQuery);
+
+            while (queryOutput.next()) {
+            
+                Integer userIDquery = queryOutput.getInt("user_id");
+                
+                String usernamequery = queryOutput.getString("username");
+                String displaynamequery = queryOutput.getString("full_name");
+                String emailquery = queryOutput.getString("email");
+                String rolequery = queryOutput.getString("name");
+                Button button = new Button("Modify");
+            
+                UsersTableObservableList.add(
+                            
+                new TABLESystemUsersTableController(userIDquery, usernamequery, displaynamequery, emailquery, rolequery, button));
+            }
+
+            Users_UserId.setCellValueFactory(new PropertyValueFactory<>("Userid"));
+            UsersUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+            UsersDisplayName.setCellValueFactory(new PropertyValueFactory<>("displayname"));
+            UsersEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+            UsersRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+            UsersModifyButton.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+            
+            SystemUsersTable.setItems(null);
+            SystemUsersTable.setItems(UsersTableObservableList);
+
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
 
 
 

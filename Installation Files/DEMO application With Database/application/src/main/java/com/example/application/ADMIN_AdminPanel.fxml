@@ -231,7 +231,7 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="searchPatients" layoutX="1268.0" layoutY="15.0" />
-                                    <Button fx:id="NewPatient" layoutX="-9.0" layoutY="-9.0" mnemonicParsing="false" onAction="#LoadNewPatient" prefHeight="69.0" prefWidth="209.0" style="-fx-background-color: transparent;" text="New" textFill="#323fff">
+                                    <Button fx:id="NewPatient" layoutX="-9.0" layoutY="-9.0" mnemonicParsing="false"  prefHeight="69.0" prefWidth="209.0" style="-fx-background-color: transparent;" text="New" textFill="#323fff">
                                        <font>
                                           <Font name="System Bold" size="23.0" />
                                        </font>
