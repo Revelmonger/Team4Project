@@ -67,7 +67,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("login");
     }
 
     public void referrals(ActionEvent e) throws IOException {
@@ -75,7 +75,7 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     }
 
     public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN_AllOrders");
     }
 
     public void appointments(ActionEvent e) throws IOException {
