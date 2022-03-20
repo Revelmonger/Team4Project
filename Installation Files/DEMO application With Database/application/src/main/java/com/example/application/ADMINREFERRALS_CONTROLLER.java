@@ -989,7 +989,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                         String PlacedOrdersTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"+ firstNameField.getText() +"', '"+ lastNamefield.getText() +"', '"+ dateofbirth.getValue()+"', '"+sexChange.getValue() +"', '"+RaceChange.getValue() +"', '"+ EthnicityChange.getValue()+"');";
                                 
                                         Statement statement = connectDB.createStatement();
-                                        ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
+                                        statement.execute(PlacedOrdersTableQuery);
                                     } catch (SQLException e1) {
                                        
                                         e1.printStackTrace();
