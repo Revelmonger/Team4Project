@@ -63,7 +63,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
     public void userInfo(ActionEvent e) throws IOException {
         System.out.println("The Current user is " + user_id1);
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN");
     }
 
     public void admin(ActionEvent e) throws IOException {
@@ -79,7 +79,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
     }
 
     public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINAPPOINTMENTS");
+        FXApp.setRoot("ADMIN_Apppointments");
     }
 
     /*

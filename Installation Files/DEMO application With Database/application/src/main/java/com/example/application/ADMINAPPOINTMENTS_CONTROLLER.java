@@ -155,7 +155,7 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
     private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_radiologist;
 
     @FXML
-    private TextField searchPlacedOrders;
+    private TextField searchAllAppointments;
 
     ObservableList<TABLEAllAppointmentsTableController> PlacedOrdersTableObservableList = FXCollections
             .observableArrayList();
@@ -196,47 +196,50 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
             AllAppointmentsTable.setItems(null);
             AllAppointmentsTable.setItems(PlacedOrdersTableObservableList);
 
-            // Search Bar Functionality
-            /*FilteredList<TABLEAllAppointmentsTableController> PlacedOrdersFilteredData = new FilteredList<>(
-                    PlacedOrdersTableObservableList);
 
-            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
+             // Search Bar Functionality Start
+             FilteredList<TABLEAllAppointmentsTableController> AllAppointmentsFilteredList = new FilteredList<>(PlacedOrdersTableObservableList);
 
-                    String searchKeyword = newValue.toLowerCase();
+             searchAllAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
+                AllAppointmentsFilteredList.setPredicate(TABLEAllAppointmentsTableController -> {
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                    return true;
+                }
+                String searchKeyword = newValue.toLowerCase();
 
-                    if (TABLEPlacedOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
+                if (TABLEAllAppointmentsTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
 
-                    } else if (TABLEPlacedOrdersTableController.getModality().toLowerCase()
-                            .indexOf(searchKeyword) > -1) {
-                        return true;
+                } else if (TABLEAllAppointmentsTableController.getModality().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
 
-                    } else if (TABLEPlacedOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
+                } else if (TABLEAllAppointmentsTableController.getDate_time().toString().indexOf(searchKeyword) > -1) {
+                    return true;
 
-                    } else if (TABLEPlacedOrdersTableController.getStatus().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else {
-                        return false; // no match found
-                    }
-
-                });
+                } else if (TABLEAllAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                }
+                 else {
+                    return false; // no match found
+                }
 
             });
 
-            SortedList<TABLEPlacedOrdersTableController> PlacedOrdersSortedData = new SortedList<>(
-                    PlacedOrdersFilteredData);
+        });
 
-            // Binds the sorted resultswith the Table
-            PlacedOrdersSortedData.comparatorProperty().bind(PlacedOrdersTable.comparatorProperty());
 
-            PlacedOrdersTable.setItems(PlacedOrdersSortedData);
-*/
+        SortedList<TABLEAllAppointmentsTableController> AllPatientsSortedData = new SortedList<>(
+            AllAppointmentsFilteredList);
+
+        // Binds the sorted resultswith the Table
+        AllPatientsSortedData.comparatorProperty().bind(AllAppointmentsTable.comparatorProperty());
+
+        AllAppointmentsTable.setItems(AllPatientsSortedData);
+        // Search Bar Functionality End
+
+
+
+
         } catch (Exception e) {
             System.out.println("error");
         }
@@ -255,8 +258,7 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
      */
 
     public void logout(ActionEvent e) throws IOException {
-
-        //setCurrentUser(null)
+       
         FXApp.setRoot("LOGIN");
     }
 
@@ -265,15 +267,16 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
     }
 
     public void userInfo(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+       
+        FXApp.setRoot("ADMIN");
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN_AdminPanel");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINREFERRALS");
+        FXApp.setRoot("ADMIN_Referrals");
     }
 
     public void orders(ActionEvent e) throws IOException {
@@ -281,7 +284,7 @@ public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
     }
 
     public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINAPPOINTMENTS");
+        FXApp.setRoot("ADMIN_Apppointments");
     }
 
 }

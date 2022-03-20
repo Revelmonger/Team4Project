@@ -10,20 +10,65 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.application.*;
 public class ADMIN_AdminPanel_Controller implements Initializable{
 
    
-    String user_id1 = LoginController.LoggedInUserID;
+ 
    
     
     /*
@@ -63,8 +108,8 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
     }
 
     public void userInfo(ActionEvent e) throws IOException {
-        System.out.println("The Current user is " + user_id1);
-        FXApp.setRoot("LOGIN");
+       
+        FXApp.setRoot("ADMIN");
     }
 
     public void admin(ActionEvent e) throws IOException {
@@ -80,7 +125,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
     }
 
     public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINAPPOINTMENTS");
+        FXApp.setRoot("ADMIN_Apppointments");
     }
 
     /*
@@ -179,596 +224,285 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
 
     }
 
-    /*
-     * 
-     * Placed Orders Imports
-     * 
-     */
-    @FXML
-    private TableView<TABLEPlacedOrdersTableController> PlacedOrdersTable;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Patient;
+    private Button NewPatient;
 
-    @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Modality;
-
-    @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, String> placed_orders_Notes;
-
-    @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Status;
-
-    @FXML
-    private TextField searchPlacedOrders;
-
-    ObservableList<TABLEPlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
-            .observableArrayList();
-    /*
-     * 
-     * Checked-In Appointments Imports
-     * 
-     */
-    @FXML
-    private TableView<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsTable;
-
-    @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> CheckedInAppointments_Patient;
-
-    @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> CheckedInAppointments_Modality;
-
-    @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, String> CheckedInAppointments_Price;
-
-    @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Date> CheckedInAppointments_DateandTime;
-
-    @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> CheckedInAppointments_Radiologist;
-
-    @FXML
-    private TextField searchCheckedInAppointments;
-
-    ObservableList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsObservableList = FXCollections
-            .observableArrayList();
-    /*
-     * 
-     * Todays Appointments Imports
-     * 
-     */
-    @FXML
-    private TableView<TABLETodaysAppointmentsTableController> TodaysAppointmentsTable;
-
-    @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointments_Patient1;
-
-    @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointmentsTable_Modality;
-
-    @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, String> TodaysAppointmentsTable_Prices;
-
-    @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, Date> TodaysAppointmentsTable_DateandTime;
-
-    @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointmentsTable_Radiologist;
-
-    @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointmentsTable_Technician;
-
-    @FXML
-    private TextField searchTodaysAppointments;
-
-    ObservableList<TABLETodaysAppointmentsTableController> TodaysAppointmentsObservableList = FXCollections
-            .observableArrayList();
-
-    /*
-     * 
-     * Unscheduled Orders Imports
-     * 
-     */
-    @FXML
-    private TableView<TABLEUnscheduledOrdersTableController> UnscheduledOrdersTable;
-
-    @FXML
-    private TableColumn<TABLEUnscheduledOrdersTableController, Integer> UnscheduledOrdersTable_Patient;
-
-    @FXML
-    private TableColumn<TABLEUnscheduledOrdersTableController, Integer> UnscheduledOrdersTable_ReferralMD;
-
-    @FXML
-    private TableColumn<TABLEUnscheduledOrdersTableController, Integer> UnscheduledOrdersTable_Modality;
-
-    @FXML
-    private TableColumn<TABLEUnscheduledOrdersTableController, String> UnscheduledOrdersTable_Notes;
-
-    @FXML
-    private TextField searchUnscheduledOrders;
-
-    ObservableList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersObservableList = FXCollections
-            .observableArrayList();
-
-    /*
-     * 
-     * Review Imaging Orders Imports
-     * 
-     */
-
-    @FXML
-    private TableView<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersTable;
-
-    @FXML
-    private TableColumn<TABLEReviewImagingOrdersTableController, Integer> ReviewImagingOrdersTable_Patient;
-
-    @FXML
-    private TableColumn<TABLEReviewImagingOrdersTableController, Integer> ReviewImagingOrdersTable_RefferalMD;
-
-    @FXML
-    private TableColumn<TABLEReviewImagingOrdersTableController, Integer> ReviewImagingOrdersTable_Modality;
-
-    @FXML
-    private TableColumn<TABLEReviewImagingOrdersTableController, String> ReviewImagingOrdersTable_Notes;
-    
-    @FXML
-    private TextField searchReviewImagineOrders;
-
-    ObservableList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersObservableList = FXCollections
-            .observableArrayList();
+    public void LoadNewPatient(ActionEvent e) throws IOException {
+        
+    }
 
     @Override
-    public void initialize(URL url, ResourceBundle resource) {
-
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getConnection();
-        /*
-         * 
-         * Placed Orders Table
-         * 
-         */
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
-
-        try {
-
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
-
-            while (queryOutput.next()) {
-
-                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                String modalityquery = queryOutput.getString("name");
-                String notesquery = queryOutput.getString("notes").trim();
-                String statusquery = queryOutput.getString("order_name");
-
-                PlacedOrdersTableObservableList.add(
-                        new TABLEPlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery));
-            }
-
-            placed_orders_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
-            placed_orders_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
-            placed_orders_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
-
-            placed_orders_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-            PlacedOrdersTable.setItems(null);
-            PlacedOrdersTable.setItems(PlacedOrdersTableObservableList);
-
-            // Search Bar Functionality Start
-            FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
-                    PlacedOrdersTableObservableList);
-
-            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-
-                    String searchKeyword = newValue.toLowerCase();
-
-                    if (TABLEPlacedOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEPlacedOrdersTableController.getModality().toLowerCase()
-                            .indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEPlacedOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEPlacedOrdersTableController.getStatus().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else {
-                        return false; // no match found
-                    }
-
-                });
-
-            });
-
-            SortedList<TABLEPlacedOrdersTableController> PlacedOrdersSortedData = new SortedList<>(
-                    PlacedOrdersFilteredData);
-
-            // Binds the sorted resultswith the Table
-            PlacedOrdersSortedData.comparatorProperty().bind(PlacedOrdersTable.comparatorProperty());
-
-            PlacedOrdersTable.setItems(PlacedOrdersSortedData);
-            // Search Bar Functionality End
-
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-
-        /*
-         * 
-         * Checked-In Appointments Table
-         * 
-         */
-
-        // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
-                                                                                                                                          // to
-                                                                                                                                          // just
-                                                                                                                                          // like
-                                                                                                                                          // orders
-                                                                                                                                          // select
-                                                                                                                                          // statement
-        // still need price
-        try {
-
-            Statement statement2 = connectDB.createStatement();
-            ResultSet queryOutput = statement2.executeQuery(CheckedInAppointmentsTableQuery);
-
-            while (queryOutput.next()) {
-
-                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                String modalityquery = queryOutput.getString("name");
-                String pricequery = queryOutput.getString("price");
-                Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
-                String radiologistquery = queryOutput.getString("full_name");
-
-                CheckedInAppointmentsObservableList.add(new TABLECheckedInAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery));
-            }
-
-            CheckedInAppointments_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
-            CheckedInAppointments_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
-            CheckedInAppointments_DateandTime.setCellValueFactory(new PropertyValueFactory<>("date_time")); // price
-
-            CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
-
-            CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-            CheckedInAppointmentsTable.setItems(null);
-            CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
-
-            // Search Bar Functionality Start
-            FilteredList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsFilteredData = new FilteredList<>(
-                CheckedInAppointmentsObservableList);
-
-                searchCheckedInAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
-                    CheckedInAppointmentsFilteredData.setPredicate(TABLECheckedInAppointmentsTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-
-                    String searchKeyword = newValue.toLowerCase();
-
-                    if (TABLECheckedInAppointmentsTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLECheckedInAppointmentsTableController.getModality().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } /*else if (TABLECheckedInAppointmentsTableController.getDate_time().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    }*/ else if (TABLECheckedInAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                      else if (TABLECheckedInAppointmentsTableController.getPrice().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
+    public void initialize(URL arg0, ResourceBundle arg1) {
     
-                    }
 
-                     else {
-                        return false; // no match found
-                    }
 
-                });
 
-            });
 
-            SortedList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsSortedData = new SortedList<>(
-                CheckedInAppointmentsFilteredData);
 
-            // Binds the sorted resultswith the Table
-            CheckedInAppointmentsSortedData.comparatorProperty().bind(CheckedInAppointmentsTable.comparatorProperty());
 
-            CheckedInAppointmentsTable.setItems(CheckedInAppointmentsSortedData);
-            // Search Bar Functionality End
-
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-
-        /*
-         * 
-         * Today's Appointments Table
-         * 
-         */
-
-        String TodaysAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where date(date_time) = (select date(now()))  order by date_time;";
-
-        // date time for todays date!
-
-        try {
-
-            Statement statement3 = connectDB.createStatement();
-            ResultSet queryOutput = statement3.executeQuery(TodaysAppointmentsTableQuery);
-
-            while (queryOutput.next()) {
-
-                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                String modalityquery = queryOutput.getString("name");
-                Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
-                String radiologistquery = queryOutput.getString("full_name");
-                String pricequery = queryOutput.getString("price");
-
-                TodaysAppointmentsObservableList.add(new TABLETodaysAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery));
-            }
-
-            TodaysAppointments_Patient1.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
-            TodaysAppointmentsTable_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
-            TodaysAppointmentsTable_DateandTime.setCellValueFactory(new PropertyValueFactory<>("date_time")); // price
-
-            TodaysAppointmentsTable_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
-
-            TodaysAppointmentsTable_Prices.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-            TodaysAppointmentsTable.setItems(null);
-            TodaysAppointmentsTable.setItems(TodaysAppointmentsObservableList);
-
-            // Search Bar Functionality Start
-            FilteredList<TABLETodaysAppointmentsTableController> TodaysAppointmentsFilteredData = new FilteredList<>(
-                TodaysAppointmentsObservableList);
-
-                searchTodaysAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
-                    TodaysAppointmentsFilteredData.setPredicate(TABLETodaysAppointmentsTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-
-                    String searchKeyword = newValue.toLowerCase();
-
-                    if (TABLETodaysAppointmentsTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLETodaysAppointmentsTableController.getModality().toLowerCase()
-                            .indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } /*else if (TABLETodaysAppointmentsTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    }*/ else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                        else if (TABLETodaysAppointmentsTableController.getPrice().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else {
-                        return false; // no match found
-                    }
-
-                });
-
-            });
-
-            SortedList<TABLETodaysAppointmentsTableController> TodaysAppointmentsSortedData = new SortedList<>(
-                TodaysAppointmentsFilteredData);
-
-            // Binds the sorted resultswith the Table
-            TodaysAppointmentsSortedData.comparatorProperty().bind(TodaysAppointmentsTable.comparatorProperty());
-
-            TodaysAppointmentsTable.setItems(TodaysAppointmentsSortedData);
-            // Search Bar Functionality End
-
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-
-        /*
-         * 
-         * Unscheduled Appointments Table
-         * 
-         */
-
-        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
-                                                                                                                // to
-                                                                                                                // just
-                                                                                                                // like
-                                                                                                                // orders
-                                                                                                                // select
-                                                                                                                // statement
-
-        try {
-
-            Statement statement4 = connectDB.createStatement();
-            ResultSet queryOutput = statement4.executeQuery(UnscheduledOrdersTableQuery);
-
-            while (queryOutput.next()) {
-
-                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                String referral_mdquery = queryOutput.getString("full_name");
-                String modalityquery = queryOutput.getString("name"); // might need to change types
-                String notesquery = queryOutput.getString("notes");
-
-                UnscheduledOrdersObservableList.add(new TABLEUnscheduledOrdersTableController(patientquery,
-                        referral_mdquery, modalityquery, notesquery));
-            }
-
-            UnscheduledOrdersTable_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
-            UnscheduledOrdersTable_ReferralMD.setCellValueFactory(new PropertyValueFactory<>("referral_md"));
-
-            UnscheduledOrdersTable_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
-            UnscheduledOrdersTable_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
-
-            UnscheduledOrdersTable.setItems(null);
-            UnscheduledOrdersTable.setItems(UnscheduledOrdersObservableList);
-
-                    // Search Bar Functionality Start
-            FilteredList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersFilteredData = new FilteredList<>(
-                UnscheduledOrdersObservableList);
-
-                searchUnscheduledOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                    UnscheduledOrdersFilteredData.setPredicate(TABLEUnscheduledOrdersTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-
-                    String searchKeyword = newValue.toLowerCase();
-
-                    if (TABLEUnscheduledOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEUnscheduledOrdersTableController.getModality().toLowerCase()
-                            .indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } /*else if (TABLEUnscheduledOrdersTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    }*/ else if (TABLEUnscheduledOrdersTableController.getReferral_md().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                        else if (TABLEUnscheduledOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else {
-                        return false; // no match found
-                    }
-
-                });
-
-            });
-
-            SortedList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersSortedData = new SortedList<>(
-                UnscheduledOrdersFilteredData);
-
-            // Binds the sorted resultswith the Table
-            UnscheduledOrdersSortedData.comparatorProperty().bind(UnscheduledOrdersTable.comparatorProperty());
-
-            UnscheduledOrdersTable.setItems(UnscheduledOrdersSortedData);
-            // Search Bar Functionality End
-
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-
-        /*
-         * 
-         * Review Imaging Orders Table
-         * 
-         */
-        String ReviewImagingOrdersTableQuery = "SELECT patient, referral_md, modality, notes FROM db_ris.orders"; // change
-                                                                                                                  // to
-                                                                                                                  // just
-                                                                                                                  // like
-                                                                                                                  // orders
-                                                                                                                  // select
-                                                                                                                  // statement
-
-        try {
-
-            Statement statement5 = connectDB.createStatement();
-            ResultSet queryOutput = statement5.executeQuery(ReviewImagingOrdersTableQuery);
-
-            while (queryOutput.next()) {
-
-                String patientquery = queryOutput.getString("patient");
-                String referral_mdquery = queryOutput.getString("referral_md");
-                String modalityquery = queryOutput.getString("modality"); // might need to change types
-                String notesquery = queryOutput.getString("notes");
-
-                ReviewImagingOrdersObservableList.add(new TABLEReviewImagingOrdersTableController(patientquery,
-                        referral_mdquery, modalityquery, notesquery));
-            }
-
-            ReviewImagingOrdersTable_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
-            ReviewImagingOrdersTable_RefferalMD.setCellValueFactory(new PropertyValueFactory<>("referral_md"));
-
-            ReviewImagingOrdersTable_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
-            ReviewImagingOrdersTable_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
-
-            ReviewImagingOrdersTable.setItems(null);
-            ReviewImagingOrdersTable.setItems(ReviewImagingOrdersObservableList);
-
-            // Search Bar Functionality Start
-            FilteredList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersFilteredData = new FilteredList<>(
-                ReviewImagingOrdersObservableList);
-
-                searchReviewImagineOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                    ReviewImagingOrdersFilteredData.setPredicate(TABLEReviewImagingOrdersTableController -> {
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                        return true;
-                    }
-
-                    String searchKeyword = newValue.toLowerCase();
-
-                    if (TABLEReviewImagingOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else if (TABLEReviewImagingOrdersTableController.getModality().toLowerCase()
-                            .indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } /*else if (TABLEReviewImagingOrdersTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    }*/ else if (TABLEReviewImagingOrdersTableController.getReferral_md().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                        else if (TABLEReviewImagingOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
-                    } else {
-                        return false; // no match found
-                    }
-
-                });
-
-            });
-
-            SortedList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersSortedData = new SortedList<>(
-                ReviewImagingOrdersFilteredData);
-
-            // Binds the sorted resultswith the Table
-            ReviewImagingOrdersSortedData.comparatorProperty().bind(ReviewImagingOrdersTable.comparatorProperty());
-
-            ReviewImagingOrdersTable.setItems(ReviewImagingOrdersSortedData);
-            // Search Bar Functionality End
-
+        //CREATES NEW PATIENT AND WINDOW
+        NewPatient.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                VBox vbox = new VBox();
+        
+                Pane newPane = new Pane();
+                    newPane.setLayoutX(0);
+                    newPane.setLayoutY(0);
+                    newPane.setPrefHeight(109);
+                    newPane.setPrefWidth(800);
+                 
+        
+                    Label PatientOverviewLabe = new Label("Start Order");
+                    PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                    PatientOverviewLabe.setLayoutX(25);
+                    PatientOverviewLabe.setLayoutY(27);
+                    PatientOverviewLabe.setMinHeight(55);
+                    PatientOverviewLabe.setMinWidth(281);
+        
+        
+                    Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
+                    horizontalline.setTranslateX(100);
+                    horizontalline.setTranslateY(110);
+        
+                newPane.getChildren().add(PatientOverviewLabe);
+                newPane.getChildren().add(horizontalline);
+        
+                Pane Filler = new Pane();
+                    Filler.setLayoutX(0);
+                    Filler.setLayoutY(0);
+                    Filler.setPrefHeight(41);
+                 
+                Pane NamesPane = new Pane();
+                    NamesPane.setPrefHeight(114);
+                    NamesPane.setPrefWidth(800);
+
+                    Label FirstName = new Label("First Name:");
+                        FirstName.setStyle("-fx-font: normal bold 16px 'arial';");
+                        FirstName.setMinHeight(55);
+                        FirstName.setMinWidth(128);
+                        FirstName.setLayoutX(35);
+                      
+                        
+                    
+        
+                    Label LastName = new Label("Last Name:");
+                        LastName.setStyle("-fx-font: normal bold 16px 'arial';");
+                        LastName.setMinHeight(55);
+                        LastName.setMinWidth(128);
+                        LastName.setLayoutX(287);
+                
+        
+                    Label Date_of_Birth = new Label("Date of Birth:");
+                        Date_of_Birth.setStyle("-fx-font: normal bold 16px 'arial';");
+                        Date_of_Birth.setMinHeight(55);
+                        Date_of_Birth.setMinWidth(128);
+                        Date_of_Birth.setLayoutX(543);
+                             
+                    TextField firstNameField = new TextField();
+                        firstNameField.setMinHeight(35);
+                        firstNameField.setMinWidth(210);
+                        firstNameField.setLayoutX(35);
+                        firstNameField.setLayoutY(43);
+                  
+                   
+        
+        
+                    TextField lastNamefield = new TextField();
+                        lastNamefield.setMinHeight(35);
+                        lastNamefield.setMinWidth(210);
+                        lastNamefield.setLayoutX(287);
+                        lastNamefield.setLayoutY(43);
+                
+                        
+        
+                        DatePicker dateofbirth = new DatePicker();
+                        dateofbirth.setMinHeight(35);
+                        dateofbirth.setMinWidth(210);
+                        dateofbirth.setLayoutX(543);
+                        dateofbirth.setLayoutY(43);
+                    
+                    
+        
+           
+        
+                NamesPane.getChildren().add(FirstName);
+                NamesPane.getChildren().add(LastName);
+                NamesPane.getChildren().add(Date_of_Birth);
+                NamesPane.getChildren().add(firstNameField);
+                NamesPane.getChildren().add(lastNamefield);
+                NamesPane.getChildren().add(dateofbirth);
+        
+                Pane SexPane = new Pane();
+                NamesPane.setPrefHeight(114);
+                NamesPane.setPrefWidth(800);
+             
+        
+                Label Sex = new Label("Sex:");
+                Sex.setStyle("-fx-font: normal bold 16px 'arial';");
+                Sex.setMinHeight(55);
+                Sex.setMinWidth(128);
+                Sex.setLayoutX(35);
+              
+                
+        
+                Label Race = new Label("Race:");
+                Race.setStyle("-fx-font: normal bold 16px 'arial';");
+                Race.setMinHeight(55);
+                Race.setMinWidth(128);
+                Race.setLayoutX(196);
+        
+                Label Ethnicity = new Label("Ethnicity:");
+                Ethnicity.setStyle("-fx-font: normal bold 16px 'arial';");
+                Ethnicity.setMinHeight(55);
+                Ethnicity.setMinWidth(128);
+                Ethnicity.setLayoutX(493);
+                
+        
+                    ChoiceBox<String> sexChange = new ChoiceBox<String>();
+                        sexChange.setPrefHeight(35);
+                        sexChange.setPrefWidth(128);
+                        sexChange.setLayoutX(35);
+                        sexChange.setLayoutY(43);
+        
+                        sexChange.getItems().add("Male");
+                        sexChange.getItems().add("Female");
+                        sexChange.getItems().add("Other");
+                    
+                      
+        
+        
+        
+                    ChoiceBox<String> RaceChange = new ChoiceBox<String>();
+                        RaceChange.setPrefHeight(35);
+                        RaceChange.setPrefWidth(259);
+                        RaceChange.setLayoutX(196);
+                        RaceChange.setLayoutY(43);
+        
+        
+                        RaceChange.getItems().add("White");
+                        RaceChange.getItems().add("African American");
+                        RaceChange.getItems().add("American Indian");
+                        RaceChange.getItems().add("Asian");
+                        RaceChange.getItems().add("Native Hawaiian");
+              
+                     
+        
+                    ChoiceBox<String> EthnicityChange = new ChoiceBox<String>();
+                        EthnicityChange.setPrefHeight(35);
+                        EthnicityChange.setPrefWidth(259);
+                        EthnicityChange.setLayoutX(493);
+                        EthnicityChange.setLayoutY(43);
+        
+                        EthnicityChange.getItems().add("Hispanic or Latino");
+                        EthnicityChange.getItems().add("Not Hispanic or Latino");
             
+                        
+                
+                SexPane.getChildren().add(Sex);
+                SexPane.getChildren().add(Race);
+                SexPane.getChildren().add(Ethnicity);
+                SexPane.getChildren().add(sexChange);
+                SexPane.getChildren().add(RaceChange);
+                SexPane.getChildren().add(EthnicityChange);
+        
+        
+                Pane BottomPane = new Pane();
+                    BottomPane.setPrefHeight(223);
+                    NamesPane.setPrefWidth(800);
+        
+                    Button StartOrderButton = new Button("Save Patient");
+                    StartOrderButton.setPrefHeight(42);
+                    StartOrderButton.setPrefWidth(102);
+                    StartOrderButton.setLayoutX(509);
+                    StartOrderButton.setLayoutY(147);
+                    StartOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+        
+                    StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override public void handle(ActionEvent e) {
+                           
+                   
+                            try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
+                                String PlacedOrdersTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"+ firstNameField.getText() +"', '"+ lastNamefield.getText() +"', '"+ dateofbirth.getValue()+"', '"+sexChange.getValue() +"', '"+RaceChange.getValue() +"', '"+ EthnicityChange.getValue()+"');";
+                        
+                                Statement statement = connectDB.createStatement();
+                                statement.execute(PlacedOrdersTableQuery);
+                                Stage stage = (Stage) StartOrderButton.getScene().getWindow();
+                                stage.close();
+                            } catch (SQLException e1) {
+                               
+                                e1.printStackTrace();
+                            }
+        
+        
+                        }
+                    });
+        
+        
+                    Button CancelButton = new Button("Cancel");
+                    CancelButton.setPrefHeight(42);
+                    CancelButton.setPrefWidth(102);
+                    CancelButton.setLayoutX(654);
+                    CancelButton.setLayoutY(147);
+                    CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+        
+                    CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override public void handle(ActionEvent e) {
+                            Stage stage = (Stage) CancelButton.getScene().getWindow();
+                            stage.close();
+                        }
+                    });
+        
+        
+                BottomPane.getChildren().add(StartOrderButton);
+                BottomPane.getChildren().add(CancelButton);
+        
+        
+            vbox.getChildren().add(newPane);
+            vbox.getChildren().add(Filler);
+            vbox.getChildren().add(NamesPane);
+            vbox.getChildren().add(SexPane);
+            vbox.getChildren().add(BottomPane);
+        
+            Scene scene = new Scene(vbox, 800, 600);
+            
+            Stage newWindow = new Stage();
+            newWindow.setScene(scene);
+            newWindow.initStyle(StageStyle.UNDECORATED);
+            newWindow.setResizable(false);
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.setTitle("Edit User INfo");
+        
+        
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent t) {
+                    KeyCode key = t.getCode();
+                    if (key == KeyCode.ESCAPE){
+                        newWindow.close();
+                    }
+                }
+            });
+            newWindow.show();
+            }
+        });//CLOSES NEW PATIENT AND WINDOW
 
-        } catch (Exception e) {
-            System.out.println("error");
-        }
+        
+
+
+
 
     }
 
+
+}
+
+    
+
    
     
-}

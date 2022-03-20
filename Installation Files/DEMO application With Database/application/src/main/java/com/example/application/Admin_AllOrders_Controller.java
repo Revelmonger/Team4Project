@@ -155,7 +155,7 @@ public class Admin_AllOrders_Controller implements Initializable {
     private TableColumn<TABLEPlacedOrdersTableController, Integer> AllOrdersStatus;
 
     @FXML
-    private TextField searchPlacedOrders;
+    private TextField searchOrders;
 
     ObservableList<TABLEPlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
             .observableArrayList();
@@ -203,7 +203,7 @@ public class Admin_AllOrders_Controller implements Initializable {
                     FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
                             PlacedOrdersTableObservableList);
         
-                    searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                            searchOrders.textProperty().addListener((observable, oldValue, newValue) -> {
                         PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
                             if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                                 return true;
@@ -242,7 +242,7 @@ public class Admin_AllOrders_Controller implements Initializable {
                     // Search Bar Functionality End
         
                 } catch (Exception e) {
-                    System.out.println("error");
+                 e.printStackTrace();
                 }
                 }
 
@@ -297,8 +297,7 @@ public class Admin_AllOrders_Controller implements Initializable {
      */
 
     public void logout(ActionEvent e) throws IOException {
-
-        //setCurrentUser(null)
+       
         FXApp.setRoot("LOGIN");
     }
 
@@ -307,15 +306,16 @@ public class Admin_AllOrders_Controller implements Initializable {
     }
 
     public void userInfo(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+       
+        FXApp.setRoot("ADMIN");
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN_AdminPanel");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINREFERRALS");
+        FXApp.setRoot("ADMIN_Referrals");
     }
 
     public void orders(ActionEvent e) throws IOException {
@@ -323,7 +323,7 @@ public class Admin_AllOrders_Controller implements Initializable {
     }
 
     public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINAPPOINTMENTS");
+        FXApp.setRoot("ADMIN_Apppointments");
     }
 
 }

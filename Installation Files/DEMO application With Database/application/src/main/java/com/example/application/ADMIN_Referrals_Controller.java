@@ -211,6 +211,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
            String patientrace= queryOutput.getString("race");
            String patientethnicity = queryOutput.getString("ethnicity");
 
+           button.setStyle("-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
     
 
@@ -759,8 +760,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
      */
 
     public void logout(ActionEvent e) throws IOException {
-
-        //setCurrentUser(null)
+       
         FXApp.setRoot("LOGIN");
     }
 
@@ -769,15 +769,16 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     public void userInfo(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+       
+        FXApp.setRoot("ADMIN");
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN_AdminPanel");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINREFERRALS");
+        FXApp.setRoot("ADMIN_Referrals");
     }
 
     public void orders(ActionEvent e) throws IOException {
@@ -785,7 +786,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINAPPOINTMENTS");
+        FXApp.setRoot("ADMIN_Apppointments");
     }
 
 
@@ -995,6 +996,13 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 
                                         Statement statement = connectDB.createStatement();
                                         statement.execute(PlacedOrdersTableQuery);
+
+
+                                     
+                                                Stage stage = (Stage) StartOrderButton.getScene().getWindow();
+                                                stage.close();
+                             
+
                                     } catch (SQLException e1) {
                                        
                                         e1.printStackTrace();
