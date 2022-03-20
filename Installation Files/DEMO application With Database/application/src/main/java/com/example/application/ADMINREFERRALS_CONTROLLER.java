@@ -14,6 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,8 +23,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,6 +40,10 @@ import javafx.event.EventHandler;
 import javafx.application.*;
 
 public class ADMINREFERRALS_CONTROLLER implements Initializable {
+    Date dobquery  ;
+    String firstnamequery = "";
+    String lastnamequery  = "";
+    Button button ;
 
     /*
      * 
@@ -190,10 +200,14 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
 
             while (queryOutput.next()) {
 
-                Date dobquery = queryOutput.getDate("dob");
-                String firstnamequery = queryOutput.getString("first_name");
-                String lastnamequery = queryOutput.getString("last_name");
-                Button button = new Button("Modify");
+                dobquery = queryOutput.getDate("dob");
+                firstnamequery = queryOutput.getString("first_name");
+                lastnamequery = queryOutput.getString("last_name");
+                button = new Button("Modify");
+
+
+
+           
 
 
                 button.setOnAction(new EventHandler<ActionEvent>() {
@@ -201,59 +215,221 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                     @Override
                     public void handle(ActionEvent event) {
 
-                        System.out.println(firstnamequery);
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditUserInfo.fxml"));
-                        Parent root1;
-                        try {
-                            root1 = (Parent) fxmlLoader.load();
-                            Stage stage = new Stage();
-                            stage.setResizable(false);
-                            stage.initModality(Modality.APPLICATION_MODAL);
-                            stage.setTitle("Edit User Information");
-                        stage.setScene(new Scene(root1, 800, 600));
-
-                        root1.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                            @Override
-                            public void handle(KeyEvent t) {
-                                KeyCode key = t.getCode();
-                                if (key == KeyCode.ESCAPE){
-                                    stage.close();
-                                }
-                            }
-                        });
-                        stage.show();
-                        } catch (IOException e) {
-                           
-                            e.printStackTrace();
-                        }
-                        
                        
 
+                        VBox vbox = new VBox();
+
+                            Pane newPane = new Pane();
+                                newPane.setLayoutX(0);
+                                newPane.setLayoutY(0);
+                                newPane.setPrefHeight(109);
+                                newPane.setPrefWidth(800);
+                             
+
+                                Label PatientOverviewLabe = new Label("Patient Overview");
+                                PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                                PatientOverviewLabe.setLayoutX(25);
+                                PatientOverviewLabe.setLayoutY(27);
+                                PatientOverviewLabe.setMinHeight(55);
+                                PatientOverviewLabe.setMinWidth(281);
 
 
+                                Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
+                                horizontalline.setTranslateX(100);
+                                horizontalline.setTranslateY(110);
+
+                            newPane.getChildren().add(PatientOverviewLabe);
+                            newPane.getChildren().add(horizontalline);
+
+                            Pane Filler = new Pane();
+                                Filler.setLayoutX(0);
+                                Filler.setLayoutY(0);
+                                Filler.setPrefHeight(41);
+                             
+
+                            Pane NamesPane = new Pane();
+                                NamesPane.setPrefHeight(114);
+                                NamesPane.setPrefWidth(800);
+                             
+
+                                Label FirstName = new Label("First Name:");
+                                    FirstName.setStyle("-fx-font: normal bold 16px 'arial';");
+                                    FirstName.setMinHeight(55);
+                                    FirstName.setMinWidth(128);
+                                    FirstName.setLayoutX(35);
+                                
+
+                                Label LastName = new Label("Last Name:");
+                                    LastName.setStyle("-fx-font: normal bold 16px 'arial';");
+                                    LastName.setMinHeight(55);
+                                    LastName.setMinWidth(128);
+                                    LastName.setLayoutX(287);
+                            
+
+                                Label Date_of_Birth = new Label("Date of Birth:");
+                                    Date_of_Birth.setStyle("-fx-font: normal bold 16px 'arial';");
+                                    Date_of_Birth.setMinHeight(55);
+                                    Date_of_Birth.setMinWidth(128);
+                                    Date_of_Birth.setLayoutX(543);
+                                         
+                                TextField firstNameField = new TextField();
+                                    firstNameField.setMinHeight(35);
+                                    firstNameField.setMinWidth(210);
+                                    firstNameField.setLayoutX(35);
+                                    firstNameField.setLayoutY(43);
+
+                                TextField lastNamefield = new TextField();
+                                    lastNamefield.setMinHeight(35);
+                                    lastNamefield.setMinWidth(210);
+                                    lastNamefield.setLayoutX(287);
+                                    lastNamefield.setLayoutY(43);
+
+                               DatePicker dateofbirth = new DatePicker();
+                                dateofbirth.setMinHeight(35);
+                                dateofbirth.setMinWidth(210);
+                                dateofbirth.setLayoutX(543);
+                                dateofbirth.setLayoutY(43);
 
 
-                        /*
+                            NamesPane.getChildren().add(FirstName);
+                            NamesPane.getChildren().add(LastName);
+                            NamesPane.getChildren().add(Date_of_Birth);
+                            NamesPane.getChildren().add(firstNameField);
+                            NamesPane.getChildren().add(lastNamefield);
+                            NamesPane.getChildren().add(dateofbirth);
 
+                            Pane SexPane = new Pane();
+                            NamesPane.setPrefHeight(114);
+                            NamesPane.setPrefWidth(800);
+                         
+
+                            Label Sex = new Label("Sex:");
+                            Sex.setStyle("-fx-font: normal bold 16px 'arial';");
+                            Sex.setMinHeight(55);
+                            Sex.setMinWidth(128);
+                            Sex.setLayoutX(35);
+                            
+
+                            Label Race = new Label("Race:");
+                            Race.setStyle("-fx-font: normal bold 16px 'arial';");
+                            Race.setMinHeight(55);
+                            Race.setMinWidth(128);
+                            Race.setLayoutX(196);
                         
-                        StackPane secondaryLayout = new StackPane();
-                       
-                        Scene secondScene = new Scene(secondaryLayout, 600, 400);
 
-                      */
+                            Label Ethnicity = new Label("Ethnicity:");
+                            Ethnicity.setStyle("-fx-font: normal bold 16px 'arial';");
+                            Ethnicity.setMinHeight(55);
+                            Ethnicity.setMinWidth(128);
+                            Ethnicity.setLayoutX(493);
 
 
-        /*
-                        // New window (Stage)
+                                ChoiceBox<String> sexChange = new ChoiceBox<String>();
+                                    sexChange.setPrefHeight(35);
+                                    sexChange.setPrefWidth(128);
+                                    sexChange.setLayoutX(35);
+                                    sexChange.setLayoutY(43);
+
+                                    sexChange.getItems().add("Male");
+                                    sexChange.getItems().add("Female");
+                                    sexChange.getItems().add("Other");
+
+                                ChoiceBox<String> RaceChange = new ChoiceBox<String>();
+                                    RaceChange.setPrefHeight(35);
+                                    RaceChange.setPrefWidth(259);
+                                    RaceChange.setLayoutX(196);
+                                    RaceChange.setLayoutY(43);
+
+                                    RaceChange.getItems().add("White");
+                                    RaceChange.getItems().add("African American");
+                                    RaceChange.getItems().add("American Indian");
+                                    RaceChange.getItems().add("Asian");
+                                    RaceChange.getItems().add("Native Hawaiian");
+
+                                ChoiceBox<String> EthnicityChange = new ChoiceBox<String>();
+                                    EthnicityChange.setPrefHeight(35);
+                                    EthnicityChange.setPrefWidth(259);
+                                    EthnicityChange.setLayoutX(493);
+                                    EthnicityChange.setLayoutY(43);
+
+                                    EthnicityChange.getItems().add("Hispanic or Latino");
+                                    EthnicityChange.getItems().add(" Not Hispanic or Latino");
+                            
+                            SexPane.getChildren().add(Sex);
+                            SexPane.getChildren().add(Race);
+                            SexPane.getChildren().add(Ethnicity);
+                            SexPane.getChildren().add(sexChange);
+                            SexPane.getChildren().add(RaceChange);
+                            SexPane.getChildren().add(EthnicityChange);
+
+
+                            Pane BottomPane = new Pane();
+                                BottomPane.setPrefHeight(223);
+                                NamesPane.setPrefWidth(800);
+
+                                Button SubmitButton = new Button("Submit");
+                                SubmitButton.setPrefHeight(42);
+                                SubmitButton.setPrefWidth(102);
+                                SubmitButton.setLayoutX(509);
+                                SubmitButton.setLayoutY(147);
+                                SubmitButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+                                SubmitButton.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override public void handle(ActionEvent e) {
+                                        SubmitButton.setText("Submitted");
+                                    }
+                                });
+
+
+                                Button CancelButton = new Button("Cancel");
+                                CancelButton.setPrefHeight(42);
+                                CancelButton.setPrefWidth(102);
+                                CancelButton.setLayoutX(654);
+                                CancelButton.setLayoutY(147);
+                                CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+                                CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override public void handle(ActionEvent e) {
+                                        Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                        stage.close();
+                                    }
+                                });
+
+
+                            BottomPane.getChildren().add(SubmitButton);
+                            BottomPane.getChildren().add(CancelButton);
+
+
+                        vbox.getChildren().add(newPane);
+                        vbox.getChildren().add(Filler);
+                        vbox.getChildren().add(NamesPane);
+                        vbox.getChildren().add(SexPane);
+                        vbox.getChildren().add(BottomPane);
+
+
+
+
+
+
+
+                        Scene scene = new Scene(vbox, 800, 600);
+                        
+
+
+
+
+
                         Stage newWindow = new Stage();
-                        //newWindow.initStyle(StageStyle.UNDECORATED);
+                        newWindow.setScene(scene);
+                        newWindow.initStyle(StageStyle.UNDECORATED);
                         newWindow.setResizable(false);
                         newWindow.initModality(Modality.APPLICATION_MODAL);
-                        newWindow.setTitle("Second Stage");
-                        newWindow.setScene(secondScene);
+                        newWindow.setTitle("Edit User INfo");
 
 
-                        secondScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+
+                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                             @Override
                             public void handle(KeyEvent t) {
                                 KeyCode key = t.getCode();
@@ -262,9 +438,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                 }
                             }
                         });
-                        
-        
-                        newWindow.show();*/
+                        newWindow.show();
                     }
                 });
   
@@ -333,3 +507,36 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
     }
 
 }
+/*
+FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditUserInfo.fxml"));
+Parent root1;
+try {
+    root1 = (Parent) fxmlLoader.load();
+    Stage stage = new Stage();
+    stage.initStyle(StageStyle.UNDECORATED);
+    stage.setResizable(false);
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.setTitle("Edit User Information");
+stage.setScene(new Scene(root1, 800, 600));
+
+stage.show();
+} catch (IOException e) {
+   
+    e.printStackTrace();
+}
+
+/*
+
+sexdropdown.getItems().add("Male");
+sexdropdown.getItems().add("Female");
+sexdropdown.getItems().add("Other");
+
+racedropdown.getItems().add("White");
+racedropdown.getItems().add("African American");
+racedropdown.getItems().add("American Indian");
+racedropdown.getItems().add("Asian");
+racedropdown.getItems().add("Native Hawaiian");
+
+ethnicitydropdown.getItems().add("Hispanic or Latino");
+ethnicitydropdown.getItems().add(" Not Hispanic or Latino");
+*/
