@@ -44,7 +44,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.application.*;
 
-public class ADMINREFERRALS_CONTROLLER implements Initializable {
+public class ADMIN_Referrals_Controller implements Initializable {
 
 
     /*
@@ -206,7 +206,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                 java.sql.Date dobquery = queryOutput.getDate("dob");
                 String firstnamequery = queryOutput.getString("first_name");
                 String lastnamequery = queryOutput.getString("last_name");
-                Button  button = new Button("Modify");
+                Button  button = new Button("Select");
               String patientsex  = queryOutput.getString("sex");
            String patientrace= queryOutput.getString("race");
            String patientethnicity = queryOutput.getString("ethnicity");
@@ -397,7 +397,7 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
                                 BottomPane.setPrefHeight(223);
                                 NamesPane.setPrefWidth(800);
 
-                                Button StartOrderButton = new Button("Start Order");
+                                Button StartOrderButton = new Button("Begin Order");
                                 StartOrderButton.setPrefHeight(42);
                                 StartOrderButton.setPrefWidth(102);
                                 StartOrderButton.setLayoutX(509);
@@ -587,7 +587,12 @@ public class ADMINREFERRALS_CONTROLLER implements Initializable {
             
                                             StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
                                                 @Override public void handle(ActionEvent e) {
-                                                    StartOrderButton.setText("Submitted");
+                                                   
+                                                //Open Create New Order Page with this users Information filled In
+
+
+
+
                                                 }
                                             });
             

@@ -20,8 +20,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 
-public class ADMIN_TABLE_CONTROLLER implements Initializable {
+public class ADMIN_AdminPanel_Controller implements Initializable{
 
+   
     String user_id1 = LoginController.LoggedInUserID;
    
     
@@ -67,11 +68,11 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("login");
+        FXApp.setRoot("ADMIN_AdminPanel");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMINREFERRALS");
+        FXApp.setRoot("ADMIN_Referrals");
     }
 
     public void orders(ActionEvent e) throws IOException {
@@ -769,5 +770,5 @@ public class ADMIN_TABLE_CONTROLLER implements Initializable {
     }
 
    
-
+    
 }
