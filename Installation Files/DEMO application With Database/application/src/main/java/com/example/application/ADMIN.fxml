@@ -165,7 +165,6 @@
                                     <TableColumn fx:id="CheckedInAppointments_Price" editable="false" prefWidth="500.0" text="Price" />
                                     <TableColumn fx:id="CheckedInAppointments_DateandTime" editable="false" prefWidth="259.0" text="Date and Time" />
                                     <TableColumn fx:id="CheckedInAppointments_Radiologist" prefWidth="75.0" text="Radiologist" />
-                                    <TableColumn fx:id="CheckedInAppointments_Technician" prefWidth="75.0" text="Technician" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -194,7 +193,6 @@
                                     <TableColumn fx:id="TodaysAppointmentsTable_Prices" editable="false" prefWidth="500.0" text="Price" />
                                     <TableColumn fx:id="TodaysAppointmentsTable_DateandTime" editable="false" prefWidth="259.0" text="Date and Time" />
                                     <TableColumn fx:id="TodaysAppointmentsTable_Radiologist" prefWidth="75.0" text="Radiologist" />
-                                    <TableColumn fx:id="TodaysAppointmentsTable_Technician" prefWidth="75.0" text="Technician" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

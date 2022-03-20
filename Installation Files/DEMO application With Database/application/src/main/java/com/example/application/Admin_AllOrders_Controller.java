@@ -140,61 +140,111 @@ public class Admin_AllOrders_Controller implements Initializable {
 
  
     @FXML
-    private TableView<TABLEAllAppointmentsTableController> AllAppointmentsTable;
+    private TableView<TABLEPlacedOrdersTableController> AllAppointmentsTable;
 
     @FXML
-    private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_patient;
+    private TableColumn<TABLEPlacedOrdersTableController, Integer> AllOrdersPatient;
 
     @FXML
-    private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_Modality;
+    private TableColumn<TABLEPlacedOrdersTableController, Integer> AllOrdersModality;
 
     @FXML
-    private TableColumn<TABLEAllAppointmentsTableController, Date> all_appointments_dateandtime;
+    private TableColumn<TABLEPlacedOrdersTableController, String> AllOrdersNotes;
 
     @FXML
-    private TableColumn<TABLEAllAppointmentsTableController, Integer> all_appointments_radiologist;
+    private TableColumn<TABLEPlacedOrdersTableController, Integer> AllOrdersStatus;
 
     @FXML
     private TextField searchPlacedOrders;
 
-    ObservableList<TABLEAllAppointmentsTableController> PlacedOrdersTableObservableList = FXCollections
+    ObservableList<TABLEPlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
             .observableArrayList();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resource) {
-
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getConnection();
+            @Override
+            public void initialize(URL url, ResourceBundle resource) {
         
-
-        String PlacedOrdersTableQuery = "select p.first_name, p.last_name, m.name, a.date_time, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id;";
-
-        try {
-
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
-
-            while (queryOutput.next()) {
-
-                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                String modalityquery = queryOutput.getString("name");
-                Date datequery = queryOutput.getDate("date_time");
-                String radiologistquery = queryOutput.getString("full_name");
-
-                PlacedOrdersTableObservableList.add(
-                        new TABLEAllAppointmentsTableController(patientquery, modalityquery, datequery, radiologistquery));
-            }
-
-            all_appointments_patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-
-            all_appointments_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
-
-            all_appointments_dateandtime.setCellValueFactory(new PropertyValueFactory<>("date_time"));
-
-            all_appointments_radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
-
-            AllAppointmentsTable.setItems(null);
-            AllAppointmentsTable.setItems(PlacedOrdersTableObservableList);
+                DatabaseConnection connectNow = new DatabaseConnection();
+                Connection connectDB = connectNow.getConnection();
+                /*
+                 * 
+                 * Placed Orders Table
+                 * 
+                 */
+                String AllOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
+        
+                try {
+        
+                    Statement statement = connectDB.createStatement();
+                    ResultSet queryOutput = statement.executeQuery(AllOrdersTableQuery);
+        
+                    while (queryOutput.next()) {
+        
+                        String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                        String modalityquery = queryOutput.getString("name");
+                        String notesquery = queryOutput.getString("notes").trim();
+                        String statusquery = queryOutput.getString("order_name");
+        
+                        PlacedOrdersTableObservableList.add(
+                                new TABLEPlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery));
+                    }
+        
+                    AllOrdersPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        
+                    AllOrdersModality.setCellValueFactory(new PropertyValueFactory<>("modality"));
+        
+                    AllOrdersNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        
+                    AllOrdersStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        
+                    AllAppointmentsTable.setItems(null);
+                    AllAppointmentsTable.setItems(PlacedOrdersTableObservableList);
+        
+                    // Search Bar Functionality Start
+                    FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
+                            PlacedOrdersTableObservableList);
+        
+                    searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                        PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
+                            if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                                return true;
+                            }
+        
+                            String searchKeyword = newValue.toLowerCase();
+        
+                            if (TABLEPlacedOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                                return true;
+        
+                            } else if (TABLEPlacedOrdersTableController.getModality().toLowerCase()
+                                    .indexOf(searchKeyword) > -1) {
+                                return true;
+        
+                            } else if (TABLEPlacedOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                                return true;
+        
+                            } else if (TABLEPlacedOrdersTableController.getStatus().toLowerCase().indexOf(searchKeyword) > -1) {
+                                return true;
+        
+                            } else {
+                                return false; // no match found
+                            }
+        
+                        });
+        
+                    });
+        
+                    SortedList<TABLEPlacedOrdersTableController> PlacedOrdersSortedData = new SortedList<>(
+                            PlacedOrdersFilteredData);
+        
+                    // Binds the sorted resultswith the Table
+                    PlacedOrdersSortedData.comparatorProperty().bind(AllAppointmentsTable.comparatorProperty());
+        
+                    AllAppointmentsTable.setItems(PlacedOrdersSortedData);
+                    // Search Bar Functionality End
+        
+                } catch (Exception e) {
+                    System.out.println("error");
+                }
+                }
 
             // Search Bar Functionality
             /*FilteredList<TABLEAllAppointmentsTableController> PlacedOrdersFilteredData = new FilteredList<>(
@@ -237,15 +287,7 @@ public class Admin_AllOrders_Controller implements Initializable {
 
             PlacedOrdersTable.setItems(PlacedOrdersSortedData);
 */
-        } catch (Exception e) {
-            System.out.println("error");
-        }
 
-
-
-
-
-    }
        
 
     /*
@@ -277,7 +319,7 @@ public class Admin_AllOrders_Controller implements Initializable {
     }
 
     public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("LOGIN");
+        FXApp.setRoot("ADMIN_AllOrders");
     }
 
     public void appointments(ActionEvent e) throws IOException {
