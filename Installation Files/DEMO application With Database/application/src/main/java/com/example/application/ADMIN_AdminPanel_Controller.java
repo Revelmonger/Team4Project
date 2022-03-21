@@ -277,6 +277,9 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
     @FXML
     private TextField searchUsers;
 
+    @FXML
+    private Button NewUserButton;
+
     ObservableList<TABLESystemUsersTableController> UsersTableObservableList = FXCollections
             .observableArrayList();
 
@@ -361,6 +364,347 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
         Connection connectDB = connectNow.getConnection();
         
 
+
+
+
+
+
+
+
+
+
+
+
+
+//CREATES NEW USER
+NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
+
+    @Override
+    public void handle(ActionEvent event) {
+
+        VBox vbox = new VBox();
+
+        Pane newPane = new Pane();
+            newPane.setLayoutX(0);
+            newPane.setLayoutY(0);
+            newPane.setPrefHeight(109);
+            newPane.setPrefWidth(800);
+         
+
+            Label PatientOverviewLabe = new Label("Create New User");
+            PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+            PatientOverviewLabe.setLayoutX(25);
+            PatientOverviewLabe.setLayoutY(27);
+            PatientOverviewLabe.setMinHeight(55);
+            PatientOverviewLabe.setMinWidth(281);
+
+
+            Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
+            horizontalline.setTranslateX(100);
+            horizontalline.setTranslateY(110);
+
+        newPane.getChildren().add(PatientOverviewLabe);
+        newPane.getChildren().add(horizontalline);
+
+        Pane Filler = new Pane();
+            Filler.setLayoutX(0);
+            Filler.setLayoutY(0);
+            Filler.setPrefHeight(41);
+         
+        Pane NamesPane = new Pane();
+            NamesPane.setPrefHeight(114);
+            NamesPane.setPrefWidth(800);
+
+            Label Username = new Label("Username:");
+            Username.setStyle("-fx-font: normal bold 16px 'arial';");
+            Username.setMinHeight(55);
+            Username.setMinWidth(128);
+            Username.setLayoutX(35);
+              
+                
+            
+
+            Label Displayname = new Label("Display Name:");
+            Displayname.setStyle("-fx-font: normal bold 16px 'arial';");
+            Displayname.setMinHeight(55);
+            Displayname.setMinWidth(128);
+            Displayname.setLayoutX(287);
+        
+
+            Label EmailAddress = new Label("Email Address:");
+                EmailAddress.setStyle("-fx-font: normal bold 16px 'arial';");
+                EmailAddress.setMinHeight(55);
+                EmailAddress.setMinWidth(128);
+                EmailAddress.setLayoutX(543);
+                     
+            TextField UsernameField = new TextField();
+                UsernameField.setMinHeight(35);
+                UsernameField.setMinWidth(210);
+                UsernameField.setLayoutX(35);
+                UsernameField.setLayoutY(43);
+          
+           
+
+
+            TextField displayNameField = new TextField();
+                displayNameField.setMinHeight(35);
+                displayNameField.setMinWidth(210);
+                displayNameField.setLayoutX(287);
+                displayNameField.setLayoutY(43);
+        
+                TextField EmailAddressField = new TextField();
+                EmailAddressField.setMinHeight(35);
+                EmailAddressField.setMinWidth(210);
+                EmailAddressField.setLayoutX(543);
+                EmailAddressField.setLayoutY(43);
+
+                
+            
+            
+
+   
+
+        NamesPane.getChildren().add(Username);
+        NamesPane.getChildren().add(Displayname);
+        NamesPane.getChildren().add(EmailAddress);
+        NamesPane.getChildren().add(UsernameField);
+        NamesPane.getChildren().add(displayNameField);
+        NamesPane.getChildren().add(EmailAddressField);
+
+        Pane RolePane = new Pane();
+        RolePane.setPrefHeight(114);
+        RolePane.setPrefWidth(800);
+        
+
+
+        ChoiceBox<String> UserRole = new ChoiceBox<String>();
+        UserRole.setStyle("-fx-font: normal bold 16px 'arial';");
+        UserRole.setMinHeight(55);
+        UserRole.setMinWidth(100);
+        UserRole.setLayoutX(35);
+
+        UserRole.getItems().add("ADMIN");
+        UserRole.getItems().add("USER");
+        UserRole.getItems().add("REFERAL_DOCTOR");
+        UserRole.getItems().add("RECEPTIONIST");
+        UserRole.getItems().add("TECHNICIAN");
+        UserRole.getItems().add("RADIOLOGIST");
+
+
+      
+        
+
+        Label UserPassword = new Label("Change Password:");
+        UserPassword.setStyle("-fx-font: normal bold 16px 'arial';");
+        UserPassword.setMinHeight(55);
+        UserPassword.setMinWidth(128);
+        UserPassword.setLayoutX(196);
+
+    
+          
+            
+              
+
+
+
+            TextField PasswordField = new TextField();
+            PasswordField.setPrefHeight(35);
+            PasswordField.setPrefWidth(259);
+            PasswordField.setLayoutX(196);
+            PasswordField.setLayoutY(43);
+
+
+            
+      
+             
+    
+                
+        
+            RolePane.getChildren().add(UserPassword);
+            RolePane.getChildren().add(UserRole);
+            RolePane.getChildren().add(PasswordField);
+   
+  
+
+
+        Pane BottomPane = new Pane();
+            BottomPane.setPrefHeight(223);
+            NamesPane.setPrefWidth(800);
+
+            Button SaveUserButton = new Button("Save Changes");
+            SaveUserButton.setPrefHeight(42);
+            SaveUserButton.setPrefWidth(102);
+            SaveUserButton.setLayoutX(509);
+            SaveUserButton.setLayoutY(147);
+            SaveUserButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+            SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                   
+           
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
+
+                        String InsertIntoUsersTableQuery = "insert into users (username, full_name, email, password) values ('"+ UsernameField.getText() +"', '"+ displayNameField.getText() +"', '"+ EmailAddressField.getText()+"', '"+PasswordField.getText() +"');";
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(InsertIntoUsersTableQuery);
+
+                        
+
+                        String GetUserID = "Select user_id from users where username = '" + UsernameField.getText() + "' AND password = '" + PasswordField.getText() + "';";
+                        try {
+
+                            statement = connectDB.createStatement();
+                            ResultSet queryOutput = statement.executeQuery(GetUserID);
+                
+                            while (queryOutput.next()) {
+                            
+                                Integer userIDquery = queryOutput.getInt("user_id");
+
+
+                                
+                                System.out.println(UserRole.getValue());
+                                if (UserRole.getValue().equals("ADMIN") ){
+                                    String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '1');";
+                                    statement = connectDB.createStatement();
+                                    statement.execute(UpdateUsersRole);
+                                } else if (UserRole.getValue().equals("USER") ) {
+                                    String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '2');";
+                                    statement = connectDB.createStatement();
+                                    statement.execute(UpdateUsersRole);
+                                    
+                                } else if (UserRole.getValue().equals("REFERRAL_DOCTOR") ) {
+                                    String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '3');";
+                                    statement = connectDB.createStatement();
+                                    statement.execute(UpdateUsersRole);
+                                } else if (UserRole.getValue().equals("RECEPTIONIST") ) {
+                                    String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '4');";
+                                    statement = connectDB.createStatement();
+                                    statement.execute(UpdateUsersRole);
+                                } else if (UserRole.getValue().equals("TECHNICAN")) {
+                                    String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '5');";
+                                    statement = connectDB.createStatement();
+                                    statement.execute(UpdateUsersRole);
+                                } else if (UserRole.getValue().equals("RADIOLOGIST") ) {
+                                    String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '6');";
+                                    statement = connectDB.createStatement();
+                                    statement.execute(UpdateUsersRole);
+                                } else {
+
+                                    System.out.println("Error in if statement");
+                                }
+
+
+
+                            }
+                
+                        } catch (Exception e2) {
+                           e2.printStackTrace();
+                        }
+                
+                       
+
+                   
+                        
+                     
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+          
+                        
+                        
+                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+
+
+                        
+                        stage.close();
+                    } catch (SQLException e1) {
+                       
+                        e1.printStackTrace();
+                    }
+
+
+                }
+            });
+
+
+            Button CancelButton = new Button("Cancel");
+            CancelButton.setPrefHeight(42);
+            CancelButton.setPrefWidth(102);
+            CancelButton.setLayoutX(654);
+            CancelButton.setLayoutY(147);
+            CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+            CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    Stage stage = (Stage) CancelButton.getScene().getWindow();
+                    stage.close();
+                }
+            });
+
+
+        BottomPane.getChildren().add(SaveUserButton);
+        BottomPane.getChildren().add(CancelButton);
+
+
+    vbox.getChildren().add(newPane);
+    vbox.getChildren().add(Filler);
+    vbox.getChildren().add(NamesPane);
+    vbox.getChildren().add(RolePane);
+    vbox.getChildren().add(BottomPane);
+
+    Scene scene = new Scene(vbox, 800, 600);
+    
+    Stage newWindow = new Stage();
+    newWindow.setScene(scene);
+    newWindow.initStyle(StageStyle.UNDECORATED);
+    newWindow.setResizable(false);
+    newWindow.initModality(Modality.APPLICATION_MODAL);
+    newWindow.setTitle("Edit User INfo");
+
+
+    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent t) {
+            KeyCode key = t.getCode();
+            if (key == KeyCode.ESCAPE){
+                newWindow.close();
+            }
+        }
+    });
+    newWindow.show();
+    }
+});//CLOSES NEW User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+     //ALL USERES TABLE POPULATION
         String UsersTableQuery = "select u.user_id, u.full_name, u.username, u.email, ur.role_id, r.name from users as u left join users_roles as ur on ur.user_id = u.user_id left join roles as r on r.role_id = ur.role_id;";
 
         try {
@@ -402,7 +746,11 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
 
 
 
-        //CREATES NEW PATIENT AND WINDOW
+
+
+
+
+//CREATES NEW PATIENT AND WINDOW
         NewPatient.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
