@@ -213,6 +213,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 String patientrace = queryOutput.getString("race");
                 String patientethnicity = queryOutput.getString("ethnicity");
 
+
                 button.setStyle(
                         "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
@@ -466,6 +467,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 SelectedPatientField.setLayoutX(35);
                                 SelectedPatientField.setLayoutY(43);
                                 SelectedPatientField.setPrefWidth(210);
+                                SelectedPatientField.setValue(firstnamequery + " " + lastnamequery);
+                                //SelectedPatientField.setDisable(true);
                 
                                 ChoiceBox<String> SelectedDoctorField = new ChoiceBox<String>();
                                 SelectedDoctorField.setStyle("-fx-font: normal bold 16px 'arial';");
@@ -513,7 +516,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 ;
                 
                                
-                                SelectedPatientField.getItems().add(firstnamequery);
+                                SelectedPatientField.getItems().add(firstnamequery + " " + lastnamequery);
                                      
                               
                                 // Adds Modalities to Modalities Box
@@ -546,7 +549,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 
                                     while (OrderStatusOutput.next()) {
                                         OrderStatuses currentOrderStatusOutput = new OrderStatuses(
-                                                OrderStatusOutput.getString("name"));
+                                                OrderStatusOutput.getString("order_name"));
                                         SelectedStatusField.getItems().add(currentOrderStatusOutput.getOrderstatus());
                                     }
                 
