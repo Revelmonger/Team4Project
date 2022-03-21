@@ -450,8 +450,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
         contactInfoPane.getChildren().add(SelectedAppointmentTime);
         contactInfoPane.getChildren().add(AppointmentDatePicker);
 
-      ////  contactInfoPane.getChildren().add(EmailAddressField);
-
+  
       Pane OfficeInfoPane = new Pane();
       OfficeInfoPane.setPrefHeight(198);
       OfficeInfoPane.setPrefWidth(800);
@@ -495,13 +494,141 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
       EstimatedCostsLabel.setLayoutX(22);
       EstimatedCostsLabel.setLayoutY(225);
 
-      OfficeInfoPane.getChildren().add(OrderLabel);
-      OfficeInfoPane.getChildren().add(OfficeInfoLabel);
-      OfficeInfoPane.getChildren().add(HorizontalLineOfficeIn);
-      OfficeInfoPane.getChildren().add(ModalityLabel);
-      OfficeInfoPane.getChildren().add(RadiologistLabel);
-      OfficeInfoPane.getChildren().add(EstimatedCostsLabel);
+      Label PatientLabel = new Label("Patient:");
+      PatientLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      PatientLabel.setMinHeight(27);
+      PatientLabel.setMinWidth(128);
+      PatientLabel.setLayoutX(260);
+      PatientLabel.setLayoutY(225);
 
+    
+
+
+
+  
+  
+
+        ChoiceBox<String> SelectedPatientChoiceBox = new ChoiceBox<String>();
+        SelectedPatientChoiceBox.setPrefHeight(35);
+        SelectedPatientChoiceBox.setPrefWidth(170);
+        SelectedPatientChoiceBox.setLayoutX(260);
+        SelectedPatientChoiceBox.setLayoutY(270);
+        
+        // Adds Patients to the Box
+        try {
+            DatabaseConnection connectNow = new DatabaseConnection();
+            Connection connectDB = connectNow.getConnection();
+
+            String GetChoiceBoxQuery = "Select * from patients";
+            Statement statement = connectDB.createStatement();
+            ResultSet PatientCurrentOutput = statement.executeQuery(GetChoiceBoxQuery);
+
+            while (PatientCurrentOutput.next()) {
+                Patient CurrentPatient = new Patient(PatientCurrentOutput.getInt("patient_id"), PatientCurrentOutput.getString("first_name"), PatientCurrentOutput.getString("last_name"));
+                        SelectedPatientChoiceBox.getItems().add(CurrentPatient.getFirstname() + " " + CurrentPatient.getLastname());
+            }
+
+        } catch (SQLException e1) {
+
+            e1.printStackTrace();
+        }
+
+
+      ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
+      OrdersChoiceBox.setPrefHeight(35);
+      OrdersChoiceBox.setPrefWidth(170);
+      OrdersChoiceBox.setLayoutX(22);
+      OrdersChoiceBox.setLayoutY(160);
+
+      // Adds Orders to the Box
+      try {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String GetChoiceBoxQuery = "Select * from orders";
+        Statement statement = connectDB.createStatement();
+        ResultSet OrdersOutput = statement.executeQuery(GetChoiceBoxQuery);
+
+        while (OrdersOutput.next()) {
+            Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
+            OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
+        }
+
+    } catch (SQLException e1) {
+
+        e1.printStackTrace();
+    }
+
+      
+      ChoiceBox<String> RadiologistChoiceBox = new ChoiceBox<String>();
+      RadiologistChoiceBox.setPrefHeight(35);
+      RadiologistChoiceBox.setPrefWidth(170);
+      RadiologistChoiceBox.setLayoutX(522);
+      RadiologistChoiceBox.setLayoutY(170);
+
+// Adds Radiologists to the Box
+try {
+    DatabaseConnection connectNow = new DatabaseConnection();
+    Connection connectDB = connectNow.getConnection();
+
+    String GetChoiceBoxQuery = "Select * from radiologists";
+    Statement statement = connectDB.createStatement();
+    ResultSet radiologistsQuery = statement.executeQuery(GetChoiceBoxQuery);
+
+    while (radiologistsQuery.next()) {
+        Radiologists currentRadiologist = new Radiologists(radiologistsQuery.getInt("id"), radiologistsQuery.getString("full_name"));
+        RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
+    }
+
+} catch (SQLException e1) {
+
+    e1.printStackTrace();
+}
+
+
+
+TextField EstinatedCosts = new TextField();
+EstinatedCosts.setMinHeight(35);
+EstinatedCosts.setMinWidth(170);
+EstinatedCosts.setLayoutX(22);
+EstinatedCosts.setLayoutY(270);
+EstinatedCosts.setEditable(false);
+
+
+
+
+// Adds Costs to the Box
+/*try {
+DatabaseConnection connectNow = new DatabaseConnection();
+Connection connectDB = connectNow.getConnection();
+
+String GetChoiceBoxQuery = "Select  price from modatlities where name = '"+  + "'";
+Statement statement = connectDB.createStatement();
+ResultSet radiologistsQuery = statement.executeQuery(GetChoiceBoxQuery);
+
+while (radiologistsQuery.next()) {
+  Radiologists currentRadiologist = new Radiologists(radiologistsQuery.getInt("id"), radiologistsQuery.getString("full_name"));
+  RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
+}
+
+} catch (SQLException e1) {
+
+e1.printStackTrace();
+}
+*/
+
+
+        OfficeInfoPane.getChildren().add(OrderLabel);
+        OfficeInfoPane.getChildren().add(OfficeInfoLabel);
+        OfficeInfoPane.getChildren().add(HorizontalLineOfficeIn);
+        OfficeInfoPane.getChildren().add(ModalityLabel);
+        OfficeInfoPane.getChildren().add(RadiologistLabel);
+        OfficeInfoPane.getChildren().add(EstimatedCostsLabel);
+        OfficeInfoPane.getChildren().add(OrdersChoiceBox);
+        OfficeInfoPane.getChildren().add(RadiologistChoiceBox);
+        OfficeInfoPane.getChildren().add(PatientLabel);
+        OfficeInfoPane.getChildren().add(SelectedPatientChoiceBox);
+        OfficeInfoPane.getChildren().add(EstinatedCosts);
      
         Pane BottomPane = new Pane();
         BottomPane.setPrefHeight(223);
