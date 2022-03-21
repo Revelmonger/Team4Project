@@ -485,7 +485,7 @@ NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
 
         UserRole.getItems().add("ADMIN");
         UserRole.getItems().add("USER");
-        UserRole.getItems().add("REFERAL_DOCTOR");
+        UserRole.getItems().add("REFERRAL_DOCTOR");
         UserRole.getItems().add("RECEPTIONIST");
         UserRole.getItems().add("TECHNICIAN");
         UserRole.getItems().add("RADIOLOGIST");
@@ -552,7 +552,7 @@ NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
 
                         
 
-                        String GetUserID = "Select user_id from users where username = '" + UsernameField.getText() + "' AND password = '" + PasswordField.getText() + "';";
+                        String GetUserID = "Select user_id, full_name from users where username = '" + UsernameField.getText() + "' AND password = '" + PasswordField.getText() + "';";
                         try {
 
                             statement = connectDB.createStatement();
@@ -561,6 +561,7 @@ NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
                             while (queryOutput.next()) {
                             
                                 Integer userIDquery = queryOutput.getInt("user_id");
+                                String namequery = queryOutput.getString("full_name");
 
 
                                 
@@ -576,8 +577,10 @@ NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
                                     
                                 } else if (UserRole.getValue().equals("REFERRAL_DOCTOR") ) {
                                     String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '3');";
+                                    String UpdateReferralMDTable = "insert into referralmds (full_name, user_id) values ('"+ namequery +"', '"+ userIDquery +"');";
                                     statement = connectDB.createStatement();
                                     statement.execute(UpdateUsersRole);
+                                    statement.execute(UpdateReferralMDTable);
                                 } else if (UserRole.getValue().equals("RECEPTIONIST") ) {
                                     String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '4');";
                                     statement = connectDB.createStatement();
@@ -588,8 +591,10 @@ NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
                                     statement.execute(UpdateUsersRole);
                                 } else if (UserRole.getValue().equals("RADIOLOGIST") ) {
                                     String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"+ userIDquery +"', '6');";
+                                    String UpdateRadiologistTable = "insert into radiologists (full_name, user_id) values ('"+ namequery +"', '"+ userIDquery +"');";
                                     statement = connectDB.createStatement();
                                     statement.execute(UpdateUsersRole);
+                                    statement.execute(UpdateRadiologistTable);
                                 } else {
 
                                     System.out.println("Error in if statement");
