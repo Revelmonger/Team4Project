@@ -890,8 +890,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 NamesPane.getChildren().add(dateofbirth);
 
                 Pane SexPane = new Pane();
-                NamesPane.setPrefHeight(114);
-                NamesPane.setPrefWidth(800);
+                SexPane.setPrefHeight(114);
+                SexPane.setPrefWidth(800);
              
 
                 Label Sex = new Label("Sex:");
