@@ -280,6 +280,75 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
     ObservableList<TABLESystemUsersTableController> UsersTableObservableList = FXCollections
             .observableArrayList();
 
+    //Modalities imports
+    @FXML
+    private TableView<TABLEModalitiesTableController> ModalitiesTable;
+
+    @FXML
+    private TableColumn<TABLEModalitiesTableController, String> ModalitiesIDColumn;
+
+    @FXML
+    private TableColumn<TABLEModalitiesTableController, String> ModalitiesNameColumn;
+
+    @FXML
+    private TableColumn<TABLEModalitiesTableController, Integer> ModalityPriceColumn;
+
+    @FXML
+    private TableColumn<TABLEModalitiesTableController, Button> ModalitiesModify;
+
+    @FXML
+    private TextField searchModalities;
+
+    ObservableList<TABLEModalitiesTableController> ModalitiesTableObservableList = FXCollections
+            .observableArrayList();
+
+    //Patient alerts imports
+    @FXML
+    private TableView<TABLEPatientAlertsTableController> PatientAlertsTable;
+    
+    @FXML
+    private TableColumn<TABLEPatientAlertsTableController, Integer> PatientAlertsIDColulm;
+
+    @FXML
+    private TableColumn<TABLEModalitiesTableController, Integer> PatientsAlertsColumn;
+
+    @FXML
+    private TableColumn<TABLEPatientAlertsTableController, Button> PatientAlertsModifyColumn;
+
+    @FXML
+    private TextField searchAlerts;
+
+    ObservableList<TABLEPatientAlertsTableController> AlertsTableObservableList = FXCollections
+            .observableArrayList();
+    
+    //Patient table imports
+    @FXML
+    private TableView<TABLEPatientsTableController> PatientsTable;
+    
+    @FXML
+    private TableColumn<TABLEPatientsTableController, Integer> PatientIDColumn;
+
+    @FXML
+    private TableColumn<TABLEPatientsTableController, Date> PatientdobColumn;
+
+    @FXML
+    private TableColumn<TABLEPatientsTableController, String> PatientFirstNameColumn;
+
+    @FXML
+    private TableColumn<TABLEPatientsTableController, String> PatientLastNameColumn;
+
+    @FXML
+    private TableColumn<TABLEPatientsTableController, Button> PatientModifyColumn;
+
+    @FXML
+    private TextField searchPatients;
+
+    ObservableList<TABLEPatientsTableController> PatientsTableObservableList = FXCollections
+            .observableArrayList();
+
+    //Orders table imports
+    
+
 
 
 
@@ -585,9 +654,131 @@ public class ADMIN_AdminPanel_Controller implements Initializable{
         });//CLOSES NEW PATIENT AND WINDOW
 
         
+        /*
+         *
+         * Modalities table
+         * 
+         */
+
+        String ModalitiesTableQuery = "select*from modalities;";
+
+        try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(ModalitiesTableQuery);
+
+            while (queryOutput.next()) {
+            
+                Integer modalityidquery = queryOutput.getInt("modality_id");
+                String modalitynamequery = queryOutput.getString("name");
+                String modalitypricequery = queryOutput.getString("price");
+                Button button = new Button("Modify");
+            
+                ModalitiesTableObservableList.add(
+                            
+                new TABLEModalitiesTableController(modalityidquery, modalitynamequery, modalitypricequery, button));
+            }
+
+            ModalitiesIDColumn.setCellValueFactory(new PropertyValueFactory<>("Modalityid"));
+            ModalitiesNameColumn.setCellValueFactory(new PropertyValueFactory<>("Modalityname"));
+            ModalityPriceColumn.setCellValueFactory(new PropertyValueFactory<>("Modalityprice"));
+            ModalitiesModify.setCellValueFactory(new PropertyValueFactory<>("Button"));
+
+            
+            ModalitiesTable.setItems(null);
+            ModalitiesTable.setItems(ModalitiesTableObservableList);
+
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
+
+        /*
+         *
+         * Patient alerts table
+         * 
+         */
+        
+        String AlertsTableQuery = "select*from alerts;";
+        
+         try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(AlertsTableQuery);
+
+            while (queryOutput.next()) {
+            
+                Integer alertidquery = queryOutput.getInt("alert_id");
+                String alertnamequery = queryOutput.getString("alert_name");
+                Button button = new Button("Modify");
+            
+                AlertsTableObservableList.add(
+                            
+                new TABLEPatientAlertsTableController(alertidquery, alertnamequery, button));
+            }
+
+            PatientAlertsIDColulm.setCellValueFactory(new PropertyValueFactory<>("Alertid"));
+            PatientsAlertsColumn.setCellValueFactory(new PropertyValueFactory<>("Alertname"));
+            PatientAlertsModifyColumn.setCellValueFactory(new PropertyValueFactory<>("Button"));
+
+            
+            PatientAlertsTable.setItems(null);
+            PatientAlertsTable.setItems(AlertsTableObservableList);
+
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
 
 
 
+
+        /*
+         *
+         * Patients table
+         * 
+         */ 
+
+        String PlacedOrdersTableQuery = "select * from patients;";
+
+        try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
+
+            while (queryOutput.next()) {
+                
+                Integer patient_id = queryOutput.getInt("patient_id");
+                java.sql.Date dobquery = queryOutput.getDate("dob");
+                String firstnamequery = queryOutput.getString("first_name");
+                String lastnamequery = queryOutput.getString("last_name");
+                Button  button = new Button("Modify");
+
+                PatientsTableObservableList.add(
+                            
+                new TABLEPatientsTableController(patient_id, dobquery, firstnamequery, lastnamequery, button));
+            }
+
+            PatientIDColumn.setCellValueFactory(new PropertyValueFactory<>("patientID"));
+            PatientdobColumn.setCellValueFactory(new PropertyValueFactory<>("dob"));
+            PatientFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+            PatientLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+            PatientModifyColumn.setCellValueFactory(new PropertyValueFactory<>("Button"));
+            
+            PatientsTable.setItems(null);
+            PatientsTable.setItems(PatientsTableObservableList);
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+    
+    /*
+     *
+     * Orders
+     * 
+     */ 
+    
 
     }
 
