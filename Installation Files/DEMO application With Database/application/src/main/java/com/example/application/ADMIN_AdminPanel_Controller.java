@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
+import org.yaml.snakeyaml.emitter.Emitable;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,7 +41,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
@@ -312,12 +313,320 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     // Orders table imports
     @FXML
     private Button NewOrder;
+     @FXML
+     private Button NewAppointment;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
+
+
+ // CREATES NEW Appointment
+ NewAppointment.setOnAction(new EventHandler<ActionEvent>() {
+
+    @Override
+    public void handle(ActionEvent event) {
+
+       
+
+        VBox vbox = new VBox();
+
+        ScrollPane scroll = new ScrollPane();
+        scroll.setPrefSize(800, 800);
+        scroll.setContent(vbox);
+        scroll.setFitToWidth(true);
+
+        Pane newPane = new Pane();
+        newPane.setLayoutX(0);
+        newPane.setLayoutY(0);
+        newPane.setPrefHeight(109);
+        newPane.setPrefWidth(800);
+
+        Label CreateNewAppointmentsLabel = new Label("Create New Appointment");
+        CreateNewAppointmentsLabel.setStyle("-fx-font: normal bold 32px 'arial';");
+        CreateNewAppointmentsLabel.setLayoutX(25);
+        CreateNewAppointmentsLabel.setLayoutY(0);
+        CreateNewAppointmentsLabel.setMinHeight(90);
+        CreateNewAppointmentsLabel.setMinWidth(410);
+
+        Line horizontalline = new Line(22.0f, 0.0f, 769.0f, 0.0f);
+        horizontalline.setTranslateY(100);
+        horizontalline.setOpacity(.3);
+        
+        newPane.getChildren().add(CreateNewAppointmentsLabel);
+        newPane.getChildren().add(horizontalline);
+
+       
+
+        Pane contactInfoPane = new Pane();
+        contactInfoPane.setPrefHeight(198);
+        contactInfoPane.setPrefWidth(800);
+
+        Label ContactInfoLable = new Label("Contact Info");
+        ContactInfoLable.setStyle("-fx-font: normal bold 20px 'arial';");
+        ContactInfoLable.setMinHeight(38);
+        ContactInfoLable.setMinWidth(128);
+        ContactInfoLable.setLayoutX(22);
+        ContactInfoLable.setLayoutY(47);
+
+        Line horizontallineContactINfo = new Line(22.0f, 0.0f, 769.0f, 0.0f);
+        horizontallineContactINfo.setTranslateY(100);
+        horizontallineContactINfo.setOpacity(.3);
+
+
+
+        Label phoneNumberLabel = new Label("Phone Number:");
+        phoneNumberLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        phoneNumberLabel.setMinHeight(27);
+        phoneNumberLabel.setMinWidth(128);
+        phoneNumberLabel.setLayoutX(22);
+        phoneNumberLabel.setLayoutY(119);
+
+        Label EmailAddressLabel = new Label("Email Address:");
+        EmailAddressLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        EmailAddressLabel.setMinHeight(27);
+        EmailAddressLabel.setMinWidth(128);
+        EmailAddressLabel.setLayoutX(209);
+        EmailAddressLabel.setLayoutY(119);
+
+        Label DateLabel = new Label("Appointment Date:");
+        DateLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        DateLabel.setMinHeight(27);
+        DateLabel.setMinWidth(128);
+        DateLabel.setLayoutX(396);
+        DateLabel.setLayoutY(119);
+
+        Label TimeLabel = new Label("Appointment Time:");
+        TimeLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        TimeLabel.setMinHeight(27);
+        TimeLabel.setMinWidth(128);
+        TimeLabel.setLayoutX(605);
+        TimeLabel.setLayoutY(119);
+
+
+        TextField phoneNumberField = new TextField();
+        phoneNumberField.setMinHeight(35);
+        phoneNumberField.setMinWidth(145);
+        phoneNumberField.setLayoutX(22);
+        phoneNumberField.setLayoutY(160);
+        phoneNumberField.setPromptText("    000-000-0000");
+
+        TextField emailAddressField = new TextField();
+        emailAddressField.setMinHeight(35);
+        emailAddressField.setMinWidth(145);
+        emailAddressField.setLayoutX(209);
+        emailAddressField.setLayoutY(160);
+        emailAddressField.setPromptText("demo@example.com");
+
+        DatePicker AppointmentDatePicker = new DatePicker();
+        AppointmentDatePicker.setMinHeight(35);
+        AppointmentDatePicker.setMinWidth(166);
+        AppointmentDatePicker.setLayoutX(396);
+        AppointmentDatePicker.setLayoutY(160);
+
+
+        ChoiceBox<String> SelectedAppointmentTime = new ChoiceBox<String>();
+        SelectedAppointmentTime.setStyle("-fx-font: normal bold 16px 'arial';");
+        SelectedAppointmentTime.setMinHeight(35);
+        SelectedAppointmentTime.setMaxWidth(170);
+        SelectedAppointmentTime.setLayoutX(599);
+        SelectedAppointmentTime.setLayoutY(160);
+        SelectedAppointmentTime.setPrefHeight(210);
+        SelectedAppointmentTime.setMaxHeight(35);
+        SelectedAppointmentTime.setPrefWidth(170);
+
+
+
+        contactInfoPane.getChildren().add(ContactInfoLable);
+        contactInfoPane.getChildren().add(horizontallineContactINfo);
+        contactInfoPane.getChildren().add(phoneNumberLabel);
+        contactInfoPane.getChildren().add(EmailAddressLabel);
+        contactInfoPane.getChildren().add(DateLabel);
+        contactInfoPane.getChildren().add(TimeLabel);
+        contactInfoPane.getChildren().add(phoneNumberField);
+        contactInfoPane.getChildren().add(emailAddressField);
+        contactInfoPane.getChildren().add(SelectedAppointmentTime);
+        contactInfoPane.getChildren().add(AppointmentDatePicker);
+
+      ////  contactInfoPane.getChildren().add(EmailAddressField);
+
+      Pane OfficeInfoPane = new Pane();
+      OfficeInfoPane.setPrefHeight(198);
+      OfficeInfoPane.setPrefWidth(800);
+
+      Label OfficeInfoLabel = new Label("Office Info");
+      OfficeInfoLabel.setStyle("-fx-font: normal bold 20px 'arial';");
+      OfficeInfoLabel.setMinHeight(38);
+      OfficeInfoLabel.setMinWidth(128);
+      OfficeInfoLabel.setLayoutX(22);
+      OfficeInfoLabel.setLayoutY(47);
+
+      Line HorizontalLineOfficeIn = new Line(22.0f, 0.0f, 769.0f, 0.0f);
+      HorizontalLineOfficeIn.setTranslateY(100);
+      HorizontalLineOfficeIn.setOpacity(.3);
+
+      Label OrderLabel = new Label("Order:");
+      OrderLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      OrderLabel.setMinHeight(27);
+      OrderLabel.setMinWidth(128);
+      OrderLabel.setLayoutX(22);
+      OrderLabel.setLayoutY(119);
+
+      Label ModalityLabel = new Label("Modality:");
+      ModalityLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      ModalityLabel.setMinHeight(27);
+      ModalityLabel.setMinWidth(128);
+      ModalityLabel.setLayoutX(260);
+      ModalityLabel.setLayoutY(119);
+
+      Label RadiologistLabel = new Label("Radiologist:");
+      RadiologistLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      RadiologistLabel.setMinHeight(27);
+      RadiologistLabel.setMinWidth(128);
+      RadiologistLabel.setLayoutX(522);
+      RadiologistLabel.setLayoutY(119);
+
+      Label EstimatedCostsLabel = new Label("Estimated Costs:");
+      EstimatedCostsLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      EstimatedCostsLabel.setMinHeight(27);
+      EstimatedCostsLabel.setMinWidth(128);
+      EstimatedCostsLabel.setLayoutX(22);
+      EstimatedCostsLabel.setLayoutY(225);
+
+      OfficeInfoPane.getChildren().add(OrderLabel);
+      OfficeInfoPane.getChildren().add(OfficeInfoLabel);
+      OfficeInfoPane.getChildren().add(HorizontalLineOfficeIn);
+      OfficeInfoPane.getChildren().add(ModalityLabel);
+      OfficeInfoPane.getChildren().add(RadiologistLabel);
+      OfficeInfoPane.getChildren().add(EstimatedCostsLabel);
+
+     
+        Pane BottomPane = new Pane();
+        BottomPane.setPrefHeight(223);
+        BottomPane.setPrefWidth(800);
+
+        Button SaveUserButton = new Button("Save Changes");
+        SaveUserButton.setPrefHeight(42);
+        SaveUserButton.setPrefWidth(102);
+        SaveUserButton.setLayoutX(509);
+        SaveUserButton.setLayoutY(147);
+        SaveUserButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+            
+            }
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(654);
+        CancelButton.setLayoutY(147);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+            }
+        });
+
+        BottomPane.getChildren().add(SaveUserButton);
+        BottomPane.getChildren().add(CancelButton);
+
+        vbox.getChildren().add(newPane);
+
+        vbox.getChildren().add(contactInfoPane);
+        vbox.getChildren().add(OfficeInfoPane);
+        vbox.getChildren().add(BottomPane);
+
+        Scene scene = new Scene(scroll , 800, 800);
+
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        newWindow.setTitle("Edit User INfo");
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                }
+            }
+        });
+        newWindow.show();
+    }
+});// CLOSES NEW User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // CREATES NEW USER
         NewUserButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -403,11 +712,24 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
                 RolePane.setPrefHeight(114);
                 RolePane.setPrefWidth(800);
 
+                Label UserRoleLabel = new Label("User Role:");
+                UserRoleLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+                UserRoleLabel.setMinHeight(55);
+                UserRoleLabel.setMinWidth(100);
+                UserRoleLabel.setLayoutX(35);
+
+
                 ChoiceBox<String> UserRole = new ChoiceBox<String>();
-                UserRole.setStyle("-fx-font: normal bold 16px 'arial';");
-                UserRole.setMinHeight(55);
+                UserRole.setStyle("-fx-font: normal bold 16px 'arial'; -fx-wrap-text: true;");
+                UserRole.setMaxHeight(35);
+                UserRole.setPrefHeight(35);   
+                UserRole.setMinHeight(35);   
+                            
                 UserRole.setMinWidth(100);
+                UserRole.setMaxWidth(100);
+                UserRole.setPrefWidth(100);
                 UserRole.setLayoutX(35);
+                UserRole.setLayoutY(45);
 
                 UserRole.getItems().add("ADMIN");
                 UserRole.getItems().add("USER");
@@ -431,6 +753,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
                 RolePane.getChildren().add(UserPassword);
                 RolePane.getChildren().add(UserRole);
                 RolePane.getChildren().add(PasswordField);
+                RolePane.getChildren().add(UserRoleLabel);
 
                 Pane BottomPane = new Pane();
                 BottomPane.setPrefHeight(223);
@@ -528,6 +851,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
 
                     }
                 });
+                
 
                 Button CancelButton = new Button("Cancel");
                 CancelButton.setPrefHeight(42);
