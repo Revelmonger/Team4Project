@@ -942,13 +942,13 @@ try {
                         Connection connectDB = connectNow.getConnection();
                         
 
-                        String InsertQueries = "Select user_id from users where full_name = '" + SelectedDoctorField.getValue() + "'";
+                        String InsertQueries = "Select id from referralmds where full_name = '" + SelectedDoctorField.getValue() + "'";
                         Statement statement = connectDB.createStatement();
                         ResultSet DoctorIDOutput = statement.executeQuery(InsertQueries);
                     
                        
                         while (DoctorIDOutput.next()) {
-                            user_id = DoctorIDOutput.getInt("user_id");
+                            user_id = DoctorIDOutput.getInt("id");
                          
                            
                         }
