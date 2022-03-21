@@ -12,15 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.stage.Stage;
 
 public class LoginController {
 
     Boolean CertifiedLoggedIn = false;
 
-    public static String LoggedInUserID ="";
-
-
+    public static String LoggedInUserID = "";
 
     @FXML
     private Button LoginButton;
@@ -34,130 +32,105 @@ public class LoginController {
     @FXML
     private Label warningLabel;
 
+    @FXML
+    private Button CloseApplicationButton;
 
-public void connectButton(ActionEvent event) {
-  
-    DatabaseConnection connectNow = new DatabaseConnection();
+    public void CloseApplication(ActionEvent event) {
+        Stage stage = (Stage) CloseApplicationButton.getScene().getWindow();
 
-   
-    
-    Connection connectDB = connectNow.getConnection(); 
-    String connectQuery = "select * from db_ris.users where username = " + "'" + NameField.getText() + "'";
+        stage.close();
 
-
-    try {
-        
-        Statement statement = connectDB.createStatement();
-       if(NameField.getText().isEmpty() || PassField.getText().isEmpty()){
-        warningLabel.setText("Please enter valid username and password!");
-       }
-        ResultSet queryOutput = statement.executeQuery(connectQuery);
-        writeResultSet(queryOutput);
-
-        connectDB.close();
-        
-    } catch (Exception e) {
-        e.getStackTrace();
     }
 
-}   
+    public void connectButton(ActionEvent event) {
 
+        DatabaseConnection connectNow = new DatabaseConnection();
 
+        Connection connectDB = connectNow.getConnection();
+        String connectQuery = "select * from db_ris.users where username = " + "'" + NameField.getText() + "'";
 
+        try {
 
+            Statement statement = connectDB.createStatement();
+            if (NameField.getText().isEmpty() || PassField.getText().isEmpty()) {
+                warningLabel.setText("Please enter valid username and password!");
+            }
+            ResultSet queryOutput = statement.executeQuery(connectQuery);
+            writeResultSet(queryOutput);
 
-private void writeResultSet(ResultSet resultSet) throws SQLException, IOException {
-   
-    while (resultSet.next()) {
-       
-         String password = resultSet.getString("password");
-         if ( password.equals(PassField.getText())) {
-           
-       
+            connectDB.close();
 
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
 
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection(); 
-            String  loginQuery = "select user_id from db_ris.users where username = " + "'" + NameField.getText() + "'";
-            try {
-                Statement statement = connectDB.createStatement();             
-                ResultSet queryOutput = statement.executeQuery(loginQuery);                 
-                while (queryOutput.next()) {        
-                String user_id = queryOutput.getString("user_id").trim();
-                LoggedInUserID = user_id;
-                queryOutput.close();
+    }
 
+    private void writeResultSet(ResultSet resultSet) throws SQLException, IOException {
 
-          loginQuery = "select role_id from db_ris.users_roles where user_id = " + "'" + user_id + "'";
-          try {
-              statement = connectDB.createStatement();             
-              queryOutput = statement.executeQuery(loginQuery);                 
-              while (queryOutput.next()) {        
-              String role_id = queryOutput.getString("role_id").trim();
-             
-              queryOutput.close();
+        while (resultSet.next()) {
 
+            String password = resultSet.getString("password");
+            if (password.equals(PassField.getText())) {
 
-
-                loginQuery = "select name from db_ris.roles where role_id = " + "'" + role_id + "'";
+                DatabaseConnection connectNow = new DatabaseConnection();
+                Connection connectDB = connectNow.getConnection();
+                String loginQuery = "select user_id from db_ris.users where username = " + "'" + NameField.getText()
+                        + "'";
                 try {
-                  statement = connectDB.createStatement();             
-                  queryOutput = statement.executeQuery(loginQuery);                 
-                  while (queryOutput.next()) {        
-                  String role_name = queryOutput.getString("name").trim();
-                  
-                  queryOutput.close();
+                    Statement statement = connectDB.createStatement();
+                    ResultSet queryOutput = statement.executeQuery(loginQuery);
+                    while (queryOutput.next()) {
+                        String user_id = queryOutput.getString("user_id").trim();
+                        LoggedInUserID = user_id;
+                        queryOutput.close();
 
-                  
-                  
+                        loginQuery = "select role_id from db_ris.users_roles where user_id = " + "'" + user_id + "'";
+                        try {
+                            statement = connectDB.createStatement();
+                            queryOutput = statement.executeQuery(loginQuery);
+                            while (queryOutput.next()) {
+                                String role_id = queryOutput.getString("role_id").trim();
 
-                    try {
-                        FXApp.setRoot(role_name);
-                    
-                     
-                    } catch (Exception e) {
-                        e.getStackTrace();
+                                queryOutput.close();
+
+                                loginQuery = "select name from db_ris.roles where role_id = " + "'" + role_id + "'";
+                                try {
+                                    statement = connectDB.createStatement();
+                                    queryOutput = statement.executeQuery(loginQuery);
+                                    while (queryOutput.next()) {
+                                        String role_name = queryOutput.getString("name").trim();
+
+                                        queryOutput.close();
+
+                                        try {
+                                            FXApp.setRoot(role_name);
+
+                                        } catch (Exception e) {
+                                            e.getStackTrace();
+                                        }
+
+                                    }
+                                } catch (Exception e) {
+                                    e.getStackTrace();
+                                }
+
+                            }
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+
                     }
-                    
-                
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
 
+                connectDB.close();
+            } else {
+                warningLabel.setText("Please enter valid username and password");
+            }
 
         }
-            } catch (Exception e) {
-                e.getStackTrace();
-            } 
-
-
 
     }
-        } catch (Exception e) {
-            e.getStackTrace();
-        } 
-
-
-    }   
-        } catch (Exception e) {
-            e.getStackTrace();
-        } 
-
-
-        
-        
-               
-               
-
-
-
-
-connectDB.close();
-        }
-        else{
-        warningLabel.setText("Please enter valid username and password");
-        }
-            
-    }
-    
 }
-}
-
-

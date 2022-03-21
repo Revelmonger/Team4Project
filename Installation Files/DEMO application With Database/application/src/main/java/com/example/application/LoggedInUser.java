@@ -1,11 +1,8 @@
 
 package com.example.application;
 
+public class LoggedInUser extends LoginController {
 
-
-public class LoggedInUser extends LoginController{
-
- 
     public String user_id;
 
     public LoggedInUser(String user_id) {
@@ -24,5 +21,3 @@ public class LoggedInUser extends LoginController{
     }
 
 }
-
-

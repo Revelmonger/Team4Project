@@ -13,7 +13,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMINAPPOINTMENTS_CONTROLLER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
+   xmlns="http://javafx.com/javafx/17"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMINAPPOINTMENTS_CONTROLLER">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
@@ -137,7 +139,6 @@
                                     <TableColumn fx:id="all_appointments_Modality" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="Modality" />
                                     <TableColumn fx:id="all_appointments_dateandtime" prefWidth="601.6666870117188" text="Date and Time" />
                                     <TableColumn fx:id="all_appointments_radiologist" editable="false" prefWidth="235.0" text="Radiologist" />
-                                    <TableColumn prefWidth="75.0" text="DROP THIS NOW" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

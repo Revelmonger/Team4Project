@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.Constructors;
 
 public class Modalities {
     String Modalityname;
@@ -6,9 +6,8 @@ public class Modalities {
 
     public Modalities(int int1, String Modalityname) {
         this.Modalityname = Modalityname;
-        this.int1 =int1;
+        this.int1 = int1;
     }
-
 
     public String getModalityname() {
         return Modalityname;
@@ -17,6 +16,5 @@ public class Modalities {
     public Integer getModalityID() {
         return int1;
     }
-
 
 }

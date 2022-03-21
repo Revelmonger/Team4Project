@@ -3,13 +3,14 @@ package com.example.application;
 import javafx.scene.control.Button;
 
 public class TABLEModalitiesTableController {
-    
+
     Integer Modalityid;
     String Modalityname;
     String Modalityprice;
     Button Button;
 
-    public TABLEModalitiesTableController (Integer Modalityid, String Modalityname, String Modalityprice, Button Button){
+    public TABLEModalitiesTableController(Integer Modalityid, String Modalityname, String Modalityprice,
+            Button Button) {
 
         this.Modalityid = Modalityid;
         this.Modalityname = Modalityname;
@@ -21,7 +22,6 @@ public class TABLEModalitiesTableController {
 
         return Modalityname;
     }
-
 
     public String getModalityprice() {
 
@@ -38,21 +38,20 @@ public class TABLEModalitiesTableController {
         return Modalityid;
     }
 
+    public void setModalityid(Integer Modalityid) {
+        this.Modalityid = Modalityid;
+    }
 
-public void setModalityid(Integer Modalityid) {
-    this.Modalityid = Modalityid;
-}
+    public void setModalityname(String Modalityname) {
+        this.Modalityname = Modalityname;
+    }
 
-public void setModalityname(String Modalityname) {
-    this.Modalityname = Modalityname;
-}
+    public void setModalityprice(String Modalityprice) {
+        this.Modalityprice = Modalityprice;
+    }
 
-public void setModalityprice(String Modalityprice) {
-    this.Modalityprice = Modalityprice;
-}
-
-public void setButton(Button Button) {
-    this.Button = Button;
-}
+    public void setButton(Button Button) {
+        this.Button = Button;
+    }
 
 }

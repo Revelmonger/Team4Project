@@ -23,8 +23,7 @@ import javafx.event.ActionEvent;
 public class ADMIN_AdminHome_Controller implements Initializable {
 
     String user_id1 = LoginController.LoggedInUserID;
-   
-    
+
     /*
      * 
      * Button Imports
@@ -45,15 +44,14 @@ public class ADMIN_AdminHome_Controller implements Initializable {
     @FXML
     private Button OrdersButton;
 
-
-     /*
+    /*
      * 
      * Button Logic
      * 
      */
 
     public void logout(ActionEvent e) throws IOException {
-       
+
         FXApp.setRoot("LOGIN");
     }
 
@@ -90,7 +88,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
     @FXML
     public void HomeButtonEntered() {
-       
+
         HomeButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
 
     }
@@ -309,7 +307,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
     @FXML
     private TableColumn<TABLEReviewImagingOrdersTableController, String> ReviewImagingOrdersTable_Notes;
-    
+
     @FXML
     private TextField searchReviewImagineOrders;
 
@@ -409,12 +407,12 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
         // join price modalities.price
         String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
-                                                                                                                                          // to
-                                                                                                                                          // just
-                                                                                                                                          // like
-                                                                                                                                          // orders
-                                                                                                                                          // select
-                                                                                                                                          // statement
+        // to
+        // just
+        // like
+        // orders
+        // select
+        // statement
         // still need price
         try {
 
@@ -448,34 +446,40 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
             // Search Bar Functionality Start
             FilteredList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsFilteredData = new FilteredList<>(
-                CheckedInAppointmentsObservableList);
+                    CheckedInAppointmentsObservableList);
 
-                searchCheckedInAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
-                    CheckedInAppointmentsFilteredData.setPredicate(TABLECheckedInAppointmentsTableController -> {
+            searchCheckedInAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
+                CheckedInAppointmentsFilteredData.setPredicate(TABLECheckedInAppointmentsTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
                     }
 
                     String searchKeyword = newValue.toLowerCase();
 
-                    if (TABLECheckedInAppointmentsTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                    if (TABLECheckedInAppointmentsTableController.getPatient().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } else if (TABLECheckedInAppointmentsTableController.getModality().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } else if (TABLECheckedInAppointmentsTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*else if (TABLECheckedInAppointmentsTableController.getDate_time().indexOf(searchKeyword) > -1) {
+                    } /*
+                       * else if (TABLECheckedInAppointmentsTableController.getDate_time().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TABLECheckedInAppointmentsTableController.getRadiologist().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+                    } else if (TABLECheckedInAppointmentsTableController.getPrice().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    }*/ else if (TABLECheckedInAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
                     }
-                      else if (TABLECheckedInAppointmentsTableController.getPrice().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-    
-                    }
 
-                     else {
+                    else {
                         return false; // no match found
                     }
 
@@ -484,7 +488,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
             });
 
             SortedList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsSortedData = new SortedList<>(
-                CheckedInAppointmentsFilteredData);
+                    CheckedInAppointmentsFilteredData);
 
             // Binds the sorted resultswith the Table
             CheckedInAppointmentsSortedData.comparatorProperty().bind(CheckedInAppointmentsTable.comparatorProperty());
@@ -538,10 +542,10 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
             // Search Bar Functionality Start
             FilteredList<TABLETodaysAppointmentsTableController> TodaysAppointmentsFilteredData = new FilteredList<>(
-                TodaysAppointmentsObservableList);
+                    TodaysAppointmentsObservableList);
 
-                searchTodaysAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
-                    TodaysAppointmentsFilteredData.setPredicate(TABLETodaysAppointmentsTableController -> {
+            searchTodaysAppointments.textProperty().addListener((observable, oldValue, newValue) -> {
+                TodaysAppointmentsFilteredData.setPredicate(TABLETodaysAppointmentsTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
                     }
@@ -555,13 +559,18 @@ public class ADMIN_AdminHome_Controller implements Initializable {
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*else if (TABLETodaysAppointmentsTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } /*
+                       * else if
+                       * (TABLETodaysAppointmentsTableController.getDate_time().toLowerCase().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
-
-                    }*/ else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                        else if (TABLETodaysAppointmentsTableController.getPrice().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } else if (TABLETodaysAppointmentsTableController.getPrice().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
                     } else {
@@ -573,7 +582,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
             });
 
             SortedList<TABLETodaysAppointmentsTableController> TodaysAppointmentsSortedData = new SortedList<>(
-                TodaysAppointmentsFilteredData);
+                    TodaysAppointmentsFilteredData);
 
             // Binds the sorted resultswith the Table
             TodaysAppointmentsSortedData.comparatorProperty().bind(TodaysAppointmentsTable.comparatorProperty());
@@ -592,12 +601,12 @@ public class ADMIN_AdminHome_Controller implements Initializable {
          */
 
         String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
-                                                                                                                // to
-                                                                                                                // just
-                                                                                                                // like
-                                                                                                                // orders
-                                                                                                                // select
-                                                                                                                // statement
+        // to
+        // just
+        // like
+        // orders
+        // select
+        // statement
 
         try {
 
@@ -626,12 +635,12 @@ public class ADMIN_AdminHome_Controller implements Initializable {
             UnscheduledOrdersTable.setItems(null);
             UnscheduledOrdersTable.setItems(UnscheduledOrdersObservableList);
 
-                    // Search Bar Functionality Start
+            // Search Bar Functionality Start
             FilteredList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersFilteredData = new FilteredList<>(
-                UnscheduledOrdersObservableList);
+                    UnscheduledOrdersObservableList);
 
-                searchUnscheduledOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                    UnscheduledOrdersFilteredData.setPredicate(TABLEUnscheduledOrdersTableController -> {
+            searchUnscheduledOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                UnscheduledOrdersFilteredData.setPredicate(TABLEUnscheduledOrdersTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
                     }
@@ -645,13 +654,18 @@ public class ADMIN_AdminHome_Controller implements Initializable {
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*else if (TABLEUnscheduledOrdersTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } /*
+                       * else if
+                       * (TABLEUnscheduledOrdersTableController.getDate_time().toLowerCase().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TABLEUnscheduledOrdersTableController.getReferral_md().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
-
-                    }*/ else if (TABLEUnscheduledOrdersTableController.getReferral_md().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                        else if (TABLEUnscheduledOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } else if (TABLEUnscheduledOrdersTableController.getNotes().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
                     } else {
@@ -663,7 +677,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
             });
 
             SortedList<TABLEUnscheduledOrdersTableController> UnscheduledOrdersSortedData = new SortedList<>(
-                UnscheduledOrdersFilteredData);
+                    UnscheduledOrdersFilteredData);
 
             // Binds the sorted resultswith the Table
             UnscheduledOrdersSortedData.comparatorProperty().bind(UnscheduledOrdersTable.comparatorProperty());
@@ -717,30 +731,36 @@ public class ADMIN_AdminHome_Controller implements Initializable {
 
             // Search Bar Functionality Start
             FilteredList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersFilteredData = new FilteredList<>(
-                ReviewImagingOrdersObservableList);
+                    ReviewImagingOrdersObservableList);
 
-                searchReviewImagineOrders.textProperty().addListener((observable, oldValue, newValue) -> {
-                    ReviewImagingOrdersFilteredData.setPredicate(TABLEReviewImagingOrdersTableController -> {
+            searchReviewImagineOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                ReviewImagingOrdersFilteredData.setPredicate(TABLEReviewImagingOrdersTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
                     }
 
                     String searchKeyword = newValue.toLowerCase();
 
-                    if (TABLEReviewImagingOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                    if (TABLEReviewImagingOrdersTableController.getPatient().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
                     } else if (TABLEReviewImagingOrdersTableController.getModality().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*else if (TABLEReviewImagingOrdersTableController.getDate_time().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } /*
+                       * else if
+                       * (TABLEReviewImagingOrdersTableController.getDate_time().toLowerCase().indexOf
+                       * (searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TABLEReviewImagingOrdersTableController.getReferral_md().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
-
-                    }*/ else if (TABLEReviewImagingOrdersTableController.getReferral_md().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-                    }
-                        else if (TABLEReviewImagingOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                    } else if (TABLEReviewImagingOrdersTableController.getNotes().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
                         return true;
 
                     } else {
@@ -752,7 +772,7 @@ public class ADMIN_AdminHome_Controller implements Initializable {
             });
 
             SortedList<TABLEReviewImagingOrdersTableController> ReviewImagingOrdersSortedData = new SortedList<>(
-                ReviewImagingOrdersFilteredData);
+                    ReviewImagingOrdersFilteredData);
 
             // Binds the sorted resultswith the Table
             ReviewImagingOrdersSortedData.comparatorProperty().bind(ReviewImagingOrdersTable.comparatorProperty());
@@ -760,14 +780,10 @@ public class ADMIN_AdminHome_Controller implements Initializable {
             ReviewImagingOrdersTable.setItems(ReviewImagingOrdersSortedData);
             // Search Bar Functionality End
 
-            
-
         } catch (Exception e) {
             System.out.println("error");
         }
 
     }
-
-   
 
 }

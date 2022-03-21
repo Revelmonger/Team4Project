@@ -54,7 +54,14 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Pane prefHeight="119.0" prefWidth="470.0" />
+            <Pane prefHeight="119.0" prefWidth="470.0">
+               <children>
+                  <Button fx:id="CloseApplicationButton" alignment="CENTER" layoutX="194.0" layoutY="18.0" mnemonicParsing="false" onAction="#CloseApplication" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #d32525;" text="Close" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
          </children>
       </VBox>
    </center>

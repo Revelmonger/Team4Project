@@ -8,14 +8,15 @@ public class TABLECheckedInAppointmentsTableController {
     String patient;
     String modality;
     String price;
-    Date date_time;                             //price
+    Date date_time; // price
     String radiologist;
 
-    public TABLECheckedInAppointmentsTableController (String patient, String modality, Date date_time, String radiologist, String price){
+    public TABLECheckedInAppointmentsTableController(String patient, String modality, Date date_time,
+            String radiologist, String price) {
 
         this.patient = patient;
         this.modality = modality;
-        this.date_time = date_time;             //price
+        this.date_time = date_time; // price
         this.radiologist = radiologist;
         this.price = price;
     }
@@ -24,7 +25,6 @@ public class TABLECheckedInAppointmentsTableController {
 
         return modality;
     }
-
 
     public Date getDate_time() {
 
@@ -46,26 +46,24 @@ public class TABLECheckedInAppointmentsTableController {
         return patient;
     }
 
+    public void setPatient(String patient) {
+        this.patient = patient;
+    }
 
-public void setPatient(String patient) {
-    this.patient = patient;
-}
+    public void setModality(String modality) {
+        this.modality = modality;
+    }
 
-public void setModality(String modality) {
-    this.modality = modality;
-}
+    public void setDate_time(Date date_time) {
+        this.date_time = date_time;
+    }
 
-public void setDate_time(Date date_time) {
-    this.date_time = date_time;
-}
+    public void setRadiologist(String radiologist) {
+        this.radiologist = radiologist;
+    }
 
-public void setRadiologist(String radiologist) {
-    this.radiologist = radiologist;
-}
-
-public void setPrice(String price) {
-    this.price = price;
-}
-
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
 }
