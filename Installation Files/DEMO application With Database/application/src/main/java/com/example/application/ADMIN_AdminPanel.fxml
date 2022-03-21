@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMIN_AdminPanel_Controller">
+<ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMIN_AdminPanel_Controller">
    <content>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
@@ -231,7 +231,7 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="searchPatients" layoutX="1268.0" layoutY="15.0" />
-                                    <Button fx:id="NewPatient" layoutX="-9.0" layoutY="-9.0" mnemonicParsing="false"  prefHeight="69.0" prefWidth="209.0" style="-fx-background-color: transparent;" text="New" textFill="#323fff">
+                                    <Button fx:id="NewPatient" layoutX="-9.0" layoutY="-9.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="209.0" style="-fx-background-color: transparent;" text="New" textFill="#323fff">
                                        <font>
                                           <Font name="System Bold" size="23.0" />
                                        </font>
