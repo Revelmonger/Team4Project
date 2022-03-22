@@ -814,11 +814,42 @@ e1.printStackTrace();
                 try {
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
+                    
+                    String GetRadiologistIDQuery = "select * from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
+                    String GetPatientQuery = "select order_id, patient, modality from orders where order_id = '" + OrdersChoiceBox.getValue() + "';";
+                    
+                    Statement RadiologistStatement = connectDB.createStatement();
+                    Statement PatientStatement = connectDB.createStatement();
+                    ResultSet queryOutput = RadiologistStatement.executeQuery(GetRadiologistIDQuery);
+                    ResultSet queryOutput2 = PatientStatement.executeQuery(GetPatientQuery);
 
-       
-                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, date_time, radiologist, phone_number, email_address) values ('" + OrdersChoiceBox.getValue() + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + RadiologistChoiceBox.getValue() + "', '"+ emailAddressField.getText() +"', '"+ phoneNumberField.getText()+"')";
-                    Statement statement = connectDB.createStatement();
-                    statement.execute(InsertIntoUsersTableQuery);
+                    while (queryOutput.next() && queryOutput2.next()){ 
+                        
+                    Integer radioID = queryOutput.getInt("id");
+                    Integer patientID = queryOutput2.getInt("patient");  
+                    Integer modality = queryOutput2.getInt("modality");
+
+                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrdersChoiceBox.getValue() + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText() +"', '"+ emailAddressField.getText() +"')";
+                    String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrdersChoiceBox.getValue() + "';";
+
+                    Statement NewAppointmentStatemnet = connectDB.createStatement();
+                    NewAppointmentStatemnet.execute(InsertIntoUsersTableQuery);
+
+                    Statement AppointmentIDStatement = connectDB.createStatement();
+                    ResultSet queryOutput3 = AppointmentIDStatement.executeQuery(GetAppointmentID);
+
+                    while(queryOutput3.next()){
+
+                        Integer appointmentID = queryOutput3.getInt("appointment_id");
+
+                        String InsertAppointmentID = "update orders set appointment = '" + appointmentID + "' where order_id = '" + OrdersChoiceBox.getValue() + "';";
+
+                        Statement InsertAppointmentIDStatement = connectDB.createStatement();
+                        InsertAppointmentIDStatement.execute(InsertAppointmentID);
+                    }
+
+                    
+                }
                     Stage stage = (Stage) SaveUserButton.getScene().getWindow();
 
                     stage.close();
