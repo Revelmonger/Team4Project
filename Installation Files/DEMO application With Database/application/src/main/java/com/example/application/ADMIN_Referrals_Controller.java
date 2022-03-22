@@ -185,7 +185,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
     private TableColumn<TABLEReferralsTableController, Button> ModifyButton;
 
     @FXML
-    private TextField searchPlacedOrders;
+    private TextField searchAdminReferrals;
 
     ObservableList<TABLEReferralsTableController> ReferralsTableObservableList = FXCollections
             .observableArrayList();
@@ -851,7 +851,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
             FilteredList<TABLEReferralsTableController> ReferralsTableFilteredData = new FilteredList<>(
                 ReferralsTableObservableList);
 
-                searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                searchAdminReferrals.textProperty().addListener((observable, oldValue, newValue) -> {
                 ReferralsTableFilteredData.setPredicate(TABLEReferralsTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
