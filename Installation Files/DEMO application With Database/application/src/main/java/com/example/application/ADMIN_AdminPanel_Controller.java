@@ -17,6 +17,8 @@ import com.example.application.Constructors.Patient;
 import com.example.application.Constructors.Radiologists;
 import com.example.application.Constructors.ReferralDoctor;
 import com.example.application.TableConstructors.TABLEAppointmentsTableController;
+import com.example.application.TableConstructors.TABLEDiagnosticReportsTableController;
+import com.example.application.TableConstructors.TABLEFileUploadsTableController;
 import com.example.application.TableConstructors.TABLEModalitiesTableController;
 import com.example.application.TableConstructors.TABLEOrdersTableController;
 import com.example.application.TableConstructors.TABLEPatientAlertsTableController;
@@ -390,6 +392,62 @@ ObservableList<TABLEAppointmentsTableController> AppointmentsTableObservableList
         .observableArrayList();
      @FXML
      private Button NewAppointment;
+
+
+
+//File Upload table imports
+@FXML
+private TableView<TABLEFileUploadsTableController> FileUploadsTable;
+
+@FXML
+private TableColumn<TABLEFileUploadsTableController, Integer> FilesUploadsID;
+
+@FXML
+private TableColumn<TABLEFileUploadsTableController, String> FileUploadsName;
+
+@FXML
+private TableColumn<TABLEFileUploadsTableController, String> FileUploadsType;
+
+@FXML
+private TableColumn<TABLEFileUploadsTableController, Integer> FileUploadsOrderNumber;
+
+@FXML
+private TableColumn<TABLEFileUploadsTableController, String> FileUploadsOpenNewWindow;
+
+@FXML
+private TableColumn<TABLEFileUploadsTableController, Button> FileUploadsModify;
+
+@FXML
+private TextField searchFileUploads;
+
+ObservableList<TABLEFileUploadsTableController> FileUploadsObservableList = FXCollections
+        .observableArrayList();
+
+// Diagnostic Reports table imports       
+@FXML
+private TableView<TABLEDiagnosticReportsTableController> DiagnosticReportsTable;
+
+@FXML
+private TableColumn<TABLEDiagnosticReportsTableController, Integer> ReportsID;
+
+@FXML
+private TableColumn<TABLEDiagnosticReportsTableController, String> ReportsRadiologist;
+
+@FXML
+private TableColumn<TABLEDiagnosticReportsTableController, Integer> ReportsOrderNumber;
+
+@FXML
+private TableColumn<TABLEDiagnosticReportsTableController, String> ReportsReport;
+
+@FXML
+private TableColumn<TABLEDiagnosticReportsTableController, Button> ReportsModify;
+
+@FXML
+private TextField searchDiagnosticReports;
+
+ObservableList<TABLEDiagnosticReportsTableController> DiagnosticReportsObservableList = FXCollections
+                .observableArrayList();
+        
 
 
 
@@ -1976,9 +2034,86 @@ e1.printStackTrace();
 
         /*
          *
-         * Orders
+         * File Uploads
          * 
          */
+
+        String FileUploadsTableQuery = "select * from file_uploads;";
+
+        try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(FileUploadsTableQuery);
+
+            while (queryOutput.next()) {
+
+                Integer uploadidquery = queryOutput.getInt("file_upload_id");
+                String filenamequery = queryOutput.getString("file_name");
+                String filetypequery = queryOutput.getString("file_type");
+                Integer ordernumberquery = queryOutput.getInt("order_id");
+                Boolean isopenquery = queryOutput.getBoolean("is_active");
+                Button button = new Button("Modify");
+
+                FileUploadsObservableList.add(
+
+                        new TABLEFileUploadsTableController(uploadidquery, filenamequery, filetypequery, ordernumberquery, isopenquery, button));
+            }
+
+            FilesUploadsID.setCellValueFactory(new PropertyValueFactory<>("uploadid"));
+            FileUploadsName.setCellValueFactory(new PropertyValueFactory<>("filename"));
+            FileUploadsType.setCellValueFactory(new PropertyValueFactory<>("filetype"));
+            FileUploadsOrderNumber.setCellValueFactory(new PropertyValueFactory<>("ordernumber"));
+            FileUploadsOpenNewWindow.setCellValueFactory(new PropertyValueFactory<>("isopen"));
+            FileUploadsModify.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+            FileUploadsTable.setItems(null);
+            FileUploadsTable.setItems(FileUploadsObservableList);
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
+         /*
+         *
+         * Diagnostic Reports
+         * 
+         */
+
+
+        String DiagnosticReportsTableQuery = "select dr.diagnostic_report_id, r.full_name, dr.order_id, dr.diagnostic from diagnostic_reports as dr join radiologists as r on r.id = dr.radiologist;";
+
+        try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(DiagnosticReportsTableQuery);
+
+            while (queryOutput.next()) {
+
+                Integer reportidquery = queryOutput.getInt("diagnostic_report_id");
+                String radiologistquery = queryOutput.getString("full_name");
+                Integer ordernumberquery = queryOutput.getInt("order_id");
+                String reportquery = queryOutput.getString("diagnostic");
+                Button button = new Button("Modify");
+
+                DiagnosticReportsObservableList.add(
+
+                        new TABLEDiagnosticReportsTableController(reportidquery, radiologistquery, ordernumberquery, reportquery, button));
+            }
+
+            ReportsID.setCellValueFactory(new PropertyValueFactory<>("reportid"));
+            ReportsRadiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
+            ReportsOrderNumber.setCellValueFactory(new PropertyValueFactory<>("ordernumber"));
+            ReportsReport.setCellValueFactory(new PropertyValueFactory<>("report"));
+            ReportsModify.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+            DiagnosticReportsTable.setItems(null);
+            DiagnosticReportsTable.setItems(DiagnosticReportsObservableList);
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
+
 
     }
 
