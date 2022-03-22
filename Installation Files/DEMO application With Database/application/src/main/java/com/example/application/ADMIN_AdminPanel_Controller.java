@@ -1,5 +1,6 @@
 package com.example.application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -25,6 +26,7 @@ import com.example.application.TableConstructors.TABLESystemUsersTableController
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -54,12 +56,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 
 import javafx.stage.StageStyle;
@@ -361,6 +365,9 @@ ObservableList<TABLEOrdersTableController> OrdersTableObservableList = FXCollect
 
 
 
+
+
+
 //Appointments table imports
 @FXML
 private TableView<TABLEAppointmentsTableController> AppointmentsTable;
@@ -393,6 +400,10 @@ ObservableList<TABLEAppointmentsTableController> AppointmentsTableObservableList
 
 
 
+
+@FXML
+
+private Button NewFileUpload;
 
 
     @Override
@@ -639,7 +650,7 @@ ObservableList<TABLEAppointmentsTableController> AppointmentsTableObservableList
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
-        String GetChoiceBoxQuery = "Select * from orders";
+        String GetChoiceBoxQuery = "SELECT * FROM orders where appointment IS NULL";
         Statement statement = connectDB.createStatement();
         ResultSet OrdersOutput = statement.executeQuery(GetChoiceBoxQuery);
 
@@ -806,7 +817,169 @@ e1.printStackTrace();
         });
         newWindow.show();
     }
-});// CLOSES NEW User
+}); //Closes New Appointments
+
+
+
+
+
+//Create New File Upload
+NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
+
+    @Override
+    public void handle(ActionEvent event) {
+
+        try {
+ 
+            Stage stage = new Stage();
+           
+     
+           
+            FileChooser fil_chooser = new FileChooser();
+     
+            
+         
+            Label label = new Label("no file chosen");
+     
+            
+            Button button = new Button("Show open dialog");
+     
+            // create an Event Handler
+            EventHandler<ActionEvent> event1 =
+            new EventHandler<ActionEvent>() {
+     
+                public void handle(ActionEvent e)
+                {
+     
+                    // get the file selected
+                    File file = fil_chooser.showOpenDialog(stage);
+     
+                    if (file != null) {
+                        label.setText(file.getAbsolutePath()
+                                            );
+                    }
+                }
+            };
+     
+            button.setOnAction(event1);
+     
+           
+     
+           
+     
+            // create a VBox
+            VBox vbox = new VBox(30, label, button);
+     
+            // set Alignment
+            vbox.setAlignment(Pos.CENTER);
+     
+            // create a scene
+            Scene scene = new Scene(vbox, 800, 500);
+     
+            // set the scene
+            stage.setScene(scene);
+     
+            stage.show();
+        }
+     
+        catch (Exception e) {
+     
+            System.out.println(e.getMessage());
+        }
+/*
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setStyle("-fx-background-color: white;");
+
+        Label CreateFileLabel = new Label("Create New File Upload");
+        CreateFileLabel.setLayoutX(46);
+        CreateFileLabel.setLayoutY(47);
+        CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+        
+
+        Label UploadLabel = new Label("Upload:");
+        UploadLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        UploadLabel.setLayoutX(47);
+        UploadLabel.setLayoutY(192);
+
+        Label OrderLabel = new Label("Order:");
+        OrderLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        OrderLabel.setLayoutX(459);
+        OrderLabel.setLayoutY(192);
+     
+
+        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+        horizontalline.setOpacity(.3);
+        horizontalline.setTranslateY(100);
+
+      
+
+        FileChooser fil_chooser = new FileChooser();
+
+        fil_chooser.setTitle("Choose Image");
+
+
+        
+        
+        ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
+        OrdersChoiceBox.setPrefHeight(30);
+        OrdersChoiceBox.setPrefWidth(150);
+        OrdersChoiceBox.setLayoutX(459);
+        OrdersChoiceBox.setLayoutY(227);
+  
+        // Adds Orders to the Box
+        try {
+          DatabaseConnection connectNow = new DatabaseConnection();
+          Connection connectDB = connectNow.getConnection();
+  
+          String GetChoiceBoxQuery = "Select * from orders";
+          Statement statement = connectDB.createStatement();
+          ResultSet OrdersOutput = statement.executeQuery(GetChoiceBoxQuery);
+  
+          while (OrdersOutput.next()) {
+              Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
+              OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
+          }
+  
+      } catch (SQLException e1) {
+  
+          e1.printStackTrace();
+      }
+
+
+
+
+
+
+
+        
+                anchorpane.getChildren().add(CreateFileLabel);
+                anchorpane.getChildren().add(UploadLabel);
+                anchorpane.getChildren().add(OrderLabel);
+                anchorpane.getChildren().add(horizontalline);
+                anchorpane.getChildren().add(OrdersChoiceBox);
+
+        Scene scene = new Scene(anchorpane, 800, 400);
+
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        newWindow.setTitle("Edit User INfo");
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                }
+            }
+        });
+        newWindow.show();
+    */  }
+});// CLOSES NEW File Upload
+
 
 
 
@@ -891,6 +1064,8 @@ e1.printStackTrace();
                 Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
                 horizontalline.setTranslateX(100);
                 horizontalline.setTranslateY(110);
+             
+                horizontalline.setOpacity(.3);
 
                 newPane.getChildren().add(PatientOverviewLabe);
                 newPane.getChildren().add(horizontalline);
@@ -1162,6 +1337,8 @@ e1.printStackTrace();
                 Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
                 horizontalline.setTranslateX(100);
                 horizontalline.setTranslateY(110);
+                horizontalline.setOpacity(.3);
+                
 
                 newPane.getChildren().add(PatientOverviewLabe);
                 newPane.getChildren().add(horizontalline);
@@ -1665,6 +1842,7 @@ e1.printStackTrace();
                 Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
                 horizontalline.setTranslateX(100);
                 horizontalline.setTranslateY(110);
+                horizontalline.setOpacity(.3);
 
                 newPane.getChildren().add(PatientOverviewLabe);
                 newPane.getChildren().add(horizontalline);
