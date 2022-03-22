@@ -1903,7 +1903,6 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
         while (queryOutput.next()) {
         
             Integer order_id = queryOutput.getInt("order_id");
-            System.out.println(order_id);
             String patientquery = queryOutput.getString("first_name")+ " " + queryOutput.getString("last_name");
             String referral_mdquery = queryOutput.getString("full_name");
             String modalityquery = queryOutput.getString("name");
