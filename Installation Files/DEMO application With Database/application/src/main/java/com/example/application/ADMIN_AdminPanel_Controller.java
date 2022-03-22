@@ -233,6 +233,9 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     private Button NewPatient;
 
     @FXML
+    private Button NewDiagnosticReport;
+
+    @FXML
     private TableView<TABLESystemUsersTableController> SystemUsersTable;
 
     @FXML
@@ -462,12 +465,14 @@ ObservableList<TABLEDiagnosticReportsTableController> DiagnosticReportsObservabl
 
 
 @FXML
-
 private Button NewFileUpload;
+
+
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -816,6 +821,9 @@ e1.printStackTrace();
                     Connection connectDB = connectNow.getConnection();
 
        
+
+
+
                     String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, date_time, radiologist, phone_number, email_address) values ('" + OrdersChoiceBox.getValue() + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + RadiologistChoiceBox.getValue() + "', '"+ emailAddressField.getText() +"', '"+ phoneNumberField.getText()+"')";
                     Statement statement = connectDB.createStatement();
                     statement.execute(InsertIntoUsersTableQuery);
@@ -881,6 +889,12 @@ e1.printStackTrace();
         newWindow.show();
     }
 }); //Closes New Appointments
+
+
+
+
+
+
 
 
 
@@ -1097,7 +1111,209 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
 
 
 
+//Creates New Diagnostic Report
+NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
+    
+   
+    @Override
+    public void handle(ActionEvent event) {
+
+         
+           Stage newWindow = new Stage();
+     
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setStyle("-fx-background-color: white;");
+
+        Label CreateFileLabel = new Label("Create New Diagnostic Report");
+        CreateFileLabel.setLayoutX(46);
+        CreateFileLabel.setLayoutY(47);
+        CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+        
+
+        Label UploadLabel = new Label("Radiologist:");
+        UploadLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        UploadLabel.setLayoutX(47);
+        UploadLabel.setLayoutY(192);
+
+        Label OrderLabel = new Label("Order:");
+        OrderLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        OrderLabel.setLayoutX(247);
+        OrderLabel.setLayoutY(192);
+
+        Label ReportLabel = new Label("Report:");
+        ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        ReportLabel.setLayoutX(459);
+        ReportLabel.setLayoutY(192);
+     
+
+        
+        TextArea ReportArea = new TextArea();
+        ReportArea.setPrefHeight(100);
+        ReportArea.setPrefWidth(260);
+        ReportArea.setLayoutX(459);
+        ReportArea.setLayoutY(227);
+
+
+        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+        horizontalline.setOpacity(.3);
+        horizontalline.setTranslateY(100);
+
+        ChoiceBox<String> RadiologistChoiceBox = new ChoiceBox<String>();
+        RadiologistChoiceBox.setPrefHeight(30);
+        RadiologistChoiceBox.setPrefWidth(150);
+        RadiologistChoiceBox.setLayoutX(47);
+        RadiologistChoiceBox.setLayoutY(227);
+  
+  // Adds Radiologists to the Box
+  try {
+      DatabaseConnection connectNow = new DatabaseConnection();
+      Connection connectDB = connectNow.getConnection();
+  
+      String GetChoiceBoxQuery = "Select * from radiologists";
+      Statement statement = connectDB.createStatement();
+      ResultSet radiologistsQuery = statement.executeQuery(GetChoiceBoxQuery);
+  
+      while (radiologistsQuery.next()) {
+          Radiologists currentRadiologist = new Radiologists(radiologistsQuery.getInt("id"), radiologistsQuery.getString("full_name"));
+          RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
+      }
+  
+  } catch (SQLException e1) {
+  
+      e1.printStackTrace();
+  }
+        
+
+
+
+        ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
+        OrdersChoiceBox.setPrefHeight(30);
+        OrdersChoiceBox.setPrefWidth(150);
+        OrdersChoiceBox.setLayoutX(247);
+        OrdersChoiceBox.setLayoutY(227);
+  
+        // Adds Orders to the Box
+        try {
+          DatabaseConnection connectNow = new DatabaseConnection();
+          Connection connectDB = connectNow.getConnection();
+  
+          String GetChoiceBoxQuery = "Select * from orders";
+          Statement statement = connectDB.createStatement();
+          ResultSet OrdersOutput = statement.executeQuery(GetChoiceBoxQuery);
+  
+          while (OrdersOutput.next()) {
+              Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
+              OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
+          }
+  
+      } catch (SQLException e1) {
+  
+          e1.printStackTrace();
+      }
+
+
+
+      Button CreateDiagnosticReportButton = new Button("Create Report");
+        CreateDiagnosticReportButton.setPrefHeight(42);
+        CreateDiagnosticReportButton.setPrefWidth(102);
+        CreateDiagnosticReportButton.setLayoutX(565);
+        CreateDiagnosticReportButton.setLayoutY(338);
+        CreateDiagnosticReportButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        CreateDiagnosticReportButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+           
+                try {
+            DatabaseConnection connectNow = new DatabaseConnection();
+            Connection connectDB = connectNow.getConnection();
+
+       
+
+            String RadiologistQuery = "Select id from radiologists where full_name = '"+ RadiologistChoiceBox.getValue() + "'";
+            Statement statement2 = connectDB.createStatement();
+            ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
+
+         
+                   
+
+
+             while (RadiologistsID.next()) {
+                Integer  RadiologistID = RadiologistsID.getInt("id");
+
+                String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  radiologist, diagnostic) values ('"+ OrdersChoiceBox.getValue() + "', '" + RadiologistID + "', '"+ ReportArea.getText() + "');";
+                Statement statement = connectDB.createStatement();
+                statement.execute(InsertIntoUsersTableQuery);
+                Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
+    
+                stage.close();
+
+          }
+
+
+
+          
+
+        }
+        catch (SQLException e2){
+
+            e2.printStackTrace();
+        }
+
+
+
+            
+            }
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(680);
+        CancelButton.setLayoutY(338);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+            }
+        });
+
+                anchorpane.getChildren().add(CreateFileLabel);
+                anchorpane.getChildren().add(UploadLabel);
+                anchorpane.getChildren().add(OrderLabel);
+                anchorpane.getChildren().add(horizontalline);
+                anchorpane.getChildren().add(OrdersChoiceBox);
+                anchorpane.getChildren().add(RadiologistChoiceBox);
+                anchorpane.getChildren().add(CancelButton);
+                anchorpane.getChildren().add(CreateDiagnosticReportButton);
+                anchorpane.getChildren().add(ReportArea);
+                anchorpane.getChildren().add(ReportLabel);
+                
+        Scene scene = new Scene(anchorpane, 800, 400);
+
+        
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                }
+            }
+        });
+        newWindow.show();
+      }
+});//
 
 
 
