@@ -847,6 +847,52 @@ public class ADMIN_Referrals_Controller implements Initializable {
             AllPatientsTable.setItems(null);
             AllPatientsTable.setItems(ReferralsTableObservableList);
 
+            // Search Bar Functionality Start
+            FilteredList<TABLEReferralsTableController> ReferralsTableFilteredData = new FilteredList<>(
+                ReferralsTableObservableList);
+
+                searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                ReferralsTableFilteredData.setPredicate(TABLEReferralsTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLEReferralsTableController.getDob().toString().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLEReferralsTableController.getFirstname().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*
+                       * else if
+                       * (TABLEReferralsTableController.getDate_time().toLowerCase().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TABLEReferralsTableController.getLastname().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+                    } else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLEReferralsTableController> ReferralsSortedData = new SortedList<>(
+                    ReferralsTableFilteredData);
+
+            // Binds the sorted resultswith the Table
+            ReferralsSortedData.comparatorProperty().bind(AllPatientsTable.comparatorProperty());
+
+            AllPatientsTable.setItems(ReferralsSortedData);
+            // Search Bar Functionality End
+
         } catch (Exception e) {
             System.out.println("error");
         }
