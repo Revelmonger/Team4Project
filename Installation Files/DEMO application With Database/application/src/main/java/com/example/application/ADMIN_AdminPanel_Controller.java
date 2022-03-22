@@ -3,6 +3,7 @@ package com.example.application;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -65,6 +66,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 
@@ -252,7 +254,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     private TableColumn<TABLESystemUsersTableController, Button> UsersModifyButton;
 
     @FXML
-    private TextField searchUsers;
+    private TextField searchSystemUsers;
 
     @FXML
     private Button NewUserButton;
@@ -813,7 +815,7 @@ e1.printStackTrace();
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
 
-        DatePicker AppointmentDatePicker = new DatePicker();
+       
                     String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, date_time, radiologist, phone_number, email_address) values ('" + OrdersChoiceBox.getValue() + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + RadiologistChoiceBox.getValue() + "', '"+ emailAddressField.getText() +"', '"+ phoneNumberField.getText()+"')";
                     Statement statement = connectDB.createStatement();
                     statement.execute(InsertIntoUsersTableQuery);
@@ -827,6 +829,9 @@ e1.printStackTrace();
 
 
             
+
+
+
             }
         });
         
@@ -884,67 +889,15 @@ e1.printStackTrace();
 //Create New File Upload
 NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
 
+    String extension;
+    String fileName;
+   
     @Override
     public void handle(ActionEvent event) {
 
-        try {
- 
-            Stage stage = new Stage();
-           
-     
-           
-            FileChooser fil_chooser = new FileChooser();
-     
-            
          
-            Label label = new Label("no file chosen");
+           Stage newWindow = new Stage();
      
-            
-            Button button = new Button("Show open dialog");
-     
-            // create an Event Handler
-            EventHandler<ActionEvent> event1 =
-            new EventHandler<ActionEvent>() {
-     
-                public void handle(ActionEvent e)
-                {
-     
-                    // get the file selected
-                    File file = fil_chooser.showOpenDialog(stage);
-     
-                    if (file != null) {
-                        label.setText(file.getAbsolutePath()
-                                            );
-                    }
-                }
-            };
-     
-            button.setOnAction(event1);
-     
-           
-     
-           
-     
-            // create a VBox
-            VBox vbox = new VBox(30, label, button);
-     
-            // set Alignment
-            vbox.setAlignment(Pos.CENTER);
-     
-            // create a scene
-            Scene scene = new Scene(vbox, 800, 500);
-     
-            // set the scene
-            stage.setScene(scene);
-     
-            stage.show();
-        }
-     
-        catch (Exception e) {
-     
-            System.out.println(e.getMessage());
-        }
-/*
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setStyle("-fx-background-color: white;");
 
@@ -969,13 +922,36 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setOpacity(.3);
         horizontalline.setTranslateY(100);
 
-      
-
         FileChooser fil_chooser = new FileChooser();
+        Label label = new Label("No file chosen");
+        label.setPrefHeight(30);
+        label.setPrefWidth(340);
+        label.setLayoutX(127);
+        label.setLayoutY(227);
+        Button button = new Button("Select File");
+        button.setPrefHeight(30);
+        button.setPrefWidth(70);
+        button.setLayoutX(47);
+        button.setLayoutY(227);
 
-        fil_chooser.setTitle("Choose Image");
+       
+        EventHandler<ActionEvent> event1 =
+        new EventHandler<ActionEvent>() {
 
+           
+            public void handle(ActionEvent e)
+            {
+ 
+               
+                File file = fil_chooser.showOpenDialog(newWindow);
+ 
+                if (file != null) {
 
+                    label.setText(file.getAbsolutePath());               
+                }
+            }
+        };
+        button.setOnAction(event1);
         
         
         ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
@@ -1006,24 +982,104 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
 
 
 
+      Button UploadFileButton = new Button("Upload File");
+        UploadFileButton.setPrefHeight(42);
+        UploadFileButton.setPrefWidth(102);
+        UploadFileButton.setLayoutX(565);
+        UploadFileButton.setLayoutY(338);
+        UploadFileButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+  
+                try {
+                  
+                  
+
+
+                    try {
+
+                       
+                        int index =  label.getText().lastIndexOf('.');
+                 
+                        if(index > 0) {
+                          extension  = label.getText().substring(index + 1);
+                    
+                        } 
+                        if(index > 0) {
+                       
+                            java.nio.file.Path path = Paths.get(label.getText());         
+                           fileName = path.getFileName().toString();
+                        }
+    
+
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
+    
+           
+                        String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path)values ('"+ OrdersChoiceBox.getValue() + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
+                        Statement statement = connectDB.createStatement();
+
+                        statement.execute(InsertIntoUploadsTable);
+                        Stage stage = (Stage) UploadFileButton.getScene().getWindow();
+    
+                        stage.close();
+                    } catch (SQLException e1) {
+    
+                        e1.printStackTrace();
+                    }
+    
 
 
 
+
+
+
+
+                 
+                } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+
+
+            
+            }
+        });
         
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(680);
+        CancelButton.setLayoutY(338);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+            }
+        });
+
                 anchorpane.getChildren().add(CreateFileLabel);
                 anchorpane.getChildren().add(UploadLabel);
                 anchorpane.getChildren().add(OrderLabel);
                 anchorpane.getChildren().add(horizontalline);
                 anchorpane.getChildren().add(OrdersChoiceBox);
+                anchorpane.getChildren().add(button);
+                anchorpane.getChildren().add(label);
+                anchorpane.getChildren().add(CancelButton);
+                anchorpane.getChildren().add(UploadFileButton);
 
         Scene scene = new Scene(anchorpane, 800, 400);
 
-        Stage newWindow = new Stage();
+        
         newWindow.setScene(scene);
         newWindow.initStyle(StageStyle.UNDECORATED);
         newWindow.setResizable(false);
         newWindow.initModality(Modality.APPLICATION_MODAL);
-        newWindow.setTitle("Edit User INfo");
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -1035,7 +1091,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
             }
         });
         newWindow.show();
-    */  }
+      }
 });// CLOSES NEW File Upload
 
 
@@ -1781,6 +1837,51 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
             SystemUsersTable.setItems(null);
             SystemUsersTable.setItems(UsersTableObservableList);
 
+
+
+           //  Search Bar Functionality Start
+            FilteredList<TABLESystemUsersTableController> SystemUsersFilteredData = new FilteredList<>(
+                    UsersTableObservableList);
+
+                    searchSystemUsers.textProperty().addListener((observable, oldValue, newValue) -> {
+                SystemUsersFilteredData.setPredicate(TABLESystemUsersTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLESystemUsersTableController.getUsername().toLowerCase().indexOf(searchKeyword) > -1) {
+                            return true;
+
+                    } else if (TABLESystemUsersTableController.getDisplayname().toLowerCase().indexOf(searchKeyword) > -1) {
+                            return true;
+
+                    } else if (TABLESystemUsersTableController.getEmail().toLowerCase().indexOf(searchKeyword) > -1) {
+                                return true;
+
+                    } else if (TABLESystemUsersTableController.getRole().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+                    }
+
+                      else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLESystemUsersTableController> SystemUsersSortedData = new SortedList<>(SystemUsersFilteredData);
+
+            // Binds the sorted resultswith the Table
+            SystemUsersSortedData.comparatorProperty().bind(SystemUsersTable.comparatorProperty());
+
+            SystemUsersTable.setItems(SystemUsersSortedData);
+            // Search Bar Functionality End
+
+
+
         } catch (Exception e) {
             System.out.println("error");
         }
@@ -2131,6 +2232,57 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
 
             ModalitiesTable.setItems(null);
             ModalitiesTable.setItems(ModalitiesTableObservableList);
+
+////////////////
+
+
+
+
+// Search Bar Functionality Start
+FilteredList<TABLEModalitiesTableController> ModalitiesFilteredData = new FilteredList<>(
+    ModalitiesTableObservableList);
+
+    searchModalities.textProperty().addListener((observable, oldValue, newValue) -> {
+            ModalitiesFilteredData.setPredicate(TABLEModalitiesTableController -> {
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                    return true;
+                }
+
+                String searchKeyword = newValue.toLowerCase();
+
+                if (TABLEModalitiesTableController.getModalityname().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+
+                } else if (TABLEModalitiesTableController.getModalityprice().toLowerCase()
+                        .indexOf(searchKeyword) > -1) {
+                    return true;
+
+                }  else {
+                    return false; 
+                }
+
+            });
+
+            });
+
+            SortedList<TABLEModalitiesTableController> ModalitiesTableSortedData = new SortedList<>(
+                ModalitiesFilteredData);
+
+            // Binds the sorted resultswith the Table
+            ModalitiesTableSortedData.comparatorProperty().bind(ModalitiesTable.comparatorProperty());
+
+            ModalitiesTable.setItems(ModalitiesTableSortedData);
+// Search Bar Functionality End
+
+
+
+
+
+
+            ///////////////////
+
+
+
 
         } catch (Exception e) {
             System.out.println("error");
