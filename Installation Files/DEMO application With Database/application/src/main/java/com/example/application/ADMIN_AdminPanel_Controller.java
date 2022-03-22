@@ -252,7 +252,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     private TableColumn<TABLESystemUsersTableController, Button> UsersModifyButton;
 
     @FXML
-    private TextField searchUsers;
+    private TextField searchSystemUsers;
 
     @FXML
     private Button NewUserButton;
@@ -1785,7 +1785,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
             FilteredList<TABLESystemUsersTableController> SystemUsersFilteredData = new FilteredList<>(
                     UsersTableObservableList);
 
-            searchUsers.textProperty().addListener((observable, oldValue, newValue) -> {
+                    searchSystemUsers.textProperty().addListener((observable, oldValue, newValue) -> {
                 SystemUsersFilteredData.setPredicate(TABLESystemUsersTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
@@ -1804,12 +1804,6 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
 
                     } else if (TABLESystemUsersTableController.getRole().toLowerCase().indexOf(searchKeyword) > -1) {
                         return true;
-
-                    } 
-                    
-                      else if (TABLESystemUsersTableController.getRole().toLowerCase().indexOf(searchKeyword) > -1) {
-                        return true;
-
                     }
                     
                       else {
