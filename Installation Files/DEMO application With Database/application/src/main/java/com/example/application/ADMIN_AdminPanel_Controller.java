@@ -254,7 +254,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     private TableColumn<TABLESystemUsersTableController, Button> UsersModifyButton;
 
     @FXML
-    private TextField searchUsers;
+    private TextField searchSystemUsers;
 
     @FXML
     private Button NewUserButton;
@@ -1836,6 +1836,51 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
 
             SystemUsersTable.setItems(null);
             SystemUsersTable.setItems(UsersTableObservableList);
+
+
+
+           //  Search Bar Functionality Start
+            FilteredList<TABLESystemUsersTableController> SystemUsersFilteredData = new FilteredList<>(
+                    UsersTableObservableList);
+
+                    searchSystemUsers.textProperty().addListener((observable, oldValue, newValue) -> {
+                SystemUsersFilteredData.setPredicate(TABLESystemUsersTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLESystemUsersTableController.getUsername().toLowerCase().indexOf(searchKeyword) > -1) {
+                            return true;
+
+                    } else if (TABLESystemUsersTableController.getDisplayname().toLowerCase().indexOf(searchKeyword) > -1) {
+                            return true;
+
+                    } else if (TABLESystemUsersTableController.getEmail().toLowerCase().indexOf(searchKeyword) > -1) {
+                                return true;
+
+                    } else if (TABLESystemUsersTableController.getRole().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+                    }
+
+                      else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TABLESystemUsersTableController> SystemUsersSortedData = new SortedList<>(SystemUsersFilteredData);
+
+            // Binds the sorted resultswith the Table
+            SystemUsersSortedData.comparatorProperty().bind(SystemUsersTable.comparatorProperty());
+
+            SystemUsersTable.setItems(SystemUsersSortedData);
+            // Search Bar Functionality End
+
+
 
         } catch (Exception e) {
             System.out.println("error");
