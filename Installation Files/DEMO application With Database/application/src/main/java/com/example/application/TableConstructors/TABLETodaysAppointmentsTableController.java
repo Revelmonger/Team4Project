@@ -1,5 +1,5 @@
 
-package com.example.application;
+package com.example.application.TableConstructors;
 
 import java.sql.Date;
 

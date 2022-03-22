@@ -1,19 +1,18 @@
+package com.example.application.TableConstructors;
 
-package com.example.application;
-
-public class TABLEReviewImagingOrdersTableController {
+public class TABLEPlacedOrdersTableController {
 
     String patient;
-    String referral_md;
     String modality;
     String notes;
+    String status;
 
-    public TABLEReviewImagingOrdersTableController(String patient, String referral_md, String modality, String notes) {
+    public TABLEPlacedOrdersTableController(String patient, String modality, String notes, String status) {
 
         this.patient = patient;
-        this.referral_md = referral_md;
         this.modality = modality;
         this.notes = notes;
+        this.status = status;
     }
 
     public String getModality() {
@@ -26,9 +25,9 @@ public class TABLEReviewImagingOrdersTableController {
         return notes;
     }
 
-    public String getReferral_md() {
+    public String getStatus() {
 
-        return referral_md;
+        return status;
     }
 
     public String getPatient() {
@@ -48,8 +47,8 @@ public class TABLEReviewImagingOrdersTableController {
         this.notes = notes;
     }
 
-    public void setReferral_md(String referral_md) {
-        this.referral_md = referral_md;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -8,10 +8,20 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+
+
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
+import com.example.application.Constructors.Orders;
 import com.example.application.Constructors.Patient;
+import com.example.application.Constructors.Radiologists;
 import com.example.application.Constructors.ReferralDoctor;
+import com.example.application.TableConstructors.TABLEAppointmentsTableController;
+import com.example.application.TableConstructors.TABLEModalitiesTableController;
+import com.example.application.TableConstructors.TABLEOrdersTableController;
+import com.example.application.TableConstructors.TABLEPatientAlertsTableController;
+import com.example.application.TableConstructors.TABLEPatientsTableController;
+import com.example.application.TableConstructors.TABLESystemUsersTableController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -313,8 +323,77 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     // Orders table imports
     @FXML
     private Button NewOrder;
+
+//Orders table imports
+@FXML
+private TableView<TABLEOrdersTableController> OrdersTable;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, Integer> OrdersIDColumn;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, String> OrdersPatientNameColumn;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, String> OrdersReferralDoctorColumn;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, String> OrdersModalityColumn;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, String> OrdersNotesColumn;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, String> OrdersStatusColumn;
+
+@FXML
+private TableColumn<TABLEOrdersTableController, Button> OrdersModifyColumn;
+
+@FXML
+private TextField searchOrders;
+
+ObservableList<TABLEOrdersTableController> OrdersTableObservableList = FXCollections
+        .observableArrayList();
+
+
+
+
+
+
+
+//Appointments table imports
+@FXML
+private TableView<TABLEAppointmentsTableController> AppointmentsTable;
+
+@FXML
+private TableColumn<TABLEAppointmentsTableController, Integer> AppointmentID;
+
+@FXML
+private TableColumn<TABLEAppointmentsTableController, String> AppintmentPatient;
+
+@FXML
+private TableColumn<TABLEAppointmentsTableController, Integer> AppopintmentsOrderNumber;
+
+@FXML
+private TableColumn<TABLEAppointmentsTableController, Date> AppointmentsDateandtime;
+
+@FXML
+private TableColumn<TABLEAppointmentsTableController, String> AppointmentsRadiologist;
+
+@FXML
+private TableColumn<TABLEAppointmentsTableController, Button> AppointmentsModify;
+
+@FXML
+private TextField searchAppointments;
+
+ObservableList<TABLEAppointmentsTableController> AppointmentsTableObservableList = FXCollections
+        .observableArrayList();
      @FXML
      private Button NewAppointment;
+
+
+
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -333,10 +412,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
 
         VBox vbox = new VBox();
 
-        ScrollPane scroll = new ScrollPane();
-        scroll.setPrefSize(800, 800);
-        scroll.setContent(vbox);
-        scroll.setFitToWidth(true);
+        
 
         Pane newPane = new Pane();
         newPane.setLayoutX(0);
@@ -438,6 +514,33 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
         SelectedAppointmentTime.setPrefWidth(170);
 
 
+        SelectedAppointmentTime.getItems().add("1:00");
+        SelectedAppointmentTime.getItems().add("2:00");
+        SelectedAppointmentTime.getItems().add("3:00");
+        SelectedAppointmentTime.getItems().add("4:00");
+        SelectedAppointmentTime.getItems().add("5:00");
+        SelectedAppointmentTime.getItems().add("6:00");
+        SelectedAppointmentTime.getItems().add("7:00");
+        SelectedAppointmentTime.getItems().add("8:00");
+        SelectedAppointmentTime.getItems().add("9:00");
+        SelectedAppointmentTime.getItems().add("10:00");
+        SelectedAppointmentTime.getItems().add("11:00");
+        SelectedAppointmentTime.getItems().add("12:00");
+        SelectedAppointmentTime.getItems().add("13:00");
+        SelectedAppointmentTime.getItems().add("14:00");
+        SelectedAppointmentTime.getItems().add("15:00");
+        SelectedAppointmentTime.getItems().add("16:00");
+        SelectedAppointmentTime.getItems().add("17:00");
+        SelectedAppointmentTime.getItems().add("18:00");
+        SelectedAppointmentTime.getItems().add("19:00");
+        SelectedAppointmentTime.getItems().add("20:00");
+        SelectedAppointmentTime.getItems().add("21:00");
+        SelectedAppointmentTime.getItems().add("22:00");
+        SelectedAppointmentTime.getItems().add("23:00");
+        SelectedAppointmentTime.getItems().add("24:00");
+
+
+
 
         contactInfoPane.getChildren().add(ContactInfoLable);
         contactInfoPane.getChildren().add(horizontallineContactINfo);
@@ -452,7 +555,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
 
   
       Pane OfficeInfoPane = new Pane();
-      OfficeInfoPane.setPrefHeight(198);
+      OfficeInfoPane.setPrefHeight(425);
       OfficeInfoPane.setPrefWidth(800);
 
       Label OfficeInfoLabel = new Label("Office Info");
@@ -502,36 +605,27 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
       PatientLabel.setLayoutY(225);
 
     
+      TextField ModalityField = new TextField();
+      ModalityField.setMinHeight(35);
+      ModalityField.setMinWidth(170);
+      ModalityField.setLayoutX(260);
+      ModalityField.setLayoutY(160);
+      ModalityField.setEditable(false);
 
 
+      TextField patientfortheorder = new TextField();
+      patientfortheorder.setPrefHeight(35);
+      patientfortheorder.setPrefWidth(170);
+      patientfortheorder.setLayoutX(260);
+      patientfortheorder.setLayoutY(270);
+      patientfortheorder.setEditable(false);
+      
 
   
-  
 
-        ChoiceBox<String> SelectedPatientChoiceBox = new ChoiceBox<String>();
-        SelectedPatientChoiceBox.setPrefHeight(35);
-        SelectedPatientChoiceBox.setPrefWidth(170);
-        SelectedPatientChoiceBox.setLayoutX(260);
-        SelectedPatientChoiceBox.setLayoutY(270);
         
-        // Adds Patients to the Box
-        try {
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
-
-            String GetChoiceBoxQuery = "Select * from patients";
-            Statement statement = connectDB.createStatement();
-            ResultSet PatientCurrentOutput = statement.executeQuery(GetChoiceBoxQuery);
-
-            while (PatientCurrentOutput.next()) {
-                Patient CurrentPatient = new Patient(PatientCurrentOutput.getInt("patient_id"), PatientCurrentOutput.getString("first_name"), PatientCurrentOutput.getString("last_name"));
-                        SelectedPatientChoiceBox.getItems().add(CurrentPatient.getFirstname() + " " + CurrentPatient.getLastname());
-            }
-
-        } catch (SQLException e1) {
-
-            e1.printStackTrace();
-        }
+       
+        
 
 
       ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
@@ -564,7 +658,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
       RadiologistChoiceBox.setPrefHeight(35);
       RadiologistChoiceBox.setPrefWidth(170);
       RadiologistChoiceBox.setLayoutX(522);
-      RadiologistChoiceBox.setLayoutY(170);
+      RadiologistChoiceBox.setLayoutY(160);
 
 // Adds Radiologists to the Box
 try {
@@ -627,23 +721,41 @@ e1.printStackTrace();
         OfficeInfoPane.getChildren().add(OrdersChoiceBox);
         OfficeInfoPane.getChildren().add(RadiologistChoiceBox);
         OfficeInfoPane.getChildren().add(PatientLabel);
-        OfficeInfoPane.getChildren().add(SelectedPatientChoiceBox);
+        OfficeInfoPane.getChildren().add(patientfortheorder);
         OfficeInfoPane.getChildren().add(EstinatedCosts);
+        OfficeInfoPane.getChildren().add(ModalityField);
      
         Pane BottomPane = new Pane();
-        BottomPane.setPrefHeight(223);
+        BottomPane.setPrefHeight(70);
         BottomPane.setPrefWidth(800);
 
-        Button SaveUserButton = new Button("Save Changes");
+        Button SaveUserButton = new Button("Create Appointment");
         SaveUserButton.setPrefHeight(42);
         SaveUserButton.setPrefWidth(102);
-        SaveUserButton.setLayoutX(509);
-        SaveUserButton.setLayoutY(147);
+        SaveUserButton.setLayoutX(472);
+        SaveUserButton.setLayoutY(15);
         SaveUserButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
         SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+
+                try {
+                    DatabaseConnection connectNow = new DatabaseConnection();
+                    Connection connectDB = connectNow.getConnection();
+
+        DatePicker AppointmentDatePicker = new DatePicker();
+                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, date_time, radiologist, phone_number, email_address) values ('" + OrdersChoiceBox.getValue() + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + RadiologistChoiceBox.getValue() + "', '"+ emailAddressField.getText() +"', '"+ phoneNumberField.getText()+"')";
+                    Statement statement = connectDB.createStatement();
+                    statement.execute(InsertIntoUsersTableQuery);
+                    Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+
+                    stage.close();
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+                }
+
 
             
             }
@@ -653,8 +765,8 @@ e1.printStackTrace();
         Button CancelButton = new Button("Cancel");
         CancelButton.setPrefHeight(42);
         CancelButton.setPrefWidth(102);
-        CancelButton.setLayoutX(654);
-        CancelButton.setLayoutY(147);
+        CancelButton.setLayoutX(644);
+        CancelButton.setLayoutY(15);
         CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
 
         CancelButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -674,7 +786,7 @@ e1.printStackTrace();
         vbox.getChildren().add(OfficeInfoPane);
         vbox.getChildren().add(BottomPane);
 
-        Scene scene = new Scene(scroll , 800, 800);
+        Scene scene = new Scene(vbox , 800, 800);
 
         Stage newWindow = new Stage();
         newWindow.setScene(scene);
@@ -1398,6 +1510,8 @@ e1.printStackTrace();
             }
         });// CLOSES NEW ORDER
 
+
+
         // ALL USERES TABLE POPULATION
         String UsersTableQuery = "select u.user_id, u.full_name, u.username, u.email, ur.role_id, r.name from users as u left join users_roles as ur on ur.user_id = u.user_id left join roles as r on r.role_id = ur.role_id;";
 
@@ -1435,6 +1549,97 @@ e1.printStackTrace();
         } catch (Exception e) {
             System.out.println("error");
         }
+
+
+/*
+     *
+     * Populates Orders
+     * 
+     */ 
+
+    String OrdersTableQuery = "select o.order_id, p.first_name, p.last_name, rmd.full_name, m.name, o.notes, os.order_name from orders as o join patients as p on p.patient_id = o.patient join referralmds as rmd on rmd.id = o.referral_md join modalities as m on m.modality_id = o.modality join order_status as os on os.order_status_id = o.status;";
+
+    try {
+
+        Statement statement = connectDB.createStatement();
+        ResultSet queryOutput = statement.executeQuery(OrdersTableQuery);
+
+        while (queryOutput.next()) {
+        
+            Integer order_id = queryOutput.getInt("order_id");
+            System.out.println(order_id);
+            String patientquery = queryOutput.getString("first_name")+ " " + queryOutput.getString("last_name");
+            String referral_mdquery = queryOutput.getString("full_name");
+            String modalityquery = queryOutput.getString("name");
+            String notesquery = queryOutput.getString("notes");
+            String statusquery = queryOutput.getString("order_name");
+            Button  button = new Button("Modify");
+
+            OrdersTableObservableList.add(
+                    
+            new TABLEOrdersTableController(order_id, patientquery, referral_mdquery, modalityquery, notesquery, statusquery, button)); 
+        }
+
+        OrdersIDColumn.setCellValueFactory(new PropertyValueFactory<>("orderid"));               
+        OrdersPatientNameColumn.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        OrdersReferralDoctorColumn.setCellValueFactory(new PropertyValueFactory<>("referraldoctor"));       
+        OrdersModalityColumn.setCellValueFactory(new PropertyValueFactory<>("modality"));
+        OrdersNotesColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        OrdersStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));           
+        OrdersModifyColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
+                
+        OrdersTable.setItems(null);
+        OrdersTable.setItems(OrdersTableObservableList);
+
+    } catch (Exception e) {
+        System.out.println("error");
+    }
+
+/*
+     *
+     * Appointments Populated
+     * 
+     */ 
+
+    String AppointmentsTableQuery = "select a.appointment_id, p.first_name, p.last_name, a.order_id, a.date_time, r.full_name from appointments as a join patients as p on p.patient_id = a.patient join radiologists as r on r.id = a.radiologist;";
+
+    try {
+
+        Statement statement = connectDB.createStatement();
+        ResultSet queryOutput = statement.executeQuery(AppointmentsTableQuery);
+
+        while (queryOutput.next()) {
+        
+            Integer appointmentIdquery = queryOutput.getInt("appointment_id");
+            String patientquery = queryOutput.getString("first_name")+ " " + queryOutput.getString("last_name");
+            Integer ordernumberquery = queryOutput.getInt("order_id");
+            java.sql.Date datetimequery = queryOutput.getDate("date_time");
+            String radiologistquery = queryOutput.getString("full_name");
+            Button  button = new Button("Modify");
+
+            AppointmentsTableObservableList.add(
+
+            new TABLEAppointmentsTableController(appointmentIdquery, patientquery, ordernumberquery, datetimequery, radiologistquery, button)); 
+        }
+
+        AppointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentid"));               
+        AppintmentPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        AppopintmentsOrderNumber.setCellValueFactory(new PropertyValueFactory<>("ordernumber"));       
+        AppointmentsDateandtime.setCellValueFactory(new PropertyValueFactory<>("datetime"));          
+        AppointmentsRadiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
+        AppointmentsModify.setCellValueFactory(new PropertyValueFactory<>("button"));
+    
+        AppointmentsTable.setItems(null);
+        AppointmentsTable.setItems(AppointmentsTableObservableList);
+
+    } catch (Exception e) {
+        System.out.println("error");
+    }
+
+
+
+
+
 
         // CREATES NEW PATIENT AND WINDOW
         NewPatient.setOnAction(new EventHandler<ActionEvent>() {

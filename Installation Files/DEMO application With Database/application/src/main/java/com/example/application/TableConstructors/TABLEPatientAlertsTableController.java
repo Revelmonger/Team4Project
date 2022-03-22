@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.TableConstructors;
 
 import javafx.scene.control.Button;
 

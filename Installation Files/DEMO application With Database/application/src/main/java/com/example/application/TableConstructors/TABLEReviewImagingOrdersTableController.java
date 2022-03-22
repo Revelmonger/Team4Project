@@ -1,14 +1,14 @@
 
-package com.example.application;
+package com.example.application.TableConstructors;
 
-public class TABLEUnscheduledOrdersTableController {
+public class TABLEReviewImagingOrdersTableController {
 
     String patient;
     String referral_md;
     String modality;
     String notes;
 
-    public TABLEUnscheduledOrdersTableController(String patient, String referral_md, String modality, String notes) {
+    public TABLEReviewImagingOrdersTableController(String patient, String referral_md, String modality, String notes) {
 
         this.patient = patient;
         this.referral_md = referral_md;

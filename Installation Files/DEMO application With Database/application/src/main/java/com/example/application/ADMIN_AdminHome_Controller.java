@@ -8,6 +8,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import com.example.application.TableConstructors.TABLECheckedInAppointmentsTableController;
+import com.example.application.TableConstructors.TABLEPlacedOrdersTableController;
+import com.example.application.TableConstructors.TABLEReviewImagingOrdersTableController;
+import com.example.application.TableConstructors.TABLETodaysAppointmentsTableController;
+import com.example.application.TableConstructors.TABLEUnscheduledOrdersTableController;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
