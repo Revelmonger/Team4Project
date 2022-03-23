@@ -546,7 +546,7 @@ NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
 
 
 
-      Button CreateNewModalityButton = new Button("Save Modality");
+      Button CreateNewModalityButton = new Button("Save Alert");
         CreateNewModalityButton.setPrefHeight(42);
         CreateNewModalityButton.setPrefWidth(102);
         CreateNewModalityButton.setLayoutX(565);
@@ -558,6 +558,26 @@ NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
   
            
+
+                try {
+                    String InsertIntoAlerts = "insert into alerts (alert_name) values ('" + PatientAlertNameField.getText() + " ');";
+                    Statement statement = connectDB.createStatement();
+                    statement.execute(InsertIntoAlerts);
+
+                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                    stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                    FXApp.setRoot("ADMIN_AdminPanel");
+                    
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+          
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
 
 
 
@@ -591,6 +611,7 @@ NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
              
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(CreateNewModalityButton);
+                anchorpane.getChildren().add(PatientAlertNameField);
 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -2748,7 +2769,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
         AnchorPane anchorpane = new AnchorPane();
        
 
-        Label CreateNewModalityLabel = new Label("Create New Modality");
+        Label CreateNewModalityLabel = new Label("Update Modality");
         CreateNewModalityLabel.setLayoutX(46);
         CreateNewModalityLabel.setLayoutY(47);
         CreateNewModalityLabel.setStyle("-fx-font: normal bold 36px 'arial';");
@@ -2997,49 +3018,146 @@ FilteredList<TABLEModalitiesTableController> ModalitiesFilteredData = new Filter
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
     
-            button.setOnAction(new EventHandler<ActionEvent>() {
-    
-    
-    
           
-                @Override
-                public void handle(ActionEvent event) {
-                 ///   BlurBox.setEffect(new BoxBlur(5, 10, 10));
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
+//Modifies Selected Patient Alert
+button.setOnAction(new EventHandler<ActionEvent>() {
+
+   
+    @Override
+    public void handle(ActionEvent event) {
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+         
+        Stage newWindow = new Stage();
+     
+        AnchorPane anchorpane = new AnchorPane();
+       
+
+        Label CreateNewPatientAlertLabel = new Label("Update Patient Alert");
+        CreateNewPatientAlertLabel.setLayoutX(46);
+        CreateNewPatientAlertLabel.setLayoutY(47);
+        CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+        
+
+        Label ModalityName = new Label("Patient Alert Name:");
+        ModalityName.setStyle("-fx-font: normal bold 16px 'arial';");
+        ModalityName.setLayoutX(47);
+        ModalityName.setLayoutY(192);
+
+
+
+        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+        horizontalline.setOpacity(.3);
+        horizontalline.setTranslateY(100);
+
+  
     
+        TextField PatientAlertNameField = new TextField();
+        PatientAlertNameField.setMinHeight(35);
+        PatientAlertNameField.setMinWidth(145);
+        PatientAlertNameField.setLayoutX(47);
+        PatientAlertNameField.setLayoutY(227);
+        PatientAlertNameField.setText(alertnamequery);
+
+
+
+       
+        
+        
+     
+
+
+
+
+      Button CreateNewModalityButton = new Button("Save");
+        CreateNewModalityButton.setPrefHeight(42);
+        CreateNewModalityButton.setPrefWidth(102);
+        CreateNewModalityButton.setLayoutX(565);
+        CreateNewModalityButton.setLayoutY(338);
+        CreateNewModalityButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+  
+           
+
+                try {
+                    String InsertIntoAlerts = "update alerts set alert_name = '" + PatientAlertNameField.getText() + "' where alert_id = '"+ alertidquery+"';";
+                    Statement statement = connectDB.createStatement();
+                    statement.execute(InsertIntoAlerts);
+
+                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                    stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                    FXApp.setRoot("ADMIN_AdminPanel");
                     
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+          
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
                 }
-                
-            });
+
+
+
+
+            
+            }
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(680);
+        CancelButton.setLayoutY(338);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+            }
+        });
+
+                anchorpane.getChildren().add(CreateNewPatientAlertLabel);
+                anchorpane.getChildren().add(ModalityName);
+               
+                anchorpane.getChildren().add(horizontalline);
+             
+                anchorpane.getChildren().add(CancelButton);
+                anchorpane.getChildren().add(CreateNewModalityButton);
+                anchorpane.getChildren().add(PatientAlertNameField);
+
+        Scene scene = new Scene(anchorpane, 800, 400);
+
+        
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                }
+            }
+        });
+        newWindow.show();
+      }
+});// Closes Modified Patient Alert
 
 
                 AlertsTableObservableList.add(

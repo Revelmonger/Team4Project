@@ -3,6 +3,8 @@ package com.example.application.TableConstructors;
 
 import java.sql.Date;
 
+import javafx.scene.control.Button;
+
 public class TABLECheckedInAppointmentsTableController {
 
     String patient;
@@ -10,15 +12,16 @@ public class TABLECheckedInAppointmentsTableController {
     String price;
     Date date_time; // price
     String radiologist;
+    Boolean bool;
 
-    public TABLECheckedInAppointmentsTableController(String patient, String modality, Date date_time,
-            String radiologist, String price) {
+    public TABLECheckedInAppointmentsTableController(String patient, String modality, Date date_time, String radiologist, String price, Boolean bool) {
 
         this.patient = patient;
         this.modality = modality;
         this.date_time = date_time; // price
         this.radiologist = radiologist;
         this.price = price;
+        this.bool = bool;
     }
 
     public String getModality() {
@@ -46,6 +49,15 @@ public class TABLECheckedInAppointmentsTableController {
         return patient;
     }
 
+    
+    public Boolean getBool() {
+
+        return bool;
+    }
+
+    public void setBool(Boolean bool) {
+        this.bool = bool;
+    }
     public void setPatient(String patient) {
         this.patient = patient;
     }

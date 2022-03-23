@@ -28,6 +28,24 @@ import javafx.event.ActionEvent;
 
 public class ADMIN implements Initializable {
 
+
+
+
+    @ FXML
+    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> statusColumn;
+    @FXML
+    private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointmentsCheckedIN;
+    @FXML
+    private TableColumn<TABLEUnscheduledOrdersTableController, Integer> UnscheduledOrdersSchedule;
+    @FXML
+    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> TechCheckedInCompleteOrder;
+    @FXML
+    private TableColumn<TABLEReviewImagingOrdersTableController, Integer> ReviewOrderColumn;
+
+
+
+
+
     String user_id1 = LOGIN.LoggedInUserID;
 
     /*
@@ -412,7 +430,7 @@ public class ADMIN implements Initializable {
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
         // to
         // just
         // like
@@ -432,9 +450,11 @@ public class ADMIN implements Initializable {
                 String pricequery = queryOutput.getString("price");
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
+                Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
+                
 
                 CheckedInAppointmentsObservableList.add(new TABLECheckedInAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery));
+                        modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion));
             }
 
             CheckedInAppointments_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -446,6 +466,7 @@ public class ADMIN implements Initializable {
             CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+            statusColumn.setCellValueFactory(new PropertyValueFactory<>("checked_in"));
 
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);

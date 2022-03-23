@@ -13,14 +13,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMIN">
+<ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="4000.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.ADMIN">
    <content>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1980.0" style="-fx-background-color: #212529;">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="3143.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
             <Pane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
          </left>
          <center>
-            <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="3029.0" prefWidth="1480.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox prefHeight="130.0" prefWidth="1420.0" style="-fx-background-color: #cccccc;">
                      <children>
@@ -109,12 +109,12 @@
                      </children>
                   </HBox>
                   <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #333333;" />
-                  <BorderPane prefHeight="2510.0" prefWidth="1480.0" style="-fx-background-color: #cccccc;">
+                  <BorderPane prefHeight="2984.0" prefWidth="1480.0" style="-fx-background-color: #cccccc;">
                      <top>
                         <Pane prefHeight="35.0" prefWidth="1480.0" BorderPane.alignment="CENTER" />
                      </top>
                      <center>
-                        <VBox prefHeight="1726.0" prefWidth="1430.0" BorderPane.alignment="CENTER">
+                        <VBox prefHeight="2349.0" prefWidth="1430.0" BorderPane.alignment="CENTER">
                            <children>
                               <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
                                  <children>
@@ -165,6 +165,7 @@
                                     <TableColumn fx:id="CheckedInAppointments_Price" editable="false" prefWidth="500.0" text="Price" />
                                     <TableColumn fx:id="CheckedInAppointments_DateandTime" editable="false" prefWidth="259.0" text="Date and Time" />
                                     <TableColumn fx:id="CheckedInAppointments_Radiologist" prefWidth="75.0" text="Radiologist" />
+                                    <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -193,6 +194,7 @@
                                     <TableColumn fx:id="TodaysAppointmentsTable_Prices" editable="false" prefWidth="500.0" text="Price" />
                                     <TableColumn fx:id="TodaysAppointmentsTable_DateandTime" editable="false" prefWidth="259.0" text="Date and Time" />
                                     <TableColumn fx:id="TodaysAppointmentsTable_Radiologist" prefWidth="75.0" text="Radiologist" />
+                                    <TableColumn fx:id="TodaysAppointmentsCheckedIN" prefWidth="75.0" text="Check-in " />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -220,12 +222,41 @@
                                     <TableColumn fx:id="UnscheduledOrdersTable_ReferralMD" editable="false" minWidth="0.0" prefWidth="230.0" text="Referal MD" />
                                     <TableColumn fx:id="UnscheduledOrdersTable_Modality" editable="false" prefWidth="500.0" text="Modality" />
                                     <TableColumn fx:id="UnscheduledOrdersTable_Notes" editable="false" prefWidth="259.0" text="Notes" />
+                                    <TableColumn fx:id="UnscheduledOrdersSchedule" prefWidth="75.0" text="Schedule Appointment" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
                               <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+                              <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="1424.0" text="Checked-In Appointments">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="1182.0" layoutY="11.0" text="Search:">
+                                       <font>
+                                          <Font name="System Bold" size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="searchCheckedInAppointments1" layoutX="1267.0" layoutY="15.0" />
+                                 </children>
+                              </Pane>
+                              <TableView fx:id="TECHNICIANCheckedInAppointmentsTable1" prefHeight="400.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="CheckedInAppointments_Patient1" editable="false" prefWidth="230.0" text="Patient" />
+                                    <TableColumn fx:id="CheckedInAppointments_Modality1" editable="false" minWidth="0.0" prefWidth="230.0" text="Modality" />
+                                    <TableColumn fx:id="CheckedInAppointments_Price1" editable="false" prefWidth="500.0" text="Price" />
+                                    <TableColumn fx:id="CheckedInAppointments_DateandTime1" editable="false" prefWidth="259.0" text="Date and Time" />
+                                    <TableColumn fx:id="CheckedInAppointments_Radiologist1" prefWidth="75.0" text="Radiologist" />
+                                    <TableColumn fx:id="TechCheckedInCompleteOrder" prefWidth="75.0" text="Complete Order" />
+                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
                               <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="1430.0" text="Review Imaging Orders">
@@ -247,11 +278,13 @@
                                     <TableColumn fx:id="ReviewImagingOrdersTable_RefferalMD" editable="false" minWidth="0.0" prefWidth="230.0" text="Referral MD" />
                                     <TableColumn fx:id="ReviewImagingOrdersTable_Modality" editable="false" prefWidth="500.0" text="Modality" />
                                     <TableColumn fx:id="ReviewImagingOrdersTable_Notes" editable="false" prefWidth="259.0" text="Notes" />
+                                    <TableColumn fx:id="ReviewOrderColumn" prefWidth="75.0" text="Review Order" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
+                              <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
                               <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
                            </children>
                         </VBox>
