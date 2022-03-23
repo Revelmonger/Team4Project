@@ -3163,6 +3163,10 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setTranslateY(100);
 
         FileChooser fil_chooser = new FileChooser();
+        java.nio.file.Path p1 = Paths.get(file_path);
+        String p2 = p1.toAbsolutePath().normalize().getParent().toString();
+        System.out.println(p2);
+        fil_chooser.setInitialDirectory(new File(p2));
         
      
         Label label = new Label("No file chosen");
