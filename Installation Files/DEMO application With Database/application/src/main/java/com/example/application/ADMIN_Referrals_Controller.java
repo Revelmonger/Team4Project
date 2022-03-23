@@ -708,9 +708,14 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 
                                             Stage stage = (Stage) CreateOrderButton.getScene().getWindow();
                                             stage.close();
+
+                                            FXApp.setRoot("ADMIN_Referrals");
                 
                                         } catch (SQLException e1) {
                 
+                                            e1.printStackTrace();
+                                        } catch (IOException e1) {
+                                      
                                             e1.printStackTrace();
                                         }
                 
@@ -1114,7 +1119,12 @@ public class ADMIN_Referrals_Controller implements Initializable {
                     Stage stage = (Stage) StartOrderButton.getScene().getWindow();
                     stage.close();
 
+                    FXApp.setRoot("ADMIN_Referrals");
+
                 } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+                } catch (IOException e1) {
 
                     e1.printStackTrace();
                 }

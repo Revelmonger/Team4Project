@@ -8,9 +8,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ResourceBundle;
 
-
+import javax.management.Query;
 
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
@@ -852,19 +853,27 @@ e1.printStackTrace();
                         Statement InsertAppointmentIDStatement = connectDB.createStatement();
                         InsertAppointmentIDStatement.execute(InsertAppointmentID);
                     }
-
                     
                 }
+
                     Stage stage = (Stage) SaveUserButton.getScene().getWindow();
 
                     stage.close();
+
+
+                    FXApp.setRoot("ADMIN_AdminPanel");
+                    
                 } catch (SQLException e1) {
 
                     e1.printStackTrace();
+                } catch (IOException e1) {
+                    
+                    e1.printStackTrace();
                 }
-
-
+                
+               
             }
+
         });
         
 
@@ -1063,6 +1072,9 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
                         Stage stage = (Stage) UploadFileButton.getScene().getWindow();
     
                         stage.close();
+
+                        FXApp.setRoot("ADMIN_AdminPanel");
+
                     } catch (SQLException e1) {
     
                         e1.printStackTrace();
@@ -1273,6 +1285,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
     
                 stage.close();
 
+                FXApp.setRoot("ADMIN_AdminPanel");
+
           }
 
 
@@ -1283,6 +1297,9 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
         catch (SQLException e2){
 
             e2.printStackTrace();
+        } catch (IOException e1) {
+   
+            e1.printStackTrace();
         }
 
 
@@ -1612,8 +1629,14 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                             Stage stage = (Stage) SaveUserButton.getScene().getWindow();
 
                             stage.close();
+
+                            FXApp.setRoot("ADMIN_AdminPanel");
+                            
                         } catch (SQLException e1) {
 
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+  
                             e1.printStackTrace();
                         }
 
@@ -1986,8 +2009,13 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                             Stage stage = (Stage) CreateOrderButton.getScene().getWindow();
                             stage.close();
 
+                            FXApp.setRoot("ADMIN_AdminPanel");
+
                         } catch (SQLException e1) {
 
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+    
                             e1.printStackTrace();
                         }
 
