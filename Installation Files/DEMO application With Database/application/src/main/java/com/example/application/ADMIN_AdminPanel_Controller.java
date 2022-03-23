@@ -12,6 +12,7 @@ import java.sql.Time;
 import java.util.ResourceBundle;
 
 import javax.management.Query;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
@@ -38,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DisplacementMap;
 import javafx.stage.Stage;
 import javafx.collections.*;
@@ -52,6 +54,7 @@ import java.time.format.DateTimeFormatter;
 import org.apache.logging.log4j.util.Strings;
 import org.hibernate.cache.spi.QueryResultsCache;
 import org.hibernate.sql.Select;
+import org.hibernate.type.SerializableToBlobType;
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
 import org.yaml.snakeyaml.emitter.Emitable;
 
@@ -76,6 +79,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 
 import javafx.stage.StageStyle;
+import javafx.util.FXPermission;
 import net.bytebuddy.asm.Advice.OffsetMapping.Target.ForArray.ReadOnly;
 import javafx.event.EventHandler;
 import javafx.application.*;
@@ -101,6 +105,9 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
     private Button AppointmentsButton;
     @FXML
     private Button OrdersButton;
+
+    @FXML
+   private ScrollPane BlurBox;
 
     /*
      * 
@@ -495,6 +502,7 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
    
     @Override
     public void handle(ActionEvent event) {
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
          
         Stage newWindow = new Stage();
@@ -548,7 +556,7 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
 
 
 
-      Button CreateNewModalityButton = new Button("Upload File");
+      Button CreateNewModalityButton = new Button("Save Modality");
         CreateNewModalityButton.setPrefHeight(42);
         CreateNewModalityButton.setPrefWidth(102);
         CreateNewModalityButton.setLayoutX(565);
@@ -569,6 +577,8 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
 
                     Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
                     stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                     FXApp.setRoot("ADMIN_AdminPanel");
                     
                 } catch (SQLException e1) {
@@ -600,6 +610,8 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
             }
         });
 
@@ -627,6 +639,8 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });
@@ -670,7 +684,9 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
     @Override
     public void handle(ActionEvent event) {
 
-       
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+
 
         VBox vbox = new VBox();
 
@@ -1044,6 +1060,8 @@ e1.printStackTrace();
                     Stage stage = (Stage) SaveUserButton.getScene().getWindow();
 
                     stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
 
 
                     FXApp.setRoot("ADMIN_AdminPanel");
@@ -1074,6 +1092,8 @@ e1.printStackTrace();
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
             }
         });
 
@@ -1101,6 +1121,8 @@ e1.printStackTrace();
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });
@@ -1126,7 +1148,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
    
     @Override
     public void handle(ActionEvent event) {
-
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
          
            Stage newWindow = new Stage();
      
@@ -1154,7 +1176,12 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setOpacity(.3);
         horizontalline.setTranslateY(100);
 
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
+
         FileChooser fil_chooser = new FileChooser();
+        fil_chooser.getExtensionFilters().add(extFilter);
+
         Label label = new Label("No file chosen");
         label.setPrefHeight(30);
         label.setPrefWidth(340);
@@ -1257,6 +1284,8 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
                         Stage stage = (Stage) UploadFileButton.getScene().getWindow();
     
                         stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
 
                         FXApp.setRoot("ADMIN_AdminPanel");
 
@@ -1295,6 +1324,8 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
             }
         });
 
@@ -1322,6 +1353,8 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });
@@ -1341,6 +1374,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
    
     @Override
     public void handle(ActionEvent event) {
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
          
            Stage newWindow = new Stage();
@@ -1471,6 +1505,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
     
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                 FXApp.setRoot("ADMIN_AdminPanel");
 
@@ -1508,6 +1543,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
             }
         });
 
@@ -1536,6 +1573,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });
@@ -1603,6 +1642,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+                BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
                 VBox vbox = new VBox();
 
@@ -1710,7 +1750,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 UserRole.getItems().add("TECHNICIAN");
                 UserRole.getItems().add("RADIOLOGIST");
 
-                Label UserPassword = new Label("Change Password:");
+                Label UserPassword = new Label("Password:");
                 UserPassword.setStyle("-fx-font: normal bold 16px 'arial';");
                 UserPassword.setMinHeight(55);
                 UserPassword.setMinWidth(128);
@@ -1814,8 +1854,9 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                             }
 
                             Stage stage = (Stage) SaveUserButton.getScene().getWindow();
-
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
                             stage.close();
+                            
 
                             FXApp.setRoot("ADMIN_AdminPanel");
                             
@@ -1843,6 +1884,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent e) {
                         Stage stage = (Stage) CancelButton.getScene().getWindow();
                         stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                     }
                 });
 
@@ -1870,6 +1913,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                         KeyCode key = t.getCode();
                         if (key == KeyCode.ESCAPE) {
                             newWindow.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                         }
                     }
                 });
@@ -1882,6 +1927,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+                BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
                 VBox vbox = new VBox();
 
@@ -2195,6 +2241,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
                             Stage stage = (Stage) CreateOrderButton.getScene().getWindow();
                             stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
 
                             FXApp.setRoot("ADMIN_AdminPanel");
 
@@ -2222,7 +2270,11 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent e) {
                         Stage stage = (Stage) CancelButton.getScene().getWindow();
                         stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                     }
+
+
                 });
 
                 BottomPane.getChildren().add(CreateOrderButton);
@@ -2249,6 +2301,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                         KeyCode key = t.getCode();
                         if (key == KeyCode.ESCAPE) {
                             newWindow.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                         }
                     }
                 });
@@ -2265,6 +2319,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+                BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
                 VBox vbox = new VBox();
 
@@ -2428,7 +2483,10 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                             statement.execute(PlacedOrdersTableQuery);
                             Stage stage = (Stage) StartOrderButton.getScene().getWindow();
                             stage.close();
-                        } catch (SQLException e1) {
+                            FXApp.setRoot("ADMIN_AdminPanel");                         
+                               BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                        } catch (SQLException | IOException e1) {
 
                             e1.printStackTrace();
                         }
@@ -2448,6 +2506,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent e) {
                         Stage stage = (Stage) CancelButton.getScene().getWindow();
                         stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                     }
                 });
 
@@ -2475,6 +2535,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                         KeyCode key = t.getCode();
                         if (key == KeyCode.ESCAPE) {
                             newWindow.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                         }
                     }
                 });
@@ -2552,44 +2614,179 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
     
+//Modifys Selected Modality
             button.setOnAction(new EventHandler<ActionEvent>() {
     
-    
-    
-          
                 @Override
                 public void handle(ActionEvent event) {
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
+                    BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+        Stage newWindow = new Stage();
+     
+        AnchorPane anchorpane = new AnchorPane();
+       
+
+        Label CreateNewModalityLabel = new Label("Create New Modality");
+        CreateNewModalityLabel.setLayoutX(46);
+        CreateNewModalityLabel.setLayoutY(47);
+        CreateNewModalityLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+        
+
+        Label ModalityName = new Label("Modality Name:");
+        ModalityName.setStyle("-fx-font: normal bold 16px 'arial';");
+        ModalityName.setLayoutX(47);
+        ModalityName.setLayoutY(192);
+
+        Label modalityPriceLabel = new Label("Modality Price:");
+        modalityPriceLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        modalityPriceLabel.setLayoutX(350);
+        modalityPriceLabel.setLayoutY(192);
+     
+
+        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+        horizontalline.setOpacity(.3);
+        horizontalline.setTranslateY(100);
+
+  
     
+        TextField ModalityNameTextField = new TextField();
+        ModalityNameTextField.setMinHeight(35);
+        ModalityNameTextField.setMinWidth(145);
+        ModalityNameTextField.setLayoutX(47);
+        ModalityNameTextField.setLayoutY(227);
+
+
+
+       
+        
+        
+        
+        TextField ModalityPriceTextField = new TextField();
+        ModalityPriceTextField.setMinHeight(35);
+        ModalityPriceTextField.setMinWidth(145);
+        ModalityPriceTextField.setLayoutX(350);
+        ModalityPriceTextField.setLayoutY(227);
+  
+     
+
+
+
+
+      Button CreateNewModalityButton = new Button("Save");
+        CreateNewModalityButton.setPrefHeight(42);
+        CreateNewModalityButton.setPrefWidth(102);
+        CreateNewModalityButton.setLayoutX(565);
+        CreateNewModalityButton.setLayoutY(338);
+        CreateNewModalityButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+  
+                try {
+                    String InstertIntoModalitiesTable = "";
+                    Statement statement = connectDB.createStatement();
+                    statement.execute(InstertIntoModalitiesTable);
+
+                  
+
+
+                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                    stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                    FXApp.setRoot("ADMIN_AdminPanel");
+                    
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+          
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
+
+
+
+            
+            }
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(680);
+        CancelButton.setLayoutY(338);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+            }
+        });
+
+                anchorpane.getChildren().add(CreateNewModalityLabel);
+                anchorpane.getChildren().add(ModalityName);
+                anchorpane.getChildren().add(modalityPriceLabel);
+                anchorpane.getChildren().add(horizontalline);
+                anchorpane.getChildren().add(ModalityPriceTextField);
+      
+                anchorpane.getChildren().add(ModalityNameTextField);
+                anchorpane.getChildren().add(CancelButton);
+                anchorpane.getChildren().add(CreateNewModalityButton);
+
+        Scene scene = new Scene(anchorpane, 800, 400);
+
+        
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                }
+            }
+        });
+        newWindow.show();
+// Closes Modify Modality
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     
                 }
                 
@@ -2685,6 +2882,7 @@ FilteredList<TABLEModalitiesTableController> ModalitiesFilteredData = new Filter
           
                 @Override
                 public void handle(ActionEvent event) {
+                 ///   BlurBox.setEffect(new BoxBlur(5, 10, 10));
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2805,7 +3003,8 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
 
                         @Override
                         public void handle(ActionEvent event) {
-            
+                            BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
                             VBox vbox = new VBox();
             
                             Pane newPane = new Pane();
@@ -2971,6 +3170,9 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                                         statement.execute(PlacedOrdersTableQuery);
                                         Stage stage = (Stage) SaveModifiedPatient.getScene().getWindow();
                                         stage.close();
+                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                        
                                     } catch (SQLException e1) {
             
                                         e1.printStackTrace();
@@ -2991,6 +3193,8 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                                 public void handle(ActionEvent e) {
                                     Stage stage = (Stage) CancelButton.getScene().getWindow();
                                     stage.close();
+                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                                 }
                             });
             
@@ -3018,6 +3222,8 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                                     KeyCode key = t.getCode();
                                     if (key == KeyCode.ESCAPE) {
                                         newWindow.close();
+                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                                     }
                                 }
                             });
@@ -3135,7 +3341,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
     @Override
     public void handle(ActionEvent event) {
 
-         
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
         Stage newWindow = new Stage();
      
         AnchorPane anchorpane = new AnchorPane();
@@ -3163,6 +3370,11 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setTranslateY(100);
 
         FileChooser fil_chooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
+
+       
+        fil_chooser.getExtensionFilters().add(extFilter);
+
         java.nio.file.Path p1 = Paths.get(file_path);
         String p2 = p1.toAbsolutePath().normalize().getParent().toString();
         System.out.println(p2);
@@ -3230,24 +3442,89 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
 
 
-      Button UploadFileButton = new Button("Upload File");
-        UploadFileButton.setPrefHeight(42);
-        UploadFileButton.setPrefWidth(102);
-        UploadFileButton.setLayoutX(565);
-        UploadFileButton.setLayoutY(338);
-        UploadFileButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+      Button FileModifyButton = new Button("Save");
+        FileModifyButton.setPrefHeight(42);
+        FileModifyButton.setPrefWidth(102);
+        FileModifyButton.setLayoutX(565);
+        FileModifyButton.setLayoutY(338);
+        FileModifyButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
-        UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
+        FileModifyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
   
+                
+
+
+
+
                 try {
-
-
+                    DatabaseConnection connectNow = new DatabaseConnection();
+                    Connection connectDB = connectNow.getConnection();
+        
+                    int index =  label.getText().lastIndexOf('.');
                  
-                } catch (Exception e2) {
-                        e2.printStackTrace();
+                    if(index > 0) {
+                      extension  = label.getText().substring(index + 1);
+                
+                    } 
+                    if(index > 0) {
+                   
+                        java.nio.file.Path path = Paths.get(label.getText());         
+                       fileName = path.getFileName().toString();
                     }
+
+
+        
+                        String InsertIntoFileUploadQuery = "update file_uploads set order_id = '" + OrdersChoiceBox.getValue() + "', file_name = '" + fileName + "', file_type = '"+ extension + "', is_active = " +"true" + ", upload_path = '" + label.getText() + "' where file_upload_id = '" + uploadidquery + "';";
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(InsertIntoFileUploadQuery);
+                        Stage stage = (Stage) FileModifyButton.getScene().getWindow();
+            
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                        FXApp.setRoot("ADMIN_AdminPanel");
+        
+                  
+        
+        
+        
+                  
+        
+                }
+                catch (SQLException e2){
+        
+                    e2.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             
@@ -3267,6 +3544,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
             }
         });
 
@@ -3278,7 +3557,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 anchorpane.getChildren().add(button);
                 anchorpane.getChildren().add(label);
                 anchorpane.getChildren().add(CancelButton);
-                anchorpane.getChildren().add(UploadFileButton);
+                anchorpane.getChildren().add(FileModifyButton);
 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -3294,6 +3573,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });
@@ -3390,6 +3671,7 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
 
         @Override
         public void handle(ActionEvent event) {
+            BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
             VBox vbox = new VBox();
 
@@ -3600,7 +3882,7 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
             BottomPane.setPrefHeight(223);
             NamesPane.setPrefWidth(800);
 
-            Button CreateOrderButton = new Button("Create Order");
+            Button CreateOrderButton = new Button("Save");
             CreateOrderButton.setPrefHeight(42);
             CreateOrderButton.setPrefWidth(102);
             CreateOrderButton.setLayoutX(509);
@@ -3629,6 +3911,8 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
                 public void handle(ActionEvent e) {
                     Stage stage = (Stage) CancelButton.getScene().getWindow();
                     stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             });
 
@@ -3656,6 +3940,8 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
                     KeyCode key = t.getCode();
                     if (key == KeyCode.ESCAPE) {
                         newWindow.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                     }
                 }
             });
@@ -3767,8 +4053,6 @@ FilteredList<TABLEOrdersTableController> OrdersFilteredData = new FilteredList<>
 
 
 
-
-
             String radiologistquery = queryOutput.getString("full_name");
             String phoneNumbeQuery = queryOutput.getString("phone_number");
             String email_addressQuery = queryOutput.getString("email_address");
@@ -3785,12 +4069,10 @@ FilteredList<TABLEOrdersTableController> OrdersFilteredData = new FilteredList<>
     @Override
     public void handle(ActionEvent event) {
 
-       
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
 
         VBox vbox = new VBox();
-
-        
-
         Pane newPane = new Pane();
         newPane.setLayoutX(0);
         newPane.setLayoutY(0);
@@ -4100,7 +4382,7 @@ EstinatedCosts.setEditable(false);
         BottomPane.setPrefHeight(70);
         BottomPane.setPrefWidth(800);
 
-        Button SaveUserButton = new Button("Create Appointment");
+        Button SaveUserButton = new Button("Save");
         SaveUserButton.setPrefHeight(42);
         SaveUserButton.setPrefWidth(102);
         SaveUserButton.setLayoutX(472);
@@ -4127,32 +4409,19 @@ EstinatedCosts.setEditable(false);
         CancelButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                try {
-                    DatabaseConnection connectNow = new DatabaseConnection();
-                    Connection connectDB = connectNow.getConnection();
-        
                
-                        String UpdateAppointmentQuery = "";
-
-                        Statement statement = connectDB.createStatement();
-                        statement.execute(UpdateAppointmentQuery);
-
-
+                  
                         Stage stage = (Stage) SaveUserButton.getScene().getWindow();
             
                         stage.close();
         
-                        FXApp.setRoot("ADMIN_AdminPanel");
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
         
         
-                }
-                catch (SQLException e2){
-        
-                    e2.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                
+               
+               
             }
         });
 
@@ -4180,6 +4449,8 @@ EstinatedCosts.setEditable(false);
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });
@@ -4278,6 +4549,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
 
             @Override
             public void handle(ActionEvent event) {
+                BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
                 VBox vbox = new VBox();
 
@@ -4412,7 +4684,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 BottomPane.setPrefHeight(223);
                 NamesPane.setPrefWidth(800);
 
-                Button SaveUserButton = new Button("Save Changes");
+                Button SaveUserButton = new Button("Save");
                 SaveUserButton.setPrefHeight(42);
                 SaveUserButton.setPrefWidth(102);
                 SaveUserButton.setLayoutX(509);
@@ -4447,7 +4719,8 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                         Stage stage = (Stage) SaveUserButton.getScene().getWindow();
             
                         stage.close();
-        
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                         FXApp.setRoot("ADMIN_AdminPanel");
         
         
@@ -4477,6 +4750,8 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                     public void handle(ActionEvent e) {
                         Stage stage = (Stage) CancelButton.getScene().getWindow();
                         stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                     }
                 });
 
@@ -4504,6 +4779,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                         KeyCode key = t.getCode();
                         if (key == KeyCode.ESCAPE) {
                             newWindow.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
                         }
                     }
                 });
@@ -4615,7 +4891,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
     @Override
     public void handle(ActionEvent event) {
 
-         
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
            Stage newWindow = new Stage();
      
         AnchorPane anchorpane = new AnchorPane();
@@ -4747,6 +5024,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
     
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                 FXApp.setRoot("ADMIN_AdminPanel");
 
@@ -4784,6 +5062,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                 stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
             }
         });
 
@@ -4812,6 +5092,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
                     newWindow.close();
+                                                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                 }
             }
         });

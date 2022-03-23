@@ -22,7 +22,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 
-public class ADMINAPPOINTMENTS_CONTROLLER implements Initializable {
+public class ADMIN_Appointments_Controller implements Initializable {
 
     /*
      * 

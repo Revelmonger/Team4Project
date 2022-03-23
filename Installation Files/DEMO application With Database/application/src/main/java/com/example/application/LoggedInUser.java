@@ -1,7 +1,7 @@
 
 package com.example.application;
 
-public class LoggedInUser extends LoginController {
+public class LoggedInUser extends LOGIN {
 
     public String user_id;
 

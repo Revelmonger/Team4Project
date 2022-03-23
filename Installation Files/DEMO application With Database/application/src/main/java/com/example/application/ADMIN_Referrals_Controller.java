@@ -33,8 +33,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -72,6 +74,9 @@ public class ADMIN_Referrals_Controller implements Initializable {
     private Button AppointmentsButton;
     @FXML
     private Button OrdersButton;
+
+    @FXML
+    private AnchorPane BlurBox;
 
     /*
      * 
@@ -220,32 +225,11 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
                 button.setOnAction(new EventHandler<ActionEvent>() {
 
-
-
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
                     @Override
                     public void handle(ActionEvent event) {
-
+                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
                         
+
                         VBox vbox = new VBox();
 
                         Pane newPane = new Pane();
@@ -411,7 +395,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 Stage stage = (Stage) StartOrderButton.getScene().getWindow();
                         
                                 stage.close();
-
                                 VBox vbox = new VBox();
                 
                                 Pane newPane = new Pane();
@@ -708,6 +691,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 
                                             Stage stage = (Stage) CreateOrderButton.getScene().getWindow();
                                             stage.close();
+                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                             FXApp.setRoot("ADMIN_Referrals");
                 
@@ -735,7 +719,10 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                     public void handle(ActionEvent e) {
                                         Stage stage = (Stage) CancelButton.getScene().getWindow();
                                         stage.close();
+                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                                     }
+
                                 });
                 
                                 BottomPane.getChildren().add(CreateOrderButton);
@@ -762,6 +749,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                         KeyCode key = t.getCode();
                                         if (key == KeyCode.ESCAPE) {
                                             newWindow.close();
+                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                                         }
                                     }
                                 });
@@ -784,6 +773,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                             public void handle(ActionEvent e) {
                                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                                 stage.close();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                             }
                         });
 
@@ -811,6 +802,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 KeyCode key = t.getCode();
                                 if (key == KeyCode.ESCAPE) {
                                     newWindow.close();
+                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                                 }
                             }
                         });
@@ -945,6 +938,9 @@ public class ADMIN_Referrals_Controller implements Initializable {
     //Creates New Patient
     public void NewPatientGeneration() throws IOException {
 
+  
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+       
         VBox vbox = new VBox();
 
         Pane newPane = new Pane();
@@ -1116,8 +1112,15 @@ public class ADMIN_Referrals_Controller implements Initializable {
                     Statement statement = connectDB.createStatement();
                     statement.execute(PlacedOrdersTableQuery);
 
+                    
+                    
+                    
+                    
+                    
+                    
                     Stage stage = (Stage) StartOrderButton.getScene().getWindow();
                     stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                     FXApp.setRoot("ADMIN_Referrals");
 
@@ -1143,6 +1146,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
             @Override
             public void handle(ActionEvent e) {
                 Stage stage = (Stage) CancelButton.getScene().getWindow();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
                 stage.close();
             }
         });
@@ -1170,6 +1174,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
             public void handle(KeyEvent t) {
                 KeyCode key = t.getCode();
                 if (key == KeyCode.ESCAPE) {
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
                     newWindow.close();
                 }
             }

@@ -26,9 +26,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 
-public class ADMIN_AdminHome_Controller implements Initializable {
+public class ADMIN implements Initializable {
 
-    String user_id1 = LoginController.LoggedInUserID;
+    String user_id1 = LOGIN.LoggedInUserID;
 
     /*
      * 
