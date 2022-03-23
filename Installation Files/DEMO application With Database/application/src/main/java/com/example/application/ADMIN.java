@@ -32,15 +32,15 @@ public class ADMIN implements Initializable {
 
 
     @ FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> statusColumn;
+    private TableColumn<TABLECheckedInAppointmentsTableController, Boolean> statusColumn;
     @FXML
-    private TableColumn<TABLETodaysAppointmentsTableController, Integer> TodaysAppointmentsCheckedIN;
+    private TableColumn<TABLETodaysAppointmentsTableController, Button> TodaysAppointmentsCheckedIN;
     @FXML
-    private TableColumn<TABLEUnscheduledOrdersTableController, Integer> UnscheduledOrdersSchedule;
+    private TableColumn<TABLEUnscheduledOrdersTableController, Button> UnscheduledOrdersSchedule;
     @FXML
-    private TableColumn<TABLECheckedInAppointmentsTableController, Integer> TechCheckedInCompleteOrder;
+    private TableColumn<TABLECheckedInAppointmentsTableController, Button> TechCheckedInCompleteOrder;
     @FXML
-    private TableColumn<TABLEReviewImagingOrdersTableController, Integer> ReviewOrderColumn;
+    private TableColumn<TABLEReviewImagingOrdersTableController, Button> ReviewOrderColumn;
 
 
 
