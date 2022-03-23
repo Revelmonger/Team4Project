@@ -3058,47 +3058,6 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
   
                 try {
-                  
-                  
-
-
-                    try {
-
-                       
-                        int index =  label.getText().lastIndexOf('.');
-                 
-                        if(index > 0) {
-                          extension  = label.getText().substring(index + 1);
-                    
-                        } 
-                        if(index > 0) {
-                       
-                            java.nio.file.Path path = Paths.get(label.getText());         
-                           fileName = path.getFileName().toString();
-                        }
-    
-
-                        DatabaseConnection connectNow = new DatabaseConnection();
-                        Connection connectDB = connectNow.getConnection();
-    
-           
-                        String InsertIntoUploadsTable = "";
-                        Statement statement = connectDB.createStatement();
-
-                        statement.execute(InsertIntoUploadsTable);
-                        Stage stage = (Stage) UploadFileButton.getScene().getWindow();
-    
-                        stage.close();
-                    } catch (SQLException e1) {
-    
-                        e1.printStackTrace();
-                    }
-    
-
-
-
-
-
 
 
                  
@@ -4403,7 +4362,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
     
-//Creates New Diagnostic Report
+//Modift Diagnostic Report
 button.setOnAction(new EventHandler<ActionEvent>() {
 
     
