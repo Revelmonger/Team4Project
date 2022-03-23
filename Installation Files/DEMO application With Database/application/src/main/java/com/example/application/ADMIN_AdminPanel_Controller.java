@@ -4127,8 +4127,32 @@ EstinatedCosts.setEditable(false);
         CancelButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Stage stage = (Stage) CancelButton.getScene().getWindow();
-                stage.close();
+                try {
+                    DatabaseConnection connectNow = new DatabaseConnection();
+                    Connection connectDB = connectNow.getConnection();
+        
+               
+                        String UpdateAppointmentQuery = "";
+
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(UpdateAppointmentQuery);
+
+
+                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+            
+                        stage.close();
+        
+                        FXApp.setRoot("ADMIN_AdminPanel");
+        
+        
+                }
+                catch (SQLException e2){
+        
+                    e2.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -4357,6 +4381,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 UserRole.setLayoutX(35);
                 UserRole.setLayoutY(45);
                 UserRole.setValue(rolequery);
+                UserRole.setDisable(true);
 
                 UserRole.getItems().add("ADMIN");
                 UserRole.getItems().add("USER");
@@ -4397,7 +4422,43 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
+                       
+                try {
+                    DatabaseConnection connectNow = new DatabaseConnection();
+                    Connection connectDB = connectNow.getConnection();
+        
+               
+                        String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText() + "', full_name = '" + displayNameField.getText() + "', email = '" + EmailAddressField.getText() + "', password = '" + PasswordField.getText() + "' where user_id = '" + userIDquery + "';";
+                        String UpdateRadiologistTableQuery = "update radiologists set full_name = '" + displayNameField.getText() + "' where user_id = '" + userIDquery + "';";
+                        String UpdateRefferalmdTableQuery = "update referralmds  set full_name = '" + displayNameField.getText() + "' where user_id = '" + userIDquery + "';";
 
+
+
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(InsertIntoUsersTableQuery);
+
+                        Statement statement2 = connectDB.createStatement();
+                        statement2.execute(UpdateRadiologistTableQuery);
+                        
+                        Statement statement3 = connectDB.createStatement();
+                        statement3.execute(UpdateRefferalmdTableQuery);
+                        
+                        
+                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+            
+                        stage.close();
+        
+                        FXApp.setRoot("ADMIN_AdminPanel");
+        
+        
+                }
+                catch (SQLException e2){
+        
+                    e2.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                       
 
                     }
@@ -4669,7 +4730,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
        
 
-            String RadiologistQuery = "";
+            String RadiologistQuery = "select id from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
             Statement statement2 = connectDB.createStatement();
             ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
 
@@ -4680,12 +4741,14 @@ button.setOnAction(new EventHandler<ActionEvent>() {
              while (RadiologistsID.next()) {
                 Integer  RadiologistID = RadiologistsID.getInt("id");
 
-                String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  radiologist, diagnostic) values ('"+ OrdersChoiceBox.getValue() + "', '" + RadiologistID + "', '"+ ReportArea.getText() + "');";
+                String InsertIntoUsersTableQuery = "update diagnostic_reports set order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + RadiologistID + "', diagnostic = '"+ ReportArea.getText() + "' where diagnostic_report_id = '" + reportidquery + "';";
                 Statement statement = connectDB.createStatement();
                 statement.execute(InsertIntoUsersTableQuery);
                 Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
     
                 stage.close();
+
+                FXApp.setRoot("ADMIN_AdminPanel");
 
           }
 
@@ -4697,6 +4760,9 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         catch (SQLException e2){
 
             e2.printStackTrace();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
 
 
