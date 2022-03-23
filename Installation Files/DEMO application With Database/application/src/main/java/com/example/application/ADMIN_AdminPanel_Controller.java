@@ -472,15 +472,196 @@ ObservableList<TABLEDiagnosticReportsTableController> DiagnosticReportsObservabl
 @FXML
 private Button NewFileUpload;
 
-
+@FXML
+private Button NewModalities;
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
 
+
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
+
+
+
+
+
+
+//Creates New Modality
+NewModalities.setOnAction(new EventHandler<ActionEvent>() {
+
+   
+    @Override
+    public void handle(ActionEvent event) {
+
+         
+        Stage newWindow = new Stage();
+     
+        AnchorPane anchorpane = new AnchorPane();
+       
+
+        Label CreateNewModalityLabel = new Label("Create New Modality");
+        CreateNewModalityLabel.setLayoutX(46);
+        CreateNewModalityLabel.setLayoutY(47);
+        CreateNewModalityLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+        
+
+        Label ModalityName = new Label("Modality Name:");
+        ModalityName.setStyle("-fx-font: normal bold 16px 'arial';");
+        ModalityName.setLayoutX(47);
+        ModalityName.setLayoutY(192);
+
+        Label modalityPriceLabel = new Label("Modality Price:");
+        modalityPriceLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        modalityPriceLabel.setLayoutX(350);
+        modalityPriceLabel.setLayoutY(192);
+     
+
+        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+        horizontalline.setOpacity(.3);
+        horizontalline.setTranslateY(100);
+
+  
+    
+        TextField ModalityNameTextField = new TextField();
+        ModalityNameTextField.setMinHeight(35);
+        ModalityNameTextField.setMinWidth(145);
+        ModalityNameTextField.setLayoutX(47);
+        ModalityNameTextField.setLayoutY(227);
+
+
+
+       
+        
+        
+        
+        TextField ModalityPriceTextField = new TextField();
+        ModalityPriceTextField.setMinHeight(35);
+        ModalityPriceTextField.setMinWidth(145);
+        ModalityPriceTextField.setLayoutX(350);
+        ModalityPriceTextField.setLayoutY(227);
+  
+     
+
+
+
+
+      Button CreateNewModalityButton = new Button("Upload File");
+        CreateNewModalityButton.setPrefHeight(42);
+        CreateNewModalityButton.setPrefWidth(102);
+        CreateNewModalityButton.setLayoutX(565);
+        CreateNewModalityButton.setLayoutY(338);
+        CreateNewModalityButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+  
+                try {
+                    String InstertIntoModalitiesTable = "insert into modalities (name, price) values ('" + ModalityNameTextField.getText() + "', '"+ ModalityPriceTextField.getText() +"')";
+                    Statement statement = connectDB.createStatement();
+                    statement.execute(InstertIntoModalitiesTable);
+
+                  
+
+
+                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                    stage.close();
+                    FXApp.setRoot("ADMIN_AdminPanel");
+                    
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+          
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
+
+
+
+            
+            }
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(680);
+        CancelButton.setLayoutY(338);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+            }
+        });
+
+                anchorpane.getChildren().add(CreateNewModalityLabel);
+                anchorpane.getChildren().add(ModalityName);
+                anchorpane.getChildren().add(modalityPriceLabel);
+                anchorpane.getChildren().add(horizontalline);
+                anchorpane.getChildren().add(ModalityPriceTextField);
+      
+                anchorpane.getChildren().add(ModalityNameTextField);
+                anchorpane.getChildren().add(CancelButton);
+                anchorpane.getChildren().add(CreateNewModalityButton);
+
+        Scene scene = new Scene(anchorpane, 800, 400);
+
+        
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                }
+            }
+        });
+        newWindow.show();
+      }
+});// Closes New Modality
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  // CREATES NEW Appointment
@@ -950,7 +1131,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
            Stage newWindow = new Stage();
      
         AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setStyle("-fx-background-color: white;");
+       
 
         Label CreateFileLabel = new Label("Create New File Upload");
         CreateFileLabel.setLayoutX(46);
@@ -1165,7 +1346,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
            Stage newWindow = new Stage();
      
         AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setStyle("-fx-background-color: white;");
+      
 
         Label CreateFileLabel = new Label("Create New Diagnostic Report");
         CreateFileLabel.setLayoutX(46);
@@ -2639,7 +2820,6 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                             PatientOverviewLabe.setLayoutY(27);
                             PatientOverviewLabe.setMinHeight(55);
                             PatientOverviewLabe.setMinWidth(281);
-            
                             Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
                             horizontalline.setTranslateX(100);
                             horizontalline.setTranslateY(110);
@@ -2959,7 +3139,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         Stage newWindow = new Stage();
      
         AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setStyle("-fx-background-color: white;");
+      
 
         Label CreateFileLabel = new Label("Change File");
         CreateFileLabel.setLayoutX(46);
@@ -4374,7 +4554,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
            Stage newWindow = new Stage();
      
         AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setStyle("-fx-background-color: white;");
+   
 
         Label CreateFileLabel = new Label("Change Report");
         CreateFileLabel.setLayoutX(46);
