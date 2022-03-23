@@ -1,24 +1,32 @@
 
 package com.example.application.TableConstructors;
 
+import javafx.scene.control.Button;
+
 public class TABLEReviewImagingOrdersTableController {
 
     String patient;
     String referral_md;
     String modality;
     String notes;
+    Button button;
 
-    public TABLEReviewImagingOrdersTableController(String patient, String referral_md, String modality, String notes) {
+    public TABLEReviewImagingOrdersTableController(String patient, String referral_md, String modality, String notes, Button button) {
 
         this.patient = patient;
         this.referral_md = referral_md;
         this.modality = modality;
         this.notes = notes;
+        this.button = button;
     }
 
     public String getModality() {
 
         return modality;
+    }
+    public Button getButton() {
+
+        return button;
     }
 
     public String getNotes() {
@@ -47,7 +55,9 @@ public class TABLEReviewImagingOrdersTableController {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-
+    public void setButton(Button button) {
+        this.button = button;
+    }
     public void setReferral_md(String referral_md) {
         this.referral_md = referral_md;
     }
