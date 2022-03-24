@@ -1319,11 +1319,16 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setOpacity(.3);
         horizontalline.setTranslateY(100);
 
-
+        FileChooser fil_chooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
 
-        FileChooser fil_chooser = new FileChooser();
+       
         fil_chooser.getExtensionFilters().add(extFilter);
+
+    
+
+
+        
 
         Label label = new Label("No file chosen");
         label.setPrefHeight(30);
@@ -3625,11 +3630,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
        
         fil_chooser.getExtensionFilters().add(extFilter);
 
-        java.nio.file.Path p1 = Paths.get(file_path);
-        String p2 = p1.toAbsolutePath().normalize().getParent().toString();
-        System.out.println(p2);
-        fil_chooser.setInitialDirectory(new File(p2));
-        
+       
      
         Label label = new Label("No file chosen");
         label.setPrefHeight(30);
