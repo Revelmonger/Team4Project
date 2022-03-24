@@ -4868,7 +4868,19 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
     }
 
 
+
+
+
+
+
+
+
+
+    
         // ALL USERES TABLE POPULATION
+
+
+
         String UsersTableQuery = "select u.user_id, u.full_name, u.username, u.email, ur.role_id, r.name, u.password from users as u left join users_roles as ur on ur.user_id = u.user_id left join roles as r on r.role_id = ur.role_id;";
 
         try {
@@ -4879,7 +4891,6 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
             while (queryOutput.next()) {
 
                 Integer userIDquery = queryOutput.getInt("user_id");
-
                 String usernamequery = queryOutput.getString("username");
                 String displaynamequery = queryOutput.getString("full_name");
                 String emailquery = queryOutput.getString("email");
@@ -5145,7 +5156,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                                 rolequery, button));
             }
 
-            Users_UserId.setCellValueFactory(new PropertyValueFactory<>("Userid"));
+            Users_UserId.setCellValueFactory(new PropertyValueFactory<>("userid"));
             UsersUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
             UsersDisplayName.setCellValueFactory(new PropertyValueFactory<>("displayname"));
             UsersEmail.setCellValueFactory(new PropertyValueFactory<>("email"));

@@ -28,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
@@ -41,6 +42,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
 import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -794,7 +798,7 @@ private ScrollPane BlurBox;
          * 
          */
 
-        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
+        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes, o.order_id from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
         // to
         // just
         // like
@@ -813,7 +817,450 @@ private ScrollPane BlurBox;
                 String referral_mdquery = queryOutput.getString("full_name");
                 String modalityquery = queryOutput.getString("name"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
-                Button button = new Button("Modify");
+                Integer OrderID = queryOutput.getInt("order_id");
+                Button button = new Button("Schedule");
+                button.setStyle(
+                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
+
+ // Create Appointment for order
+ button.setOnAction(new EventHandler<ActionEvent>() {
+
+    @Override
+    public void handle(ActionEvent event) {
+
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+
+
+        VBox vbox = new VBox();
+
+        
+
+        Pane newPane = new Pane();
+        newPane.setLayoutX(0);
+        newPane.setLayoutY(0);
+        newPane.setPrefHeight(109);
+        newPane.setPrefWidth(800);
+
+        Label CreateNewAppointmentsLabel = new Label("Create New Appointment");
+        CreateNewAppointmentsLabel.setStyle("-fx-font: normal bold 32px 'arial';");
+        CreateNewAppointmentsLabel.setLayoutX(25);
+        CreateNewAppointmentsLabel.setLayoutY(0);
+        CreateNewAppointmentsLabel.setMinHeight(90);
+        CreateNewAppointmentsLabel.setMinWidth(410);
+
+        Line horizontalline = new Line(22.0f, 0.0f, 769.0f, 0.0f);
+        horizontalline.setTranslateY(100);
+        horizontalline.setOpacity(.3);
+        
+        newPane.getChildren().add(CreateNewAppointmentsLabel);
+        newPane.getChildren().add(horizontalline);
+
+       
+
+        Pane contactInfoPane = new Pane();
+        contactInfoPane.setPrefHeight(198);
+        contactInfoPane.setPrefWidth(800);
+
+        Label ContactInfoLable = new Label("Contact Info");
+        ContactInfoLable.setStyle("-fx-font: normal bold 20px 'arial';");
+        ContactInfoLable.setMinHeight(38);
+        ContactInfoLable.setMinWidth(128);
+        ContactInfoLable.setLayoutX(22);
+        ContactInfoLable.setLayoutY(47);
+
+        Line horizontallineContactINfo = new Line(22.0f, 0.0f, 769.0f, 0.0f);
+        horizontallineContactINfo.setTranslateY(100);
+        horizontallineContactINfo.setOpacity(.3);
+
+
+
+        Label phoneNumberLabel = new Label("Phone Number:");
+        phoneNumberLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        phoneNumberLabel.setMinHeight(27);
+        phoneNumberLabel.setMinWidth(128);
+        phoneNumberLabel.setLayoutX(22);
+        phoneNumberLabel.setLayoutY(119);
+
+        Label EmailAddressLabel = new Label("Email Address:");
+        EmailAddressLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        EmailAddressLabel.setMinHeight(27);
+        EmailAddressLabel.setMinWidth(128);
+        EmailAddressLabel.setLayoutX(209);
+        EmailAddressLabel.setLayoutY(119);
+
+        Label DateLabel = new Label("Appointment Date:");
+        DateLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        DateLabel.setMinHeight(27);
+        DateLabel.setMinWidth(128);
+        DateLabel.setLayoutX(396);
+        DateLabel.setLayoutY(119);
+
+        Label TimeLabel = new Label("Appointment Time:");
+        TimeLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        TimeLabel.setMinHeight(27);
+        TimeLabel.setMinWidth(128);
+        TimeLabel.setLayoutX(605);
+        TimeLabel.setLayoutY(119);
+
+
+        TextField phoneNumberField = new TextField();
+        phoneNumberField.setMinHeight(35);
+        phoneNumberField.setMinWidth(145);
+        phoneNumberField.setLayoutX(22);
+        phoneNumberField.setLayoutY(160);
+        phoneNumberField.setPromptText("    000-000-0000");
+
+        TextField emailAddressField = new TextField();
+        emailAddressField.setMinHeight(35);
+        emailAddressField.setMinWidth(145);
+        emailAddressField.setLayoutX(209);
+        emailAddressField.setLayoutY(160);
+        emailAddressField.setPromptText("demo@example.com");
+
+        DatePicker AppointmentDatePicker = new DatePicker();
+        AppointmentDatePicker.setMinHeight(35);
+        AppointmentDatePicker.setMinWidth(166);
+        AppointmentDatePicker.setLayoutX(396);
+        AppointmentDatePicker.setLayoutY(160);
+
+
+        ChoiceBox<String> SelectedAppointmentTime = new ChoiceBox<String>();
+        SelectedAppointmentTime.setStyle("-fx-font: normal bold 16px 'arial';");
+        SelectedAppointmentTime.setMinHeight(35);
+        SelectedAppointmentTime.setMaxWidth(170);
+        SelectedAppointmentTime.setLayoutX(599);
+        SelectedAppointmentTime.setLayoutY(160);
+        SelectedAppointmentTime.setPrefHeight(210);
+        SelectedAppointmentTime.setMaxHeight(35);
+        SelectedAppointmentTime.setPrefWidth(170);
+
+
+        SelectedAppointmentTime.getItems().add("1:00");
+        SelectedAppointmentTime.getItems().add("2:00");
+        SelectedAppointmentTime.getItems().add("3:00");
+        SelectedAppointmentTime.getItems().add("4:00");
+        SelectedAppointmentTime.getItems().add("5:00");
+        SelectedAppointmentTime.getItems().add("6:00");
+        SelectedAppointmentTime.getItems().add("7:00");
+        SelectedAppointmentTime.getItems().add("8:00");
+        SelectedAppointmentTime.getItems().add("9:00");
+        SelectedAppointmentTime.getItems().add("10:00");
+        SelectedAppointmentTime.getItems().add("11:00");
+        SelectedAppointmentTime.getItems().add("12:00");
+        SelectedAppointmentTime.getItems().add("13:00");
+        SelectedAppointmentTime.getItems().add("14:00");
+        SelectedAppointmentTime.getItems().add("15:00");
+        SelectedAppointmentTime.getItems().add("16:00");
+        SelectedAppointmentTime.getItems().add("17:00");
+        SelectedAppointmentTime.getItems().add("18:00");
+        SelectedAppointmentTime.getItems().add("19:00");
+        SelectedAppointmentTime.getItems().add("20:00");
+        SelectedAppointmentTime.getItems().add("21:00");
+        SelectedAppointmentTime.getItems().add("22:00");
+        SelectedAppointmentTime.getItems().add("23:00");
+        SelectedAppointmentTime.getItems().add("24:00");
+
+
+
+
+        contactInfoPane.getChildren().add(ContactInfoLable);
+        contactInfoPane.getChildren().add(horizontallineContactINfo);
+        contactInfoPane.getChildren().add(phoneNumberLabel);
+        contactInfoPane.getChildren().add(EmailAddressLabel);
+        contactInfoPane.getChildren().add(DateLabel);
+        contactInfoPane.getChildren().add(TimeLabel);
+        contactInfoPane.getChildren().add(phoneNumberField);
+        contactInfoPane.getChildren().add(emailAddressField);
+        contactInfoPane.getChildren().add(SelectedAppointmentTime);
+        contactInfoPane.getChildren().add(AppointmentDatePicker);
+
+  
+      Pane OfficeInfoPane = new Pane();
+      OfficeInfoPane.setPrefHeight(425);
+      OfficeInfoPane.setPrefWidth(800);
+
+      Label OfficeInfoLabel = new Label("Office Info");
+      OfficeInfoLabel.setStyle("-fx-font: normal bold 20px 'arial';");
+      OfficeInfoLabel.setMinHeight(38);
+      OfficeInfoLabel.setMinWidth(128);
+      OfficeInfoLabel.setLayoutX(22);
+      OfficeInfoLabel.setLayoutY(47);
+
+      Line HorizontalLineOfficeIn = new Line(22.0f, 0.0f, 769.0f, 0.0f);
+      HorizontalLineOfficeIn.setTranslateY(100);
+      HorizontalLineOfficeIn.setOpacity(.3);
+/*
+      Label OrderLabel = new Label("Order:");
+      OrderLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      OrderLabel.setMinHeight(27); Leave Commented for Box Layout
+      OrderLabel.setMinWidth(128);
+      OrderLabel.setLayoutX(22);
+      OrderLabel.setLayoutY(119);
+*/
+      Label ModalityLabel = new Label("Modality:");
+      ModalityLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      ModalityLabel.setMinHeight(27);
+      ModalityLabel.setMinWidth(128);
+      ModalityLabel.setLayoutX(260);
+      ModalityLabel.setLayoutY(119);
+
+      Label RadiologistLabel = new Label("Radiologist:");
+      RadiologistLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      RadiologistLabel.setMinHeight(27);
+      RadiologistLabel.setMinWidth(128);
+      RadiologistLabel.setLayoutX(522);
+      RadiologistLabel.setLayoutY(119);
+
+      Label EstimatedCostsLabel = new Label("Estimated Costs:");
+      EstimatedCostsLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      EstimatedCostsLabel.setMinHeight(27);
+      EstimatedCostsLabel.setMinWidth(128);
+      EstimatedCostsLabel.setLayoutX(22);
+      EstimatedCostsLabel.setLayoutY(225);
+
+      Label PatientLabel = new Label("Patient:");
+      PatientLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+      PatientLabel.setMinHeight(27);
+      PatientLabel.setMinWidth(128);
+      PatientLabel.setLayoutX(260);
+      PatientLabel.setLayoutY(225);
+
+    
+      TextField ModalityField = new TextField();
+      ModalityField.setMinHeight(35);
+      ModalityField.setMinWidth(170);
+      ModalityField.setLayoutX(260);
+      ModalityField.setLayoutY(160);
+      ModalityField.setEditable(false);
+      ModalityField.setText(modalityquery);
+      
+
+
+      TextField patientfortheorder = new TextField();
+      patientfortheorder.setPrefHeight(35);
+      patientfortheorder.setPrefWidth(170);
+      patientfortheorder.setLayoutX(260);
+      patientfortheorder.setLayoutY(270);
+      patientfortheorder.setEditable(false);
+      patientfortheorder.setText(patientquery);
+      
+
+  
+
+        
+       
+        
+
+/*
+      ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
+      OrdersChoiceBox.setPrefHeight(35);
+      OrdersChoiceBox.setPrefWidth(170);
+      OrdersChoiceBox.setLayoutX(22);
+      OrdersChoiceBox.setLayoutY(160);
+
+      // Adds Orders to the Box
+      try {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+ Leave Commented for Box Layout
+        String GetChoiceBoxQuery = "SELECT * FROM orders where appointment IS NULL";
+        Statement statement = connectDB.createStatement();
+        ResultSet OrdersOutput = statement.executeQuery(GetChoiceBoxQuery);
+
+        while (OrdersOutput.next()) {
+            Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
+            OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
+        }
+
+    } catch (SQLException e1) {
+
+        e1.printStackTrace();
+    }
+*/
+      
+      ChoiceBox<String> RadiologistChoiceBox = new ChoiceBox<String>();
+      RadiologistChoiceBox.setPrefHeight(35);
+      RadiologistChoiceBox.setPrefWidth(170);
+      RadiologistChoiceBox.setLayoutX(522);
+      RadiologistChoiceBox.setLayoutY(160);
+
+// Adds Radiologists to the Box
+try {
+    DatabaseConnection connectNow = new DatabaseConnection();
+    Connection connectDB = connectNow.getConnection();
+
+    String GetChoiceBoxQuery = "Select * from radiologists";
+    Statement statement = connectDB.createStatement();
+    ResultSet radiologistsQuery = statement.executeQuery(GetChoiceBoxQuery);
+
+    while (radiologistsQuery.next()) {
+        Radiologists currentRadiologist = new Radiologists(radiologistsQuery.getInt("id"), radiologistsQuery.getString("full_name"));
+        RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
+    }
+
+} catch (SQLException e1) {
+
+    e1.printStackTrace();
+}
+
+
+
+TextField EstinatedCosts = new TextField();
+EstinatedCosts.setMinHeight(35);
+EstinatedCosts.setMinWidth(170);
+EstinatedCosts.setLayoutX(22);
+EstinatedCosts.setLayoutY(270);
+EstinatedCosts.setEditable(false);
+
+
+
+
+
+
+        OfficeInfoPane.getChildren().add(OfficeInfoLabel);
+        OfficeInfoPane.getChildren().add(HorizontalLineOfficeIn);
+        OfficeInfoPane.getChildren().add(ModalityLabel);
+        OfficeInfoPane.getChildren().add(RadiologistLabel);
+        OfficeInfoPane.getChildren().add(EstimatedCostsLabel);
+        OfficeInfoPane.getChildren().add(RadiologistChoiceBox);
+        OfficeInfoPane.getChildren().add(PatientLabel);
+        OfficeInfoPane.getChildren().add(patientfortheorder);
+        OfficeInfoPane.getChildren().add(EstinatedCosts);
+        OfficeInfoPane.getChildren().add(ModalityField);
+     
+        Pane BottomPane = new Pane();
+        BottomPane.setPrefHeight(70);
+        BottomPane.setPrefWidth(800);
+
+        Button SaveUserButton = new Button("Create Appointment");
+        SaveUserButton.setPrefHeight(42);
+        SaveUserButton.setPrefWidth(102);
+        SaveUserButton.setLayoutX(472);
+        SaveUserButton.setLayoutY(15);
+        SaveUserButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                try {
+                    DatabaseConnection connectNow = new DatabaseConnection();
+                    Connection connectDB = connectNow.getConnection();
+                    
+                    String GetRadiologistIDQuery = "select * from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
+                    String GetPatientQuery = "select order_id, patient, modality from orders where order_id = '" + OrderID + "';";
+                    
+                    Statement RadiologistStatement = connectDB.createStatement();
+                    Statement PatientStatement = connectDB.createStatement();
+                    ResultSet queryOutput = RadiologistStatement.executeQuery(GetRadiologistIDQuery);
+                    ResultSet queryOutput2 = PatientStatement.executeQuery(GetPatientQuery);
+
+                    while (queryOutput.next() && queryOutput2.next()){ 
+                        
+                    Integer radioID = queryOutput.getInt("id");
+                    Integer patientID = queryOutput2.getInt("patient");  
+                    Integer modality = queryOutput2.getInt("modality");
+
+                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrderID + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText() +"', '"+ emailAddressField.getText() +"')";
+                    String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrderID + "';";
+
+                    Statement NewAppointmentStatemnet = connectDB.createStatement();
+                    NewAppointmentStatemnet.execute(InsertIntoUsersTableQuery);
+
+                    Statement AppointmentIDStatement = connectDB.createStatement();
+                    ResultSet queryOutput3 = AppointmentIDStatement.executeQuery(GetAppointmentID);
+
+                    while(queryOutput3.next()){
+
+                        Integer appointmentID = queryOutput3.getInt("appointment_id");
+
+                        String InsertAppointmentID = "update orders set appointment = '" + appointmentID + "' where order_id = '" + OrderID + "';";
+
+                        Statement InsertAppointmentIDStatement = connectDB.createStatement();
+                        InsertAppointmentIDStatement.execute(InsertAppointmentID);
+                    }
+                    
+                }
+
+                    Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+
+                    stage.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+
+
+                    FXApp.setRoot("ADMIN");
+                    
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    
+                    e1.printStackTrace();
+                }
+                
+               
+            }
+
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(644);
+        CancelButton.setLayoutY(15);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+            }
+        });
+
+        BottomPane.getChildren().add(SaveUserButton);
+        BottomPane.getChildren().add(CancelButton);
+
+        vbox.getChildren().add(newPane);
+
+        vbox.getChildren().add(contactInfoPane);
+        vbox.getChildren().add(OfficeInfoPane);
+        vbox.getChildren().add(BottomPane);
+
+        Scene scene = new Scene(vbox , 800, 800);
+
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        newWindow.setTitle("Edit User INfo");
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                }
+            }
+        });
+        newWindow.show();
+    }
+}); //Closes Create Appointment for order
+
+
+
+
+
+
 
                 UnscheduledOrdersObservableList.add(new TABLEUnscheduledOrdersTableController(patientquery,
                         referral_mdquery, modalityquery, notesquery, button));
@@ -851,14 +1298,7 @@ private ScrollPane BlurBox;
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*
-                       * else if
-                       * (TABLEUnscheduledOrdersTableController.getDate_time().toLowerCase().indexOf(
-                       * searchKeyword) > -1) {
-                       * return true;
-                       * 
-                       * }
-                       */ else if (TABLEUnscheduledOrdersTableController.getReferral_md().toLowerCase()
+                    } else if (TABLEUnscheduledOrdersTableController.getReferral_md().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
                     } else if (TABLEUnscheduledOrdersTableController.getNotes().toLowerCase()
@@ -891,7 +1331,7 @@ private ScrollPane BlurBox;
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "SELECT patient, referral_md, modality, order_id, notes FROM db_ris.orders"; 
+        String ReviewImagingOrdersTableQuery = "select *  from orders as o join patients as p on p.patient_id = o.patient  join appointments as a on a.appointment_id = o.appointment  where a.closed = true and report IS NULL;"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
@@ -899,9 +1339,9 @@ private ScrollPane BlurBox;
 
             while (queryOutput.next()) {
 
-                String patientquery = queryOutput.getString("patient");
-                String referral_mdquery = queryOutput.getString("referral_md");
-                String modalityquery = queryOutput.getString("modality"); // might need to change types
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                Integer referral_mdquery = queryOutput.getInt("referral_md");
+                Integer modalityquery = queryOutput.getInt("modality"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
                 Button button = new Button("Review Order");
                 Integer OrderID = queryOutput.getInt("order_id");
@@ -1115,21 +1555,21 @@ Button showImage = new Button();
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } else if (TABLEReviewImagingOrdersTableController.getModality().toLowerCase()
+                    } /*else if (TABLEReviewImagingOrdersTableController.getModality().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*
-                       * else if
-                       * (TABLEReviewImagingOrdersTableController.getDate_time().toLowerCase().indexOf
-                       * (searchKeyword) > -1) {
-                       * return true;
-                       * 
-                       * }
-                       */ else if (TABLEReviewImagingOrdersTableController.getReferral_md().toLowerCase()
+                    } 
+                        else if
+                       (TABLEReviewImagingOrdersTableController.getDate_time().toLowerCase().indexOf
+                       (searchKeyword) > -1) {
+                        return true;
+                       
+                       }
+                        else if (TABLEReviewImagingOrdersTableController.getReferral_md().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
-                    } else if (TABLEReviewImagingOrdersTableController.getNotes().toLowerCase()
+                    } */else if (TABLEReviewImagingOrdersTableController.getNotes().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
 

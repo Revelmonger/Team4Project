@@ -6,12 +6,12 @@ import javafx.scene.control.Button;
 public class TABLEReviewImagingOrdersTableController {
 
     String patient;
-    String referral_md;
-    String modality;
+    Integer referral_md;
+    Integer modality;
     String notes;
     Button button;
 
-    public TABLEReviewImagingOrdersTableController(String patient, String referral_md, String modality, String notes, Button button) {
+    public TABLEReviewImagingOrdersTableController(String patient, Integer referral_md, Integer modality, String notes, Button button) {
 
         this.patient = patient;
         this.referral_md = referral_md;
@@ -20,7 +20,11 @@ public class TABLEReviewImagingOrdersTableController {
         this.button = button;
     }
 
-    public String getModality() {
+    public TABLEReviewImagingOrdersTableController(Integer patientquery, Integer referral_mdquery, Integer modalityquery,
+            Integer notesquery, Button button2) {
+    }
+
+    public Integer getModality() {
 
         return modality;
     }
@@ -34,7 +38,7 @@ public class TABLEReviewImagingOrdersTableController {
         return notes;
     }
 
-    public String getReferral_md() {
+    public Integer getReferral_md() {
 
         return referral_md;
     }
@@ -48,7 +52,7 @@ public class TABLEReviewImagingOrdersTableController {
         this.patient = patient;
     }
 
-    public void setModality(String modality) {
+    public void setModality(Integer modality) {
         this.modality = modality;
     }
 
@@ -58,7 +62,7 @@ public class TABLEReviewImagingOrdersTableController {
     public void setButton(Button button) {
         this.button = button;
     }
-    public void setReferral_md(String referral_md) {
+    public void setReferral_md(Integer referral_md) {
         this.referral_md = referral_md;
     }
 
