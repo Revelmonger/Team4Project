@@ -12,3 +12,8 @@ public class FXApp_Springboot {
         Application.launch(FXApp.class, args);
     }
 }
+
+
+//Checked in appointments with status
+//unscehduled orders with schedule
+
