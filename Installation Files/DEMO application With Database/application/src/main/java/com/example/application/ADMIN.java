@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -39,13 +38,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -491,7 +487,7 @@ private ScrollPane BlurBox;
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
         // to
         // just
         // like
@@ -512,11 +508,12 @@ private ScrollPane BlurBox;
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
                 Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
+                String inProgress = String.valueOf(checkedinquestion);
+                inProgress = "In Progress";
                 
 
-
                 CheckedInAppointmentsObservableList.add(new TABLECheckedInAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion));
+                        modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion, inProgress));
             }
 
             CheckedInAppointments_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -528,7 +525,7 @@ private ScrollPane BlurBox;
             CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
-            statusColumn.setCellValueFactory(new PropertyValueFactory<>("bool"));
+            statusColumn.setCellValueFactory(new PropertyValueFactory<>("inprogress"));
 
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
@@ -591,12 +588,12 @@ private ScrollPane BlurBox;
 
          /*
          * 
-         * Checked-In Appointments TECH Table
+         * Checked-In Appointments Table
          * 
          */
 
         // join price modalities.price
-        String TECHCheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; 
+        String TECHCheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
         // to
         // just
         // like
@@ -617,210 +614,7 @@ private ScrollPane BlurBox;
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
                 Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
-                Integer Order_id = queryOutput.getInt("order_id");
-                Button button = new Button("Complete Order");
-                Integer appointment_id = queryOutput.getInt("appointment_id");
-
-                button.setStyle(
-                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
-    
-
-//Completes Order
-button.setOnAction(new EventHandler<ActionEvent>() {
-
-    String extension;
-    String fileName;
-   
-    @Override
-    public void handle(ActionEvent event) {
-        BlurBox.setEffect(new BoxBlur(5, 10, 10));
-         
-           Stage newWindow = new Stage();
-     
-        AnchorPane anchorpane = new AnchorPane();
-       
-
-        Label CreateFileLabel = new Label("Upload Files to Order");
-        CreateFileLabel.setLayoutX(46);
-        CreateFileLabel.setLayoutY(47);
-        CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
-        
-
-        Label UploadLabel = new Label("Upload:");
-        UploadLabel.setStyle("-fx-font: normal bold 16px 'arial';");
-        UploadLabel.setLayoutX(47);
-        UploadLabel.setLayoutY(192);
-
-    
-     
-
-        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
-        horizontalline.setOpacity(.3);
-        horizontalline.setTranslateY(100);
-
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
-
-        FileChooser fil_chooser = new FileChooser();
-        fil_chooser.getExtensionFilters().add(extFilter);
-
-        Label label = new Label("No file chosen");
-        label.setPrefHeight(30);
-        label.setPrefWidth(340);
-        label.setLayoutX(127);
-        label.setLayoutY(227);
-        Button button = new Button("Select File");
-        button.setPrefHeight(30);
-        button.setPrefWidth(70);
-        button.setLayoutX(47);
-        button.setLayoutY(227);
-
-       
-        EventHandler<ActionEvent> event1 =
-        new EventHandler<ActionEvent>() {
-
-           
-            public void handle(ActionEvent e)
-            {
- 
-               
-                File file = fil_chooser.showOpenDialog(newWindow);
- 
-                if (file != null) {
-
-                    label.setText(file.getAbsolutePath());               
-                }
-            }
-        };
-        button.setOnAction(event1);
-        
-
-      Button UploadFileButton = new Button("Complete Order");
-        UploadFileButton.setPrefHeight(42);
-        UploadFileButton.setPrefWidth(102);
-        UploadFileButton.setLayoutX(565);
-        UploadFileButton.setLayoutY(338);
-        UploadFileButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
-
-        UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                  
-
-
-                    
-                  
-
-
-                    try {
-
-                       
-                        int index =  label.getText().lastIndexOf('.');
-                 
-                        if(index > 0) {
-                          extension  = label.getText().substring(index + 1);
-                    
-                        } 
-                        if(index > 0) {
-                       
-                            java.nio.file.Path path = Paths.get(label.getText());         
-                           fileName = path.getFileName().toString();
-                        }
-    
-
-                        DatabaseConnection connectNow = new DatabaseConnection();
-                        Connection connectDB = connectNow.getConnection();
-    
-                        String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
-                        String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values ('"+ Order_id + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
-                        Statement statement = connectDB.createStatement();
-                        Statement statement2 = connectDB.createStatement();
-
-                        statement.execute(InsertIntoUploadsTable);
-                        statement.execute(UpdateAppointmentsTable);
-                        Stage stage = (Stage) UploadFileButton.getScene().getWindow();
-    
-                        stage.close();
-                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-
-                        FXApp.setRoot("ADMIN");
-
-                    } catch (SQLException e1) {
-    
-                        e1.printStackTrace();
-                    }
-    
-
-
-
-
-
-
-
-                 
-                } catch (Exception e2) {
-                        e2.printStackTrace();
-                    }
-
-            }
-        });
-        
-
-        Button CancelButton = new Button("Cancel");
-        CancelButton.setPrefHeight(42);
-        CancelButton.setPrefWidth(102);
-        CancelButton.setLayoutX(680);
-        CancelButton.setLayoutY(338);
-        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-
-        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                Stage stage = (Stage) CancelButton.getScene().getWindow();
-                stage.close();
-                BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-            }
-        });
-
-                anchorpane.getChildren().add(CreateFileLabel);
-                anchorpane.getChildren().add(UploadLabel);
-             
-                anchorpane.getChildren().add(horizontalline);
-             
-                anchorpane.getChildren().add(button);
-                anchorpane.getChildren().add(label);
-                anchorpane.getChildren().add(CancelButton);
-                anchorpane.getChildren().add(UploadFileButton);
-
-        Scene scene = new Scene(anchorpane, 800, 400);
-
-        
-        newWindow.setScene(scene);
-        newWindow.initStyle(StageStyle.UNDECORATED);
-        newWindow.setResizable(false);
-        newWindow.initModality(Modality.APPLICATION_MODAL);
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent t) {
-                KeyCode key = t.getCode();
-                if (key == KeyCode.ESCAPE) {
-                    newWindow.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                }
-            }
-        });
-        newWindow.show();
-      }
-});// CLOSES Complete Order
-
-
-
-
+                Button button = new Button("modify");
                 
 
                 TECHCheckedInAppointmentsObservableList.add(new TECHCheckedInAppointmentsTableController(patientquery,
@@ -903,7 +697,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
          * 
          */
 
-        String TodaysAppointmentsTableQuery = "select a.appointment_id, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where date(date_time) = (select date(now())) AND (a.checked_in = false || a.checked_in IS NULL  )order by date_time;";
+        String TodaysAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where date(date_time) = (select date(now()))  order by date_time;";
 
         // date time for todays date!
 
@@ -919,64 +713,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
                 String pricequery = queryOutput.getString("price");
-                Button button = new Button("Check-in");
-                Integer appointmentID = queryOutput.getInt("appointment_id");
-                button.setStyle(
-                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
-
-
-                button.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                   
-                        try {
-                            DatabaseConnection connectNow = new DatabaseConnection();
-                            Connection connectDB = connectNow.getConnection();
-                            
-                            String CheckInAppoint = "UPDATE appointments set checked_in = true where appointment_id = " +appointmentID + ";";
-                            Statement statement4 = connectDB.createStatement();
-                           statement4.execute(CheckInAppoint);
-                           try {
-                            FXApp.setRoot("ADMIN");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        }
-                            catch (SQLException e) {
-                             
-                                e.printStackTrace();
-                            }
-                
-
-        
-                    }
-                
-        
-
-                });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                Button button = new Button("Modify");
 
                 TodaysAppointmentsObservableList.add(new TABLETodaysAppointmentsTableController(patientquery,
                         modalityquery, date_timequery, radiologistquery, pricequery, button));
@@ -1016,7 +753,14 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    }  else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase()
+                    } /*
+                       * else if
+                       * (TABLETodaysAppointmentsTableController.getDate_time().toLowerCase().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
                     } else if (TABLETodaysAppointmentsTableController.getPrice().toLowerCase()
@@ -1041,7 +785,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-e.printStackTrace();        }
+            System.out.println("error");
+        }
 
         /*
          * 
@@ -1141,13 +886,12 @@ e.printStackTrace();        }
             System.out.println("error");
         }
 
-
-      /*
+        /*
          * 
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "select o.order_id, p.first_name, p.last_name, m.name, rmd.full_name, o.notes, a.closed, dr.diagnostic  from orders as o  join patients as p on p.patient_id = o.patient  join modalities as m on m.modality_id = o.modality  join referralmds as rmd on rmd.id = o.referral_md  join appointments as a on a.appointment_id = o.appointment  join diagnostic_reports as dr on dr.order_id = o.order_id where a.closed = true and dr.diagnostic IS NULL;"; 
+        String ReviewImagingOrdersTableQuery = "SELECT patient, referral_md, modality, order_id, notes FROM db_ris.orders"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
@@ -1155,19 +899,26 @@ e.printStackTrace();        }
 
             while (queryOutput.next()) {
 
-                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                String referral_mdquery = queryOutput.getString("full_name");
-                String modalityquery = queryOutput.getString("name"); // might need to change types
+                String patientquery = queryOutput.getString("patient");
+                String referral_mdquery = queryOutput.getString("referral_md");
+                String modalityquery = queryOutput.getString("modality"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
                 Button button = new Button("Review Order");
                 Integer OrderID = queryOutput.getInt("order_id");
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
-                   
+                    queryOutput.close();
 
-                    
-                 
+                    String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+                    statement5 = connectDB.createStatement();
+                    queryOutput = statement5.executeQuery(ImagePathStatement);
+
+                    while (queryOutput.next()) {
+                        String UploadPath = queryOutput.getString("upload_path");
+                      BufferedImage  img = ImageIO.read(new File(UploadPath));
+                    }
+                    queryOutput.close();
 
 
 /////////////////////////////////////////////////////////////
@@ -1229,17 +980,11 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setTranslateY(100);
 
   
-        
-      /*  
-        Button showImage = new Button("Show Image");
-        showImage.setPrefHeight(42);
-        showImage.setPrefWidth(102);
-        showImage.setLayoutX(150);
-        showImage.setLayoutY(338);
-        showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");*/
+       
+Button showImage = new Button();
 
 
-
+//WORKING HERE
 
       Button CreateDiagnosticReportButton = new Button("Create Report");
         CreateDiagnosticReportButton.setPrefHeight(42);
@@ -1310,32 +1055,8 @@ button.setOnAction(new EventHandler<ActionEvent>() {
           
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(CreateDiagnosticReportButton);
-                
                 anchorpane.getChildren().add(ReportArea);
                 anchorpane.getChildren().add(ReportLabel);
-            /* String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
-        Statement statement;
-        try {
-            statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(ImagePathStatement);
-
-        while (queryOutput.next()) {
-            String UploadPath = queryOutput.getString("upload_path");
-
-            /*ImageView imageView = new ImageView(new Image(UploadPath));
-
-            showImage.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-    
-                }
-            });
-        }
-
-        } catch (SQLException e3) {
-
-            e3.printStackTrace();
-        }*/
                 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -1430,7 +1151,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("error");
         }
 
     }

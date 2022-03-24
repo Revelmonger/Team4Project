@@ -13,8 +13,9 @@ public class TABLECheckedInAppointmentsTableController {
     Date date_time; // price
     String radiologist;
     Boolean bool;
+    String inprogress;
 
-    public TABLECheckedInAppointmentsTableController(String patient, String modality, Date date_time, String radiologist, String price, Boolean bool) {
+    public TABLECheckedInAppointmentsTableController(String patient, String modality, Date date_time, String radiologist, String price, Boolean bool, String inprogress) {
 
         this.patient = patient;
         this.modality = modality;
@@ -22,6 +23,7 @@ public class TABLECheckedInAppointmentsTableController {
         this.radiologist = radiologist;
         this.price = price;
         this.bool = bool;
+        this.inprogress = inprogress;
     }
 
     public String getModality() {
@@ -49,6 +51,9 @@ public class TABLECheckedInAppointmentsTableController {
         return patient;
     }
 
+    public String getInprogress() {
+        return inprogress;
+    }
    
     
     public Boolean getBool() {
@@ -79,5 +84,8 @@ public class TABLECheckedInAppointmentsTableController {
         this.price = price;
     }
 
+    public void setInprogress(String inprogress) {
+        this.inprogress = inprogress;
+    }
  
 }
