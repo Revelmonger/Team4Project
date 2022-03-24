@@ -523,12 +523,7 @@ private ScrollPane BlurBox;
             CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
-<<<<<<< HEAD
             statusColumn.setCellValueFactory(new PropertyValueFactory<>("bool"));
-=======
-
-            statusColumn.setCellValueFactory(new PropertyValueFactory<>("checked_in"));
->>>>>>> 6d14fc49e223f0f019e9739da843e954aed4e990
 
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
@@ -889,6 +884,8 @@ private ScrollPane BlurBox;
             System.out.println("error");
         }
 
+
+
         /*
          * 
          * Review Imaging Orders Table
@@ -911,7 +908,7 @@ private ScrollPane BlurBox;
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
-                    queryOutput.close();
+                   /*
 
                     String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
                     statement5 = connectDB.createStatement();
@@ -921,8 +918,8 @@ private ScrollPane BlurBox;
                         String UploadPath = queryOutput.getString("upload_path");
                       BufferedImage  img = ImageIO.read(new File(UploadPath));
                     }
-                    queryOutput.close();
-
+                 
+*/
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
