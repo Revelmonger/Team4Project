@@ -1,32 +1,76 @@
 package com.example.application;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import com.example.application.Constructors.Orders;
+import com.example.application.Constructors.Radiologists;
 import com.example.application.TableConstructors.TABLECheckedInAppointmentsTableController;
 import com.example.application.TableConstructors.TABLEPlacedOrdersTableController;
 import com.example.application.TableConstructors.TABLEReviewImagingOrdersTableController;
 import com.example.application.TableConstructors.TABLETodaysAppointmentsTableController;
 import com.example.application.TableConstructors.TABLEUnscheduledOrdersTableController;
+import com.example.application.TableConstructors.TECHCheckedInAppointmentsTableController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class ADMIN implements Initializable {
+
+
+@FXML
+private ScrollPane BlurBox;
+
+    @ FXML
+    private TableColumn<TABLECheckedInAppointmentsTableController, Boolean> statusColumn;
+    @FXML
+    private TableColumn<TABLETodaysAppointmentsTableController, Button> TodaysAppointmentsCheckedIN;
+    @FXML
+    private TableColumn<TABLEUnscheduledOrdersTableController, Button> UnscheduledOrdersSchedule;
+    @FXML
+    private TableColumn<TABLECheckedInAppointmentsTableController, Button> TechCheckedInCompleteOrder;
+    @FXML
+    private TableColumn<TABLEReviewImagingOrdersTableController, Button> ReviewOrderColumn;
+
+
+
+
 
     String user_id1 = LOGIN.LoggedInUserID;
 
@@ -235,6 +279,37 @@ public class ADMIN implements Initializable {
 
     ObservableList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsObservableList = FXCollections
             .observableArrayList();
+    
+        /*
+     * 
+     * TECH Checked-In Appointments Imports
+     * 
+     */
+    @FXML
+    private TableView<TECHCheckedInAppointmentsTableController> TECHNICIANCheckedInAppointmentsTable1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Integer> CheckedInAppointments_Patient1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Integer> CheckedInAppointments_Modality1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, String> CheckedInAppointments_Price1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Date> CheckedInAppointments_DateandTime1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Integer> CheckedInAppointments_Radiologist1;
+
+    @FXML
+    private TextField searchCheckedInAppointments1;
+
+    ObservableList<TECHCheckedInAppointmentsTableController> TECHCheckedInAppointmentsObservableList = FXCollections
+            .observableArrayList();
+    
+            
     /*
      * 
      * Todays Appointments Imports
@@ -412,7 +487,7 @@ public class ADMIN implements Initializable {
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
         // to
         // just
         // like
@@ -432,20 +507,23 @@ public class ADMIN implements Initializable {
                 String pricequery = queryOutput.getString("price");
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
+                Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
+                
 
                 CheckedInAppointmentsObservableList.add(new TABLECheckedInAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery));
+                        modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion));
             }
 
             CheckedInAppointments_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
 
             CheckedInAppointments_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
 
-            CheckedInAppointments_DateandTime.setCellValueFactory(new PropertyValueFactory<>("date_time")); // price
+            CheckedInAppointments_DateandTime.setCellValueFactory(new PropertyValueFactory<>("date_time")); 
 
             CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+            statusColumn.setCellValueFactory(new PropertyValueFactory<>("bool"));
 
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
@@ -506,6 +584,111 @@ public class ADMIN implements Initializable {
             System.out.println("error");
         }
 
+         /*
+         * 
+         * Checked-In Appointments Table
+         * 
+         */
+
+        // join price modalities.price
+        String TECHCheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
+        // to
+        // just
+        // like
+        // orders
+        // select
+        // statement
+        // still need price
+        try {
+
+            Statement statement2 = connectDB.createStatement();
+            ResultSet queryOutput = statement2.executeQuery(TECHCheckedInAppointmentsTableQuery);
+
+            while (queryOutput.next()) {
+
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String modalityquery = queryOutput.getString("name");
+                String pricequery = queryOutput.getString("price");
+                Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
+                String radiologistquery = queryOutput.getString("full_name");
+                Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
+                Button button = new Button("modify");
+                
+
+                TECHCheckedInAppointmentsObservableList.add(new TECHCheckedInAppointmentsTableController(patientquery,
+                        modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion, button));
+            }
+
+            CheckedInAppointments_Patient1.setCellValueFactory(new PropertyValueFactory<>("patient"));
+
+            CheckedInAppointments_Modality1.setCellValueFactory(new PropertyValueFactory<>("modality"));
+
+            CheckedInAppointments_DateandTime1.setCellValueFactory(new PropertyValueFactory<>("date_time")); // price
+
+            CheckedInAppointments_Radiologist1.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
+
+            CheckedInAppointments_Price1.setCellValueFactory(new PropertyValueFactory<>("price"));
+            TechCheckedInCompleteOrder.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+            TECHNICIANCheckedInAppointmentsTable1.setItems(null);
+            TECHNICIANCheckedInAppointmentsTable1.setItems(TECHCheckedInAppointmentsObservableList);
+
+            // Search Bar Functionality Start
+            FilteredList<TECHCheckedInAppointmentsTableController> TECHCheckedInAppointmentsFilteredData = new FilteredList<>(
+                TECHCheckedInAppointmentsObservableList);
+
+                    searchCheckedInAppointments1.textProperty().addListener((observable, oldValue, newValue) -> {
+                        TECHCheckedInAppointmentsFilteredData.setPredicate(TECHCheckedInAppointmentsTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TECHCheckedInAppointmentsTableController.getPatient().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TECHCheckedInAppointmentsTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*
+                       * else if (TABLECheckedInAppointmentsTableController.getDate_time().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TECHCheckedInAppointmentsTableController.getRadiologist().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+                    } else if (TECHCheckedInAppointmentsTableController.getPrice().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    }
+
+                    else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TECHCheckedInAppointmentsTableController> TECHCheckedInAppointmentsSortedData = new SortedList<>(
+                TECHCheckedInAppointmentsFilteredData);
+
+            // Binds the sorted resultswith the Table
+            TECHCheckedInAppointmentsSortedData.comparatorProperty().bind(TECHNICIANCheckedInAppointmentsTable1.comparatorProperty());
+
+            TECHNICIANCheckedInAppointmentsTable1.setItems(TECHCheckedInAppointmentsSortedData);
+            // Search Bar Functionality End
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
         /*
          * 
          * Today's Appointments Table
@@ -528,9 +711,10 @@ public class ADMIN implements Initializable {
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
                 String pricequery = queryOutput.getString("price");
+                Button button = new Button("Modify");
 
                 TodaysAppointmentsObservableList.add(new TABLETodaysAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery));
+                        modalityquery, date_timequery, radiologistquery, pricequery, button));
             }
 
             TodaysAppointments_Patient1.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -542,6 +726,8 @@ public class ADMIN implements Initializable {
             TodaysAppointmentsTable_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             TodaysAppointmentsTable_Prices.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+            TodaysAppointmentsCheckedIN.setCellValueFactory(new PropertyValueFactory<>("button"));
 
             TodaysAppointmentsTable.setItems(null);
             TodaysAppointmentsTable.setItems(TodaysAppointmentsObservableList);
@@ -625,9 +811,10 @@ public class ADMIN implements Initializable {
                 String referral_mdquery = queryOutput.getString("full_name");
                 String modalityquery = queryOutput.getString("name"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
+                Button button = new Button("Modify");
 
                 UnscheduledOrdersObservableList.add(new TABLEUnscheduledOrdersTableController(patientquery,
-                        referral_mdquery, modalityquery, notesquery));
+                        referral_mdquery, modalityquery, notesquery, button));
             }
 
             UnscheduledOrdersTable_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -637,6 +824,8 @@ public class ADMIN implements Initializable {
             UnscheduledOrdersTable_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
 
             UnscheduledOrdersTable_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+            UnscheduledOrdersSchedule.setCellValueFactory(new PropertyValueFactory<>("button"));
 
             UnscheduledOrdersTable.setItems(null);
             UnscheduledOrdersTable.setItems(UnscheduledOrdersObservableList);
@@ -695,19 +884,14 @@ public class ADMIN implements Initializable {
             System.out.println("error");
         }
 
+
+
         /*
          * 
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "SELECT patient, referral_md, modality, notes FROM db_ris.orders"; // change
-                                                                                                                  // to
-                                                                                                                  // just
-                                                                                                                  // like
-                                                                                                                  // orders
-                                                                                                                  // select
-                                                                                                                  // statement
-
+        String ReviewImagingOrdersTableQuery = "SELECT patient, referral_md, modality, order_id, notes FROM db_ris.orders"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
@@ -719,9 +903,188 @@ public class ADMIN implements Initializable {
                 String referral_mdquery = queryOutput.getString("referral_md");
                 String modalityquery = queryOutput.getString("modality"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
+                Button button = new Button("Review Order");
+                Integer OrderID = queryOutput.getInt("order_id");
+                button.setStyle(
+                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
-                ReviewImagingOrdersObservableList.add(new TABLEReviewImagingOrdersTableController(patientquery,
-                        referral_mdquery, modalityquery, notesquery));
+                   /*
+
+                    String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+                    statement5 = connectDB.createStatement();
+                    queryOutput = statement5.executeQuery(ImagePathStatement);
+
+                    while (queryOutput.next()) {
+                        String UploadPath = queryOutput.getString("upload_path");
+                      BufferedImage  img = ImageIO.read(new File(UploadPath));
+                    }
+                 
+*/
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////// NOT FINISHED
+
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+button.setOnAction(new EventHandler<ActionEvent>() {
+
+    
+   
+    @Override
+    public void handle(ActionEvent event) {
+        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+         
+           Stage newWindow = new Stage();
+     
+        AnchorPane anchorpane = new AnchorPane();
+      
+
+        Label CreateFileLabel = new Label("Create Diagnostic Report");
+        CreateFileLabel.setLayoutX(46);
+        CreateFileLabel.setLayoutY(47);
+        CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+        
+
+      
+
+        Label ReportLabel = new Label("Report:");
+        ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+        ReportLabel.setLayoutX(459);
+        ReportLabel.setLayoutY(192);
+     
+
+        
+        TextArea ReportArea = new TextArea();
+        ReportArea.setPrefHeight(100);
+        ReportArea.setPrefWidth(260);
+        ReportArea.setLayoutX(459);
+        ReportArea.setLayoutY(227);
+
+
+        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+        horizontalline.setOpacity(.3);
+        horizontalline.setTranslateY(100);
+
+  
+       
+Button showImage = new Button();
+
+
+//WORKING HERE
+
+      Button CreateDiagnosticReportButton = new Button("Create Report");
+        CreateDiagnosticReportButton.setPrefHeight(42);
+        CreateDiagnosticReportButton.setPrefWidth(102);
+        CreateDiagnosticReportButton.setLayoutX(565);
+        CreateDiagnosticReportButton.setLayoutY(338);
+        CreateDiagnosticReportButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        CreateDiagnosticReportButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+           
+                try {
+                    DatabaseConnection connectNow = new DatabaseConnection();
+                    Connection connectDB = connectNow.getConnection();
+    
+        
+                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientquery + "', '" + user_id1 + "', '"+ ReportArea.getText() + "');";
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(InsertIntoUsersTableQuery);
+                        Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
+            
+
+
+
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+        
+                        FXApp.setRoot("ADMIN");
+        
+              
+        
+        
+                  
+        
+                }
+                catch (SQLException e2){
+        
+                    e2.printStackTrace();
+                } catch (IOException e1) {
+           
+                    e1.printStackTrace();
+                }
+            }
+        });
+        
+
+        Button CancelButton = new Button("Cancel");
+        CancelButton.setPrefHeight(42);
+        CancelButton.setPrefWidth(102);
+        CancelButton.setLayoutX(680);
+        CancelButton.setLayoutY(338);
+        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+            }
+        });
+
+                anchorpane.getChildren().add(CreateFileLabel);
+
+                anchorpane.getChildren().add(horizontalline);
+          
+                anchorpane.getChildren().add(CancelButton);
+                anchorpane.getChildren().add(CreateDiagnosticReportButton);
+                anchorpane.getChildren().add(ReportArea);
+                anchorpane.getChildren().add(ReportLabel);
+                
+        Scene scene = new Scene(anchorpane, 800, 400);
+
+        
+        newWindow.setScene(scene);
+        newWindow.initStyle(StageStyle.UNDECORATED);
+        newWindow.setResizable(false);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                KeyCode key = t.getCode();
+                if (key == KeyCode.ESCAPE) {
+                    newWindow.close();
+                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                }
+            }
+        });
+        newWindow.show();
+      }
+});//
+
+
+
+
+                ReviewImagingOrdersObservableList.add(new TABLEReviewImagingOrdersTableController(patientquery,referral_mdquery, modalityquery, notesquery, button));
             }
 
             ReviewImagingOrdersTable_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -731,6 +1094,7 @@ public class ADMIN implements Initializable {
             ReviewImagingOrdersTable_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
 
             ReviewImagingOrdersTable_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+            ReviewOrderColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
 
             ReviewImagingOrdersTable.setItems(null);
             ReviewImagingOrdersTable.setItems(ReviewImagingOrdersObservableList);

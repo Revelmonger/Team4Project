@@ -1,19 +1,23 @@
 
 package com.example.application.TableConstructors;
 
+import javafx.scene.control.Button;
+
 public class TABLEUnscheduledOrdersTableController {
 
     String patient;
     String referral_md;
     String modality;
     String notes;
+    Button button;
 
-    public TABLEUnscheduledOrdersTableController(String patient, String referral_md, String modality, String notes) {
+    public TABLEUnscheduledOrdersTableController(String patient, String referral_md, String modality, String notes, Button button) {
 
         this.patient = patient;
         this.referral_md = referral_md;
         this.modality = modality;
         this.notes = notes;
+        this.button = button;
     }
 
     public String getModality() {
@@ -36,6 +40,10 @@ public class TABLEUnscheduledOrdersTableController {
         return patient;
     }
 
+    public Button getButton() {
+        return button;
+    }
+
     public void setPatient(String patient) {
         this.patient = patient;
     }
@@ -50,6 +58,10 @@ public class TABLEUnscheduledOrdersTableController {
 
     public void setReferral_md(String referral_md) {
         this.referral_md = referral_md;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
     }
 
 }
