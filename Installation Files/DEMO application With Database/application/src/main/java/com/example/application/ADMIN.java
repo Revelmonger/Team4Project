@@ -491,7 +491,7 @@ private ScrollPane BlurBox;
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.closed, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = true and closed = false;"; // change
         // to
         // just
         // like
@@ -595,7 +595,7 @@ private ScrollPane BlurBox;
          */
 
         // join price modalities.price
-        String TECHCheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND closed = 0 order by date_time;"; // change
+        String TECHCheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND closed = 0;"; // change
         // to
         // just
         // like
@@ -999,7 +999,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
          * 
          */
 
-        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
+        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.appointment is null;"; // change
         // to
         // just
         // like
@@ -1098,7 +1098,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "SELECT patient, referral_md, modality, order_id, notes FROM db_ris.orders"; 
+        String ReviewImagingOrdersTableQuery = "select o.order_id, p.first_name, p.last_name, m.name, rmd.full_name, o.notes, a.closed, dr.diagnostic  from orders as o  join patients as p on p.patient_id = o.patient  join modalities as m on m.modality_id = o.modality  join referralmds as rmd on rmd.id = o.referral_md  join appointments as a on a.appointment_id = o.appointment  join diagnostic_reports as dr on dr.order_id = o.order_id where a.closed = true and dr.diagnostic is null;"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
@@ -1106,9 +1106,9 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
             while (queryOutput.next()) {
 
-                String patientquery = queryOutput.getString("patient");
-                String referral_mdquery = queryOutput.getString("referral_md");
-                String modalityquery = queryOutput.getString("modality"); // might need to change types
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String referral_mdquery = queryOutput.getString("full_name");
+                String modalityquery = queryOutput.getString("name"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
                 Button button = new Button("Review Order");
                 Integer OrderID = queryOutput.getInt("order_id");
@@ -1264,7 +1264,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 
                 anchorpane.getChildren().add(ReportArea);
                 anchorpane.getChildren().add(ReportLabel);
-             String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+            /* String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
         Statement statement;
         try {
             statement = connectDB.createStatement();
@@ -1279,14 +1279,14 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
     
-                }*/
+                }
             });
         }
 
         } catch (SQLException e3) {
 
             e3.printStackTrace();
-        } 
+        }*/
                 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -1381,7 +1381,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
 
     }
