@@ -65,7 +65,7 @@
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="220.0">
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="130.0" prefWidth="220.0" text="Logged in: tech">
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="130.0" prefWidth="220.0" text="Logged in: tech  ">
                                  <font>
                                     <Font name="System Bold" size="23.0" />
                                  </font>

@@ -122,15 +122,15 @@ private ScrollPane BlurBox;
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
+        FXApp.setRoot("");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
+        FXApp.setRoot("");
     }
 
     public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AllOrders");
+        FXApp.setRoot("");
     }
 
     public void appointments(ActionEvent e) throws IOException {

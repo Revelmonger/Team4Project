@@ -914,7 +914,7 @@ public class REFERRAL_DOCTOR_Referrals_Controller implements Initializable {
 
     public void userInfo(ActionEvent e) throws IOException {
 
-        FXApp.setRoot("ADMIN");
+        FXApp.setRoot("");
     }
 
     public void admin(ActionEvent e) throws IOException {
