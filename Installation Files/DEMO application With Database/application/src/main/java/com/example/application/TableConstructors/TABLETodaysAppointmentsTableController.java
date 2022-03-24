@@ -3,6 +3,8 @@ package com.example.application.TableConstructors;
 
 import java.sql.Date;
 
+import javafx.scene.control.Button;
+
 public class TABLETodaysAppointmentsTableController {
 
     String patient;
@@ -10,15 +12,17 @@ public class TABLETodaysAppointmentsTableController {
     Date date_time; // price
     String radiologist;
     String price;
+    Button button;
 
     public TABLETodaysAppointmentsTableController(String patient, String modality, Date date_time, String radiologist,
-            String price) {
+            String price, Button button) {
 
         this.patient = patient;
         this.modality = modality;
         this.date_time = date_time; // price
         this.radiologist = radiologist;
         this.price = price;
+        this.button = button;
     }
 
     public String getModality() {
@@ -46,6 +50,10 @@ public class TABLETodaysAppointmentsTableController {
         return patient;
     }
 
+    public Button getButton() {
+        return button;
+    }
+
     public void setPatient(String patient) {
         this.patient = patient;
     }
@@ -64,6 +72,10 @@ public class TABLETodaysAppointmentsTableController {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
     }
 
 }

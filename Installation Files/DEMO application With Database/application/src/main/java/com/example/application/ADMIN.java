@@ -21,6 +21,7 @@ import com.example.application.TableConstructors.TABLEPlacedOrdersTableControlle
 import com.example.application.TableConstructors.TABLEReviewImagingOrdersTableController;
 import com.example.application.TableConstructors.TABLETodaysAppointmentsTableController;
 import com.example.application.TableConstructors.TABLEUnscheduledOrdersTableController;
+import com.example.application.TableConstructors.TECHCheckedInAppointmentsTableController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -278,6 +279,37 @@ private ScrollPane BlurBox;
 
     ObservableList<TABLECheckedInAppointmentsTableController> CheckedInAppointmentsObservableList = FXCollections
             .observableArrayList();
+    
+        /*
+     * 
+     * TECH Checked-In Appointments Imports
+     * 
+     */
+    @FXML
+    private TableView<TECHCheckedInAppointmentsTableController> TECHNICIANCheckedInAppointmentsTable1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Integer> CheckedInAppointments_Patient1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Integer> CheckedInAppointments_Modality1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, String> CheckedInAppointments_Price1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Date> CheckedInAppointments_DateandTime1;
+
+    @FXML
+    private TableColumn<TECHCheckedInAppointmentsTableController, Integer> CheckedInAppointments_Radiologist1;
+
+    @FXML
+    private TextField searchCheckedInAppointments1;
+
+    ObservableList<TECHCheckedInAppointmentsTableController> TECHCheckedInAppointmentsObservableList = FXCollections
+            .observableArrayList();
+    
+            
     /*
      * 
      * Todays Appointments Imports
@@ -491,8 +523,12 @@ private ScrollPane BlurBox;
             CheckedInAppointments_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             CheckedInAppointments_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+<<<<<<< HEAD
+            statusColumn.setCellValueFactory(new PropertyValueFactory<>("bool"));
+=======
 
             statusColumn.setCellValueFactory(new PropertyValueFactory<>("checked_in"));
+>>>>>>> 6d14fc49e223f0f019e9739da843e954aed4e990
 
             CheckedInAppointmentsTable.setItems(null);
             CheckedInAppointmentsTable.setItems(CheckedInAppointmentsObservableList);
@@ -553,6 +589,111 @@ private ScrollPane BlurBox;
             System.out.println("error");
         }
 
+         /*
+         * 
+         * Checked-In Appointments Table
+         * 
+         */
+
+        // join price modalities.price
+        String TECHCheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
+        // to
+        // just
+        // like
+        // orders
+        // select
+        // statement
+        // still need price
+        try {
+
+            Statement statement2 = connectDB.createStatement();
+            ResultSet queryOutput = statement2.executeQuery(TECHCheckedInAppointmentsTableQuery);
+
+            while (queryOutput.next()) {
+
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String modalityquery = queryOutput.getString("name");
+                String pricequery = queryOutput.getString("price");
+                Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
+                String radiologistquery = queryOutput.getString("full_name");
+                Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
+                Button button = new Button("modify");
+                
+
+                TECHCheckedInAppointmentsObservableList.add(new TECHCheckedInAppointmentsTableController(patientquery,
+                        modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion, button));
+            }
+
+            CheckedInAppointments_Patient1.setCellValueFactory(new PropertyValueFactory<>("patient"));
+
+            CheckedInAppointments_Modality1.setCellValueFactory(new PropertyValueFactory<>("modality"));
+
+            CheckedInAppointments_DateandTime1.setCellValueFactory(new PropertyValueFactory<>("date_time")); // price
+
+            CheckedInAppointments_Radiologist1.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
+
+            CheckedInAppointments_Price1.setCellValueFactory(new PropertyValueFactory<>("price"));
+            TechCheckedInCompleteOrder.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+            TECHNICIANCheckedInAppointmentsTable1.setItems(null);
+            TECHNICIANCheckedInAppointmentsTable1.setItems(TECHCheckedInAppointmentsObservableList);
+
+            // Search Bar Functionality Start
+            FilteredList<TECHCheckedInAppointmentsTableController> TECHCheckedInAppointmentsFilteredData = new FilteredList<>(
+                TECHCheckedInAppointmentsObservableList);
+
+                    searchCheckedInAppointments1.textProperty().addListener((observable, oldValue, newValue) -> {
+                        TECHCheckedInAppointmentsFilteredData.setPredicate(TECHCheckedInAppointmentsTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TECHCheckedInAppointmentsTableController.getPatient().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TECHCheckedInAppointmentsTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } /*
+                       * else if (TABLECheckedInAppointmentsTableController.getDate_time().indexOf(
+                       * searchKeyword) > -1) {
+                       * return true;
+                       * 
+                       * }
+                       */ else if (TECHCheckedInAppointmentsTableController.getRadiologist().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+                    } else if (TECHCheckedInAppointmentsTableController.getPrice().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    }
+
+                    else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<TECHCheckedInAppointmentsTableController> TECHCheckedInAppointmentsSortedData = new SortedList<>(
+                TECHCheckedInAppointmentsFilteredData);
+
+            // Binds the sorted resultswith the Table
+            TECHCheckedInAppointmentsSortedData.comparatorProperty().bind(TECHNICIANCheckedInAppointmentsTable1.comparatorProperty());
+
+            TECHNICIANCheckedInAppointmentsTable1.setItems(TECHCheckedInAppointmentsSortedData);
+            // Search Bar Functionality End
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
         /*
          * 
          * Today's Appointments Table
@@ -575,9 +716,10 @@ private ScrollPane BlurBox;
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
                 String pricequery = queryOutput.getString("price");
+                Button button = new Button("Modify");
 
                 TodaysAppointmentsObservableList.add(new TABLETodaysAppointmentsTableController(patientquery,
-                        modalityquery, date_timequery, radiologistquery, pricequery));
+                        modalityquery, date_timequery, radiologistquery, pricequery, button));
             }
 
             TodaysAppointments_Patient1.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -589,6 +731,8 @@ private ScrollPane BlurBox;
             TodaysAppointmentsTable_Radiologist.setCellValueFactory(new PropertyValueFactory<>("radiologist"));
 
             TodaysAppointmentsTable_Prices.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+            TodaysAppointmentsCheckedIN.setCellValueFactory(new PropertyValueFactory<>("button"));
 
             TodaysAppointmentsTable.setItems(null);
             TodaysAppointmentsTable.setItems(TodaysAppointmentsObservableList);
@@ -672,9 +816,10 @@ private ScrollPane BlurBox;
                 String referral_mdquery = queryOutput.getString("full_name");
                 String modalityquery = queryOutput.getString("name"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
+                Button button = new Button("Modify");
 
                 UnscheduledOrdersObservableList.add(new TABLEUnscheduledOrdersTableController(patientquery,
-                        referral_mdquery, modalityquery, notesquery));
+                        referral_mdquery, modalityquery, notesquery, button));
             }
 
             UnscheduledOrdersTable_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -684,6 +829,8 @@ private ScrollPane BlurBox;
             UnscheduledOrdersTable_Modality.setCellValueFactory(new PropertyValueFactory<>("modality"));
 
             UnscheduledOrdersTable_Notes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+            UnscheduledOrdersSchedule.setCellValueFactory(new PropertyValueFactory<>("button"));
 
             UnscheduledOrdersTable.setItems(null);
             UnscheduledOrdersTable.setItems(UnscheduledOrdersObservableList);

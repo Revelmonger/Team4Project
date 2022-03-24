@@ -5,7 +5,7 @@ import java.sql.Date;
 
 import javafx.scene.control.Button;
 
-public class TABLECheckedInAppointmentsTableController {
+public class TECHCheckedInAppointmentsTableController {
 
     String patient;
     String modality;
@@ -13,8 +13,9 @@ public class TABLECheckedInAppointmentsTableController {
     Date date_time; // price
     String radiologist;
     Boolean bool;
+    Button button;
 
-    public TABLECheckedInAppointmentsTableController(String patient, String modality, Date date_time, String radiologist, String price, Boolean bool) {
+    public TECHCheckedInAppointmentsTableController(String patient, String modality, Date date_time, String radiologist, String price, Boolean bool, Button button) {
 
         this.patient = patient;
         this.modality = modality;
@@ -22,6 +23,7 @@ public class TABLECheckedInAppointmentsTableController {
         this.radiologist = radiologist;
         this.price = price;
         this.bool = bool;
+        this.button = button;
     }
 
     public String getModality() {
@@ -47,6 +49,10 @@ public class TABLECheckedInAppointmentsTableController {
     public String getPatient() {
 
         return patient;
+    }
+
+    public Button getButton() {
+        return button;
     }
 
    
@@ -77,6 +83,10 @@ public class TABLECheckedInAppointmentsTableController {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
     }
 
  
