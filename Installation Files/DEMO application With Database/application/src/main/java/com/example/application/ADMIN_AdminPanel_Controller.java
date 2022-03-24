@@ -2776,6 +2776,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
         ModalityNameTextField.setMinWidth(145);
         ModalityNameTextField.setLayoutX(47);
         ModalityNameTextField.setLayoutY(227);
+        ModalityNameTextField.setText(modalitynamequery);
 
 
 
@@ -2788,7 +2789,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
         ModalityPriceTextField.setMinWidth(145);
         ModalityPriceTextField.setLayoutX(350);
         ModalityPriceTextField.setLayoutY(227);
-  
+        ModalityPriceTextField.setText(modalitypricequery);
      
 
 
@@ -2806,7 +2807,10 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
   
                 try {
-                    String InstertIntoModalitiesTable = "";
+                   
+                   
+                    String InstertIntoModalitiesTable = "update modalities set name = '" + ModalityNameTextField.getText() + "', price = '" + ModalityPriceTextField.getText() + "' where modality_id = '" + modalityidquery + "';";
+
                     Statement statement = connectDB.createStatement();
                     statement.execute(InstertIntoModalitiesTable);
 
@@ -3286,17 +3290,23 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                                     try {
                                         DatabaseConnection connectNow = new DatabaseConnection();
                                         Connection connectDB = connectNow.getConnection();
-                                        String PlacedOrdersTableQuery = " ";
+
+                                        String PlacedOrdersTableQuery = "update patients set first_name = '" + firstNameField.getText() + "', last_name = '" + lastNamefield.getText() + "', dob = '" + dateofbirth.getValue() + "', sex = '" + sexChange.getValue() + "', race = '" + RaceChange.getValue() + "', ethnicity = '" + EthnicityChange.getValue() + "' where patient_id = '" + patient_id + "';";
         
                                         Statement statement = connectDB.createStatement();
                                         statement.execute(PlacedOrdersTableQuery);
+
                                         Stage stage = (Stage) SaveModifiedPatient.getScene().getWindow();
                                         stage.close();
+                                        FXApp.setRoot("ADMIN_AdminPanel");
                                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                         
                                     } catch (SQLException e1) {
             
+                                        e1.printStackTrace();
+                                    } catch (IOException e1) {
+                                        
                                         e1.printStackTrace();
                                     }
             
@@ -3777,7 +3787,9 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
         while (queryOutput.next()) {
         
             Integer order_id = queryOutput.getInt("order_id");
-            String patientquery = queryOutput.getString("first_name")+ " " + queryOutput.getString("last_name");
+            String firstnamequery = queryOutput.getString("first_name");
+            String lastnamequery = queryOutput.getString("last_name");
+            String fullname = firstnamequery + " " + lastnamequery;
             String referral_mdquery = queryOutput.getString("full_name");
             String modalityquery = queryOutput.getString("name");
             String notesquery = queryOutput.getString("notes");
@@ -3853,7 +3865,7 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
             SelectedPatientField.setLayoutX(35);
             SelectedPatientField.setLayoutY(43);
             SelectedPatientField.setPrefWidth(210);
-            SelectedPatientField.setValue(patientquery);
+            SelectedPatientField.setValue(fullname);
 
             ChoiceBox<String> SelectedDoctorField = new ChoiceBox<String>();
             SelectedDoctorField.setStyle("-fx-font: normal bold 16px 'arial';");
@@ -4015,6 +4027,56 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
                 @Override
                 public void handle(ActionEvent e) {
 
+                    try{
+
+                            String[] firstandlastnames = SelectedPatientField.getValue().toString().split(" ", 2);
+                            String GetReferralID = "select id from referralmds where full_name = '" + SelectedDoctorField.getValue() + "';";
+                            String GetModalityID = "select modality_id from modalities where name = '" + ModalityChoiceBox.getValue() + "';";
+                            String GetStatusID = "select order_status_id from order_status where order_name = '" + SelectedStatusField.getValue() + "';";
+
+                            String InsertQueries = "Select patient_id from patients where first_name = '"
+                                    + firstandlastnames[0] + "' and last_name = '" + firstandlastnames[1] + "'";
+
+                            Statement statement = connectDB.createStatement();
+                            Statement statement2 = connectDB.createStatement();
+                            Statement statement3 = connectDB.createStatement();
+                            Statement statement4 = connectDB.createStatement();
+
+                            ResultSet PatientIDOutput = statement.executeQuery(InsertQueries);
+                            ResultSet ReferralIDOutput = statement2.executeQuery(GetReferralID);
+                            ResultSet ModalityIDOutput = statement3.executeQuery(GetModalityID);
+                            ResultSet StatusIDOutput = statement4.executeQuery(GetStatusID);
+
+                            while (PatientIDOutput.next() && ReferralIDOutput.next() && ModalityIDOutput.next() && StatusIDOutput.next()) {
+                                 Integer patient_id = PatientIDOutput.getInt("patient_id");
+                                Integer modality_id = ModalityIDOutput.getInt("modality_id");
+                                Integer referral_id = ReferralIDOutput.getInt("id");
+                                Integer status_id = StatusIDOutput.getInt("order_status_id");
+
+                                String UpdateOrdersQuery = "update orders set patient = '" + patient_id + "', referral_md = '" + referral_id + "', modality = '" + modality_id + "', notes = '" + ReferralTextField.getText() + "', status = '" + status_id + "' where order_id = '" + order_id + "';";
+
+                                Statement statement5 = connectDB.createStatement();
+                                statement5.execute(UpdateOrdersQuery);
+
+                                Stage stage = (Stage) CreateOrderButton.getScene().getWindow();
+    
+                                stage.close();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                FXApp.setRoot("ADMIN_AdminPanel");
+
+                            }
+                        
+
+
+                    }catch(SQLException e1){
+
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+
+                        e1.printStackTrace();
+                    }
+
                    
 
                 }
@@ -4082,7 +4144,7 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
 
             OrdersTableObservableList.add(
                     
-            new TABLEOrdersTableController(order_id, patientquery, referral_mdquery, modalityquery, notesquery, statusquery, button)); 
+            new TABLEOrdersTableController(order_id, fullname, referral_mdquery, modalityquery, notesquery, statusquery, button)); 
         }
 
         OrdersIDColumn.setCellValueFactory(new PropertyValueFactory<>("orderid"));               
@@ -4514,6 +4576,51 @@ EstinatedCosts.setEditable(false);
         SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+
+                try {
+                    
+                    String GetRadiologistIDQuery = "select id from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
+                    String GetOrderInfoQuery = "select patient, modality from orders where order_id = '" + OrdersChoiceBox.getValue() + "';";
+
+                    Statement statement = connectDB.createStatement();
+                    Statement statement2 = connectDB.createStatement();
+
+                    ResultSet GetRadiologistID = statement.executeQuery(GetRadiologistIDQuery);
+                    ResultSet GetOrderInfo = statement2.executeQuery(GetOrderInfoQuery);
+                    while(GetRadiologistID.next() && GetOrderInfo.next()){
+
+                        Integer radiologistID = GetRadiologistID.getInt("id");
+                        Integer patientID = GetOrderInfo.getInt("patient");
+                        Integer modalityID = GetOrderInfo.getInt("modality");
+
+                        String UpdateAppointmentsQuery = "update appointments set phone_number = '" + phoneNumberField.getText() + "', email_address = '" + emailAddressField.getText() + "', date_time = '" + AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + radiologistID + "', patient = '" + patientID + "', modality = '" + modalityID + "' where appointment_id = '" + appointmentIdquery + "';";
+                        String UpdateOrdersQuery = "update orders set appointment = '" + appointmentIdquery + "' where order_id = '" + OrdersChoiceBox.getValue() + "';";
+                        String UpdateOrdersQuery2 = "update orders set appointment = null where order_id = '" + ordernumberquery + "';";
+
+                        Statement statement3 = connectDB.createStatement();
+                        Statement statement4 = connectDB.createStatement(); 
+                        Statement statement5 = connectDB.createStatement();
+
+                        statement3.execute(UpdateAppointmentsQuery);
+                        statement4.execute(UpdateOrdersQuery);
+                        statement5.execute(UpdateOrdersQuery2);
+
+                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+    
+                                stage.close();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                FXApp.setRoot("ADMIN_AdminPanel");
+
+                    }
+
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+      
+                    e1.printStackTrace();
+                }
 
 
 
