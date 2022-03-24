@@ -13,9 +13,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="com.example.application.Admin_AllOrders_Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
+<AnchorPane fx:id="BlurBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
    xmlns="http://javafx.com/javafx/17"
-   xmlns:fx="http://javafx.com/fxml/1">
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.REFERRAL_DOCTOR_Referrals_Controller">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
@@ -120,7 +120,7 @@
                            <children>
                               <Pane prefHeight="50.0" prefWidth="1220.0" style="-fx-background-color: white;">
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="1430.0" text="All Orders">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="1430.0" text="Patients">
                                        <font>
                                           <Font name="System Bold" size="30.0" />
                                        </font>
@@ -130,15 +130,20 @@
                                           <Font name="System Bold" size="23.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="searchOrders" layoutX="1267.0" layoutY="15.0" />
+                                    <TextField fx:id="searchAdminReferrals" layoutX="1267.0" layoutY="15.0" />
+                                    <Button onAction="#NewPatientGeneration" layoutX="14.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="New" textFill="#001eff">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </Pane>
-                              <TableView fx:id="AllAppointmentsTable" prefHeight="786.0" prefWidth="1430.0">
+                              <TableView fx:id="AllPatientsTable" prefHeight="786.0" prefWidth="1430.0">
                                  <columns>
-                                    <TableColumn fx:id="AllOrdersPatient" editable="false" prefWidth="336.6666564941406" text="Patient" />
-                                    <TableColumn fx:id="AllOrdersModality" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="Modality" />
-                                    <TableColumn fx:id="AllOrdersNotes" prefWidth="601.6666870117188" text="Notes" />
-                                    <TableColumn fx:id="AllOrdersStatus" editable="false" prefWidth="235.0" text="Status" />
+                                    <TableColumn fx:id="patients_date" editable="false" prefWidth="336.6666564941406" text="Date of Birth" />
+                                    <TableColumn fx:id="patients_firstName" editable="false" minWidth="0.0" prefWidth="257.33331298828125" text="First Name" />
+                                    <TableColumn fx:id="patients_lastName" prefWidth="601.6666870117188" text="Last Name" />
+                                    <TableColumn fx:id="ModifyButton" prefWidth="75.0" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

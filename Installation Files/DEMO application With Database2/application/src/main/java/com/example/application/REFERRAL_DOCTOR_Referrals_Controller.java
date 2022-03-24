@@ -53,7 +53,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.application.*;
 
-public class ADMIN_Referrals_Controller implements Initializable {
+public class REFERRAL_DOCTOR_Referrals_Controller implements Initializable {
 
     /*
      * 
@@ -909,7 +909,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN");
+        FXApp.setRoot("REFERRAL_DOCTOR");
     }
 
     public void userInfo(ActionEvent e) throws IOException {
@@ -922,7 +922,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
+        FXApp.setRoot("REFERRAL_DOCTOR_Referrals");
     }
 
     public void orders(ActionEvent e) throws IOException {

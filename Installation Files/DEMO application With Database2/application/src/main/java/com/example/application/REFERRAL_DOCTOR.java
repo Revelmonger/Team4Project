@@ -57,7 +57,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class ADMIN implements Initializable {
+public class REFERRAL_DOCTOR implements Initializable {
 
 
 @FXML
@@ -112,12 +112,12 @@ private ScrollPane BlurBox;
     }
 
     public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN");
+        FXApp.setRoot("REFERRAL_DOCTOR");
     }
 
     public void userInfo(ActionEvent e) throws IOException {
         System.out.println("The Current user is " + user_id1);
-        FXApp.setRoot("ADMIN");
+        FXApp.setRoot("");
     }
 
     public void admin(ActionEvent e) throws IOException {
@@ -125,7 +125,7 @@ private ScrollPane BlurBox;
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
+        FXApp.setRoot("REFERRAL_DOCTOR_Referrals");
     }
 
     public void orders(ActionEvent e) throws IOException {
