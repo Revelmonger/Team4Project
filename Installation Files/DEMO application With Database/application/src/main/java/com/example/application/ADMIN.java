@@ -491,7 +491,7 @@ private ScrollPane BlurBox;
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.closed, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = true and closed = false;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; // change
         // to
         // just
         // like
@@ -513,6 +513,7 @@ private ScrollPane BlurBox;
                 String radiologistquery = queryOutput.getString("full_name");
                 Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
                 
+
 
                 CheckedInAppointmentsObservableList.add(new TABLECheckedInAppointmentsTableController(patientquery,
                         modalityquery, date_timequery, radiologistquery, pricequery, checkedinquestion));
@@ -595,7 +596,7 @@ private ScrollPane BlurBox;
          */
 
         // join price modalities.price
-        String TECHCheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND closed = 0;"; // change
+        String TECHCheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; 
         // to
         // just
         // like
@@ -902,7 +903,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
          * 
          */
 
-        String TodaysAppointmentsTableQuery = "select a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where date(date_time) = (select date(now()))  order by date_time;";
+        String TodaysAppointmentsTableQuery = "select a.appointment_id, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where date(date_time) = (select date(now())) AND (a.checked_in = false || a.checked_in IS NULL  )order by date_time;";
 
         // date time for todays date!
 
@@ -918,7 +919,64 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 Date date_timequery = queryOutput.getDate("date_time"); // price //may need to change types
                 String radiologistquery = queryOutput.getString("full_name");
                 String pricequery = queryOutput.getString("price");
-                Button button = new Button("Modify");
+                Button button = new Button("Check-in");
+                Integer appointmentID = queryOutput.getInt("appointment_id");
+                button.setStyle(
+                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
+
+
+                button.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                   
+                        try {
+                            DatabaseConnection connectNow = new DatabaseConnection();
+                            Connection connectDB = connectNow.getConnection();
+                            
+                            String CheckInAppoint = "UPDATE appointments set checked_in = true where appointment_id = " +appointmentID + ";";
+                            Statement statement4 = connectDB.createStatement();
+                           statement4.execute(CheckInAppoint);
+                           try {
+                            FXApp.setRoot("ADMIN");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        }
+                            catch (SQLException e) {
+                             
+                                e.printStackTrace();
+                            }
+                
+
+        
+                    }
+                
+        
+
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 TodaysAppointmentsObservableList.add(new TABLETodaysAppointmentsTableController(patientquery,
                         modalityquery, date_timequery, radiologistquery, pricequery, button));
@@ -958,14 +1016,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                             .indexOf(searchKeyword) > -1) {
                         return true;
 
-                    } /*
-                       * else if
-                       * (TABLETodaysAppointmentsTableController.getDate_time().toLowerCase().indexOf(
-                       * searchKeyword) > -1) {
-                       * return true;
-                       * 
-                       * }
-                       */ else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase()
+                    }  else if (TABLETodaysAppointmentsTableController.getRadiologist().toLowerCase()
                             .indexOf(searchKeyword) > -1) {
                         return true;
                     } else if (TABLETodaysAppointmentsTableController.getPrice().toLowerCase()
@@ -990,8 +1041,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
-        }
+e.printStackTrace();        }
 
         /*
          * 
@@ -999,7 +1049,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
          * 
          */
 
-        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.appointment is null;"; // change
+        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.status = 4;"; // change
         // to
         // just
         // like
@@ -1092,13 +1142,12 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         }
 
 
-
-        /*
+      /*
          * 
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "select o.order_id, p.first_name, p.last_name, m.name, rmd.full_name, o.notes, a.closed, dr.diagnostic  from orders as o  join patients as p on p.patient_id = o.patient  join modalities as m on m.modality_id = o.modality  join referralmds as rmd on rmd.id = o.referral_md  join appointments as a on a.appointment_id = o.appointment  join diagnostic_reports as dr on dr.order_id = o.order_id where a.closed = true and dr.diagnostic is null;"; 
+        String ReviewImagingOrdersTableQuery = "select o.order_id, p.first_name, p.last_name, m.name, rmd.full_name, o.notes, a.closed, dr.diagnostic  from orders as o  join patients as p on p.patient_id = o.patient  join modalities as m on m.modality_id = o.modality  join referralmds as rmd on rmd.id = o.referral_md  join appointments as a on a.appointment_id = o.appointment  join diagnostic_reports as dr on dr.order_id = o.order_id where a.closed = true and dr.diagnostic IS NULL;"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
