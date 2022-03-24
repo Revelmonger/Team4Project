@@ -16,4 +16,3 @@ public class FXApp_Springboot {
 
 //Checked in appointments with status
 //unscehduled orders with schedule
-
