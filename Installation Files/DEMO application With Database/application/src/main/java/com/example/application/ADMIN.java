@@ -908,7 +908,7 @@ private ScrollPane BlurBox;
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
-                   /*
+                   
 
                     String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
                     statement5 = connectDB.createStatement();
@@ -919,7 +919,7 @@ private ScrollPane BlurBox;
                       BufferedImage  img = ImageIO.read(new File(UploadPath));
                     }
                  
-*/
+
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -984,7 +984,6 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 Button showImage = new Button();
 
 
-//WORKING HERE
 
       Button CreateDiagnosticReportButton = new Button("Create Report");
         CreateDiagnosticReportButton.setPrefHeight(42);
