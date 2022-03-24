@@ -483,8 +483,7 @@ private ScrollPane BlurBox;
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
-        }
+e.printStackTrace();        }
 
         /*
          * 
@@ -493,7 +492,7 @@ private ScrollPane BlurBox;
          */
 
         // join price modalities.price
-        String CheckedInAppointmentsTableQuery = "select a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 order by date_time;"; // change
+        String CheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; // change
         // to
         // just
         // like
@@ -589,8 +588,7 @@ private ScrollPane BlurBox;
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
-        }
+e.printStackTrace();        }
 
          /*
          * 
@@ -897,8 +895,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
-        }
+e.printStackTrace();        }
        
 /*
          * 
@@ -1601,20 +1598,20 @@ EstinatedCosts.setEditable(false);
                 String notesquery = queryOutput.getString("notes");
                 Button button = new Button("Review Order");
                 Integer OrderID = queryOutput.getInt("order_id");
+                Integer patientID = queryOutput.getInt("patient");
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
-                    queryOutput.close();
-
+                 
+/*
                     String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
                     statement5 = connectDB.createStatement();
                     queryOutput = statement5.executeQuery(ImagePathStatement);
-
                     while (queryOutput.next()) {
                         String UploadPath = queryOutput.getString("upload_path");
                       BufferedImage  img = ImageIO.read(new File(UploadPath));
-                    }
-                    queryOutput.close();
+                    }*/
+            
 
 
 /////////////////////////////////////////////////////////////
@@ -1678,8 +1675,6 @@ button.setOnAction(new EventHandler<ActionEvent>() {
   
        
 Button showImage = new Button();
-
-
 //WORKING HERE
 
       Button CreateDiagnosticReportButton = new Button("Create Report");
@@ -1697,10 +1692,18 @@ Button showImage = new Button();
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
     
-        
-                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientquery + "', '" + user_id1 + "', '"+ ReportArea.getText() + "');";
+                    String InsertIntoOrdersReport = "update orders set report = '1' where order_id = '"+ OrderID+ "';" ;
+
+                
+                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + user_id1 + "', '"+ ReportArea.getText() + "');";
                         Statement statement = connectDB.createStatement();
+                        Statement  statement2 = connectDB.createStatement();
+
                         statement.execute(InsertIntoUsersTableQuery);
+
+                        statement2.execute(InsertIntoOrdersReport);
+
+
                         Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
             
 
@@ -1847,8 +1850,7 @@ Button showImage = new Button();
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
-        }
+e.printStackTrace();        }
 
     }
 
