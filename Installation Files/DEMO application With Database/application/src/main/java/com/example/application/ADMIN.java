@@ -39,9 +39,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -1115,14 +1117,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
                    
 
-                    String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
-                    statement5 = connectDB.createStatement();
-                    queryOutput = statement5.executeQuery(ImagePathStatement);
-
-                    while (queryOutput.next()) {
-                        String UploadPath = queryOutput.getString("upload_path");
-                      BufferedImage  img = ImageIO.read(new File(UploadPath));
-                    }
+                    
                  
 
 
@@ -1185,8 +1180,15 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         horizontalline.setTranslateY(100);
 
   
-       
-Button showImage = new Button();
+        
+      /*  
+        Button showImage = new Button("Show Image");
+        showImage.setPrefHeight(42);
+        showImage.setPrefWidth(102);
+        showImage.setLayoutX(150);
+        showImage.setLayoutY(338);
+        showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");*/
+
 
 
 
@@ -1259,8 +1261,32 @@ Button showImage = new Button();
           
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(CreateDiagnosticReportButton);
+                
                 anchorpane.getChildren().add(ReportArea);
                 anchorpane.getChildren().add(ReportLabel);
+             String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+        Statement statement;
+        try {
+            statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(ImagePathStatement);
+
+        while (queryOutput.next()) {
+            String UploadPath = queryOutput.getString("upload_path");
+
+            /*ImageView imageView = new ImageView(new Image(UploadPath));
+
+            showImage.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+    
+                }*/
+            });
+        }
+
+        } catch (SQLException e3) {
+
+            e3.printStackTrace();
+        } 
                 
         Scene scene = new Scene(anchorpane, 800, 400);
 
