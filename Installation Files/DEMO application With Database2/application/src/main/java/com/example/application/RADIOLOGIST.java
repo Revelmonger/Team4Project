@@ -121,11 +121,11 @@ private ScrollPane BlurBox;
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
+        FXApp.setRoot("");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
+        FXApp.setRoot("");
     }
 
     public void orders(ActionEvent e) throws IOException {
@@ -746,7 +746,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
 
-                        FXApp.setRoot("ADMIN");
+                        FXApp.setRoot("RADIOLOGIST");
 
                     } catch (SQLException e1) {
     
@@ -937,7 +937,7 @@ e.printStackTrace();        }
                             Statement statement4 = connectDB.createStatement();
                            statement4.execute(CheckInAppoint);
                            try {
-                            FXApp.setRoot("ADMIN");
+                            FXApp.setRoot("RADIOLOGIST");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -1443,7 +1443,7 @@ EstinatedCosts.setEditable(false);
 
 
 
-                    FXApp.setRoot("ADMIN");
+                    FXApp.setRoot("RADIOLOGIST");
                     
                 } catch (SQLException e1) {
 
@@ -1712,7 +1712,7 @@ Button showImage = new Button();
                         stage.close();
                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
         
-                        FXApp.setRoot("ADMIN");
+                        FXApp.setRoot("RADIOLOGIST");
         
               
         

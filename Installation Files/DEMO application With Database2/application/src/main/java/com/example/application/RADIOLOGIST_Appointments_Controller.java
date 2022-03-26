@@ -266,11 +266,11 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
+        FXApp.setRoot("");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
+        FXApp.setRoot("");
     }
 
     public void orders(ActionEvent e) throws IOException {

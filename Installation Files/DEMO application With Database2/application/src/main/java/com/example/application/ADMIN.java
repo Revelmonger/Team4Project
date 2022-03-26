@@ -238,24 +238,26 @@ private ScrollPane BlurBox;
      * 
      */
     @FXML
-    private TableView<TABLEPlacedOrdersTableController> PlacedOrdersTable;
+    private TableView<PlacedOrdersTableController> PlacedOrdersTable;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Patient;
+    private TableColumn<PlacedOrdersTableController, Integer> placed_orders_Patient;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Modality;
+    private TableColumn<PlacedOrdersTableController, Integer> placed_orders_Modality;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, String> placed_orders_Notes;
+    private TableColumn<PlacedOrdersTableController, String> placed_orders_Notes;
 
     @FXML
-    private TableColumn<TABLEPlacedOrdersTableController, Integer> placed_orders_Status;
+    private TableColumn<PlacedOrdersTableController, Integer> placed_orders_Status;
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Button> ResultsTable;
 
     @FXML
     private TextField searchPlacedOrders;
 
-    ObservableList<TABLEPlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
+    ObservableList<PlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
             .observableArrayList();
     /*
      * 
@@ -424,9 +426,11 @@ private ScrollPane BlurBox;
                 String modalityquery = queryOutput.getString("name");
                 String notesquery = queryOutput.getString("notes").trim();
                 String statusquery = queryOutput.getString("order_name");
-
+                Button button = new Button("Completed");
+                button.setStyle(
+                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
                 PlacedOrdersTableObservableList.add(
-                        new TABLEPlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery));
+                        new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery, button));
             }
 
             placed_orders_Patient.setCellValueFactory(new PropertyValueFactory<>("patient"));
@@ -437,11 +441,13 @@ private ScrollPane BlurBox;
 
             placed_orders_Status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+            ResultsTable.setCellValueFactory(new PropertyValueFactory<>("button"));
+
             PlacedOrdersTable.setItems(null);
             PlacedOrdersTable.setItems(PlacedOrdersTableObservableList);
 
             // Search Bar Functionality Start
-            FilteredList<TABLEPlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
+            FilteredList<PlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
                     PlacedOrdersTableObservableList);
 
             searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -473,7 +479,7 @@ private ScrollPane BlurBox;
 
             });
 
-            SortedList<TABLEPlacedOrdersTableController> PlacedOrdersSortedData = new SortedList<>(
+            SortedList<PlacedOrdersTableController> PlacedOrdersSortedData = new SortedList<>(
                     PlacedOrdersFilteredData);
 
             // Binds the sorted resultswith the Table

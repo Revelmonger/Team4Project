@@ -319,11 +319,11 @@ public class RADIOLOGIST_AllOrders_Controller implements Initializable {
     }
 
     public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
+        FXApp.setRoot("");
     }
 
     public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
+        FXApp.setRoot("");
     }
 
     public void orders(ActionEvent e) throws IOException {
