@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="BlurBox" focusTraversable="false" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="4000.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.USER">
+   <content>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="3143.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
+         <left>
+            <Pane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <VBox prefHeight="3029.0" prefWidth="1480.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="130.0" prefWidth="1420.0" style="-fx-background-color: #cccccc;">
+                     <children>
+                        <Pane prefHeight="130.0" prefWidth="150.0">
+                           <children>
+                              <Button fx:id="HomeButton" mnemonicParsing="false" onAction="#home" onMouseEntered="#HomeButtonEntered" onMouseExited="#HomeButtonExited" prefHeight="132.0" prefWidth="153.0" style="-fx-background-color: transparent;" text="Home">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="150.0">
+                           <children>
+                              <Button fx:id="UserInfoButton" mnemonicParsing="false" onAction="#userInfo" onMouseEntered="#UserInfoButtonEntered" onMouseExited="#UserInfoButtonExited" prefHeight="131.0" prefWidth="154.0" style="-fx-background-color: transparent;" text="User Info">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="150.0" />
+                        <Pane prefHeight="130.0" prefWidth="150.0" />
+                        <Pane prefHeight="130.0" prefWidth="200.0" />
+                        <Pane prefHeight="130.0" prefWidth="145.0" />
+                        <Pane prefHeight="130.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="100.0">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="220.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="130.0" prefWidth="220.0" text="Logged in: user  ">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Line endY="-63.66666793823242" layoutX="220.0" layoutY="105.0" startY="-14.333335876464844" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="130.0" prefWidth="160.0">
+                           <children>
+                              <Button fx:id="logoutButton" layoutY="40.0" mnemonicParsing="false" onAction="#logout" onMouseEntered="#LogoutButtonOnMouseEntered" onMouseExited="#LogoutButtonOnMouseExited" prefHeight="50.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Logout">
+                                 <font>
+                                    <Font name="System Bold" size="23.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #333333;" />
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <Pane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </content>
+</ScrollPane>

@@ -1,0 +1,11 @@
+ Integer appointmentIdquery = queryOutput.getInt("appointment_id");
+            String patientquery = queryOutput.getString("first_name")+ " " + queryOutput.getString("last_name");
+            Integer ordernumberquery = queryOutput.getInt("order_id");
+            java.sql.Date datetimequery = queryOutput.getDate("date_time");
+            String radiologistquery = queryOutput.getString("full_name");
+            String phoneNumbeQuery = queryOutput.getString("phone_number");
+            String email_addressQuery = queryOutput.getString("email_address");
+            Button  button = new Button("Select");
+
+
+  String[] firstandlastnames = SelectedPatientField.getValue().toString().split(" ", 2);
