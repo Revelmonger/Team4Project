@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,6 +41,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -836,12 +838,20 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                         Connection connectDB = connectNow.getConnection();
     
                         String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
-                        String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values ('"+ Order_id + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
+                        //String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values ('"+ Order_id + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
                         Statement statement = connectDB.createStatement();
-                        Statement statement2 = connectDB.createStatement();
+                        PreparedStatement statement2 = null;
 
-                        statement.execute(InsertIntoUploadsTable);
-                        statement.execute(UpdateAppointmentsTable);
+                        statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                        statement2.setInt(1, Order_id);
+                        statement2.setString(2, fileName);
+                        statement2.setString(3, extension);
+                        statement2.setBoolean(4, true);
+                        statement2.setString(5, label.getText());
+                        statement2.executeUpdate();
+
+                        statement.execute(UpdateAppointmentsTable); 
+                        
                         Stage stage = (Stage) UploadFileButton.getScene().getWindow();
     
                         stage.close();
@@ -1776,7 +1786,69 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
   
        
-Button showImage = new Button();
+        Button showImage = new Button("Show Image");
+        showImage.setPrefHeight(42);
+        showImage.setPrefWidth(102);
+        showImage.setLayoutX(170);
+        showImage.setLayoutY(338);
+        showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+            /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+            @Override
+            public void handle(ActionEvent e){
+
+                String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+                   
+                    try {
+
+                        Statement statement5 = connectDB.createStatement();
+                        ResultSet queryOutput;
+                        queryOutput = statement5.executeQuery(ImagePathStatement);
+                   
+                    while (queryOutput.next()) {
+
+                      String UploadPath = queryOutput.getString("upload_path");
+                      File file = new File(UploadPath);
+                      Image  img = new Image(file.toURI().toString());
+
+                        Stage stage = new Stage();
+                        AnchorPane pane = new AnchorPane();
+                        ImageView imgView = new ImageView(img);
+                        
+                        imgView.setFitHeight(500);
+                        imgView.setFitWidth(500);
+                        pane.getChildren().add(imgView);
+
+                        Scene scene = new Scene(pane, 500, 500);
+
+                        stage.setScene(scene);
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.setResizable(false);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+
+                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent t) {
+                                KeyCode key = t.getCode();
+                                if (key == KeyCode.ESCAPE) {
+                                    stage.close();
+                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                }
+                            }
+                        });
+                        stage.show();
+
+                    }
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
+            }
+        });
 //WORKING HERE
 
       Button CreateDiagnosticReportButton = new Button("Create Report");
@@ -1856,6 +1928,7 @@ Button showImage = new Button();
           
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(CreateDiagnosticReportButton);
+                anchorpane.getChildren().add(showImage);
                 anchorpane.getChildren().add(ReportArea);
                 anchorpane.getChildren().add(ReportLabel);
                 
