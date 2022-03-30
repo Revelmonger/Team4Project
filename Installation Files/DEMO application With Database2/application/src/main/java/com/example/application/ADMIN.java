@@ -259,6 +259,101 @@ private ScrollPane BlurBox;
 
     ObservableList<PlacedOrdersTableController> PlacedOrdersTableObservableList = FXCollections
             .observableArrayList();
+////////////////////////////
+
+
+
+
+
+
+
+
+    /*
+     * 
+     * Completed Orders Imports
+     * 
+     */
+    @FXML
+    private TableView<PlacedOrdersTableController> CompletedOrdersTable;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Integer> CompletedOrdersPatient;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Integer> CompletedOrdersModality;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, String> CompletedOrdersNotes;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Integer> CompletedOrdersStatus;
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Button> CompletedOrdersResults;
+
+    @FXML
+    private TextField searchCompletedOrders;
+
+    ObservableList<PlacedOrdersTableController> completedOrdersObservableList = FXCollections
+            .observableArrayList();
+    
+     /*
+     * 
+     * Closed Orders
+     * 
+     */
+    @FXML
+    private TableView<PlacedOrdersTableController> OldOrdersTable;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Integer> OldOrdersPatients;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Integer> OldOrdersModality;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, String> OldOrdersNotes;
+
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Integer> OldOrdersStatus;
+    @FXML
+    private TableColumn<PlacedOrdersTableController, Button> OldOrdersResults;
+
+    @FXML
+    private TextField ClosedOrdersSearch;
+
+    ObservableList<PlacedOrdersTableController> closedOrdersObservableList = FXCollections
+            .observableArrayList();
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////
+
     /*
      * 
      * Checked-In Appointments Imports
@@ -426,9 +521,10 @@ private ScrollPane BlurBox;
                 String modalityquery = queryOutput.getString("name");
                 String notesquery = queryOutput.getString("notes").trim();
                 String statusquery = queryOutput.getString("order_name");
-                Button button = new Button("Completed");
+                Button button = new Button("Alert!");
+
                 button.setStyle(
-                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
+                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #d32525;");
                 PlacedOrdersTableObservableList.add(
                         new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery, button));
             }
