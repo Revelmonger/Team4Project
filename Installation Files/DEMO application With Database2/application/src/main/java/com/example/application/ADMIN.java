@@ -1768,16 +1768,16 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
         Label ReportLabel = new Label("Report:");
         ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
-        ReportLabel.setLayoutX(459);
-        ReportLabel.setLayoutY(192);
+        ReportLabel.setLayoutX(275);
+        ReportLabel.setLayoutY(120);
      
 
         
         TextArea ReportArea = new TextArea();
-        ReportArea.setPrefHeight(100);
-        ReportArea.setPrefWidth(260);
-        ReportArea.setLayoutX(459);
-        ReportArea.setLayoutY(227);
+        ReportArea.setPrefHeight(200);
+        ReportArea.setPrefWidth(400);
+        ReportArea.setLayoutX(350);
+        ReportArea.setLayoutY(120);
 
 
         Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
@@ -1788,9 +1788,9 @@ button.setOnAction(new EventHandler<ActionEvent>() {
        
         Button showImage = new Button("Show Image");
         showImage.setPrefHeight(42);
-        showImage.setPrefWidth(102);
-        showImage.setLayoutX(170);
-        showImage.setLayoutY(338);
+        showImage.setPrefWidth(100);
+        showImage.setLayoutX(70);
+        showImage.setLayoutY(120);
         showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
         showImage.setOnAction(new EventHandler<ActionEvent>() {
@@ -1812,19 +1812,21 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                       String UploadPath = queryOutput.getString("upload_path");
                       File file = new File(UploadPath);
                       Image  img = new Image(file.toURI().toString());
+                      double width = img.getWidth();
+                      double height = img.getHeight();;
 
                         Stage stage = new Stage();
                         AnchorPane pane = new AnchorPane();
                         ImageView imgView = new ImageView(img);
                         
-                        imgView.setFitHeight(500);
-                        imgView.setFitWidth(500);
+                        imgView.setFitHeight(height);
+                        imgView.setFitWidth(width);
                         pane.getChildren().add(imgView);
 
-                        Scene scene = new Scene(pane, 500, 500);
+                        Scene scene = new Scene(pane, width, height);
 
                         stage.setScene(scene);
-                        stage.initStyle(StageStyle.UNDECORATED);
+                      
                         stage.setResizable(false);
                         stage.initModality(Modality.APPLICATION_MODAL);
 

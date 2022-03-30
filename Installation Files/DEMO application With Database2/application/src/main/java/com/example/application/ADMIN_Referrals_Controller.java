@@ -25,9 +25,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -52,9 +57,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.application.*;
+import javafx.beans.value.ObservableValue;
 
 public class ADMIN_Referrals_Controller implements Initializable {
-
+    public MenuButton menuButton;
     /*
      * 
      * Button Imports
@@ -1073,11 +1079,14 @@ public class ADMIN_Referrals_Controller implements Initializable {
         EthnicityChange.setPrefWidth(259);
         EthnicityChange.setLayoutX(493);
         EthnicityChange.setLayoutY(43);
-
         EthnicityChange.getItems().add("Hispanic or Latino");
         EthnicityChange.getItems().add("Not Hispanic or Latino");
-
         EthnicityChange.setDisable(false);
+
+
+
+
+
 
         SexPane.getChildren().add(Sex);
         SexPane.getChildren().add(Race);
@@ -1086,9 +1095,75 @@ public class ADMIN_Referrals_Controller implements Initializable {
         SexPane.getChildren().add(RaceChange);
         SexPane.getChildren().add(EthnicityChange);
 
+/*
+        ChoiceBox<String> PatientAlert = new ChoiceBox<String>();
+        PatientAlert.setPrefHeight(35);
+        PatientAlert.setPrefWidth(128);
+        PatientAlert.setLayoutX(35);
+        PatientAlert.setLayoutY(43);
+
+        PatientAlert.getItems().add("Male");
+        PatientAlert.getItems().add("Female");
+        PatientAlert.getItems().add("Other");
+
+        PatientAlert.setDisable(false);
+*/
+
+
+
+
         Pane BottomPane = new Pane();
         BottomPane.setPrefHeight(223);
         NamesPane.setPrefWidth(800);
+
+
+        Label Alert = new Label("Alert:");
+        Alert.setStyle("-fx-font: normal bold 16px 'arial';");
+        Alert.setMinHeight(55);
+        Alert.setMinWidth(128);
+        Alert.setLayoutX(35);
+
+
+        Label SelectedItems = new Label("");
+        SelectedItems.setStyle("-fx-font: normal bold 16px 'arial';");
+        SelectedItems.setMinHeight(55);
+        SelectedItems.setMinWidth(128);
+        SelectedItems.setLayoutX(150);
+        SelectedItems.setLayoutY(50);
+   
+   
+
+        ListView<String> listView = new ListView<>();
+        listView.setPrefHeight(100);
+        listView.setPrefWidth(128);
+        listView.setLayoutX(35);
+        listView.setLayoutY(50);
+   
+        ObservableList<String> items = FXCollections.observableArrayList("Cricket", "Chess", "Kabaddy", "Badminton",
+    "Football", "Golf", "CoCo", "car racing");
+  listView.setItems(items);
+  listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+  listView.getSelectionModel().selectedItemProperty()
+  .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+   ObservableList<String> selectedItems = listView.getSelectionModel().getSelectedItems();
+
+   StringBuilder builder = new StringBuilder("Selected items :");
+
+   for (String name : selectedItems) {
+    builder.append(name + "\n");
+   }
+
+   SelectedItems.setText(builder.toString());
+
+  });
+
+
+
+
+
+
+
+
 
         Button StartOrderButton = new Button("Add Patient");
         StartOrderButton.setPrefHeight(42);
@@ -1153,6 +1228,9 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
         BottomPane.getChildren().add(StartOrderButton);
         BottomPane.getChildren().add(CancelButton);
+        BottomPane.getChildren().add(Alert);
+        BottomPane.getChildren().add(listView);
+        BottomPane.getChildren().add(SelectedItems);
 
         vbox.getChildren().add(newPane);
         vbox.getChildren().add(Filler);
