@@ -823,6 +823,58 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         button.setOnAction(event1);
         
 
+        Button showImage = new Button("Show Image");
+        showImage.setPrefHeight(42);
+        showImage.setPrefWidth(100);
+        showImage.setLayoutX(170);
+        showImage.setLayoutY(280);
+        showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+        showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+            /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+            @Override
+            public void handle(ActionEvent e){
+
+
+                      String UploadPath = label.getText();
+                      File file = new File(UploadPath);
+                      Image  img = new Image(file.toURI().toString());
+                      double width = img.getWidth();
+                      double height = img.getHeight();;
+
+                        Stage stage = new Stage();
+                        AnchorPane pane = new AnchorPane();
+                        ImageView imgView = new ImageView(img);
+                        
+                        imgView.setFitHeight(height);
+                        imgView.setFitWidth(width);
+                        pane.getChildren().add(imgView);
+
+                        Scene scene = new Scene(pane, width, height);
+
+                        stage.setScene(scene);
+                      
+                        stage.setResizable(false);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+
+                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent t) {
+                                KeyCode key = t.getCode();
+                                if (key == KeyCode.ESCAPE) {
+                                    stage.close();
+                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                }
+                            }
+                        });
+                        stage.show();
+   
+
+            }
+        });
+
       Button UploadFileButton = new Button("Complete Order");
         UploadFileButton.setPrefHeight(42);
         UploadFileButton.setPrefWidth(102);
@@ -930,6 +982,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 anchorpane.getChildren().add(label);
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(UploadFileButton);
+                anchorpane.getChildren().add(showImage);
 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -1729,6 +1782,7 @@ EstinatedCosts.setEditable(false);
 
                 String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
                 Integer referral_mdquery = queryOutput.getInt("referral_md");
+                Integer radiologistID = queryOutput.getInt("radiologist");
                 Integer modalityquery = queryOutput.getInt("modality"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
                 Button button = new Button("Review Order");
@@ -1868,7 +1922,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
                     }
                 } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
+
                     e1.printStackTrace();
                 }
 
@@ -1894,7 +1948,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                     String InsertIntoOrdersReport = "update orders set report = '1' where order_id = '"+ OrderID+ "';" ;
 
                 
-                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + user_id1 + "', '"+ ReportArea.getText() + "');";
+                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText() + "');";
                         Statement statement = connectDB.createStatement();
                         Statement  statement2 = connectDB.createStatement();
 
