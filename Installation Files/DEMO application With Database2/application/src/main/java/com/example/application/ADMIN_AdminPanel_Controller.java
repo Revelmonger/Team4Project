@@ -41,6 +41,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DisplacementMap;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
@@ -1387,7 +1389,57 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
       }
 
 
+      Button showImage = new Button("Show Image");
+      showImage.setPrefHeight(42);
+      showImage.setPrefWidth(100);
+      showImage.setLayoutX(170);
+      showImage.setLayoutY(280);
+      showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
+      showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+          /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+          @Override
+          public void handle(ActionEvent e){
+
+
+                    String UploadPath = label.getText();
+                    File file = new File(UploadPath);
+                    Image  img = new Image(file.toURI().toString());
+                    double width = img.getWidth();
+                    double height = img.getHeight();;
+
+                      Stage stage = new Stage();
+                      AnchorPane pane = new AnchorPane();
+                      ImageView imgView = new ImageView(img);
+                      
+                      imgView.setFitHeight(height);
+                      imgView.setFitWidth(width);
+                      pane.getChildren().add(imgView);
+
+                      Scene scene = new Scene(pane, width, height);
+
+                      stage.setScene(scene);
+                    
+                      stage.setResizable(false);
+                      stage.initModality(Modality.APPLICATION_MODAL);
+
+                      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                          @Override
+                          public void handle(KeyEvent t) {
+                              KeyCode key = t.getCode();
+                              if (key == KeyCode.ESCAPE) {
+                                  stage.close();
+                                  BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                              }
+                          }
+                      });
+                      stage.show();
+ 
+
+          }
+      });
 
       Button UploadFileButton = new Button("Upload File");
         UploadFileButton.setPrefHeight(42);
@@ -1486,6 +1538,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
                 anchorpane.getChildren().add(label);
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(UploadFileButton);
+                anchorpane.getChildren().add(showImage);
 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -1617,7 +1670,71 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
           e1.printStackTrace();
       }
 
+      Button showImage = new Button("Show Image");
+      showImage.setPrefHeight(42);
+      showImage.setPrefWidth(100);
+      showImage.setLayoutX(100);
+      showImage.setLayoutY(320);
+      showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
+      showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+          /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+          @Override
+          public void handle(ActionEvent e){
+
+              String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrdersChoiceBox.getValue() + "'"; 
+                 
+                  try {
+
+                      Statement statement5 = connectDB.createStatement();
+                      ResultSet queryOutput;
+                      queryOutput = statement5.executeQuery(ImagePathStatement);
+                 
+                  while (queryOutput.next()) {
+
+                    String UploadPath = queryOutput.getString("upload_path");
+                    File file = new File(UploadPath);
+                    Image  img = new Image(file.toURI().toString());
+                    double width = img.getWidth();
+                    double height = img.getHeight();;
+
+                      Stage stage = new Stage();
+                      AnchorPane pane = new AnchorPane();
+                      ImageView imgView = new ImageView(img);
+                      
+                      imgView.setFitHeight(height);
+                      imgView.setFitWidth(width);
+                      pane.getChildren().add(imgView);
+
+                      Scene scene = new Scene(pane, width, height);
+
+                      stage.setScene(scene);
+                    
+                      stage.setResizable(false);
+                      stage.initModality(Modality.APPLICATION_MODAL);
+
+                      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                          @Override
+                          public void handle(KeyEvent t) {
+                              KeyCode key = t.getCode();
+                              if (key == KeyCode.ESCAPE) {
+                                  stage.close();
+                                  BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                              }
+                          }
+                      });
+                      stage.show();
+
+                  }
+              } catch (SQLException e1) {
+
+                  e1.printStackTrace();
+              }
+
+          }
+      });
 
       Button CreateDiagnosticReportButton = new Button("Create Report");
         CreateDiagnosticReportButton.setPrefHeight(42);
@@ -1634,8 +1751,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
             DatabaseConnection connectNow = new DatabaseConnection();
             Connection connectDB = connectNow.getConnection();
 
-       
-
+            
             String RadiologistQuery = "Select id from radiologists where full_name = '"+ RadiologistChoiceBox.getValue() + "'";
             Statement statement2 = connectDB.createStatement();
             ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
@@ -1706,6 +1822,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 anchorpane.getChildren().add(CreateDiagnosticReportButton);
                 anchorpane.getChildren().add(ReportArea);
                 anchorpane.getChildren().add(ReportLabel);
+                anchorpane.getChildren().add(showImage);
                 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -3690,7 +3807,57 @@ button.setOnAction(new EventHandler<ActionEvent>() {
           e1.printStackTrace();
       }
 
+      Button showImage = new Button("Show Image");
+      showImage.setPrefHeight(42);
+      showImage.setPrefWidth(100);
+      showImage.setLayoutX(170);
+      showImage.setLayoutY(280);
+      showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
+      showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+          /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+          @Override
+          public void handle(ActionEvent e){
+
+
+                    String UploadPath = label.getText();
+                    File file = new File(UploadPath);
+                    Image  img = new Image(file.toURI().toString());
+                    double width = img.getWidth();
+                    double height = img.getHeight();;
+
+                      Stage stage = new Stage();
+                      AnchorPane pane = new AnchorPane();
+                      ImageView imgView = new ImageView(img);
+                      
+                      imgView.setFitHeight(height);
+                      imgView.setFitWidth(width);
+                      pane.getChildren().add(imgView);
+
+                      Scene scene = new Scene(pane, width, height);
+
+                      stage.setScene(scene);
+                    
+                      stage.setResizable(false);
+                      stage.initModality(Modality.APPLICATION_MODAL);
+
+                      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                          @Override
+                          public void handle(KeyEvent t) {
+                              KeyCode key = t.getCode();
+                              if (key == KeyCode.ESCAPE) {
+                                  stage.close();
+                                  BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                              }
+                          }
+                      });
+                      stage.show();
+ 
+
+          }
+      });
 
 
       Button FileModifyButton = new Button("Save");
@@ -3809,6 +3976,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 anchorpane.getChildren().add(label);
                 anchorpane.getChildren().add(CancelButton);
                 anchorpane.getChildren().add(FileModifyButton);
+                anchorpane.getChildren().add(showImage);
 
         Scene scene = new Scene(anchorpane, 800, 400);
 
@@ -5347,7 +5515,71 @@ button.setOnAction(new EventHandler<ActionEvent>() {
           e1.printStackTrace();
       }
 
+      Button showImage = new Button("Show Image");
+      showImage.setPrefHeight(42);
+      showImage.setPrefWidth(100);
+      showImage.setLayoutX(100);
+      showImage.setLayoutY(320);
+      showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
+      showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+          /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+          @Override
+          public void handle(ActionEvent e){
+
+              String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrdersChoiceBox.getValue() + "'"; 
+                 
+                  try {
+
+                      Statement statement5 = connectDB.createStatement();
+                      ResultSet queryOutput;
+                      queryOutput = statement5.executeQuery(ImagePathStatement);
+                 
+                  while (queryOutput.next()) {
+
+                    String UploadPath = queryOutput.getString("upload_path");
+                    File file = new File(UploadPath);
+                    Image  img = new Image(file.toURI().toString());
+                    double width = img.getWidth();
+                    double height = img.getHeight();;
+
+                      Stage stage = new Stage();
+                      AnchorPane pane = new AnchorPane();
+                      ImageView imgView = new ImageView(img);
+                      
+                      imgView.setFitHeight(height);
+                      imgView.setFitWidth(width);
+                      pane.getChildren().add(imgView);
+
+                      Scene scene = new Scene(pane, width, height);
+
+                      stage.setScene(scene);
+                    
+                      stage.setResizable(false);
+                      stage.initModality(Modality.APPLICATION_MODAL);
+
+                      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                          @Override
+                          public void handle(KeyEvent t) {
+                              KeyCode key = t.getCode();
+                              if (key == KeyCode.ESCAPE) {
+                                  stage.close();
+                                  BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                              }
+                          }
+                      });
+                      stage.show();
+
+                  }
+              } catch (SQLException e1) {
+
+                  e1.printStackTrace();
+              }
+
+          }
+      });
 
       Button CreateDiagnosticReportButton = new Button("Save");
         CreateDiagnosticReportButton.setPrefHeight(42);
@@ -5398,7 +5630,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
             e2.printStackTrace();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
+
             e1.printStackTrace();
         }
 
@@ -5436,6 +5668,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                 anchorpane.getChildren().add(CreateDiagnosticReportButton);
                 anchorpane.getChildren().add(ReportArea);
                 anchorpane.getChildren().add(ReportLabel);
+                anchorpane.getChildren().add(showImage);
                 
         Scene scene = new Scene(anchorpane, 800, 400);
 
