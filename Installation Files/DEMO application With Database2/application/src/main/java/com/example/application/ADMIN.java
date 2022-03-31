@@ -541,6 +541,112 @@ private ScrollPane BlurBox;
                     button = new Button("Alert!");
                     button.setStyle(
                         "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #d32525;");
+
+
+
+                        button.setOnAction(new EventHandler<ActionEvent>() {
+
+   
+                            @Override
+                            public void handle(ActionEvent event) {
+                                BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                        
+                                 
+                                Stage newWindow = new Stage();
+                             
+                                AnchorPane anchorpane = new AnchorPane();
+                               
+                        
+                                Label CreateNewPatientAlertLabel = new Label("Create New Patient Alert");
+                                CreateNewPatientAlertLabel.setLayoutX(46);
+                                CreateNewPatientAlertLabel.setLayoutY(47);
+                                CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                                
+                        
+                                Label ModalityName = new Label("Patient Alert Name:");
+                                ModalityName.setStyle("-fx-font: normal bold 16px 'arial';");
+                                ModalityName.setLayoutX(47);
+                                ModalityName.setLayoutY(192);
+                        
+                        
+                        
+                                Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                                horizontalline.setOpacity(.3);
+                                horizontalline.setTranslateY(100);
+                        
+                          
+                            
+                                TextField PatientAlertNameField = new TextField();
+                                PatientAlertNameField.setMinHeight(35);
+                                PatientAlertNameField.setMinWidth(145);
+                                PatientAlertNameField.setLayoutX(47);
+                                PatientAlertNameField.setLayoutY(227);
+                        
+        
+                                Button CancelButton = new Button("Cancel");
+                                CancelButton.setPrefHeight(42);
+                                CancelButton.setPrefWidth(102);
+                                CancelButton.setLayoutX(680);
+                                CancelButton.setLayoutY(338);
+                                CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                        
+                                CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent e) {
+                                        Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                        stage.close();
+                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                        
+                                    }
+                                });
+                        
+                                        anchorpane.getChildren().add(CreateNewPatientAlertLabel);
+                                        anchorpane.getChildren().add(ModalityName);
+                                       
+                                        anchorpane.getChildren().add(horizontalline);
+                                     
+                                        anchorpane.getChildren().add(CancelButton);
+                                        anchorpane.getChildren().add(PatientAlertNameField);
+                        
+                                Scene scene = new Scene(anchorpane, 800, 400);
+                        
+                                
+                                newWindow.setScene(scene);
+                                newWindow.initStyle(StageStyle.UNDECORATED);
+                                newWindow.setResizable(false);
+                                newWindow.initModality(Modality.APPLICATION_MODAL);
+                        
+                                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                    @Override
+                                    public void handle(KeyEvent t) {
+                                        KeyCode key = t.getCode();
+                                        if (key == KeyCode.ESCAPE) {
+                                            newWindow.close();
+                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                        
+                                        }
+                                    }
+                                });
+                                newWindow.show();
+                              }
+                        });// Closes New Patient Alert
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        /////////////////////////////
+                        
                 }
 
 
