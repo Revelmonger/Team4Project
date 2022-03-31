@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import javax.persistence.criteria.Predicate.BooleanOperator;
+
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
 import com.example.application.Constructors.Patient;
@@ -58,6 +60,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.application.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
 
 public class ADMIN_Referrals_Controller implements Initializable {
@@ -1171,24 +1175,31 @@ public class ADMIN_Referrals_Controller implements Initializable {
                     statement.execute(InsertIntoPatientsTableQuery);
                     ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
 
+                 String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
+                 System.out.println(listviewContent);
+                    //IF the ListView Has no selections
+                    if (listviewContent.length() == 0 ){
 
-
-                    //IF listView has no selections Ignore this code
-                    while (PatientIDOutput.next()) {
-                        patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
+                        
+                        // If there are selections
+                    } else {
+             
+                        while (PatientIDOutput.next()) {
+                            patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
+                        }
+    
+                            for (String name : selectedItems) {
+                                connectNow = new DatabaseConnection();
+                                connectDB = connectNow.getConnection();
+                                String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
+                                        + patients_id + "', '" + alertid + "');";
+                                statement = connectDB.createStatement();
+                                statement.execute(InsertIntoAlertsTableQuery);
+                            
+                            }
                     }
 
-                        for (String name : selectedItems) {
-                            connectNow = new DatabaseConnection();
-                            connectDB = connectNow.getConnection();
-                            String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
-                                    + patients_id + "', '" + alertid + "');";
-                            statement = connectDB.createStatement();
-                            statement.execute(InsertIntoAlertsTableQuery);
-                        
-                        }
                     
-
                 
                   
                 
