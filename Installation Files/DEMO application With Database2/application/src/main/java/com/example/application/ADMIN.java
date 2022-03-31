@@ -523,10 +523,33 @@ private ScrollPane BlurBox;
                 String modalityquery = queryOutput.getString("name");
                 String notesquery = queryOutput.getString("notes").trim();
                 String statusquery = queryOutput.getString("order_name");
-                Button button = new Button("Alert!");
+                Integer patients_id = queryOutput.getInt("patient_id");
 
-                button.setStyle(
-                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #d32525;");
+                String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"+ patients_id+ "'";
+                statement = connectDB.createStatement();
+                ResultSet queryOutput2 = statement.executeQuery(DoesThisPatientHaveAnAlert);
+               
+                Button button;
+
+                if(!queryOutput2.isBeforeFirst()){
+                    button = new Button("Alert!");
+                    button.setStyle(
+                        "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #d32525;");
+                }
+                else {
+                    button = new Button("");
+                    button.setStyle(
+                        "-fx-background-color: transparent; ");
+                } 
+
+
+             
+
+
+
+
+
+
                 PlacedOrdersTableObservableList.add(
                         new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery, button));
             }

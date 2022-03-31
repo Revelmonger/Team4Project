@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -60,7 +61,7 @@ import javafx.application.*;
 import javafx.beans.value.ObservableValue;
 
 public class ADMIN_Referrals_Controller implements Initializable {
-    public MenuButton menuButton;
+    ObservableList<String> selectedItems;
     /*
      * 
      * Button Imports
@@ -207,12 +208,12 @@ public class ADMIN_Referrals_Controller implements Initializable {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
-        String PlacedOrdersTableQuery = "select * from patients;";
+        String SelectAllFromPatientsQuery = "select * from patients;";
 
         try {
 
             Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(PlacedOrdersTableQuery);
+            ResultSet queryOutput = statement.executeQuery(SelectAllFromPatientsQuery);
 
             while (queryOutput.next()) {
 
@@ -225,7 +226,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 String patientrace = queryOutput.getString("race");
                 String patientethnicity = queryOutput.getString("ethnicity");
 
-
                 button.setStyle(
                         "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
@@ -234,7 +234,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                     @Override
                     public void handle(ActionEvent event) {
                         BlurBox.setEffect(new BoxBlur(5, 10, 10));
-                        
 
                         VBox vbox = new VBox();
 
@@ -394,62 +393,62 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         StartOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
                         StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
-                       
+
                             @Override
                             public void handle(ActionEvent event) {
-                
+
                                 Stage stage = (Stage) StartOrderButton.getScene().getWindow();
-                        
+
                                 stage.close();
                                 VBox vbox = new VBox();
-                
+
                                 Pane newPane = new Pane();
                                 newPane.setLayoutX(0);
                                 newPane.setLayoutY(0);
                                 newPane.setPrefHeight(109);
                                 newPane.setPrefWidth(800);
-                
+
                                 Label PatientOverviewLabe = new Label("Create New ORDER");
                                 PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
                                 PatientOverviewLabe.setLayoutX(25);
                                 PatientOverviewLabe.setLayoutY(27);
                                 PatientOverviewLabe.setMinHeight(55);
                                 PatientOverviewLabe.setMinWidth(281);
-                
+
                                 Line horizontalline = new Line(-100.0f, 0.0f, 700.0f, 0.0f);
                                 horizontalline.setTranslateX(100);
                                 horizontalline.setTranslateY(110);
-                
+
                                 newPane.getChildren().add(PatientOverviewLabe);
                                 newPane.getChildren().add(horizontalline);
-                
+
                                 Pane Filler = new Pane();
                                 Filler.setLayoutX(0);
                                 Filler.setLayoutY(0);
                                 Filler.setPrefHeight(41);
-                
+
                                 Pane NamesPane = new Pane();
                                 NamesPane.setPrefHeight(114);
                                 NamesPane.setPrefWidth(800);
-                
+
                                 Label Username = new Label("Patient:");
                                 Username.setStyle("-fx-font: normal bold 16px 'arial';");
                                 Username.setMinHeight(55);
                                 Username.setMinWidth(128);
                                 Username.setLayoutX(35);
-                
+
                                 Label Displayname = new Label("Referral Doctor:");
                                 Displayname.setStyle("-fx-font: normal bold 16px 'arial';");
                                 Displayname.setMinHeight(55);
                                 Displayname.setMinWidth(128);
                                 Displayname.setLayoutX(287);
-                
+
                                 Label EmailAddress = new Label("Status:");
                                 EmailAddress.setStyle("-fx-font: normal bold 16px 'arial';");
                                 EmailAddress.setMinHeight(55);
                                 EmailAddress.setMinWidth(128);
                                 EmailAddress.setLayoutX(543);
-                
+
                                 ChoiceBox<String> SelectedPatientField = new ChoiceBox<String>();
                                 SelectedPatientField.setStyle("-fx-font: normal bold 16px 'arial';");
                                 SelectedPatientField.setMinHeight(35);
@@ -458,8 +457,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 SelectedPatientField.setLayoutY(43);
                                 SelectedPatientField.setPrefWidth(210);
                                 SelectedPatientField.setValue(firstnamequery + " " + lastnamequery);
-                                //SelectedPatientField.setDisable(true);
-                
+                                // SelectedPatientField.setDisable(true);
+
                                 ChoiceBox<String> SelectedDoctorField = new ChoiceBox<String>();
                                 SelectedDoctorField.setStyle("-fx-font: normal bold 16px 'arial';");
                                 SelectedDoctorField.setMinHeight(35);
@@ -467,7 +466,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 SelectedDoctorField.setLayoutX(287);
                                 SelectedDoctorField.setLayoutY(43);
                                 SelectedDoctorField.setPrefWidth(210);
-                
+
                                 ChoiceBox<String> SelectedStatusField = new ChoiceBox<String>();
                                 SelectedStatusField.setStyle("-fx-font: normal bold 16px 'arial';");
                                 SelectedStatusField.setMinHeight(35);
@@ -477,24 +476,24 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 SelectedStatusField.setPrefHeight(210);
                                 SelectedStatusField.setMaxHeight(35);
                                 SelectedStatusField.setPrefWidth(210);
-                
+
                                 NamesPane.getChildren().add(Username);
                                 NamesPane.getChildren().add(Displayname);
                                 NamesPane.getChildren().add(EmailAddress);
                                 NamesPane.getChildren().add(SelectedDoctorField);
                                 NamesPane.getChildren().add(SelectedPatientField);
                                 NamesPane.getChildren().add(SelectedStatusField);
-                
+
                                 Pane RolePane = new Pane();
                                 RolePane.setPrefHeight(114);
                                 RolePane.setPrefWidth(800);
-                
+
                                 Label ModalityLabel = new Label("Modality:");
                                 ModalityLabel.setStyle("-fx-font: normal bold 16px 'arial';");
                                 ModalityLabel.setMinHeight(55);
                                 ModalityLabel.setMinWidth(128);
                                 ModalityLabel.setLayoutX(35);
-                
+
                                 ChoiceBox<String> ModalityChoiceBox = new ChoiceBox<String>();
                                 ModalityChoiceBox.setStyle("-fx-font: normal bold 16px 'arial';");
                                 ModalityChoiceBox.setMaxHeight(35);
@@ -504,119 +503,119 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 ModalityChoiceBox.setLayoutY(50);
                                 ModalityChoiceBox.setPrefWidth(160);
                                 ;
-                
-                               
+
                                 SelectedPatientField.getItems().add(firstnamequery + " " + lastnamequery);
-                                     
-                              
+
                                 // Adds Modalities to Modalities Box
                                 try {
                                     DatabaseConnection connectNow = new DatabaseConnection();
                                     Connection connectDB = connectNow.getConnection();
-                
+
                                     String GetChoiceBoxQuery = "Select * from modalities";
                                     Statement statement = connectDB.createStatement();
                                     ResultSet ModalitiesOutput = statement.executeQuery(GetChoiceBoxQuery);
-                
+
                                     while (ModalitiesOutput.next()) {
-                                        Modalities currentitterationpatient = new Modalities(ModalitiesOutput.getInt("modality_id"),
+                                        Modalities currentitterationpatient = new Modalities(
+                                                ModalitiesOutput.getInt("modality_id"),
                                                 ModalitiesOutput.getString("name"));
                                         ModalityChoiceBox.getItems().add(currentitterationpatient.getModalityname());
                                     }
-                
+
                                 } catch (SQLException e1) {
-                
+
                                     e1.printStackTrace();
                                 }
                                 // Adds Status
                                 try {
                                     DatabaseConnection connectNow = new DatabaseConnection();
                                     Connection connectDB = connectNow.getConnection();
-                
+
                                     String GetChoiceBoxQuery = "Select * from order_status";
                                     Statement statement = connectDB.createStatement();
                                     ResultSet OrderStatusOutput = statement.executeQuery(GetChoiceBoxQuery);
-                
+
                                     while (OrderStatusOutput.next()) {
                                         OrderStatuses currentOrderStatusOutput = new OrderStatuses(
                                                 OrderStatusOutput.getString("order_name"));
                                         SelectedStatusField.getItems().add(currentOrderStatusOutput.getOrderstatus());
                                     }
-                
+
                                 } catch (SQLException e1) {
-                
+
                                     e1.printStackTrace();
                                 }
                                 // Adds Doctors
                                 try {
                                     DatabaseConnection connectNow = new DatabaseConnection();
                                     Connection connectDB = connectNow.getConnection();
-                
+
                                     String GetChoiceBoxQuery = "select * from users as u join users_roles as ur on ur.user_id = u.user_id where role_id = 3;";
                                     Statement statement = connectDB.createStatement();
                                     ResultSet DoctorQueryOutput = statement.executeQuery(GetChoiceBoxQuery);
-                
+
                                     while (DoctorQueryOutput.next()) {
                                         ReferralDoctor currentReferralDoctor = new ReferralDoctor(
-                                                DoctorQueryOutput.getString("full_name"), DoctorQueryOutput.getInt("user_id"));
-                
+                                                DoctorQueryOutput.getString("full_name"),
+                                                DoctorQueryOutput.getInt("user_id"));
+
                                         SelectedDoctorField.getItems().add(currentReferralDoctor.getReferraldoctor());
                                     }
-                
+
                                 } catch (SQLException e1) {
-                
+
                                     e1.printStackTrace();
                                 }
-                
+
                                 Label RefNotes = new Label("Refferral Notes:");
                                 RefNotes.setStyle("-fx-font: normal bold 16px 'arial';");
                                 RefNotes.setMinHeight(55);
                                 RefNotes.setMinWidth(128);
                                 RefNotes.setLayoutX(226);
-                
+
                                 TextArea ReferralTextField = new TextArea();
                                 ReferralTextField.setPrefHeight(150);
                                 ReferralTextField.setPrefWidth(520);
                                 ReferralTextField.setLayoutX(226);
                                 ReferralTextField.setLayoutY(43);
-                
+
                                 RolePane.getChildren().add(ModalityLabel);
                                 RolePane.getChildren().add(ModalityChoiceBox);
                                 RolePane.getChildren().add(ReferralTextField);
                                 RolePane.getChildren().add(RefNotes);
-                
+
                                 Pane BottomPane = new Pane();
                                 BottomPane.setPrefHeight(223);
                                 NamesPane.setPrefWidth(800);
-                
+
                                 Button CreateOrderButton = new Button("Create Order");
                                 CreateOrderButton.setPrefHeight(42);
                                 CreateOrderButton.setPrefWidth(102);
                                 CreateOrderButton.setLayoutX(509);
                                 CreateOrderButton.setLayoutY(147);
                                 CreateOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
-                
+
                                 CreateOrderButton.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                
+
                                         // Find OrderStatusID
                                         Integer Status_id = null;
                                         try {
                                             DatabaseConnection connectNow = new DatabaseConnection();
                                             Connection connectDB = connectNow.getConnection();
-                
+
                                             String InsertQueries = "Select order_status_id from order_status where order_name = '"
                                                     + SelectedStatusField.getValue() + "'";
                                             Statement statement = connectDB.createStatement();
                                             ResultSet StatusIDOutput = statement.executeQuery(InsertQueries);
-                
+
                                             while (StatusIDOutput.next()) {
                                                 Status_id = StatusIDOutput.getInt("order_status_id");
                                             }
-                
+
                                         } catch (SQLException e1) {
-                
+
                                             e1.printStackTrace();
                                         }
                                         // Gets Modality ID
@@ -624,19 +623,19 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                         try {
                                             DatabaseConnection connectNow = new DatabaseConnection();
                                             Connection connectDB = connectNow.getConnection();
-                
+
                                             String InsertQueries = "Select modality_id from modalities where name = '"
                                                     + ModalityChoiceBox.getValue() + "'";
                                             Statement statement = connectDB.createStatement();
                                             ResultSet modalityIDOutput = statement.executeQuery(InsertQueries);
-                
+
                                             while (modalityIDOutput.next()) {
                                                 modality_id = modalityIDOutput.getInt("modality_id");
-                
+
                                             }
-                
+
                                         } catch (SQLException e1) {
-                
+
                                             e1.printStackTrace();
                                         }
                                         // Finds Doctor ID
@@ -644,82 +643,84 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                         try {
                                             DatabaseConnection connectNow = new DatabaseConnection();
                                             Connection connectDB = connectNow.getConnection();
-                
+
                                             String InsertQueries = "Select id from referralmds where full_name = '"
                                                     + SelectedDoctorField.getValue() + "'";
                                             Statement statement = connectDB.createStatement();
                                             ResultSet DoctorIDOutput = statement.executeQuery(InsertQueries);
-                
+
                                             while (DoctorIDOutput.next()) {
                                                 user_id = DoctorIDOutput.getInt("id");
-                
+
                                             }
-                
+
                                         } catch (SQLException e1) {
-                
+
                                             e1.printStackTrace();
                                         }
-                
+
                                         Integer patient_id = 1;
                                         try {
                                             DatabaseConnection connectNow = new DatabaseConnection();
                                             Connection connectDB = connectNow.getConnection();
-                
-                                            String[] firstandlastnames = SelectedPatientField.getValue().toString().split(" ", 2);
-                
+
+                                            String[] firstandlastnames = SelectedPatientField.getValue().toString()
+                                                    .split(" ", 2);
+
                                             String InsertQueries = "Select patient_id from patients where first_name = '"
-                                                    + firstandlastnames[0] + "' and last_name = '" + firstandlastnames[1] + "'";
+                                                    + firstandlastnames[0] + "' and last_name = '"
+                                                    + firstandlastnames[1] + "'";
                                             Statement statement = connectDB.createStatement();
                                             ResultSet PatientIDOutput = statement.executeQuery(InsertQueries);
-                
+
                                             while (PatientIDOutput.next()) {
                                                 patient_id = PatientIDOutput.getInt("patient_id");
-                
+
                                             }
-                
+
                                         } catch (SQLException e1) {
-                
+
                                             e1.printStackTrace();
-                
+
                                         }
-                
+
                                         // ADDING THE ORDDER TO THE database
                                         try {
                                             DatabaseConnection connectNow = new DatabaseConnection();
                                             Connection connectDB = connectNow.getConnection();
-                
+
                                             String insertheorder = "insert into orders (patient, referral_md, modality, notes, status)values ('"
                                                     + patient_id + "', '" + user_id + "', '" + modality_id + "', '"
                                                     + ReferralTextField.getText() + "', '" + Status_id + "');";
                                             Statement statement = connectDB.createStatement();
-                
+
                                             statement.execute(insertheorder);
-                
+
                                             Stage stage = (Stage) CreateOrderButton.getScene().getWindow();
                                             stage.close();
                                             BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                             FXApp.setRoot("ADMIN_Referrals");
-                
+
                                         } catch (SQLException e1) {
-                
+
                                             e1.printStackTrace();
                                         } catch (IOException e1) {
-                                      
+
                                             e1.printStackTrace();
                                         }
-                
+
                                     }
-                
+
                                 });
-                
+
                                 Button CancelButton = new Button("Cancel");
                                 CancelButton.setPrefHeight(42);
                                 CancelButton.setPrefWidth(102);
                                 CancelButton.setLayoutX(654);
                                 CancelButton.setLayoutY(147);
                                 CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-                
+
                                 CancelButton.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
@@ -730,25 +731,25 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                     }
 
                                 });
-                
+
                                 BottomPane.getChildren().add(CreateOrderButton);
                                 BottomPane.getChildren().add(CancelButton);
-                
+
                                 vbox.getChildren().add(newPane);
                                 vbox.getChildren().add(Filler);
                                 vbox.getChildren().add(NamesPane);
                                 vbox.getChildren().add(RolePane);
                                 vbox.getChildren().add(BottomPane);
-                
+
                                 Scene scene = new Scene(vbox, 800, 600);
-                
+
                                 Stage newWindow = new Stage();
                                 newWindow.setScene(scene);
                                 newWindow.initStyle(StageStyle.UNDECORATED);
                                 newWindow.setResizable(false);
                                 newWindow.initModality(Modality.APPLICATION_MODAL);
                                 newWindow.setTitle("Edit User INfo");
-                
+
                                 scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                                     @Override
                                     public void handle(KeyEvent t) {
@@ -762,8 +763,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 });
                                 newWindow.show();
                             }
-
-
 
                         });
 
@@ -853,9 +852,9 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
             // Search Bar Functionality Start
             FilteredList<TABLEReferralsTableController> ReferralsTableFilteredData = new FilteredList<>(
-                ReferralsTableObservableList);
+                    ReferralsTableObservableList);
 
-                searchAdminReferrals.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchAdminReferrals.textProperty().addListener((observable, oldValue, newValue) -> {
                 ReferralsTableFilteredData.setPredicate(TABLEReferralsTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
@@ -939,14 +938,14 @@ public class ADMIN_Referrals_Controller implements Initializable {
         FXApp.setRoot("ADMIN_Apppointments");
     }
 
+    public int patients_id;
+    public int alertid;
 
-
-    //Creates New Patient
+    // Creates New Patient
     public void NewPatientGeneration() throws IOException {
 
-  
         BlurBox.setEffect(new BoxBlur(5, 10, 10));
-       
+
         VBox vbox = new VBox();
 
         Pane newPane = new Pane();
@@ -1083,11 +1082,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
         EthnicityChange.getItems().add("Not Hispanic or Latino");
         EthnicityChange.setDisable(false);
 
-
-
-
-
-
         SexPane.getChildren().add(Sex);
         SexPane.getChildren().add(Race);
         SexPane.getChildren().add(Ethnicity);
@@ -1095,27 +1089,9 @@ public class ADMIN_Referrals_Controller implements Initializable {
         SexPane.getChildren().add(RaceChange);
         SexPane.getChildren().add(EthnicityChange);
 
-/*
-        ChoiceBox<String> PatientAlert = new ChoiceBox<String>();
-        PatientAlert.setPrefHeight(35);
-        PatientAlert.setPrefWidth(128);
-        PatientAlert.setLayoutX(35);
-        PatientAlert.setLayoutY(43);
-
-        PatientAlert.getItems().add("Male");
-        PatientAlert.getItems().add("Female");
-        PatientAlert.getItems().add("Other");
-
-        PatientAlert.setDisable(false);
-*/
-
-
-
-
         Pane BottomPane = new Pane();
         BottomPane.setPrefHeight(223);
         NamesPane.setPrefWidth(800);
-
 
         Label Alert = new Label("Alert:");
         Alert.setStyle("-fx-font: normal bold 16px 'arial';");
@@ -1123,77 +1099,100 @@ public class ADMIN_Referrals_Controller implements Initializable {
         Alert.setMinWidth(128);
         Alert.setLayoutX(35);
 
-
         Label SelectedItems = new Label("");
         SelectedItems.setStyle("-fx-font: normal bold 16px 'arial';");
         SelectedItems.setMinHeight(55);
         SelectedItems.setMinWidth(128);
-        SelectedItems.setLayoutX(150);
+        SelectedItems.setLayoutX(170);
         SelectedItems.setLayoutY(50);
-   
-   
 
         ListView<String> listView = new ListView<>();
         listView.setPrefHeight(100);
         listView.setPrefWidth(128);
         listView.setLayoutX(35);
         listView.setLayoutY(50);
-   
-        ObservableList<String> items = FXCollections.observableArrayList("Cricket", "Chess", "Kabaddy", "Badminton",
-    "Football", "Golf", "CoCo", "car racing");
-  listView.setItems(items);
-  listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-  listView.getSelectionModel().selectedItemProperty()
-  .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
-   ObservableList<String> selectedItems = listView.getSelectionModel().getSelectedItems();
 
-   StringBuilder builder = new StringBuilder("Selected items :");
+        try {
+            DatabaseConnection connectNow = new DatabaseConnection();
+            Connection connectDB = connectNow.getConnection();
 
-   for (String name : selectedItems) {
-    builder.append(name + "\n");
-   }
+            String GetAllAlerts = "select * from alerts";
+            Statement statement = connectDB.createStatement();
+            ResultSet AlertQueryOutput = statement.executeQuery(GetAllAlerts);
 
-   SelectedItems.setText(builder.toString());
+            while (AlertQueryOutput.next()) {
+                AllAlertsChoiceBoxController CurrentAlert = new AllAlertsChoiceBoxController(
+                        AlertQueryOutput.getInt("alert_id"), AlertQueryOutput.getString("alert_name"));
 
-  });
+                listView.getItems().add(CurrentAlert.getalertName());
+                alertid = AlertQueryOutput.getInt("alert_id");
 
+            }
 
+        } catch (SQLException e1) {
 
+            e1.printStackTrace();
+        }
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listView.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+                    selectedItems = listView.getSelectionModel().getSelectedItems();
 
+                    StringBuilder builder = new StringBuilder("");
 
+                    for (String name : selectedItems) {
+                        builder.append(name + "\n");
+                    }
 
+                    SelectedItems.setText(builder.toString());
 
+                });
 
+        Button AddPatientButton = new Button("Add Patient");
+        AddPatientButton.setPrefHeight(42);
+        AddPatientButton.setPrefWidth(102);
+        AddPatientButton.setLayoutX(509);
+        AddPatientButton.setLayoutY(147);
+        AddPatientButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
-        Button StartOrderButton = new Button("Add Patient");
-        StartOrderButton.setPrefHeight(42);
-        StartOrderButton.setPrefWidth(102);
-        StartOrderButton.setLayoutX(509);
-        StartOrderButton.setLayoutY(147);
-        StartOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
-
-        StartOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+        AddPatientButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
 
                 try {
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
-                    String PlacedOrdersTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
+                    String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
                             + firstNameField.getText() + "', '" + lastNamefield.getText() + "', '"
                             + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
                             + "', '" + EthnicityChange.getValue() + "');";
-
+                    String FindPatientID = " SELECT LAST_INSERT_ID();";
                     Statement statement = connectDB.createStatement();
-                    statement.execute(PlacedOrdersTableQuery);
+                    statement.execute(InsertIntoPatientsTableQuery);
+                    ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
 
+
+
+                    //IF listView has no selections Ignore this code
+                    while (PatientIDOutput.next()) {
+                        patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
+                    }
+
+                        for (String name : selectedItems) {
+                            connectNow = new DatabaseConnection();
+                            connectDB = connectNow.getConnection();
+                            String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
+                                    + patients_id + "', '" + alertid + "');";
+                            statement = connectDB.createStatement();
+                            statement.execute(InsertIntoAlertsTableQuery);
+                        
+                        }
                     
-                    
-                    
-                    
-                    
-                    
-                    Stage stage = (Stage) StartOrderButton.getScene().getWindow();
+
+                
+                  
+                
+                    Stage stage = (Stage) AddPatientButton.getScene().getWindow();
                     stage.close();
                     BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
@@ -1226,7 +1225,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
             }
         });
 
-        BottomPane.getChildren().add(StartOrderButton);
+        BottomPane.getChildren().add(AddPatientButton);
         BottomPane.getChildren().add(CancelButton);
         BottomPane.getChildren().add(Alert);
         BottomPane.getChildren().add(listView);
