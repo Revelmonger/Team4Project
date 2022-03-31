@@ -1176,14 +1176,14 @@ public class ADMIN_Referrals_Controller implements Initializable {
                     ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
 
                  String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
-                 System.out.println(listviewContent);
                     //IF the ListView Has no selections
-                    if (listviewContent.length() == 0 ){
+                    if (listviewContent.equals("[]")){
 
                         
                         // If there are selections
                     } else {
-             
+                        System.out.println(listviewContent);
+
                         while (PatientIDOutput.next()) {
                             patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
                         }
