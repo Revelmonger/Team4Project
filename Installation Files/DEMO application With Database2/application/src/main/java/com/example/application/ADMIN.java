@@ -532,15 +532,16 @@ private ScrollPane BlurBox;
                 Button button;
 
                 if(!queryOutput2.isBeforeFirst()){
-                    button = new Button("Alert!");
-                    button.setStyle(
-                        "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #d32525;");
-                }
-                else {
                     button = new Button("");
                     button.setStyle(
                         "-fx-background-color: transparent; ");
                 } 
+                
+                else {
+                    button = new Button("Alert!");
+                    button.setStyle(
+                        "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #d32525;");
+                }
 
 
              
