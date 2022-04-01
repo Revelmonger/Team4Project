@@ -695,7 +695,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
                                             String insertheorder = "insert into orders (patient, referral_md, modality, notes, status)values ('"
                                                     + patient_id + "', '" + user_id + "', '" + modality_id + "', '"
-                                                    + ReferralTextField.getText() + "', '" + Status_id + "');";
+                                                    + ReferralTextField.getText() + "', '4');";
                                             Statement statement = connectDB.createStatement();
 
                                             statement.execute(insertheorder);
@@ -1129,7 +1129,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         AlertQueryOutput.getInt("alert_id"), AlertQueryOutput.getString("alert_name"));
 
                 listView.getItems().add(CurrentAlert.getalertName());
-                alertid = AlertQueryOutput.getInt("alert_id");
+                //alertid = AlertQueryOutput.getInt("alert_id");
 
             }
 
@@ -1170,12 +1170,18 @@ public class ADMIN_Referrals_Controller implements Initializable {
                             + firstNameField.getText() + "', '" + lastNamefield.getText() + "', '"
                             + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
                             + "', '" + EthnicityChange.getValue() + "');";
+
+                    String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
                     String FindPatientID = " SELECT LAST_INSERT_ID();";
+                    
+
                     Statement statement = connectDB.createStatement();
+                    Statement statement2 = connectDB.createStatement();
                     statement.execute(InsertIntoPatientsTableQuery);
                     ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
+                    
 
-                 String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
+                 
                     //IF the ListView Has no selections
                     if (listviewContent.equals("[]")){
 
@@ -1186,16 +1192,25 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
                         while (PatientIDOutput.next()) {
                             patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
+                           
                         }
     
                             for (String name : selectedItems) {
                                 connectNow = new DatabaseConnection();
                                 connectDB = connectNow.getConnection();
-                                String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
+                                
+                                String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
+                                ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
+
+                                while(AlertQueryOutput.next()){
+                                    alertid = AlertQueryOutput.getInt("alert_id");
+
+                                    String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
                                         + patients_id + "', '" + alertid + "');";
-                                statement = connectDB.createStatement();
-                                statement.execute(InsertIntoAlertsTableQuery);
-                            
+                                    statement = connectDB.createStatement();
+                                    statement.execute(InsertIntoAlertsTableQuery);
+                                }
+
                             }
                     }
 

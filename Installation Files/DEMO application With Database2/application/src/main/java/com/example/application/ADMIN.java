@@ -510,7 +510,7 @@ private ScrollPane BlurBox;
          * Placed Orders Table
          * 
          */
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
+        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where status = 4;";
 
         try {
 
@@ -678,7 +678,7 @@ private ScrollPane BlurBox;
             FilteredList<PlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
                     PlacedOrdersTableObservableList);
 
-            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                searchCompletedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
                 PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
@@ -718,6 +718,520 @@ private ScrollPane BlurBox;
 
         } catch (Exception e) {
 e.printStackTrace();        }
+
+
+        /*************Completed Orders Table***********************/
+        
+        String CompletedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where status = 3;";
+
+        try {
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(CompletedOrdersTableQuery);
+
+            while (queryOutput.next()) {
+
+                String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                String modalityquery = queryOutput.getString("name");
+                String notesquery = queryOutput.getString("notes").trim();
+                Integer OrderID = queryOutput.getInt("order_id");
+                String statusquery = queryOutput.getString("order_name");
+                Integer patients_id = queryOutput.getInt("patient_id");
+                Button button = new Button("Review Order");
+                button.setStyle(
+                    "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
+
+                
+                button.setOnAction(new EventHandler<ActionEvent>() {
+
+    
+   
+                    @Override
+                    public void handle(ActionEvent event) {
+                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                
+                         
+                           Stage newWindow = new Stage();
+                     
+                        AnchorPane anchorpane = new AnchorPane();
+                      
+                
+                        Label CreateFileLabel = new Label("Create Diagnostic Report");
+                        CreateFileLabel.setLayoutX(46);
+                        CreateFileLabel.setLayoutY(47);
+                        CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                        
+                
+                      
+                
+                        Label ReportLabel = new Label("Report:");
+                        ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+                        ReportLabel.setLayoutX(275);
+                        ReportLabel.setLayoutY(120);
+                     
+                
+                        
+                        TextArea ReportArea = new TextArea();
+                        ReportArea.setPrefHeight(200);
+                        ReportArea.setPrefWidth(400);
+                        ReportArea.setLayoutX(350);
+                        ReportArea.setLayoutY(120);
+                        ReportArea.setEditable(false);
+                
+                
+                        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                        horizontalline.setOpacity(.3);
+                        horizontalline.setTranslateY(100);
+                
+                  
+                       
+                        Button showImage = new Button("Show Image");
+                        showImage.setPrefHeight(42);
+                        showImage.setPrefWidth(100);
+                        showImage.setLayoutX(70);
+                        showImage.setLayoutY(120);
+                        showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+                
+                        showImage.setOnAction(new EventHandler<ActionEvent>() {
+                
+                            /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+                            @Override
+                            public void handle(ActionEvent e){
+                
+                                String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+                                   
+                                    try {
+                
+                                        Statement statement5 = connectDB.createStatement();
+                                        ResultSet queryOutput;
+                                        queryOutput = statement5.executeQuery(ImagePathStatement);
+                                   
+                                    while (queryOutput.next()) {
+                
+                                      String UploadPath = queryOutput.getString("upload_path");
+                                      File file = new File(UploadPath);
+                                      Image  img = new Image(file.toURI().toString());
+                                      double width = img.getWidth();
+                                      double height = img.getHeight();;
+                
+                                        Stage stage = new Stage();
+                                        AnchorPane pane = new AnchorPane();
+                                        ImageView imgView = new ImageView(img);
+                                        
+                                        imgView.setFitHeight(height);
+                                        imgView.setFitWidth(width);
+                                        pane.getChildren().add(imgView);
+                
+                                        Scene scene = new Scene(pane, width, height);
+                
+                                        stage.setScene(scene);
+                                      
+                                        stage.setResizable(false);
+                                        stage.initModality(Modality.APPLICATION_MODAL);
+                
+                                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                            @Override
+                                            public void handle(KeyEvent t) {
+                                                KeyCode key = t.getCode();
+                                                if (key == KeyCode.ESCAPE) {
+                                                    stage.close();
+                                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                
+                                                }
+                                            }
+                                        });
+                                        stage.show();
+                
+                                    }
+                                } catch (SQLException e1) {
+                
+                                    e1.printStackTrace();
+                                }
+                
+                            }
+                        });
+                //WORKING HERE
+                        
+                
+                        Button CancelButton = new Button("Cancel");
+                        CancelButton.setPrefHeight(42);
+                        CancelButton.setPrefWidth(102);
+                        CancelButton.setLayoutX(680);
+                        CancelButton.setLayoutY(338);
+                        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                
+                        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent e) {
+                                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                stage.close();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                
+                            }
+                        });
+                
+                                anchorpane.getChildren().add(CreateFileLabel);
+                
+                                anchorpane.getChildren().add(horizontalline);
+                          
+                                anchorpane.getChildren().add(CancelButton);
+                                anchorpane.getChildren().add(showImage);
+                                anchorpane.getChildren().add(ReportArea);
+                                anchorpane.getChildren().add(ReportLabel);
+                                
+                        Scene scene = new Scene(anchorpane, 800, 400);
+                
+                        
+                        newWindow.setScene(scene);
+                        newWindow.initStyle(StageStyle.UNDECORATED);
+                        newWindow.setResizable(false);
+                        newWindow.initModality(Modality.APPLICATION_MODAL);
+                
+                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent t) {
+                                KeyCode key = t.getCode();
+                                if (key == KeyCode.ESCAPE) {
+                                    newWindow.close();
+                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                
+                                }
+                            }
+                        });
+                        newWindow.show();
+                      }
+                });//
+
+
+                completedOrdersObservableList.add(
+                        new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery, button));
+            }
+
+            CompletedOrdersPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+
+            CompletedOrdersModality.setCellValueFactory(new PropertyValueFactory<>("modality"));
+
+            CompletedOrdersNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+            CompletedOrdersStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+            CompletedOrdersResults.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+            CompletedOrdersTable.setItems(null);
+            CompletedOrdersTable.setItems(completedOrdersObservableList);
+
+            // Search Bar Functionality Start
+            FilteredList<PlacedOrdersTableController> CompletedOrdersFilteredData = new FilteredList<>(
+                completedOrdersObservableList);
+
+            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                CompletedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+
+                    String searchKeyword = newValue.toLowerCase();
+
+                    if (TABLEPlacedOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLEPlacedOrdersTableController.getModality().toLowerCase()
+                            .indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLEPlacedOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else if (TABLEPlacedOrdersTableController.getStatus().toLowerCase().indexOf(searchKeyword) > -1) {
+                        return true;
+
+                    } else {
+                        return false; // no match found
+                    }
+
+                });
+
+            });
+
+            SortedList<PlacedOrdersTableController> CompletedOrdersSortedData = new SortedList<>(
+                CompletedOrdersFilteredData);
+
+            // Binds the sorted resultswith the Table
+            CompletedOrdersSortedData.comparatorProperty().bind(CompletedOrdersTable.comparatorProperty());
+
+            CompletedOrdersTable.setItems(CompletedOrdersSortedData);
+            // Search Bar Functionality End
+
+        } catch (Exception e) {
+e.printStackTrace();        }
+
+
+
+/******************************Old Orders Table******************************************/
+
+String OldOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where status = 2;";
+
+
+try {
+
+    Statement statement = connectDB.createStatement();
+    ResultSet queryOutput = statement.executeQuery(OldOrdersTableQuery);
+
+    while (queryOutput.next()) {
+
+        String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+        String modalityquery = queryOutput.getString("name");
+        String notesquery = queryOutput.getString("notes").trim();
+        Integer OrderID = queryOutput.getInt("order_id");
+        String statusquery = queryOutput.getString("order_name");
+        Integer patients_id = queryOutput.getInt("patient_id");
+        Button button = new Button("Review Order");
+        button.setStyle(
+            "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
+
+        
+        button.setOnAction(new EventHandler<ActionEvent>() {
+
+
+
+            @Override
+            public void handle(ActionEvent event) {
+                BlurBox.setEffect(new BoxBlur(5, 10, 10));
+        
+                 
+                   Stage newWindow = new Stage();
+             
+                AnchorPane anchorpane = new AnchorPane();
+              
+        
+                Label CreateFileLabel = new Label("Create Diagnostic Report");
+                CreateFileLabel.setLayoutX(46);
+                CreateFileLabel.setLayoutY(47);
+                CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                
+        
+              
+        
+                Label ReportLabel = new Label("Report:");
+                ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+                ReportLabel.setLayoutX(275);
+                ReportLabel.setLayoutY(120);
+
+
+
+                TextArea ReportArea = new TextArea();
+                ReportArea.setPrefHeight(200);
+                ReportArea.setPrefWidth(400);
+                ReportArea.setLayoutX(350);
+                ReportArea.setLayoutY(120);
+            
+                String DiagnosticQuery = "select diagnostic from diagnostic_reports where order_id = " + OrderID + ";";
+
+                try {
+                    ResultSet DiagnosticReport = statement.executeQuery(DiagnosticQuery);
+
+                    while(DiagnosticReport.next()){
+                       String diagnostic = DiagnosticReport.getString("diagnostic");
+                       ReportArea.setText(diagnostic);
+                       ReportArea.setEditable(false);
+                    }
+                } catch (SQLException e2) {
+   
+                    e2.printStackTrace();
+                }
+
+
+
+        
+        
+                Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                horizontalline.setOpacity(.3);
+                horizontalline.setTranslateY(100);
+        
+          
+               
+                Button showImage = new Button("Show Image");
+                showImage.setPrefHeight(42);
+                showImage.setPrefWidth(100);
+                showImage.setLayoutX(70);
+                showImage.setLayoutY(120);
+                showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+        
+                showImage.setOnAction(new EventHandler<ActionEvent>() {
+        
+                    /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+                    @Override
+                    public void handle(ActionEvent e){
+        
+                        String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrderID+ "'"; 
+                           
+                            try {
+        
+                                Statement statement5 = connectDB.createStatement();
+                                ResultSet queryOutput;
+                                queryOutput = statement5.executeQuery(ImagePathStatement);
+                           
+                            while (queryOutput.next()) {
+        
+                              String UploadPath = queryOutput.getString("upload_path");
+                              File file = new File(UploadPath);
+                              Image  img = new Image(file.toURI().toString());
+                              double width = img.getWidth();
+                              double height = img.getHeight();;
+        
+                                Stage stage = new Stage();
+                                AnchorPane pane = new AnchorPane();
+                                ImageView imgView = new ImageView(img);
+                                
+                                imgView.setFitHeight(height);
+                                imgView.setFitWidth(width);
+                                pane.getChildren().add(imgView);
+        
+                                Scene scene = new Scene(pane, width, height);
+        
+                                stage.setScene(scene);
+                              
+                                stage.setResizable(false);
+                                stage.initModality(Modality.APPLICATION_MODAL);
+        
+                                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                    @Override
+                                    public void handle(KeyEvent t) {
+                                        KeyCode key = t.getCode();
+                                        if (key == KeyCode.ESCAPE) {
+                                            stage.close();
+                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+        
+                                        }
+                                    }
+                                });
+                                stage.show();
+        
+                            }
+                        } catch (SQLException e1) {
+        
+                            e1.printStackTrace();
+                        }
+        
+                    }
+                });
+        //WORKING HERE
+                
+        
+                Button CancelButton = new Button("Cancel");
+                CancelButton.setPrefHeight(42);
+                CancelButton.setPrefWidth(102);
+                CancelButton.setLayoutX(680);
+                CancelButton.setLayoutY(338);
+                CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+        
+                CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        Stage stage = (Stage) CancelButton.getScene().getWindow();
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+        
+                    }
+                });
+        
+                        anchorpane.getChildren().add(CreateFileLabel);
+        
+                        anchorpane.getChildren().add(horizontalline);
+                  
+                        anchorpane.getChildren().add(CancelButton);
+                        anchorpane.getChildren().add(showImage);
+                        anchorpane.getChildren().add(ReportArea);
+                        anchorpane.getChildren().add(ReportLabel);
+                        
+                Scene scene = new Scene(anchorpane, 800, 400);
+        
+                
+                newWindow.setScene(scene);
+                newWindow.initStyle(StageStyle.UNDECORATED);
+                newWindow.setResizable(false);
+                newWindow.initModality(Modality.APPLICATION_MODAL);
+        
+                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent t) {
+                        KeyCode key = t.getCode();
+                        if (key == KeyCode.ESCAPE) {
+                            newWindow.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+        
+                        }
+                    }
+                });
+                newWindow.show();
+              }
+        });//
+
+
+        closedOrdersObservableList.add(
+                new PlacedOrdersTableController(patientquery, modalityquery, notesquery, statusquery, button));
+    }
+
+    OldOrdersPatients.setCellValueFactory(new PropertyValueFactory<>("patient"));
+
+    OldOrdersModality.setCellValueFactory(new PropertyValueFactory<>("modality"));
+
+    OldOrdersNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+    OldOrdersStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+    OldOrdersResults.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+    OldOrdersTable.setItems(null);
+    OldOrdersTable.setItems(closedOrdersObservableList);
+
+    // Search Bar Functionality Start
+    FilteredList<PlacedOrdersTableController> ClosedOrdersFilteredData = new FilteredList<>(
+        closedOrdersObservableList);
+
+        ClosedOrdersSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        ClosedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
+            if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                return true;
+            }
+
+            String searchKeyword = newValue.toLowerCase();
+
+            if (TABLEPlacedOrdersTableController.getPatient().toLowerCase().indexOf(searchKeyword) > -1) {
+                return true;
+
+            } else if (TABLEPlacedOrdersTableController.getModality().toLowerCase()
+                    .indexOf(searchKeyword) > -1) {
+                return true;
+
+            } else if (TABLEPlacedOrdersTableController.getNotes().toLowerCase().indexOf(searchKeyword) > -1) {
+                return true;
+
+            } else if (TABLEPlacedOrdersTableController.getStatus().toLowerCase().indexOf(searchKeyword) > -1) {
+                return true;
+
+            } else {
+                return false; // no match found
+            }
+
+        });
+
+    });
+
+    SortedList<PlacedOrdersTableController> ClosedOrdersSortedData = new SortedList<>(
+        ClosedOrdersFilteredData);
+
+    // Binds the sorted resultswith the Table
+    ClosedOrdersSortedData.comparatorProperty().bind(OldOrdersTable.comparatorProperty());
+
+    OldOrdersTable.setItems(ClosedOrdersSortedData);
+    // Search Bar Functionality End
+
+} catch (Exception e) {
+e.printStackTrace();        }
+
+
+
 
         /*
          * 
@@ -1020,7 +1534,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                         Connection connectDB = connectNow.getConnection();
     
                         String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
-                        //String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values ('"+ Order_id + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
+                        String UpdateOrderStatus = "update orders set status = 3 where order_id = '" + Order_id + "';";
                         Statement statement = connectDB.createStatement();
                         PreparedStatement statement2 = null;
 
@@ -1033,6 +1547,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                         statement2.executeUpdate();
 
                         statement.execute(UpdateAppointmentsTable); 
+                        statement.execute(UpdateOrderStatus); 
                         
                         Stage stage = (Stage) UploadFileButton.getScene().getWindow();
     
@@ -2052,7 +2567,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
     
-                    String InsertIntoOrdersReport = "update orders set report = '1' where order_id = '"+ OrderID+ "';" ;
+                    String InsertIntoOrdersReport = "update orders set report = '1', status = '2' where order_id = '"+ OrderID+ "';" ;
 
                 
                         String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText() + "');";
