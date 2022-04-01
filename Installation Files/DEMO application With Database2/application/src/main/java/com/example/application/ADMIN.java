@@ -505,12 +505,15 @@ private ScrollPane BlurBox;
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
+
+
+
         /*
          * 
          * Placed Orders Table
          * 
          */
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where status = 4;";
+        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id WHERE status = 4 || status = 1;";
 
         try {
 
@@ -557,37 +560,66 @@ private ScrollPane BlurBox;
                                 AnchorPane anchorpane = new AnchorPane();
                                
                         
-                                Label CreateNewPatientAlertLabel = new Label("Create New Patient Alert");
+                                Label CreateNewPatientAlertLabel = new Label("Patient Alert History");
                                 CreateNewPatientAlertLabel.setLayoutX(46);
                                 CreateNewPatientAlertLabel.setLayoutY(47);
                                 CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
-                                
-                        
-                                Label ModalityName = new Label("Patient Alert Name:");
-                                ModalityName.setStyle("-fx-font: normal bold 16px 'arial';");
-                                ModalityName.setLayoutX(47);
-                                ModalityName.setLayoutY(192);
-                        
-                        
+                         
                         
                                 Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
                                 horizontalline.setOpacity(.3);
                                 horizontalline.setTranslateY(100);
-                        
-                          
+
+
+
+
+                                TableView tableView = new TableView();
+                                
+                                tableView.setPrefWidth(500);
+                                tableView.setPrefHeight(400);
+                                tableView.setLayoutX(47);
+                                tableView.setLayoutY(150);
+                                tableView.setEditable(false);
+                                tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+                                
+                                TableColumn<PatientsAlertsTableController, String> column1 = new TableColumn<>("Alerts");
+                                column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+                                column1.setPrefWidth(500);                                
+                               
+                                
+                                
+                                tableView.getColumns().add(column1);
+                                try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
+                                
+                                String alert_nameTableQuery = " select * from patients_alerts as pa join alerts as a on a.alert_id = pa.alert_id where patient_id = " + patients_id + ";";
+                                
+                                
+                                    Statement statement = connectDB.createStatement();
+                                    ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
+                                
+                                    while (queryOutput.next()) {
+                                        Integer AlertID = queryOutput.getInt("alert_id");
+                                      String  AlertName = queryOutput.getString("alert_name");
+
+   
+                                      tableView.getItems().add(new PatientsAlertsTableController(AlertName));
+                                    
+                                    }
+                                
+                                
+                                } catch (Exception e) {
+                                e.printStackTrace();        }
+                                
                             
-                                TextField PatientAlertNameField = new TextField();
-                                PatientAlertNameField.setMinHeight(35);
-                                PatientAlertNameField.setMinWidth(145);
-                                PatientAlertNameField.setLayoutX(47);
-                                PatientAlertNameField.setLayoutY(227);
-                        
         
-                                Button CancelButton = new Button("Cancel");
+                                Button CancelButton = new Button("Close");
                                 CancelButton.setPrefHeight(42);
                                 CancelButton.setPrefWidth(102);
-                                CancelButton.setLayoutX(680);
-                                CancelButton.setLayoutY(338);
+                                CancelButton.setLayoutX(447);
+                                CancelButton.setLayoutY(585);
                                 CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
                         
                                 CancelButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -601,14 +633,12 @@ private ScrollPane BlurBox;
                                 });
                         
                                         anchorpane.getChildren().add(CreateNewPatientAlertLabel);
-                                        anchorpane.getChildren().add(ModalityName);
                                        
                                         anchorpane.getChildren().add(horizontalline);
                                      
                                         anchorpane.getChildren().add(CancelButton);
-                                        anchorpane.getChildren().add(PatientAlertNameField);
-                        
-                                Scene scene = new Scene(anchorpane, 800, 400);
+                                        anchorpane.getChildren().add(tableView);
+                                Scene scene = new Scene(anchorpane, 600, 700);
                         
                                 
                                 newWindow.setScene(scene);
@@ -623,7 +653,6 @@ private ScrollPane BlurBox;
                                         if (key == KeyCode.ESCAPE) {
                                             newWindow.close();
                                             BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                        
                                         }
                                     }
                                 });
@@ -678,7 +707,7 @@ private ScrollPane BlurBox;
             FilteredList<PlacedOrdersTableController> PlacedOrdersFilteredData = new FilteredList<>(
                     PlacedOrdersTableObservableList);
 
-                searchCompletedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
                 PlacedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
@@ -718,6 +747,16 @@ private ScrollPane BlurBox;
 
         } catch (Exception e) {
 e.printStackTrace();        }
+
+
+
+
+
+
+
+
+
+        
 
 
         /*************Completed Orders Table***********************/
