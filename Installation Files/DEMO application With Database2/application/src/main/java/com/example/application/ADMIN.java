@@ -1063,6 +1063,7 @@ try {
                 ReportArea.setPrefWidth(400);
                 ReportArea.setLayoutX(350);
                 ReportArea.setLayoutY(120);
+                ReportArea.setDisable(true);
             
                 String DiagnosticQuery = "select diagnostic from diagnostic_reports where order_id = " + OrderID + ";";
 
@@ -2606,7 +2607,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
     
-                    String InsertIntoOrdersReport = "update orders set report = '1', status = '2' where order_id = '"+ OrderID+ "';" ;
+                    String InsertIntoOrdersReport = "update orders set report = '1', status = '3' where order_id = '"+ OrderID+ "';" ;
 
                 
                         String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText() + "');";

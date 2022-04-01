@@ -412,7 +412,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 newPane.setPrefHeight(109);
                                 newPane.setPrefWidth(800);
 
-                                Label PatientOverviewLabe = new Label("Create New ORDER");
+                                Label PatientOverviewLabe = new Label("Create New Order");
                                 PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
                                 PatientOverviewLabe.setLayoutX(25);
                                 PatientOverviewLabe.setLayoutY(27);
@@ -480,6 +480,8 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                 SelectedStatusField.setPrefHeight(210);
                                 SelectedStatusField.setMaxHeight(35);
                                 SelectedStatusField.setPrefWidth(210);
+                                SelectedStatusField.setDisable(true);     
+                                SelectedStatusField.setValue("In Progress");
 
                                 NamesPane.getChildren().add(Username);
                                 NamesPane.getChildren().add(Displayname);
