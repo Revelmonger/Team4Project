@@ -89,7 +89,7 @@ import javafx.event.EventHandler;
 import javafx.application.*;
 import javafx.beans.value.ObservableValue;
 
-public class ADMIN_AdminPanel_Controller implements Initializable {
+public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initializable {
 
     public int patients_id;
     public int alertid;
@@ -2058,10 +2058,12 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                         try {
                             DatabaseConnection connectNow = new DatabaseConnection();
                             Connection connectDB = connectNow.getConnection();
+                            String passEncrypt = PasswordField.getText();
+                            passEncrypt = Encrypt(passEncrypt);
 
                             String InsertIntoUsersTableQuery = "insert into users (username, full_name, email, password) values ('"
                                     + UsernameField.getText() + "', '" + displayNameField.getText() + "', '"
-                                    + EmailAddressField.getText() + "', '" + PasswordField.getText() + "');";
+                                    + EmailAddressField.getText() + "', '" + passEncrypt + "');";
                             Statement statement = connectDB.createStatement();
                             statement.execute(InsertIntoUsersTableQuery);
 
@@ -5182,6 +5184,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 String rolequery = queryOutput.getString("name");
                 Button button = new Button("Select");
                 String password = queryOutput.getString("password");
+                System.out.println(password);
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
     
@@ -5317,7 +5320,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 PasswordField.setPrefWidth(259);
                 PasswordField.setLayoutX(196);
                 PasswordField.setLayoutY(43);
-                PasswordField.setText(password);
+                PasswordField.setText(Decrypt(password));
 
                 RolePane.getChildren().add(UserPassword);
                 RolePane.getChildren().add(UserRole);
@@ -5342,9 +5345,11 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 try {
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
+                    String passEncryptt = PasswordField.getText();
+                    passEncryptt = Encrypt(passEncryptt);
         
                
-                        String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText() + "', full_name = '" + displayNameField.getText() + "', email = '" + EmailAddressField.getText() + "', password = '" + PasswordField.getText() + "' where user_id = '" + userIDquery + "';";
+                        String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText() + "', full_name = '" + displayNameField.getText() + "', email = '" + EmailAddressField.getText() + "', password = '" + passEncryptt + "' where user_id = '" + userIDquery + "';";
                         String UpdateRadiologistTableQuery = "update radiologists set full_name = '" + displayNameField.getText() + "' where user_id = '" + userIDquery + "';";
                         String UpdateRefferalmdTableQuery = "update referralmds  set full_name = '" + displayNameField.getText() + "' where user_id = '" + userIDquery + "';";
 
