@@ -385,191 +385,10 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         SexPane.getChildren().add(RaceChange);
                         SexPane.getChildren().add(EthnicityChange);
 
-                        
                         Pane BottomPane = new Pane();
                         BottomPane.setPrefHeight(223);
-                        BottomPane.setPrefWidth(800);
-/////////////
+                        NamesPane.setPrefWidth(800);
 
-try {
-    DatabaseConnection connectNow = new DatabaseConnection();
-    Connection connectDB = connectNow.getConnection();
-    
-    String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"+ patient_id+ "'";
-    
-    Statement statement = connectDB.createStatement();
-    ResultSet queryOutput2 = statement.executeQuery(DoesThisPatientHaveAnAlert);
-    while (queryOutput2.next()) {
-
-        Button button = new Button("Patient Alerts");
-        button.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-        button.setPrefHeight(42);
-        button.setPrefWidth(128);
-        button.setLayoutX(35);
-        button.setLayoutY(35);
-                BottomPane.getChildren().add(button);
-
-
-
-                button.setOnAction(new EventHandler<ActionEvent>() {
-
-
-                    @Override
-                    public void handle(ActionEvent event) {
-                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
-                
-                         
-                        Stage newWindow = new Stage();
-                     
-                        AnchorPane anchorpane = new AnchorPane();
-                       
-                
-                        Label CreateNewPatientAlertLabel = new Label("Patient Alert History");
-                        CreateNewPatientAlertLabel.setLayoutX(46);
-                        CreateNewPatientAlertLabel.setLayoutY(47);
-                        CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
-                 
-                
-                        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
-                        horizontalline.setOpacity(.3);
-                        horizontalline.setTranslateY(100);
-
-
-
-
-                        TableView tableView = new TableView();
-                        
-                        tableView.setPrefWidth(500);
-                        tableView.setPrefHeight(400);
-                        tableView.setLayoutX(47);
-                        tableView.setLayoutY(150);
-                        tableView.setEditable(false);
-                        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-                        
-                        TableColumn<PatientsAlertsTableController, String> column1 = new TableColumn<>("Alerts");
-                        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                        column1.setPrefWidth(500);                                
-                       
-                        
-                        
-                        tableView.getColumns().add(column1);
-                        try {
-                        DatabaseConnection connectNow = new DatabaseConnection();
-                        Connection connectDB = connectNow.getConnection();
-                        
-                        String alert_nameTableQuery = " select * from patients_alerts as pa join alerts as a on a.alert_id = pa.alert_id where patient_id = " + patient_id + ";";
-                        
-                        
-                            Statement statement = connectDB.createStatement();
-                            ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
-                        
-                            while (queryOutput.next()) {
-                                Integer AlertID = queryOutput.getInt("alert_id");
-                              String  AlertName = queryOutput.getString("alert_name");
-
-
-                              tableView.getItems().add(new PatientsAlertsTableController(AlertName));
-                            
-                            }
-                        
-                        
-                        } catch (Exception e) {
-                        e.printStackTrace();        }
-                        
-                    
-
-                        Button CancelButton = new Button("Close");
-                        CancelButton.setPrefHeight(42);
-                        CancelButton.setPrefWidth(102);
-                        CancelButton.setLayoutX(447);
-                        CancelButton.setLayoutY(585);
-                        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-                
-                        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent e) {
-                                Stage stage = (Stage) CancelButton.getScene().getWindow();
-                                stage.close();
-                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                
-                            }
-                        });
-                
-                                anchorpane.getChildren().add(CreateNewPatientAlertLabel);
-                               
-                                anchorpane.getChildren().add(horizontalline);
-                             
-                                anchorpane.getChildren().add(CancelButton);
-                                anchorpane.getChildren().add(tableView);
-                        Scene scene = new Scene(anchorpane, 600, 700);
-                
-                        
-                        newWindow.setScene(scene);
-                        newWindow.initStyle(StageStyle.UNDECORATED);
-                        newWindow.setResizable(false);
-                        newWindow.initModality(Modality.APPLICATION_MODAL);
-                
-                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                            @Override
-                            public void handle(KeyEvent t) {
-                                KeyCode key = t.getCode();
-                                if (key == KeyCode.ESCAPE) {
-                                    newWindow.close();
-                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                                }
-                            }
-                        });
-                        newWindow.show();
-                      }
-                });// Closes New Patient Alert
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                /////////////////////////////
-                
-        
-
-
-     
-
-
-
-
-
-
-       
-    }
-
-   
-   
-
-} catch (Exception e) {
-e.printStackTrace();        }
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////
                         Button StartOrderButton = new Button("Begin Order");
                         StartOrderButton.setPrefHeight(42);
                         StartOrderButton.setPrefWidth(102);
@@ -593,7 +412,7 @@ e.printStackTrace();        }
                                 newPane.setPrefHeight(109);
                                 newPane.setPrefWidth(800);
 
-                                Label PatientOverviewLabe = new Label("Create New Order");
+                                Label PatientOverviewLabe = new Label("Create New ORDER");
                                 PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
                                 PatientOverviewLabe.setLayoutX(25);
                                 PatientOverviewLabe.setLayoutY(27);
@@ -642,7 +461,7 @@ e.printStackTrace();        }
                                 SelectedPatientField.setLayoutY(43);
                                 SelectedPatientField.setPrefWidth(210);
                                 SelectedPatientField.setValue(firstnamequery + " " + lastnamequery);
-                                SelectedPatientField.setDisable(true);
+                                // SelectedPatientField.setDisable(true);
 
                                 ChoiceBox<String> SelectedDoctorField = new ChoiceBox<String>();
                                 SelectedDoctorField.setStyle("-fx-font: normal bold 16px 'arial';");
@@ -661,8 +480,6 @@ e.printStackTrace();        }
                                 SelectedStatusField.setPrefHeight(210);
                                 SelectedStatusField.setMaxHeight(35);
                                 SelectedStatusField.setPrefWidth(210);
-                                SelectedStatusField.setDisable(true);     
-                                SelectedStatusField.setValue("In Progress");
 
                                 NamesPane.getChildren().add(Username);
                                 NamesPane.getChildren().add(Displayname);
