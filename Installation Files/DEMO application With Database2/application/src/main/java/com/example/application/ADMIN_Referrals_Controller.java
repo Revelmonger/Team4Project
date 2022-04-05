@@ -1350,7 +1350,7 @@ e.printStackTrace();        }
                     DatabaseConnection connectNow = new DatabaseConnection();
                     Connection connectDB = connectNow.getConnection();
                     String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
-                            + firstNameField.getText() + "', '" + lastNamefield.getText() + "', '"
+                            + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
                             + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
                             + "', '" + EthnicityChange.getValue() + "');";
 
