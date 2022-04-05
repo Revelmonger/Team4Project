@@ -761,7 +761,7 @@ e.printStackTrace();        }
 
         /*************Completed Orders Table***********************/
         
-        String CompletedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where status = 3;";
+        String CompletedOrdersTableQuery = "select diagnostic, patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id join diagnostic_reports on orders.order_id = diagnostic_reports.order_id where status = 3;";
 
         try {
 
@@ -777,6 +777,7 @@ e.printStackTrace();        }
                 String statusquery = queryOutput.getString("order_name");
                 Integer patients_id = queryOutput.getInt("patient_id");
                 Button button = new Button("Review Order");
+                String diagnostic = queryOutput.getString("diagnostic");
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
@@ -816,6 +817,7 @@ e.printStackTrace();        }
                         ReportArea.setLayoutX(350);
                         ReportArea.setLayoutY(120);
                         ReportArea.setEditable(false);
+                        ReportArea.setText(diagnostic);
                 
                 
                         Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
@@ -1063,7 +1065,7 @@ try {
                 ReportArea.setPrefWidth(400);
                 ReportArea.setLayoutX(350);
                 ReportArea.setLayoutY(120);
-                ReportArea.setDisable(true);
+                ReportArea.setEditable(false);
             
                 String DiagnosticQuery = "select diagnostic from diagnostic_reports where order_id = " + OrderID + ";";
 
@@ -1574,7 +1576,6 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                         Connection connectDB = connectNow.getConnection();
     
                         String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
-                        String UpdateOrderStatus = "update orders set status = 3 where order_id = '" + Order_id + "';";
                         Statement statement = connectDB.createStatement();
                         PreparedStatement statement2 = null;
 
@@ -1587,7 +1588,6 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                         statement2.executeUpdate();
 
                         statement.execute(UpdateAppointmentsTable); 
-                        statement.execute(UpdateOrderStatus); 
                         
                         Stage stage = (Stage) UploadFileButton.getScene().getWindow();
     
