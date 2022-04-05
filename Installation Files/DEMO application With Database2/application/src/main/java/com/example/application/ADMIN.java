@@ -1394,7 +1394,7 @@ e.printStackTrace();        }
          */
 
         // join price modalities.price
-        String TECHCheckedInAppointmentsTableQuery = "select a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; 
+        String TECHCheckedInAppointmentsTableQuery = "select patients.patient_id, a.appointment_id, a.checked_in, a.patient, a.date_time, p.first_name, p.last_name, m.name, m.price, r.full_name, a.order_id from appointments as a left join patients as p on a.patient = p.patient_id left join modalities as m on a.modality = m.modality_id left join radiologists as r on a.radiologist = r.id where checked_in = 1 AND (closed = 0 || closed IS NULL) order by date_time;"; 
         // to
         // just
         // like
@@ -1416,13 +1416,30 @@ e.printStackTrace();        }
                 String radiologistquery = queryOutput.getString("full_name");
                 Boolean checkedinquestion = queryOutput.getBoolean("checked_in");
                 Integer Order_id = queryOutput.getInt("order_id");
-                Button button = new Button("Complete Order");
                 Integer appointment_id = queryOutput.getInt("appointment_id");
 
+                Integer patients_id = queryOutput.getInt("patient_id");
+
+
+                String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"+ patients_id+ "'";
+                Statement statement3 = connectDB.createStatement();
+                ResultSet queryOutput2 = statement3.executeQuery(DoesThisPatientHaveAnAlert);
+
+               /* if(!queryOutput3.isBeforeFirst()){
+                  
+                    
+                } 
+                
+                else {
+                }
+*/
+
+
+
+
+                Button button = new Button("Complete Order");
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
-    
-
 //Completes Order
 button.setOnAction(new EventHandler<ActionEvent>() {
 
