@@ -878,7 +878,7 @@ e.printStackTrace();        }
 
                                             String insertheorder = "insert into orders (patient, referral_md, modality, notes, status)values ('"
                                                     + patient_id + "', '" + user_id + "', '" + modality_id + "', '"
-                                                    + ReferralTextField.getText() + "', '4');";
+                                                    + ReferralTextField.getText().trim() + "', '4');";
                                             Statement statement = connectDB.createStatement();
 
                                             statement.execute(insertheorder);

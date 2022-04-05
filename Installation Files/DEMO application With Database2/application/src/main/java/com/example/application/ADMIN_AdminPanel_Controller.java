@@ -570,7 +570,7 @@ NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
            
 
                 try {
-                    String InsertIntoAlerts = "insert into alerts (alert_name) values ('" + PatientAlertNameField.getText() + " ');";
+                    String InsertIntoAlerts = "insert into alerts (alert_name) values ('" + PatientAlertNameField.getText().trim() + " ');";
                     Statement statement = connectDB.createStatement();
                     statement.execute(InsertIntoAlerts);
 
@@ -721,7 +721,7 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
   
                 try {
-                    String InstertIntoModalitiesTable = "insert into modalities (name, price) values ('" + ModalityNameTextField.getText() + "', '"+ ModalityPriceTextField.getText() +"')";
+                    String InstertIntoModalitiesTable = "insert into modalities (name, price) values ('" + ModalityNameTextField.getText().trim() + "', '"+ ModalityPriceTextField.getText().trim() +"')";
                     Statement statement = connectDB.createStatement();
                     statement.execute(InstertIntoModalitiesTable);
 
@@ -1189,7 +1189,7 @@ e1.printStackTrace();
                     Integer patientID = queryOutput2.getInt("patient");  
                     Integer modality = queryOutput2.getInt("modality");
 
-                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrdersChoiceBox.getValue() + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText() +"', '"+ emailAddressField.getText() +"')";
+                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrdersChoiceBox.getValue() + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText().trim() +"', '"+ emailAddressField.getText().trim() +"')";
                     String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrdersChoiceBox.getValue() + "';";
 
                     Statement NewAppointmentStatemnet = connectDB.createStatement();
@@ -1771,7 +1771,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
              while (RadiologistsID.next()) {
                 Integer  RadiologistID = RadiologistsID.getInt("id");
 
-                String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  radiologist, diagnostic) values ('"+ OrdersChoiceBox.getValue() + "', '" + RadiologistID + "', '"+ ReportArea.getText() + "');";
+                String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  radiologist, diagnostic) values ('"+ OrdersChoiceBox.getValue() + "', '" + RadiologistID + "', '"+ ReportArea.getText().trim() + "');";
                 Statement statement = connectDB.createStatement();
                 statement.execute(InsertIntoUsersTableQuery);
                 Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
@@ -2060,13 +2060,13 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                             Connection connectDB = connectNow.getConnection();
 
                             String InsertIntoUsersTableQuery = "insert into users (username, full_name, email, password) values ('"
-                                    + UsernameField.getText() + "', '" + displayNameField.getText() + "', '"
-                                    + EmailAddressField.getText() + "', '" + PasswordField.getText() + "');";
+                                    + UsernameField.getText().trim() + "', '" + displayNameField.getText().trim() + "', '"
+                                    + EmailAddressField.getText().trim() + "', '" + PasswordField.getText().trim() + "');";
                             Statement statement = connectDB.createStatement();
                             statement.execute(InsertIntoUsersTableQuery);
 
                             String GetUserID = "Select user_id, full_name from users where username = '"
-                                    + UsernameField.getText() + "' AND password = '" + PasswordField.getText() + "';";
+                                    + UsernameField.getText().trim() + "' AND password = '" + PasswordField.getText().trim() + "';";
                             try {
 
                                 statement = connectDB.createStatement();
@@ -2507,7 +2507,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
                             String insertheorder = "insert into orders (patient, referral_md, modality, notes, status)values ('"
                                     + patient_id + "', '" + user_id + "', '" + modality_id + "', '"
-                                    + ReferralTextField.getText() + "', '4');";
+                                    + ReferralTextField.getText().trim() + "', '4');";
                             Statement statement = connectDB.createStatement();
 
                             statement.execute(insertheorder);
@@ -2811,7 +2811,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                             DatabaseConnection connectNow = new DatabaseConnection();
                             Connection connectDB = connectNow.getConnection();
                             String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
-                                    + firstNameField.getText() + "', '" + lastNamefield.getText() + "', '"
+                                    + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
                                     + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
                                     + "', '" + EthnicityChange.getValue() + "');";
         
@@ -3069,7 +3069,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 try {
                    
                    
-                    String InstertIntoModalitiesTable = "update modalities set name = '" + ModalityNameTextField.getText() + "', price = '" + ModalityPriceTextField.getText() + "' where modality_id = '" + modalityidquery + "';";
+                    String InstertIntoModalitiesTable = "update modalities set name = '" + ModalityNameTextField.getText().trim() + "', price = '" + ModalityPriceTextField.getText().trim() + "' where modality_id = '" + modalityidquery + "';";
 
                     Statement statement = connectDB.createStatement();
                     statement.execute(InstertIntoModalitiesTable);
@@ -3326,7 +3326,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
            
 
                 try {
-                    String InsertIntoAlerts = "update alerts set alert_name = '" + PatientAlertNameField.getText() + "' where alert_id = '"+ alertidquery+"';";
+                    String InsertIntoAlerts = "update alerts set alert_name = '" + PatientAlertNameField.getText().trim() + "' where alert_id = '"+ alertidquery+"';";
                     Statement statement = connectDB.createStatement();
                     statement.execute(InsertIntoAlerts);
 
@@ -3648,7 +3648,7 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                                         DatabaseConnection connectNow = new DatabaseConnection();
                                         Connection connectDB = connectNow.getConnection();
 
-                                        String PlacedOrdersTableQuery = "update patients set first_name = '" + firstNameField.getText() + "', last_name = '" + lastNamefield.getText() + "', dob = '" + dateofbirth.getValue() + "', sex = '" + sexChange.getValue() + "', race = '" + RaceChange.getValue() + "', ethnicity = '" + EthnicityChange.getValue() + "' where patient_id = '" + patient_id + "';";
+                                        String PlacedOrdersTableQuery = "update patients set first_name = '" + firstNameField.getText().trim() + "', last_name = '" + lastNamefield.getText().trim() + "', dob = '" + dateofbirth.getValue() + "', sex = '" + sexChange.getValue() + "', race = '" + RaceChange.getValue() + "', ethnicity = '" + EthnicityChange.getValue() + "' where patient_id = '" + patient_id + "';";
         
                                         Statement statement = connectDB.createStatement();
                                         statement.execute(PlacedOrdersTableQuery);
@@ -4457,7 +4457,7 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
                                 Integer referral_id = ReferralIDOutput.getInt("id");
                                 Integer status_id = StatusIDOutput.getInt("order_status_id");
 
-                                String UpdateOrdersQuery = "update orders set patient = '" + patient_id + "', referral_md = '" + referral_id + "', modality = '" + modality_id + "', notes = '" + ReferralTextField.getText() + "', status = '" + status_id + "' where order_id = '" + order_id + "';";
+                                String UpdateOrdersQuery = "update orders set patient = '" + patient_id + "', referral_md = '" + referral_id + "', modality = '" + modality_id + "', notes = '" + ReferralTextField.getText().trim() + "', status = '" + status_id + "' where order_id = '" + order_id + "';";
 
                                 Statement statement5 = connectDB.createStatement();
                                 statement5.execute(UpdateOrdersQuery);
@@ -4997,7 +4997,7 @@ EstinatedCosts.setEditable(false);
                         Integer patientID = GetOrderInfo.getInt("patient");
                         Integer modalityID = GetOrderInfo.getInt("modality");
 
-                        String UpdateAppointmentsQuery = "update appointments set phone_number = '" + phoneNumberField.getText() + "', email_address = '" + emailAddressField.getText() + "', date_time = '" + AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + radiologistID + "', patient = '" + patientID + "', modality = '" + modalityID + "' where appointment_id = '" + appointmentIdquery + "';";
+                        String UpdateAppointmentsQuery = "update appointments set phone_number = '" + phoneNumberField.getText().trim() + "', email_address = '" + emailAddressField.getText().trim() + "', date_time = '" + AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + radiologistID + "', patient = '" + patientID + "', modality = '" + modalityID + "' where appointment_id = '" + appointmentIdquery + "';";
                         String UpdateOrdersQuery = "update orders set appointment = '" + appointmentIdquery + "' where order_id = '" + OrdersChoiceBox.getValue() + "';";
                         String UpdateOrdersQuery2 = "update orders set appointment = null where order_id = '" + ordernumberquery + "';";
 
@@ -5344,9 +5344,9 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                     Connection connectDB = connectNow.getConnection();
         
                
-                        String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText() + "', full_name = '" + displayNameField.getText() + "', email = '" + EmailAddressField.getText() + "', password = '" + PasswordField.getText() + "' where user_id = '" + userIDquery + "';";
-                        String UpdateRadiologistTableQuery = "update radiologists set full_name = '" + displayNameField.getText() + "' where user_id = '" + userIDquery + "';";
-                        String UpdateRefferalmdTableQuery = "update referralmds  set full_name = '" + displayNameField.getText() + "' where user_id = '" + userIDquery + "';";
+                        String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText().trim() + "', full_name = '" + displayNameField.getText().trim() + "', email = '" + EmailAddressField.getText().trim() + "', password = '" + PasswordField.getText().trim() + "' where user_id = '" + userIDquery + "';";
+                        String UpdateRadiologistTableQuery = "update radiologists set full_name = '" + displayNameField.getText().trim() + "' where user_id = '" + userIDquery + "';";
+                        String UpdateRefferalmdTableQuery = "update referralmds  set full_name = '" + displayNameField.getText().trim() + "' where user_id = '" + userIDquery + "';";
 
 
 
@@ -5726,7 +5726,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
              while (RadiologistsID.next()) {
                 Integer  RadiologistID = RadiologistsID.getInt("id");
 
-                String InsertIntoUsersTableQuery = "update diagnostic_reports set order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + RadiologistID + "', diagnostic = '"+ ReportArea.getText() + "' where diagnostic_report_id = '" + reportidquery + "';";
+                String InsertIntoUsersTableQuery = "update diagnostic_reports set order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + RadiologistID + "', diagnostic = '"+ ReportArea.getText().trim() + "' where diagnostic_report_id = '" + reportidquery + "';";
                 Statement statement = connectDB.createStatement();
                 statement.execute(InsertIntoUsersTableQuery);
                 Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();

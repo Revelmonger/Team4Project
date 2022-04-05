@@ -2265,7 +2265,7 @@ EstinatedCosts.setEditable(false);
                     Integer patientID = queryOutput2.getInt("patient");  
                     Integer modality = queryOutput2.getInt("modality");
 
-                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrderID + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText() +"', '"+ emailAddressField.getText() +"')";
+                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrderID + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText().trim() +"', '"+ emailAddressField.getText().trim() +"')";
                     String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrderID + "';";
 
                     Statement NewAppointmentStatemnet = connectDB.createStatement();
@@ -2610,7 +2610,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                     String InsertIntoOrdersReport = "update orders set report = '1', status = '3' where order_id = '"+ OrderID+ "';" ;
 
                 
-                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText() + "');";
+                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText().trim() + "');";
                         Statement statement = connectDB.createStatement();
                         Statement  statement2 = connectDB.createStatement();
 
