@@ -139,7 +139,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
 
     public void userInfo(ActionEvent e) throws IOException {
 
-        FXApp.setRoot("ADMIN");
+        FXApp.setRoot("ADMIN_UserInfo");
     }
 
     public void admin(ActionEvent e) throws IOException {

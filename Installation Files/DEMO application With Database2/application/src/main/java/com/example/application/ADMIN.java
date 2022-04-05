@@ -119,7 +119,7 @@ private ScrollPane BlurBox;
 
     public void userInfo(ActionEvent e) throws IOException {
         System.out.println("The Current user is " + user_id1);
-        FXApp.setRoot("ADMIN");
+        FXApp.setRoot("ADMIN_UserInfo");
     }
 
     public void admin(ActionEvent e) throws IOException {
@@ -796,7 +796,7 @@ e.printStackTrace();        }
                         AnchorPane anchorpane = new AnchorPane();
                       
                 
-                        Label CreateFileLabel = new Label("Create Diagnostic Report");
+                        Label CreateFileLabel = new Label("View Completed Order");
                         CreateFileLabel.setLayoutX(46);
                         CreateFileLabel.setLayoutY(47);
                         CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
@@ -892,7 +892,13 @@ e.printStackTrace();        }
                             }
                         });
                 //WORKING HERE
-                        
+
+                Button CloseOrderButton = new Button("Cancel");
+                CloseOrderButton.setPrefHeight(42);
+                CloseOrderButton.setPrefWidth(102);
+                CloseOrderButton.setLayoutX(558);
+                CloseOrderButton.setLayoutY(338);
+                CloseOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
                 
                         Button CancelButton = new Button("Cancel");
                         CancelButton.setPrefHeight(42);
@@ -919,6 +925,7 @@ e.printStackTrace();        }
                                 anchorpane.getChildren().add(showImage);
                                 anchorpane.getChildren().add(ReportArea);
                                 anchorpane.getChildren().add(ReportLabel);
+                                anchorpane.getChildren().add(CloseOrderButton);
                                 
                         Scene scene = new Scene(anchorpane, 800, 400);
                 
@@ -965,7 +972,7 @@ e.printStackTrace();        }
             FilteredList<PlacedOrdersTableController> CompletedOrdersFilteredData = new FilteredList<>(
                 completedOrdersObservableList);
 
-            searchPlacedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+                searchCompletedOrders.textProperty().addListener((observable, oldValue, newValue) -> {
                 CompletedOrdersFilteredData.setPredicate(TABLEPlacedOrdersTableController -> {
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
                         return true;
@@ -1045,7 +1052,7 @@ try {
                 AnchorPane anchorpane = new AnchorPane();
               
         
-                Label CreateFileLabel = new Label("Create Diagnostic Report");
+                Label CreateFileLabel = new Label("View Old Report");
                 CreateFileLabel.setLayoutX(46);
                 CreateFileLabel.setLayoutY(47);
                 CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
