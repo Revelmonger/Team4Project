@@ -64,8 +64,12 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
 
+
+
 public class ADMIN_UserInfo_Controller implements Initializable {
     ObservableList<String> selectedItems;
+
+    String userid = LOGIN.LoggedInUserID;
     /*
      * 
      * Button Imports
@@ -85,6 +89,19 @@ public class ADMIN_UserInfo_Controller implements Initializable {
     private Button AppointmentsButton;
     @FXML
     private Button OrdersButton;
+    @FXML
+    private Button SaveButton;
+    @FXML
+    private TextField usernamefield;
+    @FXML
+    private TextField emailfield;
+    @FXML
+    private TextField displaynamefield;
+    @FXML
+    private TextField passwordfield;
+    @FXML
+    private ChoiceBox<Integer> userrollfield;
+    
 
     @FXML
     private AnchorPane BlurBox;
@@ -185,8 +202,6 @@ public class ADMIN_UserInfo_Controller implements Initializable {
 
     }
 
-  
-
     /*
      * 
      * Button Logic
@@ -226,6 +241,94 @@ public class ADMIN_UserInfo_Controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String GetUserInfo = "select*from users as u join users_roles as ur on ur.user_id = u.user_id where u.user_id = " + userid + ";";
+                
+        userrollfield.getItems().add(1);
+        userrollfield.getItems().add(2);
+        userrollfield.getItems().add(3);
+        userrollfield.getItems().add(4);
+        userrollfield.getItems().add(5);
+        userrollfield.getItems().add(6);
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(GetUserInfo);
+
+            while(queryOutput.next()){
+
+                String username = queryOutput.getString("username");
+                String displayname = queryOutput.getString("full_name");
+                String email = queryOutput.getString("email");
+                Integer role = queryOutput.getInt("role_id");
+        
+                
+                usernamefield.setText(username);
+                emailfield.setText(email);
+                displaynamefield.setText(displayname);
+                userrollfield.setValue(role);
+
+            }
+        } catch (Exception e) {
+
+        }
+
+        
+        
+        SaveButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+
+                String UpdateUserWithPassword = "update users set email = '" + emailfield.getText() + "', full_name = '" + displaynamefield.getText() + "', username = '" + usernamefield.getText() + "', password = '" + passwordfield.getText() + "' where user_id = " + userid + ";";
+                String UpdateUserNoPassword = "update users set email = '" + emailfield.getText() + "', full_name = '" + displaynamefield.getText() + "', username = '" + usernamefield.getText() + "' where user_id = " + userid + ";";
+                String UpdateRole = "update users_roles set role_id = "+ userrollfield.getValue() + " where user_id = " + userid +";";
+                
+                try {
+
+                    Statement statement = connectDB.createStatement();
+
+                    if(passwordfield.getText().isEmpty()){
+                        statement.execute(UpdateUserNoPassword);
+                        statement.execute(UpdateRole);
+                    }
+                    else{
+                        statement.execute(UpdateUserWithPassword);
+                        statement.execute(UpdateRole);
+                    }
+
+
+                    if(userrollfield.getValue() == 6){
+                        
+                        String UpdateRadiologistTable = "insert into radiologists (full_name, user_id) values ('" + displaynamefield.getText() + "', " + userid + ") on duplicate key update full_name = '" + displaynamefield.getText() + "';";
+                        
+                        statement.execute(UpdateRadiologistTable);
+                    
+                    }
+
+                    if(userrollfield.getValue() == 3){
+                        
+                        String UpdateReferralmdsTable = "insert into referralmds (full_name, user_id) values ('" + displaynamefield.getText() + "', " + userid + ") on duplicate key update full_name = '" + displaynamefield.getText() + "';";
+                        
+                        statement.execute(UpdateReferralmdsTable);
+                    
+                    }
+
+                    FXApp.setRoot("ADMIN_UserInfo");
+                    
+                } catch (SQLException | IOException e1) {
+                    e1.printStackTrace();
+                }
+                
+                
+            }
+
+
+
+
+        });
+
     }
 
    
