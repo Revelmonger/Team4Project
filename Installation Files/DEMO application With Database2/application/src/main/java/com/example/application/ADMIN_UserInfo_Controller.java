@@ -69,7 +69,7 @@ import javafx.beans.value.ObservableValue;
 
 
 
-public class ADMIN_UserInfo_Controller implements Initializable {
+public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initializable {
     ObservableList<String> selectedItems;
 
     String userid = LOGIN.LoggedInUserID;
@@ -270,7 +270,7 @@ public class ADMIN_UserInfo_Controller implements Initializable {
                 usernamefield.setText(username);
                 emailfield.setText(email);
                 displaynamefield.setText(displayname);
-                passwordfield.setText(password);
+                passwordfield.setText(Decrypt(password));
             
 
                 userrollfield.getItems().add(rolename);
@@ -294,7 +294,7 @@ public class ADMIN_UserInfo_Controller implements Initializable {
             
             public void handle(ActionEvent e){
 
-                String UpdateUserWithPassword = "update users set email = '" + emailfield.getText() + "', full_name = '" + displaynamefield.getText() + "', username = '" + usernamefield.getText() + "', password = '" + passwordfield.getText() + "' where user_id = " + userid + ";";
+                String UpdateUserWithPassword = "update users set email = '" + emailfield.getText() + "', full_name = '" + displaynamefield.getText() + "', username = '" + usernamefield.getText() + "', password = '" + Encrypt(passwordfield.getText()) + "' where user_id = " + userid + ";";
                 try {
 
                     Statement statement = connectDB.createStatement();

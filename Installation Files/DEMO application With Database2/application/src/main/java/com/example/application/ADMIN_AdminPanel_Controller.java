@@ -89,7 +89,7 @@ import javafx.event.EventHandler;
 import javafx.application.*;
 import javafx.beans.value.ObservableValue;
 
-public class ADMIN_AdminPanel_Controller implements Initializable {
+public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initializable {
 
     public int patients_id;
     public int alertid;
@@ -139,7 +139,7 @@ public class ADMIN_AdminPanel_Controller implements Initializable {
 
     public void userInfo(ActionEvent e) throws IOException {
 
-        FXApp.setRoot("ADMIN_UserInfo");
+        FXApp.setRoot("ADMIN");
     }
 
     public void admin(ActionEvent e) throws IOException {
@@ -566,9 +566,14 @@ NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
         CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-  
-           
 
+                if(PatientAlertNameField.getText().isEmpty()){
+
+                }
+
+                else{
+
+                    
                 try {
                     String InsertIntoAlerts = "insert into alerts (alert_name) values ('" + PatientAlertNameField.getText().trim() + " ');";
                     Statement statement = connectDB.createStatement();
@@ -589,9 +594,9 @@ NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
                     e1.printStackTrace();
                 }
 
-
-
-
+                }
+  
+           
             
             }
         });
@@ -716,34 +721,48 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
         CreateNewModalityButton.setLayoutY(338);
         CreateNewModalityButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
+
+
+
         CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            
+
+            
+
+
             @Override
             public void handle(ActionEvent e) {
-  
-                try {
-                    String InstertIntoModalitiesTable = "insert into modalities (name, price) values ('" + ModalityNameTextField.getText().trim() + "', '"+ ModalityPriceTextField.getText().trim() +"')";
-                    Statement statement = connectDB.createStatement();
-                    statement.execute(InstertIntoModalitiesTable);
 
-                  
+                
+        if(ModalityNameTextField.getText().isEmpty() || ModalityPriceTextField.getText().isEmpty()){
+        }
 
+        else{
+            try {
+                String InstertIntoModalitiesTable = "insert into modalities (name, price) values ('" + ModalityNameTextField.getText().trim() + "', '"+ ModalityPriceTextField.getText().trim() +"')";
+                Statement statement = connectDB.createStatement();
+                statement.execute(InstertIntoModalitiesTable);
 
-                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
-                    stage.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                    FXApp.setRoot("ADMIN_AdminPanel");
-                    
-                } catch (SQLException e1) {
-
-                    e1.printStackTrace();
-          
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+              
 
 
+                Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                stage.close();
+                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                FXApp.setRoot("ADMIN_AdminPanel");
+                
+            } catch (SQLException e1) {
+
+                e1.printStackTrace();
+      
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        }
+            
 
 
             
@@ -1167,66 +1186,76 @@ e1.printStackTrace();
         SaveUserButton.setLayoutY(15);
         SaveUserButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
+        
+
         SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
+            
             @Override
             public void handle(ActionEvent e) {
 
-                try {
-                    DatabaseConnection connectNow = new DatabaseConnection();
-                    Connection connectDB = connectNow.getConnection();
-                    
-                    String GetRadiologistIDQuery = "select * from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
-                    String GetPatientQuery = "select order_id, patient, modality from orders where order_id = '" + OrdersChoiceBox.getValue() + "';";
-                    
-                    Statement RadiologistStatement = connectDB.createStatement();
-                    Statement PatientStatement = connectDB.createStatement();
-                    ResultSet queryOutput = RadiologistStatement.executeQuery(GetRadiologistIDQuery);
-                    ResultSet queryOutput2 = PatientStatement.executeQuery(GetPatientQuery);
+                if(phoneNumberField.getText().isEmpty() || emailAddressField.getText().isEmpty() || AppointmentDatePicker.getValue() == null || SelectedAppointmentTime.getValue().isEmpty() || OrdersChoiceBox.getValue().isEmpty()  || RadiologistChoiceBox.getValue().isEmpty()) {
+                }
 
-                    while (queryOutput.next() && queryOutput2.next()){ 
+                else {
+
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
                         
-                    Integer radioID = queryOutput.getInt("id");
-                    Integer patientID = queryOutput2.getInt("patient");  
-                    Integer modality = queryOutput2.getInt("modality");
-
-                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrdersChoiceBox.getValue() + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText().trim() +"', '"+ emailAddressField.getText().trim() +"')";
-                    String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrdersChoiceBox.getValue() + "';";
-
-                    Statement NewAppointmentStatemnet = connectDB.createStatement();
-                    NewAppointmentStatemnet.execute(InsertIntoUsersTableQuery);
-
-                    Statement AppointmentIDStatement = connectDB.createStatement();
-                    ResultSet queryOutput3 = AppointmentIDStatement.executeQuery(GetAppointmentID);
-
-                    while(queryOutput3.next()){
-
-                        Integer appointmentID = queryOutput3.getInt("appointment_id");
-
-                        String InsertAppointmentID = "update orders set appointment = '" + appointmentID + "' where order_id = '" + OrdersChoiceBox.getValue() + "';";
-
-                        Statement InsertAppointmentIDStatement = connectDB.createStatement();
-                        InsertAppointmentIDStatement.execute(InsertAppointmentID);
+                        String GetRadiologistIDQuery = "select * from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
+                        String GetPatientQuery = "select order_id, patient, modality from orders where order_id = '" + OrdersChoiceBox.getValue() + "';";
+                        
+                        Statement RadiologistStatement = connectDB.createStatement();
+                        Statement PatientStatement = connectDB.createStatement();
+                        ResultSet queryOutput = RadiologistStatement.executeQuery(GetRadiologistIDQuery);
+                        ResultSet queryOutput2 = PatientStatement.executeQuery(GetPatientQuery);
+    
+                        while (queryOutput.next() && queryOutput2.next()){ 
+                            
+                        Integer radioID = queryOutput.getInt("id");
+                        Integer patientID = queryOutput2.getInt("patient");  
+                        Integer modality = queryOutput2.getInt("modality");
+    
+                        String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrdersChoiceBox.getValue() + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText().trim() +"', '"+ emailAddressField.getText().trim() +"')";
+                        String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrdersChoiceBox.getValue() + "';";
+    
+                        Statement NewAppointmentStatemnet = connectDB.createStatement();
+                        NewAppointmentStatemnet.execute(InsertIntoUsersTableQuery);
+    
+                        Statement AppointmentIDStatement = connectDB.createStatement();
+                        ResultSet queryOutput3 = AppointmentIDStatement.executeQuery(GetAppointmentID);
+    
+                        while(queryOutput3.next()){
+    
+                            Integer appointmentID = queryOutput3.getInt("appointment_id");
+    
+                            String InsertAppointmentID = "update orders set appointment = '" + appointmentID + "' where order_id = '" + OrdersChoiceBox.getValue() + "';";
+    
+                            Statement InsertAppointmentIDStatement = connectDB.createStatement();
+                            InsertAppointmentIDStatement.execute(InsertAppointmentID);
+                        }
+                        
                     }
-                    
+    
+                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+    
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+    
+    
+    
+                        FXApp.setRoot("ADMIN_AdminPanel");
+                        
+                    } catch (SQLException e1) {
+    
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        
+                        e1.printStackTrace();
+                    }
+
                 }
-
-                    Stage stage = (Stage) SaveUserButton.getScene().getWindow();
-
-                    stage.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-
-
-                    FXApp.setRoot("ADMIN_AdminPanel");
-                    
-                } catch (SQLException e1) {
-
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    
-                    e1.printStackTrace();
-                }
-                
+ 
                
             }
 
@@ -1410,41 +1439,50 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent e){
 
+            if(label.getText() == "No file chosen" ){
 
-                    String UploadPath = label.getText();
-                    File file = new File(UploadPath);
-                    Image  img = new Image(file.toURI().toString());
-                    double width = img.getWidth();
-                    double height = img.getHeight();;
+            }
 
-                      Stage stage = new Stage();
-                      AnchorPane pane = new AnchorPane();
-                      ImageView imgView = new ImageView(img);
-                      
-                      imgView.setFitHeight(height);
-                      imgView.setFitWidth(width);
-                      pane.getChildren().add(imgView);
+            else{
 
-                      Scene scene = new Scene(pane, width, height);
+                
+                String UploadPath = label.getText();
+                File file = new File(UploadPath);
+                Image  img = new Image(file.toURI().toString());
+                double width = img.getWidth();
+                double height = img.getHeight();;
 
-                      stage.setScene(scene);
-                    
-                      stage.setResizable(false);
-                      stage.initModality(Modality.APPLICATION_MODAL);
+                  Stage stage = new Stage();
+                  AnchorPane pane = new AnchorPane();
+                  ImageView imgView = new ImageView(img);
+                  
+                  imgView.setFitHeight(height);
+                  imgView.setFitWidth(width);
+                  pane.getChildren().add(imgView);
 
-                      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                          @Override
-                          public void handle(KeyEvent t) {
-                              KeyCode key = t.getCode();
-                              if (key == KeyCode.ESCAPE) {
-                                  stage.close();
-                                  BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                  Scene scene = new Scene(pane, width, height);
 
-                              }
+                  stage.setScene(scene);
+                
+                  stage.setResizable(false);
+                  stage.initModality(Modality.APPLICATION_MODAL);
+
+                  scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                      @Override
+                      public void handle(KeyEvent t) {
+                          KeyCode key = t.getCode();
+                          if (key == KeyCode.ESCAPE) {
+                              stage.close();
+                              BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
                           }
-                      });
-                      stage.show();
- 
+                      }
+                  });
+                  stage.show();
+
+            }
+
+
 
           }
       });
@@ -1459,60 +1497,66 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
         UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-  
-                try {
-                  
-                  
 
+                if(label.getText() == "No file chosen" ){
+
+                }
+                else{
 
                     try {
+                  
+                  
 
-                       
-                        int index =  label.getText().lastIndexOf('.');
-                 
-                        if(index > 0) {
-                          extension  = label.getText().substring(index + 1);
-                    
-                        } 
-                        if(index > 0) {
-                       
-                            java.nio.file.Path path = Paths.get(label.getText());         
-                           fileName = path.getFileName().toString();
+
+                        try {
+    
+                           
+                            int index =  label.getText().lastIndexOf('.');
+                     
+                            if(index > 0) {
+                              extension  = label.getText().substring(index + 1);
+                        
+                            } 
+                            if(index > 0) {
+                           
+                                java.nio.file.Path path = Paths.get(label.getText());         
+                               fileName = path.getFileName().toString();
+                               
+    
+                            }
+    
+                            
+        
+    
+                            DatabaseConnection connectNow = new DatabaseConnection();
+                            Connection connectDB = connectNow.getConnection();
+        
+               
+                            String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path)values ('"+ OrdersChoiceBox.getValue() + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
+                            Statement statement = connectDB.createStatement();
+    
+                            statement.execute(InsertIntoUploadsTable);
+                            Stage stage = (Stage) UploadFileButton.getScene().getWindow();
+        
+                            stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+    
+    
+                            FXApp.setRoot("ADMIN_AdminPanel");
+    
+                        } catch (SQLException e1) {
+        
+                            e1.printStackTrace();
                         }
-    
+        
+                     
+                    } catch (Exception e2) {
+                            e2.printStackTrace();
+                        }
 
-                        DatabaseConnection connectNow = new DatabaseConnection();
-                        Connection connectDB = connectNow.getConnection();
-    
-           
-                        String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path)values ('"+ OrdersChoiceBox.getValue() + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
-                        Statement statement = connectDB.createStatement();
-
-                        statement.execute(InsertIntoUploadsTable);
-                        Stage stage = (Stage) UploadFileButton.getScene().getWindow();
-    
-                        stage.close();
-                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-
-                        FXApp.setRoot("ADMIN_AdminPanel");
-
-                    } catch (SQLException e1) {
-    
-                        e1.printStackTrace();
-                    }
-    
-
-
-
-
-
-
-
-                 
-                } catch (Exception e2) {
-                        e2.printStackTrace();
-                    }
+                }
+  
+                
 
 
             
@@ -1691,6 +1735,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent e){
 
+            
+
               String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='" + OrdersChoiceBox.getValue() + "'"; 
                  
                   try {
@@ -1754,47 +1800,57 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
         CreateDiagnosticReportButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-           
-                try {
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
 
+                if(RadiologistChoiceBox.getValue().isEmpty() || OrdersChoiceBox.getValue().isEmpty() || ReportArea.getText().isEmpty()){
+
+                }
+
+                else{
+
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
             
-            String RadiologistQuery = "Select id from radiologists where full_name = '"+ RadiologistChoiceBox.getValue() + "'";
-            Statement statement2 = connectDB.createStatement();
-            ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
+                        
+                        String RadiologistQuery = "Select id from radiologists where full_name = '"+ RadiologistChoiceBox.getValue() + "'";
+                        Statement statement2 = connectDB.createStatement();
+                        ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
+            
+                     
+                               
+            
+            
+                         while (RadiologistsID.next()) {
+                            Integer  RadiologistID = RadiologistsID.getInt("id");
+            
+                            String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  radiologist, diagnostic) values ('"+ OrdersChoiceBox.getValue() + "', '" + RadiologistID + "', '"+ ReportArea.getText().trim() + "');";
+                            Statement statement = connectDB.createStatement();
+                            statement.execute(InsertIntoUsersTableQuery);
+                            Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
+                
+                            stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+            
+                            FXApp.setRoot("ADMIN_AdminPanel");
+            
+                      }
+            
+            
+            
+                      
+            
+                    }
+                    catch (SQLException e2){
+            
+                        e2.printStackTrace();
+                    } catch (IOException e1) {
+               
+                        e1.printStackTrace();
+                    }
 
-         
-                   
-
-
-             while (RadiologistsID.next()) {
-                Integer  RadiologistID = RadiologistsID.getInt("id");
-
-                String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  radiologist, diagnostic) values ('"+ OrdersChoiceBox.getValue() + "', '" + RadiologistID + "', '"+ ReportArea.getText().trim() + "');";
-                Statement statement = connectDB.createStatement();
-                statement.execute(InsertIntoUsersTableQuery);
-                Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
-    
-                stage.close();
-                BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                FXApp.setRoot("ADMIN_AdminPanel");
-
-          }
-
-
-
-          
-
-        }
-        catch (SQLException e2){
-
-            e2.printStackTrace();
-        } catch (IOException e1) {
-   
-            e1.printStackTrace();
-        }
+                }
+           
+               
 
 
 
@@ -2055,91 +2111,104 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
 
-                        try {
-                            DatabaseConnection connectNow = new DatabaseConnection();
-                            Connection connectDB = connectNow.getConnection();
+                        if(UsernameField.getText().isEmpty() || displayNameField.getText().isEmpty() || EmailAddressField.getText().isEmpty() || PasswordField.getText().isEmpty() || UserRole.getValue().isEmpty()){
 
-                            String InsertIntoUsersTableQuery = "insert into users (username, full_name, email, password) values ('"
-                                    + UsernameField.getText().trim() + "', '" + displayNameField.getText().trim() + "', '"
-                                    + EmailAddressField.getText().trim() + "', '" + PasswordField.getText().trim() + "');";
-                            Statement statement = connectDB.createStatement();
-                            statement.execute(InsertIntoUsersTableQuery);
+                        }
 
-                            String GetUserID = "Select user_id, full_name from users where username = '"
-                                    + UsernameField.getText().trim() + "' AND password = '" + PasswordField.getText().trim() + "';";
+                        else{
+
                             try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
 
-                                statement = connectDB.createStatement();
-                                ResultSet queryOutput = statement.executeQuery(GetUserID);
-
-                                while (queryOutput.next()) {
-
-                                    Integer userIDquery = queryOutput.getInt("user_id");
-                                    String namequery = queryOutput.getString("full_name");
-
-                                    System.out.println(UserRole.getValue());
-                                    if (UserRole.getValue().equals("ADMIN")) {
-                                        String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
-                                                + userIDquery + "', '1');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(UpdateUsersRole);
-                                    } else if (UserRole.getValue().equals("USER")) {
-                                        String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
-                                                + userIDquery + "', '2');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(UpdateUsersRole);
-
-                                    } else if (UserRole.getValue().equals("REFERRAL_DOCTOR")) {
-                                        String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
-                                                + userIDquery + "', '3');";
-                                        String UpdateReferralMDTable = "insert into referralmds (full_name, user_id) values ('"
-                                                + namequery + "', '" + userIDquery + "');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(UpdateUsersRole);
-                                        statement.execute(UpdateReferralMDTable);
-                                    } else if (UserRole.getValue().equals("RECEPTIONIST")) {
-                                        String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
-                                                + userIDquery + "', '4');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(UpdateUsersRole);
-                                    } else if (UserRole.getValue().equals("TECHNICIAN")) {
-                                        String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
-                                                + userIDquery + "', '5');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(UpdateUsersRole);
-                                    } else if (UserRole.getValue().equals("RADIOLOGIST")) {
-                                        String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
-                                                + userIDquery + "', '6');";
-                                        String UpdateRadiologistTable = "insert into radiologists (full_name, user_id) values ('"
-                                                + namequery + "', '" + userIDquery + "');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(UpdateUsersRole);
-                                        statement.execute(UpdateRadiologistTable);
-                                    } else {
-
-                                        System.out.println("Error in if statement");
+                                String passEncrypt = PasswordField.getText();
+                                passEncrypt = Encrypt(passEncrypt);
+    
+                                String InsertIntoUsersTableQuery = "insert into users (username, full_name, email, password) values ('"
+                                        + UsernameField.getText().trim() + "', '" + displayNameField.getText().trim() + "', '"
+                                        + EmailAddressField.getText().trim() + "', '" + PasswordField.getText().trim() + "');";
+                                Statement statement = connectDB.createStatement();
+                                statement.execute(InsertIntoUsersTableQuery);
+    
+                                String GetUserID = "Select user_id, full_name from users where username = '"
+                                        + UsernameField.getText().trim() + "' AND password = '" + PasswordField.getText().trim() + "';";
+                                try {
+    
+                                    statement = connectDB.createStatement();
+                                    ResultSet queryOutput = statement.executeQuery(GetUserID);
+    
+                                    while (queryOutput.next()) {
+    
+                                        Integer userIDquery = queryOutput.getInt("user_id");
+                                        String namequery = queryOutput.getString("full_name");
+    
+                                        System.out.println(UserRole.getValue());
+                                        if (UserRole.getValue().equals("ADMIN")) {
+                                            String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
+                                                    + userIDquery + "', '1');";
+                                            statement = connectDB.createStatement();
+                                            statement.execute(UpdateUsersRole);
+                                        } else if (UserRole.getValue().equals("USER")) {
+                                            String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
+                                                    + userIDquery + "', '2');";
+                                            statement = connectDB.createStatement();
+                                            statement.execute(UpdateUsersRole);
+    
+                                        } else if (UserRole.getValue().equals("REFERRAL_DOCTOR")) {
+                                            String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
+                                                    + userIDquery + "', '3');";
+                                            String UpdateReferralMDTable = "insert into referralmds (full_name, user_id) values ('"
+                                                    + namequery + "', '" + userIDquery + "');";
+                                            statement = connectDB.createStatement();
+                                            statement.execute(UpdateUsersRole);
+                                            statement.execute(UpdateReferralMDTable);
+                                        } else if (UserRole.getValue().equals("RECEPTIONIST")) {
+                                            String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
+                                                    + userIDquery + "', '4');";
+                                            statement = connectDB.createStatement();
+                                            statement.execute(UpdateUsersRole);
+                                        } else if (UserRole.getValue().equals("TECHNICIAN")) {
+                                            String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
+                                                    + userIDquery + "', '5');";
+                                            statement = connectDB.createStatement();
+                                            statement.execute(UpdateUsersRole);
+                                        } else if (UserRole.getValue().equals("RADIOLOGIST")) {
+                                            String UpdateUsersRole = "insert into users_roles (user_id, role_id)values ('"
+                                                    + userIDquery + "', '6');";
+                                            String UpdateRadiologistTable = "insert into radiologists (full_name, user_id) values ('"
+                                                    + namequery + "', '" + userIDquery + "');";
+                                            statement = connectDB.createStatement();
+                                            statement.execute(UpdateUsersRole);
+                                            statement.execute(UpdateRadiologistTable);
+                                        } else {
+    
+                                            System.out.println("Error in if statement");
+                                        }
+    
                                     }
-
+    
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
                                 }
-
-                            } catch (Exception e2) {
-                                e2.printStackTrace();
+    
+                                Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                                stage.close();
+                                
+    
+                                FXApp.setRoot("ADMIN_AdminPanel");
+                                
+                            } catch (SQLException e1) {
+    
+                                e1.printStackTrace();
+                            } catch (IOException e1) {
+      
+                                e1.printStackTrace();
                             }
 
-                            Stage stage = (Stage) SaveUserButton.getScene().getWindow();
-                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                            stage.close();
-                            
-
-                            FXApp.setRoot("ADMIN_AdminPanel");
-                            
-                        } catch (SQLException e1) {
-
-                            e1.printStackTrace();
-                        } catch (IOException e1) {
-  
-                            e1.printStackTrace();
                         }
+
+                        
 
                     }
                 });
@@ -2806,71 +2875,82 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 AddPatientButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-        
-                        try {
-                            DatabaseConnection connectNow = new DatabaseConnection();
-                            Connection connectDB = connectNow.getConnection();
-                            String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
-                                    + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
-                                    + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
-                                    + "', '" + EthnicityChange.getValue() + "');";
-        
-                            String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
-                            String FindPatientID = " SELECT LAST_INSERT_ID();";
-                            
-        
-                            Statement statement = connectDB.createStatement();
-                            Statement statement2 = connectDB.createStatement();
-                            statement.execute(InsertIntoPatientsTableQuery);
-                            ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
-                            
-        
-                         
-                            //IF the ListView Has no selections
-                            if (listviewContent.equals("[]")){
-        
+
+                        if(firstNameField.getText().isEmpty() || lastNamefield.getText().isEmpty() || dateofbirth.getValue() == null || sexChange.getValue().isEmpty() || RaceChange.getValue().isEmpty() || EthnicityChange.getValue().isEmpty())
+                        {
+
+                        }
+
+                        else{
+
+                            try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
+                                String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
+                                        + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
+                                        + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
+                                        + "', '" + EthnicityChange.getValue() + "');";
+            
+                                String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
+                                String FindPatientID = " SELECT LAST_INSERT_ID();";
                                 
-                                // If there are selections
-                            } else {
-                                System.out.println(listviewContent);
-        
-                                while (PatientIDOutput.next()) {
-                                    patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
-                                   
+            
+                                Statement statement = connectDB.createStatement();
+                                Statement statement2 = connectDB.createStatement();
+                                statement.execute(InsertIntoPatientsTableQuery);
+                                ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
+                                
+            
+                             
+                                //IF the ListView Has no selections
+                                if (listviewContent.equals("[]")){
+            
+                                    
+                                    // If there are selections
+                                } else {
+                                    System.out.println(listviewContent);
+            
+                                    while (PatientIDOutput.next()) {
+                                        patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
+                                       
+                                    }
+                
+                                        for (String name : selectedItems) {
+                                            connectNow = new DatabaseConnection();
+                                            connectDB = connectNow.getConnection();
+                                            
+                                            String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
+                                            ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
+            
+                                            while(AlertQueryOutput.next()){
+                                                alertid = AlertQueryOutput.getInt("alert_id");
+            
+                                                String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
+                                                    + patients_id + "', '" + alertid + "');";
+                                                statement = connectDB.createStatement();
+                                                statement.execute(InsertIntoAlertsTableQuery);
+                                            }
+            
+                                        }
                                 }
             
-                                    for (String name : selectedItems) {
-                                        connectNow = new DatabaseConnection();
-                                        connectDB = connectNow.getConnection();
-                                        
-                                        String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
-                                        ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
-        
-                                        while(AlertQueryOutput.next()){
-                                            alertid = AlertQueryOutput.getInt("alert_id");
-        
-                                            String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
-                                                + patients_id + "', '" + alertid + "');";
-                                            statement = connectDB.createStatement();
-                                            statement.execute(InsertIntoAlertsTableQuery);
-                                        }
-        
-                                    }
+                                Stage stage = (Stage) AddPatientButton.getScene().getWindow();
+                                stage.close();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+            
+                                FXApp.setRoot("ADMIN_AdminPanel");
+            
+                            } catch (SQLException e1) {
+            
+                                e1.printStackTrace();
+                            } catch (IOException e1) {
+            
+                                e1.printStackTrace();
                             }
-        
-                            Stage stage = (Stage) AddPatientButton.getScene().getWindow();
-                            stage.close();
-                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
-        
-                            FXApp.setRoot("ADMIN_AdminPanel");
-        
-                        } catch (SQLException e1) {
-        
-                            e1.printStackTrace();
-                        } catch (IOException e1) {
-        
-                            e1.printStackTrace();
+
                         }
+        
+                        
         
                     }
                 });
@@ -3065,36 +3145,39 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
         CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-  
-                try {
-                   
-                   
-                    String InstertIntoModalitiesTable = "update modalities set name = '" + ModalityNameTextField.getText().trim() + "', price = '" + ModalityPriceTextField.getText().trim() + "' where modality_id = '" + modalityidquery + "';";
 
-                    Statement statement = connectDB.createStatement();
-                    statement.execute(InstertIntoModalitiesTable);
-
-                  
-
-
-                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
-                    stage.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                    FXApp.setRoot("ADMIN_AdminPanel");
-                    
-                } catch (SQLException e1) {
-
-                    e1.printStackTrace();
-          
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                if(ModalityNameTextField.getText().isEmpty() || ModalityPriceTextField.getText().isEmpty()){
                 }
+        
+                else{
 
+                    try {
+                   
+                   
+                        String InstertIntoModalitiesTable = "update modalities set name = '" + ModalityNameTextField.getText().trim() + "', price = '" + ModalityPriceTextField.getText().trim() + "' where modality_id = '" + modalityidquery + "';";
+    
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(InstertIntoModalitiesTable);
+    
+                      
+    
+    
+                        Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+    
+                        FXApp.setRoot("ADMIN_AdminPanel");
+                        
+                    } catch (SQLException e1) {
+    
+                        e1.printStackTrace();
+              
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
 
-
-
+                }
             
             }
         });
@@ -3322,33 +3405,36 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         CreateNewModalityButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-  
-           
 
-                try {
-                    String InsertIntoAlerts = "update alerts set alert_name = '" + PatientAlertNameField.getText().trim() + "' where alert_id = '"+ alertidquery+"';";
-                    Statement statement = connectDB.createStatement();
-                    statement.execute(InsertIntoAlerts);
+                if(PatientAlertNameField.getText().isEmpty()){
 
-                    Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
-                    stage.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                    FXApp.setRoot("ADMIN_AdminPanel");
-                    
-                } catch (SQLException e1) {
-
-                    e1.printStackTrace();
-          
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
                 }
 
+                else{
 
+                    try {
+                        String InsertIntoAlerts = "update alerts set alert_name = '" + PatientAlertNameField.getText().trim() + "' where alert_id = '"+ alertidquery+"';";
+                        Statement statement = connectDB.createStatement();
+                        statement.execute(InsertIntoAlerts);
+    
+                        Stage stage = (Stage) CreateNewModalityButton.getScene().getWindow();
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+    
+                        FXApp.setRoot("ADMIN_AdminPanel");
+                        
+                    } catch (SQLException e1) {
+    
+                        e1.printStackTrace();
+              
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+    
 
-
-            
+                }
+         
             }
         });
         
@@ -3643,29 +3729,39 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                             SaveModifiedPatient.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent e) {
-            
-                                    try {
-                                        DatabaseConnection connectNow = new DatabaseConnection();
-                                        Connection connectDB = connectNow.getConnection();
 
-                                        String PlacedOrdersTableQuery = "update patients set first_name = '" + firstNameField.getText().trim() + "', last_name = '" + lastNamefield.getText().trim() + "', dob = '" + dateofbirth.getValue() + "', sex = '" + sexChange.getValue() + "', race = '" + RaceChange.getValue() + "', ethnicity = '" + EthnicityChange.getValue() + "' where patient_id = '" + patient_id + "';";
-        
-                                        Statement statement = connectDB.createStatement();
-                                        statement.execute(PlacedOrdersTableQuery);
+                                    if(firstNameField.getText().isEmpty() || lastNamefield.getText().isEmpty() || dateofbirth.getValue() == null || sexChange.getValue().isEmpty() || RaceChange.getValue().isEmpty() || EthnicityChange.getValue().isEmpty())
+                        {
 
-                                        Stage stage = (Stage) SaveModifiedPatient.getScene().getWindow();
-                                        stage.close();
-                                        FXApp.setRoot("ADMIN_AdminPanel");
-                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                        }
 
-                                        
-                                    } catch (SQLException e1) {
-            
-                                        e1.printStackTrace();
-                                    } catch (IOException e1) {
-                                        
-                                        e1.printStackTrace();
-                                    }
+                        else{
+
+                            try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
+
+                                String PlacedOrdersTableQuery = "update patients set first_name = '" + firstNameField.getText().trim() + "', last_name = '" + lastNamefield.getText().trim() + "', dob = '" + dateofbirth.getValue() + "', sex = '" + sexChange.getValue() + "', race = '" + RaceChange.getValue() + "', ethnicity = '" + EthnicityChange.getValue() + "' where patient_id = '" + patient_id + "';";
+
+                                Statement statement = connectDB.createStatement();
+                                statement.execute(PlacedOrdersTableQuery);
+
+                                Stage stage = (Stage) SaveModifiedPatient.getScene().getWindow();
+                                stage.close();
+                                FXApp.setRoot("ADMIN_AdminPanel");
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                
+                            } catch (SQLException e1) {
+    
+                                e1.printStackTrace();
+                            } catch (IOException e1) {
+                                
+                                e1.printStackTrace();
+                            }
+
+                        }
+              
             
                                 }
                             });
@@ -4011,7 +4107,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
 
         
-                        String InsertIntoFileUploadQuery = "update file_uploads set order_id = '" + OrdersChoiceBox.getValue() + "', file_name = '" + fileName + "', file_type = '"+ extension + "', is_active = " +"true" + ", upload_path = '" + label.getText() + "' where file_upload_id = '" + uploadidquery + "';";
+                        String InsertIntoFileUploadQuery = "update file_uploads set order_id = '" + OrdersChoiceBox.getValue() + "', file_name = '" + fileName + "', file_type = '"+ extension + "', is_active = " +"true" + ", upload_path = '" + label.getText().trim()+ "' where file_upload_id = '" + uploadidquery + "';";
                         Statement statement = connectDB.createStatement();
                         statement.execute(InsertIntoFileUploadQuery);
                         Stage stage = (Stage) FileModifyButton.getScene().getWindow();
@@ -4207,8 +4303,13 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
        // Modifies Selected Order
        button.setOnAction(new EventHandler<ActionEvent>() {
 
+        
+
         @Override
         public void handle(ActionEvent event) {
+
+            
+            
             BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
             VBox vbox = new VBox();
@@ -5317,7 +5418,7 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 PasswordField.setPrefWidth(259);
                 PasswordField.setLayoutX(196);
                 PasswordField.setLayoutY(43);
-                PasswordField.setText(password);
+                PasswordField.setText(Decrypt(password));
 
                 RolePane.getChildren().add(UserPassword);
                 RolePane.getChildren().add(UserRole);
@@ -5338,44 +5439,56 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 SaveUserButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                       
-                try {
-                    DatabaseConnection connectNow = new DatabaseConnection();
-                    Connection connectDB = connectNow.getConnection();
-        
-               
-                        String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText().trim() + "', full_name = '" + displayNameField.getText().trim() + "', email = '" + EmailAddressField.getText().trim() + "', password = '" + PasswordField.getText().trim() + "' where user_id = '" + userIDquery + "';";
-                        String UpdateRadiologistTableQuery = "update radiologists set full_name = '" + displayNameField.getText().trim() + "' where user_id = '" + userIDquery + "';";
-                        String UpdateRefferalmdTableQuery = "update referralmds  set full_name = '" + displayNameField.getText().trim() + "' where user_id = '" + userIDquery + "';";
 
+                        if(UsernameField.getText().isEmpty() || displayNameField.getText().isEmpty() || EmailAddressField.getText().isEmpty() || PasswordField.getText().isEmpty() || UserRole.getValue().isEmpty()){
 
+                        }
 
-                        Statement statement = connectDB.createStatement();
-                        statement.execute(InsertIntoUsersTableQuery);
+                        else{
 
-                        Statement statement2 = connectDB.createStatement();
-                        statement2.execute(UpdateRadiologistTableQuery);
-                        
-                        Statement statement3 = connectDB.createStatement();
-                        statement3.execute(UpdateRefferalmdTableQuery);
-                        
-                        
-                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+                            try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
+                                String passEncryptt = PasswordField.getText().trim();
+                                passEncryptt = Encrypt(passEncryptt);
+                    
+                           
+                                    String InsertIntoUsersTableQuery = "update users set username = '" + UsernameField.getText().trim() + "', full_name = '" + displayNameField.getText().trim() + "', email = '" + EmailAddressField.getText().trim() + "', password = '" + passEncryptt + "' where user_id = '" + userIDquery + "';";
+                                    String UpdateRadiologistTableQuery = "update radiologists set full_name = '" + displayNameField.getText().trim() + "' where user_id = '" + userIDquery + "';";
+                                    String UpdateRefferalmdTableQuery = "update referralmds  set full_name = '" + displayNameField.getText().trim() + "' where user_id = '" + userIDquery + "';";
             
-                        stage.close();
-                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+            
+            
+                                    Statement statement = connectDB.createStatement();
+                                    statement.execute(InsertIntoUsersTableQuery);
+            
+                                    Statement statement2 = connectDB.createStatement();
+                                    statement2.execute(UpdateRadiologistTableQuery);
+                                    
+                                    Statement statement3 = connectDB.createStatement();
+                                    statement3.execute(UpdateRefferalmdTableQuery);
+                                    
+                                    
+                                    Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+                        
+                                    stage.close();
+                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+            
+                                    FXApp.setRoot("ADMIN_AdminPanel");
+                    
+                    
+                            }
+                            catch (SQLException e2){
+                    
+                                e2.printStackTrace();
+                            } catch (IOException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
 
-                        FXApp.setRoot("ADMIN_AdminPanel");
-        
-        
-                }
-                catch (SQLException e2){
-        
-                    e2.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                        }
+                       
+               
                       
 
                     }

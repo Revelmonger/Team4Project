@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LOGIN {
+public class LOGIN extends EncryptDecrypt{
 
     Boolean CertifiedLoggedIn = false;
 
@@ -71,7 +71,8 @@ public class LOGIN {
         while (resultSet.next()) {
 
             String password = resultSet.getString("password");
-            if (password.equals(PassField.getText())) {
+         
+            if (Decrypt(password).equals(PassField.getText())) {
 
                 DatabaseConnection connectNow = new DatabaseConnection();
                 Connection connectDB = connectNow.getConnection();
