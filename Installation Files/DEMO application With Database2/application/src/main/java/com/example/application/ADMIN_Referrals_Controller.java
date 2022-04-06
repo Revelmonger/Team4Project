@@ -13,10 +13,12 @@ import java.util.ResourceBundle;
 
 import javax.persistence.criteria.Predicate.BooleanOperator;
 
+import com.example.application.Constructors.AllAlertsChoiceBoxController;
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
 import com.example.application.Constructors.Patient;
 import com.example.application.Constructors.ReferralDoctor;
+import com.example.application.TableConstructors.PatientsAlertsTableController;
 import com.example.application.TableConstructors.TABLEReferralsTableController;
 
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;

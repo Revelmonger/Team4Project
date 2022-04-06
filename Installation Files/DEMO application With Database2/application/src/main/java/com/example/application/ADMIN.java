@@ -18,6 +18,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.example.application.Constructors.Orders;
 import com.example.application.Constructors.Radiologists;
+import com.example.application.TableConstructors.PatientsAlertsTableController;
+import com.example.application.TableConstructors.PlacedOrdersTableController;
 import com.example.application.TableConstructors.TABLECheckedInAppointmentsTableController;
 import com.example.application.TableConstructors.TABLEPlacedOrdersTableController;
 import com.example.application.TableConstructors.TABLEReviewImagingOrdersTableController;
