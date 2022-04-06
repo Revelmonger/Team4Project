@@ -31,9 +31,9 @@
             </Label>
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
-                  <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <TextField fx:id="NameField" prefHeight="35.0" prefWidth="245.0" />
-                  <Pane prefHeight="100.0" prefWidth="150.0" />
+                  <Pane prefHeight="100.0" prefWidth="2000.0" />
+                  <TextField fx:id="NameField" minWidth="245.0" prefHeight="35.0" prefWidth="245.0" />
+                  <Pane prefHeight="100.0" prefWidth="2000.0" />
                </children>
             </HBox>
             <Label alignment="CENTER" prefHeight="40.0" prefWidth="470.0" text="Password:">
@@ -43,9 +43,9 @@
             </Label>
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
-                  <Pane prefHeight="100.0" prefWidth="150.0" />
-                  <PasswordField fx:id="PassField" prefHeight="35.0" prefWidth="245.0" />
-                  <Pane prefHeight="100.0" prefWidth="150.0" />
+                  <Pane prefHeight="100.0" prefWidth="2000.0" />
+                  <PasswordField fx:id="PassField" minWidth="245.0" prefHeight="35.0" prefWidth="245.0" />
+                  <Pane prefHeight="100.0" prefWidth="2000.0" />
                </children>
             </HBox>
             <Pane prefHeight="17.0" prefWidth="470.0" />
@@ -54,7 +54,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Pane prefHeight="119.0" prefWidth="470.0">
+            <Pane prefHeight="119.0" prefWidth="2000.0">
                <children>
                   <Button fx:id="CloseApplicationButton" alignment="CENTER" layoutX="194.0" layoutY="18.0" mnemonicParsing="false" onAction="#CloseApplication" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #d32525;" text="Close" textFill="WHITE">
                      <font>
