@@ -5831,48 +5831,58 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         CreateDiagnosticReportButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-           
-                try {
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
 
-       
+                if(RadiologistChoiceBox.getValue().isEmpty() || OrdersChoiceBox.getValue().isEmpty() || ReportArea.getText().isEmpty()){
 
-            String RadiologistQuery = "select id from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
-            Statement statement2 = connectDB.createStatement();
-            ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
+                }
 
-         
+                else{
+
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
+            
                    
+            
+                        String RadiologistQuery = "select id from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
+                        Statement statement2 = connectDB.createStatement();
+                        ResultSet RadiologistsID = statement2.executeQuery(RadiologistQuery);
+            
+                     
+                               
+            
+            
+                         while (RadiologistsID.next()) {
+                            Integer  RadiologistID = RadiologistsID.getInt("id");
+            
+                            String InsertIntoUsersTableQuery = "update diagnostic_reports set order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + RadiologistID + "', diagnostic = '"+ ReportArea.getText().trim() + "' where diagnostic_report_id = '" + reportidquery + "';";
+                            Statement statement = connectDB.createStatement();
+                            statement.execute(InsertIntoUsersTableQuery);
+                            Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
+                
+                            stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+            
+                            FXApp.setRoot("ADMIN_AdminPanel");
+            
+                      }
+            
+            
+            
+                      
+            
+                    }
+                    catch (SQLException e2){
+            
+                        e2.printStackTrace();
+                    } catch (IOException e1) {
+            
+                        e1.printStackTrace();
+                    }
 
-
-             while (RadiologistsID.next()) {
-                Integer  RadiologistID = RadiologistsID.getInt("id");
-
-                String InsertIntoUsersTableQuery = "update diagnostic_reports set order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + RadiologistID + "', diagnostic = '"+ ReportArea.getText().trim() + "' where diagnostic_report_id = '" + reportidquery + "';";
-                Statement statement = connectDB.createStatement();
-                statement.execute(InsertIntoUsersTableQuery);
-                Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
-    
-                stage.close();
-                BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                FXApp.setRoot("ADMIN_AdminPanel");
-
-          }
-
-
-
-          
-
-        }
-        catch (SQLException e2){
-
-            e2.printStackTrace();
-        } catch (IOException e1) {
-
-            e1.printStackTrace();
-        }
+                }
+           
+               
 
 
 
