@@ -264,7 +264,6 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
                 String displayname = queryOutput.getString("full_name");
                 String email = queryOutput.getString("email");
                 String rolename = queryOutput.getString("name");
-                Integer role = queryOutput.getInt("role_id");
                 String password = queryOutput.getString("password");
         
                 usernamefield.setText(username);
@@ -294,7 +293,7 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
             
             public void handle(ActionEvent e){
 
-                String UpdateUserWithPassword = "update users set email = '" + emailfield.getText() + "', full_name = '" + displaynamefield.getText() + "', username = '" + usernamefield.getText() + "', password = '" + Encrypt(passwordfield.getText()) + "' where user_id = " + userid + ";";
+                String UpdateUserWithPassword = "update users set email = '" + emailfield.getText().trim() + "', full_name = '" + displaynamefield.getText().trim() + "', username = '" + usernamefield.getText().trim() + "', password = '" + Encrypt(passwordfield.getText().trim()) + "' where user_id = " + userid + ";";
                 try {
 
                     Statement statement = connectDB.createStatement();
@@ -308,9 +307,11 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
 
                     Integer role_id ;
 
-        String GetUserRole = "select* from users where user_id = " + userid + ";"; 
+        String GetUserRole = "select * from users_roles where user_id = " + userid + ";"; 
+
         try {
-             statement = connectDB.createStatement();
+
+            statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(GetUserRole);
 
             while(queryOutput.next()){
@@ -319,14 +320,14 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
 
                 if(role_id == 6){
                         
-                    String UpdateRadiologistTable = "insert into radiologists (full_name, user_id) values ('" + displaynamefield.getText() + "', " + userid + ") on duplicate key update full_name = '" + displaynamefield.getText() + "';";
+                    String UpdateRadiologistTable = "update radiologists set full_name = '" + displaynamefield.getText().trim() + "' where user_id = '" + userid + "';";
                     
                     statement.execute(UpdateRadiologistTable);
                 }
 
                 if(role_id == 3){
                     
-                    String UpdateReferralmdsTable = "insert into referralmds (full_name, user_id) values ('" + displaynamefield.getText() + "', " + userid + ") on duplicate key update full_name = '" + displaynamefield.getText() + "';";
+                    String UpdateReferralmdsTable = "update referralmds set full_name = '" + displaynamefield.getText().trim() + "' where user_id = '" + userid + "';";
                     
                     statement.execute(UpdateReferralmdsTable);
                 }
