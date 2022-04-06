@@ -19,14 +19,20 @@
                   <Font name="Arial Bold" size="40.0" />
                </font>
             </Label>
+            <HBox prefHeight="40.0" prefWidth="680.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="150.0" />
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="245.0" text="Username:">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="100.0" prefWidth="150.0" />
+               </children>
+            </HBox>
             <Label fx:id="warningLabel" alignment="CENTER" textFill="RED">
                <font>
                   <Font size="14.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="470.0" text="Username:">
-               <font>
-                  <Font name="Arial Bold" size="16.0" />
                </font>
             </Label>
             <HBox prefHeight="40.0" prefWidth="680.0">
@@ -36,11 +42,17 @@
                   <Pane prefHeight="100.0" prefWidth="150.0" />
                </children>
             </HBox>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="470.0" text="Password:">
-               <font>
-                  <Font name="Arial Bold" size="16.0" />
-               </font>
-            </Label>
+            <HBox prefHeight="40.0" prefWidth="680.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="150.0" />
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="245.0" text="Password">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="100.0" prefWidth="150.0" />
+               </children>
+            </HBox>
             <HBox prefHeight="40.0" prefWidth="680.0">
                <children>
                   <Pane prefHeight="100.0" prefWidth="150.0" />
@@ -49,19 +61,26 @@
                </children>
             </HBox>
             <Pane prefHeight="17.0" prefWidth="470.0" />
-            <Button fx:id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Pane prefHeight="119.0" prefWidth="470.0">
+            <HBox prefHeight="175.0" prefWidth="470.0">
                <children>
-                  <Button fx:id="CloseApplicationButton" alignment="CENTER" layoutX="194.0" layoutY="18.0" mnemonicParsing="false" onAction="#CloseApplication" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #d32525;" text="Close" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-               </children></Pane>
+                  <Pane prefHeight="100.0" prefWidth="150.0" />
+                  <Pane prefHeight="100.0" prefWidth="170.0">
+                     <children>
+                        <Button fx:id="LoginButton" alignment="CENTER" layoutX="44.0" layoutY="14.0" mnemonicParsing="false" onAction="#connectButton" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #007bff;" text="Login" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="CloseApplicationButton" alignment="CENTER" layoutX="44.0" layoutY="67.0" mnemonicParsing="false" onAction="#CloseApplication" prefHeight="42.0" prefWidth="83.0" style="-fx-background-color: #d32525;" text="Close" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="175.0" prefWidth="150.0" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </center>
