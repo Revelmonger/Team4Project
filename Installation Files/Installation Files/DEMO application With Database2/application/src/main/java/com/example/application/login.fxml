@@ -12,7 +12,7 @@
 
 <BorderPane id="Login_Scene" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.LOGIN">
    <center>
-      <VBox alignment="CENTER" prefHeight="360.0" prefWidth="680.0" style="-fx-background-color: #cccccc;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="470.0" minWidth="470.0" prefHeight="360.0" prefWidth="470.0" style="-fx-background-color: #cccccc;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="113.0" prefWidth="798.0" text="User Login" textAlignment="CENTER">
                <font>
