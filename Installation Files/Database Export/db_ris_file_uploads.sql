@@ -41,7 +41,6 @@ CREATE TABLE `file_uploads` (
 
 LOCK TABLES `file_uploads` WRITE;
 /*!40000 ALTER TABLE `file_uploads` DISABLE KEYS */;
-INSERT INTO `file_uploads` VALUES (49,18,'RIS_33.jpg','jpg',_binary '','C:UsersSchool AccountDownloadsRIS_33.jpg'),(50,19,'RIS_33.jpg','jpg',_binary '','C:UsersSchool AccountDownloadsRIS_33.jpg'),(51,20,'RIS_33.jpg','jpg',_binary '','C:UsersSchool AccountDownloadsRIS_33.jpg'),(52,21,'RIS_33.jpg','jpg',_binary '','C:UsersSchool AccountDownloadsRIS_33.jpg'),(53,22,'RIS_33.jpg','jpg',_binary '','C:UsersSchool AccountDownloadsRIS_33.jpg'),(54,23,'RIS_33.jpg','jpg',_binary '','C:\\Users\\School Account\\Downloads\\RIS_33.jpg'),(55,24,'salimi_what.png','png',_binary '','C:\\Users\\School Account\\Downloads\\salimi_what.png'),(56,25,'salimi_what.png','png',_binary '','C:\\Users\\School Account\\Downloads\\salimi_what.png'),(57,34,'kindpng_1082101.png','png',_binary '','C:\\Users\\School Account\\Downloads\\kindpng_1082101.png'),(58,35,'salimi_what.png','png',_binary '','C:\\Users\\School Account\\Downloads\\salimi_what.png'),(59,38,NULL,NULL,_binary '','No file chosen'),(60,44,'salimi_what.png','png',_binary '','C:\\Users\\School Account\\Downloads\\salimi_what.png'),(61,42,'RIS_33.jpg','jpg',_binary '','C:\\Users\\School Account\\Downloads\\RIS_33.jpg'),(62,45,'salimi_what.png','png',_binary '','C:\\Users\\School Account\\Downloads\\salimi_what.png'),(63,46,NULL,NULL,_binary '','No file chosen'),(64,43,'RIS_33.jpg','jpg',_binary '','C:\\Users\\School Account\\Downloads\\RIS_33.jpg'),(65,41,NULL,NULL,_binary '','No file chosen');
 /*!40000 ALTER TABLE `file_uploads` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-05 22:58:51
+-- Dump completed on 2022-04-06 18:14:00

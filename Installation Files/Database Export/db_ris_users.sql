@@ -42,7 +42,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin@admin.com','test admin','admin','cfokp',1),(16,'Doc','Doctor','doc','fqe',NULL),(17,'desk','DESKLADY','desk','fgum',NULL),(18,'Radi','Radio','radio','tcfkq',NULL),(21,'user','user','user','wugt',NULL),(22,'tech','tech','tech','vgej',NULL),(29,'TECHghgwge','TECH','TECH','vgej',NULL);
+INSERT INTO `users` VALUES (1,'admin@hostpital.org','test admin','admin','cfokp',NULL),(16,'doc@hostpital.org','test doc','doc','fqe',NULL),(17,'desk@hostpital.org','test desk','desk','fgum',NULL),(18,'radio@hostpital.org','test radio','radio','tcfkq',NULL),(21,'user@hostpital.org','test user','user','wugt',NULL),(22,'tech@hostpital.org','test tech','tech','vgej',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-05 22:58:50
+-- Dump completed on 2022-04-06 18:13:59

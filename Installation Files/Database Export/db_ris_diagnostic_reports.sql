@@ -40,7 +40,6 @@ CREATE TABLE `diagnostic_reports` (
 
 LOCK TABLES `diagnostic_reports` WRITE;
 /*!40000 ALTER TABLE `diagnostic_reports` DISABLE KEYS */;
-INSERT INTO `diagnostic_reports` VALUES (20,18,19,18,'DOne'),(21,18,NULL,6,'dfsgdh'),(22,19,19,18,'Brain Looks Good'),(23,21,20,18,'sgse'),(24,24,19,1,'Aids'),(25,23,20,6,'Brain Cancer 1-2 days to live'),(26,22,19,6,'Nothing '),(27,25,20,6,'Salimi What?'),(28,34,88,6,'asdfasdf'),(29,35,90,6,'Hes bald'),(30,44,97,6,'wertwetwertwertwertwertwertwer'),(31,45,92,6,'hello world2'),(32,43,97,6,'This is my diagnostic test');
 /*!40000 ALTER TABLE `diagnostic_reports` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-05 22:58:50
+-- Dump completed on 2022-04-06 18:14:00

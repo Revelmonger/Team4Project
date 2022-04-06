@@ -40,7 +40,7 @@ CREATE TABLE `appointments` (
   `checked_in` bit(1) DEFAULT NULL,
   `closed` bit(1) DEFAULT NULL,
   PRIMARY KEY (`appointment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,6 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (24,19,18,4,'2022-03-24 08:00:00',6,NULL,'234523454535','sdfgsdfgsdfgs',NULL,NULL,NULL,_binary '',_binary ''),(25,19,19,6,'2022-03-24 09:00:00',6,NULL,'1234','asdf',NULL,NULL,NULL,_binary '',_binary ''),(26,19,20,3,'2022-03-24 05:00:00',6,NULL,'2523','asdfgasdf',NULL,NULL,NULL,_binary '',_binary ''),(27,20,21,4,'2022-03-24 06:00:00',6,NULL,'234523','adfadfs',NULL,NULL,NULL,_binary '',_binary ''),(28,19,20,3,'2022-03-17 05:00:00',6,NULL,'2341234','asdfawsf',NULL,NULL,NULL,NULL,NULL),(29,19,22,3,'2022-03-29 06:00:00',6,NULL,'asdf','asdf',NULL,NULL,NULL,_binary '',_binary ''),(30,20,23,1,'2022-03-30 06:00:00',6,NULL,'1324','1243',NULL,NULL,NULL,_binary '',_binary ''),(31,19,24,1,'2022-03-30 05:00:00',6,NULL,'ASDF','234',NULL,NULL,NULL,_binary '',_binary ''),(32,20,25,2,'2022-03-30 06:00:00',6,NULL,'1234','qwer',NULL,NULL,NULL,_binary '',_binary ''),(33,88,33,3,'2022-04-01 11:00:00',6,NULL,'23452345','gsdfgsdfg',NULL,NULL,NULL,NULL,NULL),(34,88,34,3,'2022-04-02 06:00:00',6,NULL,'asdfadsf','fqwf',NULL,NULL,NULL,_binary '',_binary ''),(35,90,35,2,'2022-04-03 06:00:00',6,NULL,'23452345','',NULL,NULL,NULL,_binary '',_binary ''),(36,1,38,2,'2022-04-04 06:00:00',6,NULL,'252345','sagsg',NULL,NULL,NULL,_binary '',_binary ''),(37,97,44,1,'2022-04-04 07:00:00',6,NULL,'324543215','12345342',NULL,NULL,NULL,_binary '',_binary ''),(38,1,42,1,'2022-04-04 03:00:00',6,NULL,'asdfaf','asdfafsd',NULL,NULL,NULL,_binary '',_binary ''),(39,92,45,1,'2022-04-04 02:00:00',6,NULL,'2345','sdfg',NULL,NULL,NULL,_binary '',_binary ''),(40,97,43,1,'2022-04-04 07:00:00',6,NULL,'13241234','12341234',NULL,NULL,NULL,_binary '',_binary ''),(41,1,46,1,'2022-04-04 05:00:00',6,NULL,'432142','12431234',NULL,NULL,NULL,_binary '',_binary ''),(42,95,41,1,'2022-04-04 03:00:00',6,NULL,'1123','413241234312',NULL,NULL,NULL,_binary '',_binary '');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-05 22:58:49
+-- Dump completed on 2022-04-06 18:13:59

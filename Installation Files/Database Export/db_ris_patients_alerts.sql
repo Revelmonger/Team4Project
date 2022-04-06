@@ -34,7 +34,7 @@ CREATE TABLE `patients_alerts` (
   KEY `alert_fk_idx` (`alert_id`),
   CONSTRAINT `alert_fk` FOREIGN KEY (`alert_id`) REFERENCES `alerts` (`alert_id`),
   CONSTRAINT `patient_fk` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,6 @@ CREATE TABLE `patients_alerts` (
 
 LOCK TABLES `patients_alerts` WRITE;
 /*!40000 ALTER TABLE `patients_alerts` DISABLE KEYS */;
-INSERT INTO `patients_alerts` VALUES (19,30,5,0),(20,30,5,0),(21,31,5,0),(22,31,5,0),(23,31,5,0),(24,31,5,0),(25,31,5,0),(26,32,5,0),(27,32,5,0),(28,32,5,0),(29,37,5,0),(30,45,5,0),(31,54,5,0),(32,55,5,0),(33,55,5,0),(34,55,5,0),(35,59,5,0),(36,59,5,0),(37,59,5,0),(38,59,5,0),(39,68,5,0),(40,68,5,0),(41,68,5,0),(42,68,5,0),(43,68,5,0),(44,71,5,0),(45,71,5,0),(46,71,5,0),(47,71,5,0),(48,74,5,0),(49,74,5,0),(50,74,5,0),(51,74,5,0),(52,78,5,0),(53,78,5,0),(54,78,5,0),(55,83,5,0),(56,83,5,0),(57,83,5,0),(58,83,5,0),(59,84,5,0),(60,84,5,0),(61,84,5,0),(62,84,5,0),(63,84,5,0),(64,85,5,0),(65,85,3,0),(66,85,1,0),(67,86,2,0),(68,87,1,0),(69,87,3,0),(70,87,4,0),(71,88,1,0),(72,88,5,0),(73,89,1,0),(74,89,2,0),(75,89,3,0),(76,89,4,0),(77,89,5,0),(78,91,1,0),(79,91,2,0),(80,91,3,0),(81,91,4,0),(82,92,1,0),(83,92,2,0),(84,92,3,0),(85,93,5,0),(86,94,1,0),(87,94,3,0),(88,94,4,0),(89,94,5,0),(90,95,5,0),(91,96,2,0),(92,97,1,0),(93,97,3,0),(94,98,2,0);
 /*!40000 ALTER TABLE `patients_alerts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-05 22:58:49
+-- Dump completed on 2022-04-06 18:13:58
