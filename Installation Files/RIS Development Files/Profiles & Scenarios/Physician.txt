@@ -1,0 +1,6 @@
+Andrew is a 28 yr old Physician that has just been hired onto a doctor’s office right out of college after receiving his doctorate and a minor in computer programming at UGA. He was adopted by a couple from Austin, Texas. He and his new family moved out to Georgia about 10 years ago following a major storm that destroyed their old home. His adopted mother is a licensed pharmacist and his adopted father is the head of the IT department for a major trade organization.
+
+Since his childhood, he has access to both the medical field and the computer field allowing him plenty of experience to learn from both parents. As a newly hired doctor, he will have to examine any x-rays that are being sent to him by the radiologist and know how to treat them accordingly. To do this he will have to use this interface to better understand from the radiologist exactly what is wrong and how to fix it.
+
+A patient had recently come in with what he believed to be just a sprained arm. However, he still sent him in to get an x-ray anyway. The radiologist took an x-ray and found that it was more than that but a complete fracture. Andrew got a notification through the interface about the x-ray results. He also managed to convey a chat room with the radiologist to better discuss the results and how to fix the fracture.
+

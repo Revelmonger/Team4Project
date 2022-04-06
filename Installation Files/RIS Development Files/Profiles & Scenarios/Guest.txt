@@ -1,0 +1,11 @@
+Guest:
+
+(Persona, Scenario, User Story):
+
+Debbie, age 58, is an arson investigator in Forsyth county, a decent sized county in the north-central portion of the U.S. state of Georgia. She investigates
+crimes committed with fire and finds out who did them and for what reason these crimes were committed. She was born in the same state as which she works
+and has moved around to various parts of the state growing up. She only has a highschool degree education and has worked her way up in the ranks through 
+sheer hard work and persistance. Debbie recently fractured her foot on the job and needs an examination from a radiologist. Debbie now must have to call in, must go to the front desk, or go online into the software and get 
+scheduled in by entering in her personal information. She has very little interest in the overall workings of the technology used to recieve an exam, and has a general knowledge base of technological 
+experience enough to navigate through requiredpatient information collecting and scheduling systems but nothing too advanced. As a guest, she simply would like to enter in her information into a non-complex 
+user interfaceand schedule and recieve an exam from the radiologist.
