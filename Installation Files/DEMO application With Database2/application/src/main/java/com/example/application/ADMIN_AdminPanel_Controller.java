@@ -2428,6 +2428,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                         OrderStatuses currentOrderStatusOutput = new OrderStatuses(
                                 OrderStatusOutput.getString("order_name"));
                         SelectedStatusField.getItems().add(currentOrderStatusOutput.getOrderstatus());
+          SelectedStatusField.setValue("In Progress");
+          SelectedStatusField.setDisable(true);
                     }
 
                 } catch (SQLException e1) {
@@ -2577,7 +2579,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
 
                             String insertheorder = "insert into orders (patient, referral_md, modality, notes, status)values ('"
                                     + patient_id + "', '" + user_id + "', '" + modality_id + "', '"
-                                    + ReferralTextField.getText().trim() + "', '4');";
+                                    + ReferralTextField.getText().trim() + "', '1');";
                             Statement statement = connectDB.createStatement();
 
                             statement.execute(insertheorder);
