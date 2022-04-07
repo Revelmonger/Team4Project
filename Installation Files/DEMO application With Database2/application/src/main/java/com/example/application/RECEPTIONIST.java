@@ -123,13 +123,6 @@ private ScrollPane BlurBox;
         FXApp.setRoot("RECEPTIONIST_UserInfo");
     }
 
-    public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
-    }
-
-    public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
-    }
 
     public void orders(ActionEvent e) throws IOException {
         FXApp.setRoot("RECEPTIONIST_AllOrders");
@@ -915,7 +908,7 @@ e.printStackTrace();        }
                                 statement5.execute(UpdateOrderStatus);
                                 Stage stage = (Stage) CloseOrderButton.getScene().getWindow();
                                 stage.close();
-                                FXApp.setRoot("ADMIN");
+                                FXApp.setRoot("RECEPTIONIST");
 
                         } catch (SQLException | IOException e1) {
         
@@ -1641,7 +1634,7 @@ e.printStackTrace();        }
                                     BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
 
-                                    FXApp.setRoot("ADMIN");
+                                    FXApp.setRoot("RECEPTIONIST");
 
                                 } catch (SQLException e1) {
                 
@@ -2000,7 +1993,7 @@ e.printStackTrace();        }
                                                             BlurBox.setEffect(new BoxBlur(0, 0, 0));
                         
                         
-                                                            FXApp.setRoot("ADMIN");
+                                                            FXApp.setRoot("RECEPTIONIST");
                         
                                                         } catch (SQLException e1) {
                                         
@@ -2269,7 +2262,7 @@ e.printStackTrace();        }
                             Statement statement4 = connectDB.createStatement();
                            statement4.execute(CheckInAppoint);
                            try {
-                            FXApp.setRoot("ADMIN");
+                            FXApp.setRoot("RECEPTIONIST");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -2780,7 +2773,7 @@ EstinatedCosts.setEditable(false);
     
     
     
-                        FXApp.setRoot("ADMIN");
+                        FXApp.setRoot("RECEPTIONIST");
                         
                     } catch (SQLException e1) {
     
@@ -3124,7 +3117,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                             stage.close();
                             BlurBox.setEffect(new BoxBlur(0, 0, 0));
             
-                            FXApp.setRoot("ADMIN");
+                            FXApp.setRoot("RECEPTIONIST");
             
                   
             

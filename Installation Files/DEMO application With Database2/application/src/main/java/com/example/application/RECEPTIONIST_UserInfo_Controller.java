@@ -228,13 +228,7 @@ public class RECEPTIONIST_UserInfo_Controller extends EncryptDecrypt implements 
         FXApp.setRoot("RECEPTIONIST_UserInfo");
     }
 
-    public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
-    }
 
-    public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
-    }
 
     public void orders(ActionEvent e) throws IOException {
         FXApp.setRoot("RECEPTIONIST_AllOrders");
