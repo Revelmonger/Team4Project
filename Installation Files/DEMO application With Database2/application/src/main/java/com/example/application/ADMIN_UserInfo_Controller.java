@@ -295,7 +295,13 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
             
             public void handle(ActionEvent e){
 
-                String UpdateUserWithPassword = "update users set email = '" + emailfield.getText().trim() + "', full_name = '" + displaynamefield.getText().trim() + "', username = '" + usernamefield.getText().trim() + "', password = '" + Encrypt(passwordfield.getText().trim()) + "' where user_id = " + userid + ";";
+                if(usernamefield.getText().isEmpty() || emailfield.getText().isEmpty() || displaynamefield.getText().isEmpty() || passwordfield.getText().isEmpty()){
+
+                }
+
+                else{
+
+                    String UpdateUserWithPassword = "update users set email = '" + emailfield.getText().trim() + "', full_name = '" + displaynamefield.getText().trim() + "', username = '" + usernamefield.getText().trim() + "', password = '" + Encrypt(passwordfield.getText().trim()) + "' where user_id = " + userid + ";";
                 try {
 
                     Statement statement = connectDB.createStatement();
@@ -344,6 +350,10 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
+
+                }
+
+                
 
                 
                 
