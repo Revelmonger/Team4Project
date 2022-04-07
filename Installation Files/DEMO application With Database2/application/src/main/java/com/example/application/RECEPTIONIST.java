@@ -2376,7 +2376,7 @@ e.printStackTrace();        }
          * 
          */
 
-        String UnscheduledOrdersTableQuery = "select p.first_name, p.last_name, md.full_name, m.name, o.notes, o.order_id from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.appointment IS NULL;"; // change
+        String UnscheduledOrdersTableQuery = "select m.price, p.first_name, p.last_name, md.full_name, m.name, o.notes, o.order_id from orders as o left join patients as p on o.patient = p.patient_id left join order_status as os on o.status = os.order_status_id left join referralmds as md on o.referral_md = md.id left join modalities as m on m.modality_id = o.modality where o.appointment IS NULL;"; // change
         // to
         // just
         // like
@@ -2397,6 +2397,7 @@ e.printStackTrace();        }
                 String notesquery = queryOutput.getString("notes");
                 Integer OrderID = queryOutput.getInt("order_id");
                 Button button = new Button("Schedule");
+                Integer price = queryOutput.getInt("price");
                 button.setStyle(
                     "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
 
@@ -2601,8 +2602,8 @@ e.printStackTrace();        }
       PatientLabel.setStyle("-fx-font: normal bold 16px 'arial';");
       PatientLabel.setMinHeight(27);
       PatientLabel.setMinWidth(128);
-      PatientLabel.setLayoutX(260);
-      PatientLabel.setLayoutY(225);
+      PatientLabel.setLayoutX(22);
+      PatientLabel.setLayoutY(119);
 
     
       TextField ModalityField = new TextField();
@@ -2613,13 +2614,14 @@ e.printStackTrace();        }
       ModalityField.setEditable(false);
       ModalityField.setText(modalityquery);
       
+      
 
 
       TextField patientfortheorder = new TextField();
       patientfortheorder.setPrefHeight(35);
       patientfortheorder.setPrefWidth(170);
-      patientfortheorder.setLayoutX(260);
-      patientfortheorder.setLayoutY(270);
+      patientfortheorder.setLayoutX(22);
+      patientfortheorder.setLayoutY(160);
       patientfortheorder.setEditable(false);
       patientfortheorder.setText(patientquery);
       
@@ -2690,6 +2692,7 @@ EstinatedCosts.setMinWidth(170);
 EstinatedCosts.setLayoutX(22);
 EstinatedCosts.setLayoutY(270);
 EstinatedCosts.setEditable(false);
+EstinatedCosts.setText(price.toString());
 
 
 
@@ -2713,7 +2716,7 @@ EstinatedCosts.setEditable(false);
 
         Button SaveUserButton = new Button("Create Appointment");
         SaveUserButton.setPrefHeight(42);
-        SaveUserButton.setPrefWidth(102);
+        SaveUserButton.setPrefWidth(132);
         SaveUserButton.setLayoutX(472);
         SaveUserButton.setLayoutY(15);
         SaveUserButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
