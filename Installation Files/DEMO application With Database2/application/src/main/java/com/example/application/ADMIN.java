@@ -1588,7 +1588,14 @@ e.printStackTrace();        }
                     UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent e) {
-                            try {
+
+                            if(label.getText() == "No file chosen" ){
+
+                            }
+                
+                            else{
+
+                                try {
                             
 
 
@@ -1653,6 +1660,10 @@ e.printStackTrace();        }
                             } catch (Exception e2) {
                                     e2.printStackTrace();
                                 }
+
+                            }
+
+                            
 
                         }
                     });
@@ -1936,71 +1947,83 @@ e.printStackTrace();        }
                                         UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
                                             @Override
                                             public void handle(ActionEvent e) {
-                                                try {
-                                                
-                    
-                    
-                                                    
-                                                
-                    
-                    
+
+                                                if(label.getText() == "No file chosen" ){
+
+                                                }
+                                    
+                                                else{
+
                                                     try {
-                    
-                                                    
-                                                        int index =  label.getText().lastIndexOf('.');
                                                 
-                                                        if(index > 0) {
-                                                        extension  = label.getText().substring(index + 1);
+                    
+                    
                                                     
-                                                        } 
-                                                        if(index > 0) {
-                                                    
-                                                            java.nio.file.Path path = Paths.get(label.getText());         
-                                                        fileName = path.getFileName().toString();
-                                                        }
-                                    
+                                                
                     
-                                                        DatabaseConnection connectNow = new DatabaseConnection();
-                                                        Connection connectDB = connectNow.getConnection();
-                                    
-                                                        String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
-                                                        Statement statement = connectDB.createStatement();
-                                                        PreparedStatement statement2 = null;
                     
-                                                        statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
-                                                        statement2.setInt(1, Order_id);
-                                                        statement2.setString(2, fileName);
-                                                        statement2.setString(3, extension);
-                                                        statement2.setBoolean(4, true);
-                                                        statement2.setString(5, label.getText());
-                                                        statement2.executeUpdate();
-                    
-                                                        statement.execute(UpdateAppointmentsTable); 
+                                                        try {
+                        
                                                         
-                                                        Stage stage = (Stage) UploadFileButton.getScene().getWindow();
-                                    
-                                                        stage.close();
-                                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                    
-                    
-                                                        FXApp.setRoot("ADMIN");
-                    
-                                                    } catch (SQLException e1) {
-                                    
-                                                        e1.printStackTrace();
-                                                    }
-                                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                                                            int index =  label.getText().lastIndexOf('.');
+                                                    
+                                                            if(index > 0) {
+                                                            extension  = label.getText().substring(index + 1);
+                                                        
+                                                            } 
+                                                            if(index > 0) {
+                                                        
+                                                                java.nio.file.Path path = Paths.get(label.getText());         
+                                                            fileName = path.getFileName().toString();
+                                                            }
+                                        
+                        
+                                                            DatabaseConnection connectNow = new DatabaseConnection();
+                                                            Connection connectDB = connectNow.getConnection();
+                                        
+                                                            String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
+                                                            Statement statement = connectDB.createStatement();
+                                                            PreparedStatement statement2 = null;
+                        
+                                                            statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                                                            statement2.setInt(1, Order_id);
+                                                            statement2.setString(2, fileName);
+                                                            statement2.setString(3, extension);
+                                                            statement2.setBoolean(4, true);
+                                                            statement2.setString(5, label.getText());
+                                                            statement2.executeUpdate();
+                        
+                                                            statement.execute(UpdateAppointmentsTable); 
+                                                            
+                                                            Stage stage = (Stage) UploadFileButton.getScene().getWindow();
+                                        
+                                                            stage.close();
+                                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                        
+                        
+                                                            FXApp.setRoot("ADMIN");
+                        
+                                                        } catch (SQLException e1) {
+                                        
+                                                            e1.printStackTrace();
+                                                        }
+                                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                                                    
+                                                    } catch (Exception e2) {
+                                                            e2.printStackTrace();
+                                                        }
+
+                                                }
+
+                                               
                                                 
-                                                } catch (Exception e2) {
-                                                        e2.printStackTrace();
-                                                    }
                     
                                             }
                                         });
