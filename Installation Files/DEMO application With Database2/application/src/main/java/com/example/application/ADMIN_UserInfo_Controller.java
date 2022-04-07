@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.SubmissionPublisher;
 
 import javax.persistence.criteria.Predicate.BooleanOperator;
@@ -243,6 +245,7 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
         FXApp.setRoot("ADMIN_Apppointments");
     }
 
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         
@@ -250,7 +253,6 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
         Connection connectDB = connectNow.getConnection();
 
         String GetUserInfo = "select*from users as u join users_roles as ur on ur.user_id = u.user_id join roles as r on ur.role_id = r.role_id where u.user_id = " + userid + ";";
-
 
                 
        
@@ -335,25 +337,20 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
 
             }
     } catch (Exception e2) {
-    }
+    }     
 
-
-
-                  
-
-                    FXApp.setRoot("ADMIN_UserInfo");
+                submitionresponcebutton.setText("Submission Successful");
                    
-
-                } catch (SQLException | IOException e1) {
+                } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
+
                 
                 
-             
             }
+        
 
-
-
+            
 
         });
 
@@ -362,6 +359,5 @@ public class ADMIN_UserInfo_Controller extends EncryptDecrypt implements Initial
 
     }
 
-   
 
 }

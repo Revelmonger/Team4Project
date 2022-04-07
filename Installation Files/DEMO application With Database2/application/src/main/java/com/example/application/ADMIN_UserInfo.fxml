@@ -163,7 +163,7 @@
                               <TextField fx:id="displaynamefield" layoutX="500.0" layoutY="305.0" prefHeight="45.0" prefWidth="250.0" />
                               <ChoiceBox fx:id="userrollfield" disable="true" layoutX="75.0" layoutY="570.0" prefHeight="45.0" prefWidth="204.0" />
                               <TextField fx:id="passwordfield" layoutX="500.0" layoutY="570.0" prefHeight="45.0" prefWidth="250.0" />
-                              <Label fx:id="submitionresponcebutton" layoutX="979.0" layoutY="756.0" prefHeight="44.0" prefWidth="256.0" text="Change THIS!!!" textFill="RED" />
+                              <Label fx:id="submitionresponcebutton" layoutX="979.0" layoutY="756.0" prefHeight="44.0" prefWidth="256.0" text="" textFill="RED" />
                            </children>
                         </Pane>
                      </center>

@@ -6,6 +6,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
@@ -1401,7 +1402,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
         button.setOnAction(event1);
         
         
-        ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
+        ChoiceBox<Integer> OrdersChoiceBox = new ChoiceBox<Integer>();
         OrdersChoiceBox.setPrefHeight(30);
         OrdersChoiceBox.setPrefWidth(150);
         OrdersChoiceBox.setLayoutX(459);
@@ -1418,7 +1419,7 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
   
           while (OrdersOutput.next()) {
               Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
-              OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
+              OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders());
           }
   
       } catch (SQLException e1) {
@@ -1533,10 +1534,15 @@ NewFileUpload.setOnAction(new EventHandler<ActionEvent>() {
                             Connection connectDB = connectNow.getConnection();
         
                
-                            String InsertIntoUploadsTable = "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path)values ('"+ OrdersChoiceBox.getValue() + "', '"+ fileName + "', '"+ extension + "', true , '"+ label.getText() + "');";
-                            Statement statement = connectDB.createStatement();
-    
-                            statement.execute(InsertIntoUploadsTable);
+                            PreparedStatement statement2 = null;
+                    
+                            statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                            statement2.setInt(1, OrdersChoiceBox.getValue());
+                            statement2.setString(2, fileName);
+                            statement2.setString(3, extension);
+                            statement2.setBoolean(4, true);
+                            statement2.setString(5, label.getText());
+                            statement2.executeUpdate();
                             Stage stage = (Stage) UploadFileButton.getScene().getWindow();
         
                             stage.close();
@@ -3997,12 +4003,12 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         button.setOnAction(event1);
         
         
-        ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
+        ChoiceBox<Integer> OrdersChoiceBox = new ChoiceBox<Integer>();
         OrdersChoiceBox.setPrefHeight(30);
         OrdersChoiceBox.setPrefWidth(150);
         OrdersChoiceBox.setLayoutX(459);
         OrdersChoiceBox.setLayoutY(227);
-        OrdersChoiceBox.setValue(ordernumberquery.toString());
+        OrdersChoiceBox.setValue(ordernumberquery);
   
         // Adds Orders to the Box
         try {
@@ -4015,7 +4021,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
   
           while (OrdersOutput.next()) {
               Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
-              OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
+              OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders());
           }
   
       } catch (SQLException e1) {
@@ -4109,10 +4115,16 @@ button.setOnAction(new EventHandler<ActionEvent>() {
                     }
 
 
-        
-                        String InsertIntoFileUploadQuery = "update file_uploads set order_id = '" + OrdersChoiceBox.getValue() + "', file_name = '" + fileName + "', file_type = '"+ extension + "', is_active = " +"true" + ", upload_path = '" + label.getText().trim()+ "' where file_upload_id = '" + uploadidquery + "';";
-                        Statement statement = connectDB.createStatement();
-                        statement.execute(InsertIntoFileUploadQuery);
+                        PreparedStatement statement2 = null;
+                    
+                        statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                        statement2.setInt(1, OrdersChoiceBox.getValue());
+                        statement2.setString(2, fileName);
+                        statement2.setString(3, extension);
+                        statement2.setBoolean(4, true);
+                        statement2.setString(5, label.getText());
+                        statement2.executeUpdate();
+                        
                         Stage stage = (Stage) FileModifyButton.getScene().getWindow();
             
                         stage.close();
