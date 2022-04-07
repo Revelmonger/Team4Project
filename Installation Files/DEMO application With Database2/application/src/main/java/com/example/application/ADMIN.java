@@ -3094,46 +3094,57 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         CreateDiagnosticReportButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-           
-                try {
-                    DatabaseConnection connectNow = new DatabaseConnection();
-                    Connection connectDB = connectNow.getConnection();
+
+                if(ReportArea.getText().isEmpty()){
+
+                }
+
+                else{
+
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
+        
+                        String InsertIntoOrdersReport = "update orders set report = '1', status = '3' where order_id = '"+ OrderID+ "';" ;
     
-                    String InsertIntoOrdersReport = "update orders set report = '1', status = '3' where order_id = '"+ OrderID+ "';" ;
-
+                    
+                            String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText().trim() + "');";
+                            Statement statement = connectDB.createStatement();
+                            Statement  statement2 = connectDB.createStatement();
+    
+                            statement.execute(InsertIntoUsersTableQuery);
+    
+                            statement2.execute(InsertIntoOrdersReport);
+    
+    
+                            Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
                 
-                        String InsertIntoUsersTableQuery = "insert into diagnostic_reports (order_id,  patient,radiologist, diagnostic) values ('"+ OrderID+ "', '" + patientID + "', '" + radiologistID + "', '"+ ReportArea.getText().trim() + "');";
-                        Statement statement = connectDB.createStatement();
-                        Statement  statement2 = connectDB.createStatement();
-
-                        statement.execute(InsertIntoUsersTableQuery);
-
-                        statement2.execute(InsertIntoOrdersReport);
-
-
-                        Stage stage = (Stage) CreateDiagnosticReportButton.getScene().getWindow();
+    
+    
+    
+                            stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
             
-
-
-
-                        stage.close();
-                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
-        
-                        FXApp.setRoot("ADMIN");
-        
-              
-        
-        
+                            FXApp.setRoot("ADMIN");
+            
                   
-        
+            
+            
+                      
+            
+                    }
+                    catch (SQLException e2){
+            
+                        e2.printStackTrace();
+                    } catch (IOException e1) {
+               
+                        e1.printStackTrace();
+                    }
+
+
                 }
-                catch (SQLException e2){
-        
-                    e2.printStackTrace();
-                } catch (IOException e1) {
            
-                    e1.printStackTrace();
-                }
+                
             }
         });
         
