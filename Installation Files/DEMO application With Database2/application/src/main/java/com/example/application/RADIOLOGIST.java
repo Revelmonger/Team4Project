@@ -2920,7 +2920,7 @@ EstinatedCosts.setEditable(false);
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "select *  from orders as o join patients as p on p.patient_id = o.patient  join appointments as a on a.appointment_id = o.appointment  where a.closed = true and report IS NULL;"; 
+        String ReviewImagingOrdersTableQuery = "select * from orders as o join patients as p on p.patient_id = o.patient join appointments as a on a.appointment_id = o.appointment join modalities as m on m.modality_id = o.modality join referralmds as rmd on rmd.id = o.referral_md where a.closed = true and report IS NULL;"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
@@ -2929,9 +2929,9 @@ EstinatedCosts.setEditable(false);
             while (queryOutput.next()) {
 
                 String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
-                Integer referral_mdquery = queryOutput.getInt("referral_md");
+                String referral_mdquery = queryOutput.getString("full_name");
                 Integer radiologistID = queryOutput.getInt("radiologist");
-                Integer modalityquery = queryOutput.getInt("modality"); // might need to change types
+                String modalityquery = queryOutput.getString("name"); // might need to change types
                 String notesquery = queryOutput.getString("notes");
                 Button button = new Button("Review Order");
                 Integer OrderID = queryOutput.getInt("order_id");
