@@ -3592,7 +3592,7 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                             newPane.setPrefHeight(109);
                             newPane.setPrefWidth(800);
             
-                            Label PatientOverviewLabe = new Label("Change Patient");
+                            Label PatientOverviewLabe = new Label("Update Patient");
                             PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
                             PatientOverviewLabe.setLayoutX(25);
                             PatientOverviewLabe.setLayoutY(27);
