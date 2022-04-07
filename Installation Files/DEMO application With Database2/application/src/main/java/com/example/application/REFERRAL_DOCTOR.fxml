@@ -15,7 +15,7 @@
 
 <ScrollPane fx:id="BlurBox" focusTraversable="false" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.REFERRAL_DOCTOR">
    <content>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4000.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1668.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
             <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
          </left>
@@ -65,7 +65,7 @@
                         </Pane>
                         <Pane prefHeight="130.0" prefWidth="220.0">
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="130.0" prefWidth="220.0" text="Logged in: Doctor ">
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="130.0" prefWidth="220.0" text="Logged in: Doctor  ">
                                  <font>
                                     <Font name="System Bold" size="23.0" />
                                  </font>
