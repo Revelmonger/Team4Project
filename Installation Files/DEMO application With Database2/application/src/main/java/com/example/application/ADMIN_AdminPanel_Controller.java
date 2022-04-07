@@ -874,7 +874,7 @@ NewModalities.setOnAction(new EventHandler<ActionEvent>() {
         newPane.setPrefWidth(800);
 
         Label CreateNewAppointmentsLabel = new Label("Create New Appointment");
-        CreateNewAppointmentsLabel.setStyle("-fx-font: normal bold 32px 'arial';");
+        CreateNewAppointmentsLabel.setStyle("-fx-font: normal bold 36px 'arial';");
         CreateNewAppointmentsLabel.setLayoutX(25);
         CreateNewAppointmentsLabel.setLayoutY(0);
         CreateNewAppointmentsLabel.setMinHeight(90);
@@ -1990,7 +1990,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 newPane.setPrefWidth(800);
 
                 Label PatientOverviewLabe = new Label("Create New User");
-                PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                PatientOverviewLabe.setStyle("-fx-font: normal bold 36px 'arial';");
                 PatientOverviewLabe.setLayoutX(25);
                 PatientOverviewLabe.setLayoutY(27);
                 PatientOverviewLabe.setMinHeight(55);
@@ -2287,8 +2287,8 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 newPane.setPrefHeight(109);
                 newPane.setPrefWidth(800);
 
-                Label PatientOverviewLabe = new Label("Create New ORDER");
-                PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                Label PatientOverviewLabe = new Label("Create New Order");
+                PatientOverviewLabe.setStyle("-fx-font: normal bold 36px 'arial';");
                 PatientOverviewLabe.setLayoutX(25);
                 PatientOverviewLabe.setLayoutY(27);
                 PatientOverviewLabe.setMinHeight(55);
@@ -2682,7 +2682,7 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                 newPane.setPrefWidth(800);
         
                 Label PatientOverviewLabe = new Label("Create New Patient");
-                PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                PatientOverviewLabe.setStyle("-fx-font: normal bold 36px 'arial';");
                 PatientOverviewLabe.setLayoutX(25);
                 PatientOverviewLabe.setLayoutY(27);
                 PatientOverviewLabe.setMinHeight(55);
@@ -3593,7 +3593,7 @@ PatientAlertsTable.setItems(PatientsAlertsSortedData);
                             newPane.setPrefWidth(800);
             
                             Label PatientOverviewLabe = new Label("Update Patient");
-                            PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                            PatientOverviewLabe.setStyle("-fx-font: normal bold 36px 'arial';");
                             PatientOverviewLabe.setLayoutX(25);
                             PatientOverviewLabe.setLayoutY(27);
                             PatientOverviewLabe.setMinHeight(55);
@@ -4111,7 +4111,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         AnchorPane anchorpane = new AnchorPane();
       
 
-        Label CreateFileLabel = new Label("Change File");
+        Label CreateFileLabel = new Label("Update File");
         CreateFileLabel.setLayoutX(46);
         CreateFileLabel.setLayoutY(47);
         CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
@@ -4506,8 +4506,8 @@ FilteredList<TABLEFileUploadsTableController> FileUploadsFilteredData = new Filt
             newPane.setPrefHeight(109);
             newPane.setPrefWidth(800);
 
-            Label PatientOverviewLabe = new Label("Change Order");
-            PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+            Label PatientOverviewLabe = new Label("Update Order");
+            PatientOverviewLabe.setStyle("-fx-font: normal bold 36px 'arial';");
             PatientOverviewLabe.setLayoutX(25);
             PatientOverviewLabe.setLayoutY(27);
             PatientOverviewLabe.setMinHeight(55);
@@ -4955,8 +4955,8 @@ FilteredList<TABLEOrdersTableController> OrdersFilteredData = new FilteredList<>
         newPane.setPrefHeight(109);
         newPane.setPrefWidth(800);
 
-        Label CreateNewAppointmentsLabel = new Label("Change Appointment");
-        CreateNewAppointmentsLabel.setStyle("-fx-font: normal bold 32px 'arial';");
+        Label CreateNewAppointmentsLabel = new Label("Update Appointment");
+        CreateNewAppointmentsLabel.setStyle("-fx-font: normal bold 36px 'arial';");
         CreateNewAppointmentsLabel.setLayoutX(25);
         CreateNewAppointmentsLabel.setLayoutY(0);
         CreateNewAppointmentsLabel.setMinHeight(90);
@@ -5498,8 +5498,8 @@ FilteredList<TABLEAppointmentsTableController> AppointmentsFilteredData = new Fi
                 newPane.setPrefHeight(109);
                 newPane.setPrefWidth(800);
 
-                Label PatientOverviewLabe = new Label("Change User");
-                PatientOverviewLabe.setStyle("-fx-font: normal bold 32px 'arial';");
+                Label PatientOverviewLabe = new Label("Update User");
+                PatientOverviewLabe.setStyle("-fx-font: normal bold 36px 'arial';");
                 PatientOverviewLabe.setLayoutX(25);
                 PatientOverviewLabe.setLayoutY(27);
                 PatientOverviewLabe.setMinHeight(55);
@@ -5849,7 +5849,7 @@ button.setOnAction(new EventHandler<ActionEvent>() {
         AnchorPane anchorpane = new AnchorPane();
    
 
-        Label CreateFileLabel = new Label("Change Report");
+        Label CreateFileLabel = new Label("Update Report");
         CreateFileLabel.setLayoutX(46);
         CreateFileLabel.setLayoutY(47);
         CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
