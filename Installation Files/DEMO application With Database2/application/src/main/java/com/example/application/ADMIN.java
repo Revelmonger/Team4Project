@@ -120,7 +120,6 @@ private ScrollPane BlurBox;
     }
 
     public void userInfo(ActionEvent e) throws IOException {
-        System.out.println("The Current user is " + user_id1);
         FXApp.setRoot("ADMIN_UserInfo");
     }
 
