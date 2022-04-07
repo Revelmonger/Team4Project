@@ -1348,74 +1348,85 @@ e.printStackTrace();        }
             @Override
             public void handle(ActionEvent e) {
 
-                try {
-                    DatabaseConnection connectNow = new DatabaseConnection();
-                    Connection connectDB = connectNow.getConnection();
-                    String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
-                            + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
-                            + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
-                            + "', '" + EthnicityChange.getValue() + "');";
+                if(firstNameField.getText().isEmpty() || lastNamefield.getText().isEmpty() || dateofbirth.getValue() == null || sexChange.getValue().isEmpty() || RaceChange.getValue().isEmpty() || EthnicityChange.getValue().isEmpty())
+                {
 
-                    String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
-                    String FindPatientID = " SELECT LAST_INSERT_ID();";
-                    
+                }
 
-                    Statement statement = connectDB.createStatement();
-                    Statement statement2 = connectDB.createStatement();
-                    statement.execute(InsertIntoPatientsTableQuery);
-                    ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
-                    
+                else{
 
-                 
-                    //IF the ListView Has no selections
-                    if (listviewContent.equals("[]")){
-
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
+                        String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
+                                + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
+                                + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
+                                + "', '" + EthnicityChange.getValue() + "');";
+    
+                        String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
+                        String FindPatientID = " SELECT LAST_INSERT_ID();";
                         
-                        // If there are selections
-                    } else {
-                        System.out.println(listviewContent);
-
-                        while (PatientIDOutput.next()) {
-                            patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
-                           
+    
+                        Statement statement = connectDB.createStatement();
+                        Statement statement2 = connectDB.createStatement();
+                        statement.execute(InsertIntoPatientsTableQuery);
+                        ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
+                        
+    
+                     
+                        //IF the ListView Has no selections
+                        if (listviewContent.equals("[]")){
+    
+                            
+                            // If there are selections
+                        } else {
+                            System.out.println(listviewContent);
+    
+                            while (PatientIDOutput.next()) {
+                                patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
+                               
+                            }
+        
+                                for (String name : selectedItems) {
+                                    connectNow = new DatabaseConnection();
+                                    connectDB = connectNow.getConnection();
+                                    
+                                    String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
+                                    ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
+    
+                                    while(AlertQueryOutput.next()){
+                                        alertid = AlertQueryOutput.getInt("alert_id");
+    
+                                        String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
+                                            + patients_id + "', '" + alertid + "');";
+                                        statement = connectDB.createStatement();
+                                        statement.execute(InsertIntoAlertsTableQuery);
+                                    }
+    
+                                }
                         }
     
-                            for (String name : selectedItems) {
-                                connectNow = new DatabaseConnection();
-                                connectDB = connectNow.getConnection();
-                                
-                                String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
-                                ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
-
-                                while(AlertQueryOutput.next()){
-                                    alertid = AlertQueryOutput.getInt("alert_id");
-
-                                    String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
-                                        + patients_id + "', '" + alertid + "');";
-                                    statement = connectDB.createStatement();
-                                    statement.execute(InsertIntoAlertsTableQuery);
-                                }
-
-                            }
+                        
+                    
+                      
+                    
+                        Stage stage = (Stage) AddPatientButton.getScene().getWindow();
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+    
+                        FXApp.setRoot("ADMIN_Referrals");
+    
+                    } catch (SQLException e1) {
+    
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+    
+                        e1.printStackTrace();
                     }
 
-                    
-                
-                  
-                
-                    Stage stage = (Stage) AddPatientButton.getScene().getWindow();
-                    stage.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                    FXApp.setRoot("ADMIN_Referrals");
-
-                } catch (SQLException e1) {
-
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-
-                    e1.printStackTrace();
                 }
+
+                
 
             }
         });
