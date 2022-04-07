@@ -2707,61 +2707,70 @@ EstinatedCosts.setEditable(false);
             @Override
             public void handle(ActionEvent e) {
 
-                try {
-                    DatabaseConnection connectNow = new DatabaseConnection();
-                    Connection connectDB = connectNow.getConnection();
-                    
-                    String GetRadiologistIDQuery = "select * from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
-                    String GetPatientQuery = "select order_id, patient, modality from orders where order_id = '" + OrderID + "';";
-                    
-                    Statement RadiologistStatement = connectDB.createStatement();
-                    Statement PatientStatement = connectDB.createStatement();
-                    ResultSet queryOutput = RadiologistStatement.executeQuery(GetRadiologistIDQuery);
-                    ResultSet queryOutput2 = PatientStatement.executeQuery(GetPatientQuery);
+                if(phoneNumberField.getText().isEmpty() || emailAddressField.getText().isEmpty() || AppointmentDatePicker.getValue() == null || SelectedAppointmentTime.getValue().isEmpty() || RadiologistChoiceBox.getValue().isEmpty()) {
+                }
 
-                    while (queryOutput.next() && queryOutput2.next()){ 
+                else {
+
+                    try {
+                        DatabaseConnection connectNow = new DatabaseConnection();
+                        Connection connectDB = connectNow.getConnection();
                         
-                    Integer radioID = queryOutput.getInt("id");
-                    Integer patientID = queryOutput2.getInt("patient");  
-                    Integer modality = queryOutput2.getInt("modality");
-
-                    String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrderID + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText().trim() +"', '"+ emailAddressField.getText().trim() +"')";
-                    String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrderID + "';";
-
-                    Statement NewAppointmentStatemnet = connectDB.createStatement();
-                    NewAppointmentStatemnet.execute(InsertIntoUsersTableQuery);
-
-                    Statement AppointmentIDStatement = connectDB.createStatement();
-                    ResultSet queryOutput3 = AppointmentIDStatement.executeQuery(GetAppointmentID);
-
-                    while(queryOutput3.next()){
-
-                        Integer appointmentID = queryOutput3.getInt("appointment_id");
-
-                        String InsertAppointmentID = "update orders set appointment = '" + appointmentID + "' where order_id = '" + OrderID + "';";
-
-                        Statement InsertAppointmentIDStatement = connectDB.createStatement();
-                        InsertAppointmentIDStatement.execute(InsertAppointmentID);
+                        String GetRadiologistIDQuery = "select * from radiologists where full_name = '" + RadiologistChoiceBox.getValue() + "';";
+                        String GetPatientQuery = "select order_id, patient, modality from orders where order_id = '" + OrderID + "';";
+                        
+                        Statement RadiologistStatement = connectDB.createStatement();
+                        Statement PatientStatement = connectDB.createStatement();
+                        ResultSet queryOutput = RadiologistStatement.executeQuery(GetRadiologistIDQuery);
+                        ResultSet queryOutput2 = PatientStatement.executeQuery(GetPatientQuery);
+    
+                        while (queryOutput.next() && queryOutput2.next()){ 
+                            
+                        Integer radioID = queryOutput.getInt("id");
+                        Integer patientID = queryOutput2.getInt("patient");  
+                        Integer modality = queryOutput2.getInt("modality");
+    
+                        String InsertIntoUsersTableQuery = "insert into appointments (patient, order_id, modality, date_time, radiologist, phone_number, email_address) values ('" + patientID + "', '" + OrderID + "', '" + modality + "', '"+ AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', '" + radioID + "', '"+ phoneNumberField.getText().trim() +"', '"+ emailAddressField.getText().trim() +"')";
+                        String GetAppointmentID = "select appointment_id from appointments where order_id = '" + OrderID + "';";
+    
+                        Statement NewAppointmentStatemnet = connectDB.createStatement();
+                        NewAppointmentStatemnet.execute(InsertIntoUsersTableQuery);
+    
+                        Statement AppointmentIDStatement = connectDB.createStatement();
+                        ResultSet queryOutput3 = AppointmentIDStatement.executeQuery(GetAppointmentID);
+    
+                        while(queryOutput3.next()){
+    
+                            Integer appointmentID = queryOutput3.getInt("appointment_id");
+    
+                            String InsertAppointmentID = "update orders set appointment = '" + appointmentID + "' where order_id = '" + OrderID + "';";
+    
+                            Statement InsertAppointmentIDStatement = connectDB.createStatement();
+                            InsertAppointmentIDStatement.execute(InsertAppointmentID);
+                        }
+                        
                     }
-                    
+    
+                        Stage stage = (Stage) SaveUserButton.getScene().getWindow();
+    
+                        stage.close();
+                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+    
+    
+    
+                        FXApp.setRoot("ADMIN");
+                        
+                    } catch (SQLException e1) {
+    
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        
+                        e1.printStackTrace();
+                    }
+
                 }
 
-                    Stage stage = (Stage) SaveUserButton.getScene().getWindow();
-
-                    stage.close();
-                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-
-
-                    FXApp.setRoot("ADMIN");
-                    
-                } catch (SQLException e1) {
-
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    
-                    e1.printStackTrace();
-                }
+                
                 
                
             }
