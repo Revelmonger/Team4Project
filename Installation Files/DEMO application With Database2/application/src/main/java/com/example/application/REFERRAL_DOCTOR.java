@@ -62,6 +62,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class REFERRAL_DOCTOR implements Initializable {
+    String userid = LOGIN.LoggedInUserID;
 
 
 @FXML
@@ -515,7 +516,7 @@ private ScrollPane BlurBox;
          * Placed Orders Table
          * 
          */
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id WHERE status = 4 || status = 1;";
+        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id WHERE (status = 4 || status = 1) ;";
 
         try {
 

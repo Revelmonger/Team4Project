@@ -68,6 +68,7 @@ import javafx.beans.value.ObservableValue;
 
 public class REFERRAL_DOCTOR_Referrals_Controller implements Initializable {
     ObservableList<String> selectedItems;
+    String userid = LOGIN.LoggedInUserID;
     /*
      * 
      * Button Imports
@@ -630,6 +631,12 @@ e.printStackTrace();        }
                                 Displayname.setMinWidth(128);
                                 Displayname.setLayoutX(287);
 
+
+
+
+
+                                //ADD QUERY HERE
+
                                 Label EmailAddress = new Label("Status:");
                                 EmailAddress.setStyle("-fx-font: normal bold 16px 'arial';");
                                 EmailAddress.setMinHeight(55);
@@ -653,6 +660,40 @@ e.printStackTrace();        }
                                 SelectedDoctorField.setLayoutX(287);
                                 SelectedDoctorField.setLayoutY(43);
                                 SelectedDoctorField.setPrefWidth(210);
+
+
+      // Adds Doctors
+      try {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String GetChoiceBoxQuery = "select * from users as u join users_roles as ur on ur.user_id = u.user_id where role_id = 3 and u.user_id = "+ userid +";";
+        Statement statement = connectDB.createStatement();
+        ResultSet DoctorQueryOutput = statement.executeQuery(GetChoiceBoxQuery);
+
+        while (DoctorQueryOutput.next()) {
+            ReferralDoctor currentReferralDoctor = new ReferralDoctor(
+                    DoctorQueryOutput.getString("full_name"),
+                    DoctorQueryOutput.getInt("user_id"));
+
+
+            SelectedDoctorField.getItems().add(currentReferralDoctor.getReferraldoctor());
+            SelectedDoctorField.setValue(currentReferralDoctor.getReferraldoctor());
+            SelectedDoctorField.setDisable(true);
+        }
+
+    } catch (SQLException e1) {
+
+        e1.printStackTrace();
+    }
+
+
+
+
+
+
+
+
 
                                 ChoiceBox<String> SelectedStatusField = new ChoiceBox<String>();
                                 SelectedStatusField.setStyle("-fx-font: normal bold 16px 'arial';");
@@ -734,27 +775,7 @@ e.printStackTrace();        }
 
                                     e1.printStackTrace();
                                 }
-                                // Adds Doctors
-                                try {
-                                    DatabaseConnection connectNow = new DatabaseConnection();
-                                    Connection connectDB = connectNow.getConnection();
-
-                                    String GetChoiceBoxQuery = "select * from users as u join users_roles as ur on ur.user_id = u.user_id where role_id = 3;";
-                                    Statement statement = connectDB.createStatement();
-                                    ResultSet DoctorQueryOutput = statement.executeQuery(GetChoiceBoxQuery);
-
-                                    while (DoctorQueryOutput.next()) {
-                                        ReferralDoctor currentReferralDoctor = new ReferralDoctor(
-                                                DoctorQueryOutput.getString("full_name"),
-                                                DoctorQueryOutput.getInt("user_id"));
-
-                                        SelectedDoctorField.getItems().add(currentReferralDoctor.getReferraldoctor());
-                                    }
-
-                                } catch (SQLException e1) {
-
-                                    e1.printStackTrace();
-                                }
+                          
 
                                 Label RefNotes = new Label("Refferral Notes:");
                                 RefNotes.setStyle("-fx-font: normal bold 16px 'arial';");

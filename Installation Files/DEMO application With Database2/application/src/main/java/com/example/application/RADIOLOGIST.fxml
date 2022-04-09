@@ -13,9 +13,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="BlurBox" focusTraversable="false" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="4500.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.RADIOLOGIST">
+<ScrollPane fx:id="BlurBox" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.RADIOLOGIST">
    <content>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1282.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
             <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
          </left>
@@ -115,7 +115,7 @@
                                     <TextField fx:id="searchReviewImagineOrders" layoutX="1267.0" layoutY="15.0" />
                                  </children>
                               </Pane>
-                              <TableView fx:id="ReviewImagingOrdersTable" prefHeight="980.0" prefWidth="1430.0">
+                              <TableView fx:id="ReviewImagingOrdersTable" prefHeight="813.0" prefWidth="1430.0">
                                  <columns>
                                     <TableColumn fx:id="ReviewImagingOrdersTable_Patient" editable="false" prefWidth="230.0" text="Patient" />
                                     <TableColumn fx:id="ReviewImagingOrdersTable_RefferalMD" editable="false" minWidth="0.0" prefWidth="230.0" text="Referral MD" />
@@ -127,12 +127,12 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+                              <Pane prefHeight="19.0" prefWidth="1430.0" style="-fx-background-color: #cccccc;" />
                            </children>
                         </VBox>
                      </center>
                      <left>
-                        <Pane prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
+                        <Pane prefHeight="860.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
                         <Pane prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
