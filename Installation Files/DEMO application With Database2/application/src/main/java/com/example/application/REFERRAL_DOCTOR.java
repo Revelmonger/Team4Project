@@ -516,7 +516,7 @@ private ScrollPane BlurBox;
          * Placed Orders Table
          * 
          */
-        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id WHERE (status = 4 || status = 1) ;";
+        String PlacedOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name, referralmds.user_id from orders join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id join referralmds on referralmds.id = orders.referral_md WHERE (status = 4 || status = 1) and referralmds.user_id = " + userid + ";";
 
         try {
 
@@ -764,7 +764,7 @@ e.printStackTrace();        }
 
         /*************Completed Orders Table***********************/
         
-        String CompletedOrdersTableQuery = "select diagnostic, patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id join diagnostic_reports on orders.order_id = diagnostic_reports.order_id where status = 3;";
+        String CompletedOrdersTableQuery = "select diagnostic, patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status, order_status.order_name, referralmds.user_id  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id join diagnostic_reports on orders.order_id = diagnostic_reports.order_id join referralmds on referralmds.id = orders.referral_md where status = 3 and referralmds.user_id = "+userid+";";
 
         try {
 
@@ -895,7 +895,7 @@ e.printStackTrace();        }
                             }
                         });
 
-                Button CloseOrderButton = new Button("Complete Order");
+                Button CloseOrderButton = new Button("Close Order");
                 CloseOrderButton.setPrefHeight(42);
                 CloseOrderButton.setPrefWidth(102);
                 CloseOrderButton.setLayoutX(558);
@@ -1044,7 +1044,7 @@ e.printStackTrace();        }
 
 /******************************Old Orders Table******************************************/
 
-String OldOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where status = 2;";
+String OldOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.order_id, orders.status,  order_status.order_name, referralmds.user_id  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id join referralmds on referralmds.id = orders.referral_md where status = 2 and referralmds.user_id = "+userid+";";
 
 
 try {
