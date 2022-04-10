@@ -2129,17 +2129,17 @@ NewDiagnosticReport.setOnAction(new EventHandler<ActionEvent>() {
                                 DatabaseConnection connectNow = new DatabaseConnection();
                                 Connection connectDB = connectNow.getConnection();
 
-                                String passEncrypt = PasswordField.getText();
+                                String passEncrypt = PasswordField.getText().trim();
                                 passEncrypt = Encrypt(passEncrypt);
     
                                 String InsertIntoUsersTableQuery = "insert into users (username, full_name, email, password) values ('"
                                         + UsernameField.getText().trim() + "', '" + displayNameField.getText().trim() + "', '"
-                                        + EmailAddressField.getText().trim() + "', '" + PasswordField.getText().trim() + "');";
+                                        + EmailAddressField.getText().trim() + "', '" + passEncrypt + "');";
                                 Statement statement = connectDB.createStatement();
                                 statement.execute(InsertIntoUsersTableQuery);
     
                                 String GetUserID = "Select user_id, full_name from users where username = '"
-                                        + UsernameField.getText().trim() + "' AND password = '" + PasswordField.getText().trim() + "';";
+                                        + UsernameField.getText().trim() + "' AND password = '" + passEncrypt + "';";
                                 try {
     
                                     statement = connectDB.createStatement();
