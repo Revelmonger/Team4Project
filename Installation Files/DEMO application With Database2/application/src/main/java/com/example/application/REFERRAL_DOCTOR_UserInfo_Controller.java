@@ -74,6 +74,32 @@ import javafx.beans.value.ObservableValue;
 public class REFERRAL_DOCTOR_UserInfo_Controller extends EncryptDecrypt implements Initializable {
     ObservableList<String> selectedItems;
 
+
+//Help Button Logic
+@FXML
+private Button HelpButton;
+
+@FXML
+public void HelpButtonEntered() {
+
+    HelpButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+
+}
+
+@FXML
+public void HelpButtonExited() {
+
+    HelpButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+}
+
+public void HelpButtonPressed(ActionEvent e) throws IOException {
+
+    FXApp.setRoot("REFERRAL_DOCTOR_Tutorial");
+}
+
+
+
+
     String userid = LOGIN.LoggedInUserID;
     /*
      * 

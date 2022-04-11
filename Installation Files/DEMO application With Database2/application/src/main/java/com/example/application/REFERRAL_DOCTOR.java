@@ -68,6 +68,9 @@ public class REFERRAL_DOCTOR implements Initializable {
 @FXML
 private ScrollPane BlurBox;
 
+
+
+
     @ FXML
     private TableColumn<TABLECheckedInAppointmentsTableController, Boolean> statusColumn;
     @FXML
@@ -105,6 +108,7 @@ private ScrollPane BlurBox;
     @FXML
     private Button OrdersButton;
 
+
     /*
      * 
      * Button Logic
@@ -140,6 +144,32 @@ private ScrollPane BlurBox;
     public void appointments(ActionEvent e) throws IOException {
         FXApp.setRoot("");
     }
+
+
+
+    
+    //Help Button Logic
+    @FXML
+    private Button HelpButton;
+
+    @FXML
+    public void HelpButtonEntered() {
+
+        HelpButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+
+    }
+
+    @FXML
+    public void HelpButtonExited() {
+
+        HelpButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+
+    public void HelpButtonPressed(ActionEvent e) throws IOException {
+
+        FXApp.setRoot("REFERRAL_DOCTOR_Tutorial");
+    }
+
 
     /*
      * 
