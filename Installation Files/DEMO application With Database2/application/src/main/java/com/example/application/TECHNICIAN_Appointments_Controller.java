@@ -36,13 +36,7 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
     @FXML
     private Button UserInfoButton;
     @FXML
-    private Button AdminButton;
-    @FXML
-    private Button ReferralsButton;
-    @FXML
     private Button AppointmentsButton;
-    @FXML
-    private Button OrdersButton;
 
     /*
      * 
@@ -77,32 +71,6 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
     }
 
     @FXML
-    public void AdminButtonEntered() {
-
-        AdminButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void AdminButtonExited() {
-
-        AdminButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void ReferralsButtonEntered() {
-
-        ReferralsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void ReferralsButtonExited() {
-
-        ReferralsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
     public void AppointentsButtonEntered() {
 
         AppointmentsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -112,19 +80,6 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
     public void AppointmentsButtonExited() {
 
         AppointmentsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void OrdersButtonEntered() {
-
-        OrdersButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void OrdersButtonExited() {
-
-        OrdersButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
     }
 
     @FXML
