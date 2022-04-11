@@ -55,13 +55,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class TECHNICIAN implements Initializable {
+public class TECHNICIAN extends Application implements Initializable {
 
 
 @FXML
@@ -1448,9 +1450,187 @@ e.printStackTrace();        }
 
                 String extension;
                 String fileName;
+
+                @Override
+                public void handle(ActionEvent event){
+
+                    BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+                    Stage newWindow = new Stage();
+                
+                    AnchorPane anchorpane = new AnchorPane();
+
+                    Label CreateFileLabel = new Label("Upload Consent Form");
+                    CreateFileLabel.setLayoutX(46);
+                    CreateFileLabel.setLayoutY(47);
+                    CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                    
+
+                    Label UploadLabel = new Label("Upload:");
+                    UploadLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+                    UploadLabel.setLayoutX(47);
+                    UploadLabel.setLayoutY(192);
+
+                
+                
+
+                    Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                    horizontalline.setOpacity(.3);
+                    horizontalline.setTranslateY(100);
+
+
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF File", "*.pdf");
+
+                    FileChooser fil_chooser = new FileChooser();
+                    fil_chooser.getExtensionFilters().add(extFilter);
+
+                    Label label = new Label("No file chosen");
+                    label.setPrefHeight(30);
+                    label.setPrefWidth(340);
+                    label.setLayoutX(127);
+                    label.setLayoutY(227);
+                    Button button = new Button("Select File");
+                    button.setPrefHeight(30);
+                    button.setPrefWidth(70);
+                    button.setLayoutX(47);
+                    button.setLayoutY(227);
+
+                
+                    EventHandler<ActionEvent> event1 =
+                    new EventHandler<ActionEvent>() {
+
+                    
+                        public void handle(ActionEvent e)
+                        {
             
+                        
+                            File file = fil_chooser.showOpenDialog(newWindow);
+            
+                            if (file != null) {
+
+                                label.setText(file.getAbsolutePath());               
+                            }
+                        }
+                    };
+                    button.setOnAction(event1);
+                    
+
+                    Button showImage = new Button("Show Image");
+                    showImage.setPrefHeight(42);
+                    showImage.setPrefWidth(100);
+                    showImage.setLayoutX(170);
+                    showImage.setLayoutY(280);
+                    showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+                    showImage.setOnAction(new EventHandler<ActionEvent>() {
+
+                        /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+                        @Override
+                        public void handle(ActionEvent e){
+
+
+                                String UploadPath = label.getText();
+                                //File file = new File(UploadPath);
+                                
+                                HostServices hs = getHostServices();
+                                hs.showDocument(UploadPath);
+                                
+                                
+            
+
+                        }
+                    });
+
+                
+            
+                Button ContinueOrderButton = new Button("Continue order");
+                    ContinueOrderButton.setPrefHeight(42);
+                    ContinueOrderButton.setPrefWidth(102);
+                    ContinueOrderButton.setLayoutX(565);
+                    ContinueOrderButton.setLayoutY(338);
+                    ContinueOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+
+                ContinueOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+
                 @Override
                 public void handle(ActionEvent event) {
+
+                    if(label.getText() == "No file chosen" ){
+
+                    }
+        
+                    else{
+
+                        try {
+                    
+
+
+                        
+                    
+
+
+                        try {
+
+                        
+                            int index =  label.getText().lastIndexOf('.');
+                    
+                            if(index > 0) {
+                            extension  = label.getText().substring(index + 1);
+                        
+                            } 
+                            if(index > 0) {
+                        
+                                java.nio.file.Path path = Paths.get(label.getText());         
+                            fileName = path.getFileName().toString();
+                            }
+        
+
+                            DatabaseConnection connectNow = new DatabaseConnection();
+                            Connection connectDB = connectNow.getConnection();
+        
+                            /*String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
+                            Statement statement = connectDB.createStatement();*/
+                            PreparedStatement statement2 = null;
+
+                            statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                            statement2.setInt(1, Order_id);
+                            statement2.setString(2, fileName);
+                            statement2.setString(3, extension);
+                            statement2.setBoolean(4, true);
+                            statement2.setString(5, label.getText());
+                            statement2.executeUpdate();
+
+                            //statement.execute(UpdateAppointmentsTable); 
+                            
+                            Stage stage = (Stage) ContinueOrderButton.getScene().getWindow();
+        
+                            stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+
+                            //FXApp.setRoot("TECHNICIAN");
+
+                        } catch (SQLException e1) {
+        
+                            e1.printStackTrace();
+                        }
+        
+
+
+
+
+
+
+
+                    
+                    } catch (Exception e2) {
+                            e2.printStackTrace();
+                        }
+
+                    }
+
+
+
                     BlurBox.setEffect(new BoxBlur(5, 10, 10));
                     
                     Stage newWindow = new Stage();
@@ -1705,6 +1885,56 @@ e.printStackTrace();        }
                     });
                     newWindow.show();
                 }
+             });
+             Button CancelButton = new Button("Cancel");
+                    CancelButton.setPrefHeight(42);
+                    CancelButton.setPrefWidth(102);
+                    CancelButton.setLayoutX(680);
+                    CancelButton.setLayoutY(338);
+                    CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+                    CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent e) {
+                            Stage stage = (Stage) CancelButton.getScene().getWindow();
+                            stage.close();
+                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                        }
+                    });
+
+                            anchorpane.getChildren().add(CreateFileLabel);
+                            anchorpane.getChildren().add(UploadLabel);
+                        
+                            anchorpane.getChildren().add(horizontalline);
+                        
+                            anchorpane.getChildren().add(button);
+                            anchorpane.getChildren().add(label);
+                            anchorpane.getChildren().add(CancelButton);
+                            anchorpane.getChildren().add(ContinueOrderButton);
+                            anchorpane.getChildren().add(showImage);
+
+                    Scene scene = new Scene(anchorpane, 800, 400);
+
+                    
+                    newWindow.setScene(scene);
+                    newWindow.initStyle(StageStyle.UNDECORATED);
+                    newWindow.setResizable(false);
+                    newWindow.initModality(Modality.APPLICATION_MODAL);
+
+                    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent t) {
+                            KeyCode key = t.getCode();
+                            if (key == KeyCode.ESCAPE) {
+                                newWindow.close();
+                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                            }
+                        }
+                    });
+                    newWindow.show();
+                 }
             });// CLOSES Complete Order 
                 } 
                 //If there is an alert
@@ -1795,21 +2025,194 @@ e.printStackTrace();        }
 
 
                                 ContinueWithOrderButton.setOnAction(new EventHandler<ActionEvent>() {
-                                  
+
                                     String extension;
                                     String fileName;
+                    
+                                    @Override
+                                    public void handle(ActionEvent event){
 
-                              
+                                        newWindow.close();
+                    
+                                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                    
+                                        Stage newWindow = new Stage();
+                                    
+                                        AnchorPane anchorpane = new AnchorPane();
+                    
+                                        Label CreateFileLabel = new Label("Upload Consent Form");
+                                        CreateFileLabel.setLayoutX(46);
+                                        CreateFileLabel.setLayoutY(47);
+                                        CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                                        
+                    
+                                        Label UploadLabel = new Label("Upload:");
+                                        UploadLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+                                        UploadLabel.setLayoutX(47);
+                                        UploadLabel.setLayoutY(192);
+                    
+                                    
+                                    
+                    
+                                        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                                        horizontalline.setOpacity(.3);
+                                        horizontalline.setTranslateY(100);
+                    
+                    
+                                        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF File", "*.pdf");
+                    
+                                        FileChooser fil_chooser = new FileChooser();
+                                        fil_chooser.getExtensionFilters().add(extFilter);
+                    
+                                        Label label = new Label("No file chosen");
+                                        label.setPrefHeight(30);
+                                        label.setPrefWidth(340);
+                                        label.setLayoutX(127);
+                                        label.setLayoutY(227);
+                                        Button button = new Button("Select File");
+                                        button.setPrefHeight(30);
+                                        button.setPrefWidth(70);
+                                        button.setLayoutX(47);
+                                        button.setLayoutY(227);
+                    
+                                    
+                                        EventHandler<ActionEvent> event1 =
+                                        new EventHandler<ActionEvent>() {
+                    
+                                        
+                                            public void handle(ActionEvent e)
+                                            {
+                                
+                                            
+                                                File file = fil_chooser.showOpenDialog(newWindow);
+                                
+                                                if (file != null) {
+                    
+                                                    label.setText(file.getAbsolutePath());               
+                                                }
+                                            }
+                                        };
+                                        button.setOnAction(event1);
+                                        
+                    
+                                        Button showImage = new Button("Show Image");
+                                        showImage.setPrefHeight(42);
+                                        showImage.setPrefWidth(100);
+                                        showImage.setLayoutX(170);
+                                        showImage.setLayoutY(280);
+                                        showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+                    
+                                        showImage.setOnAction(new EventHandler<ActionEvent>() {
+                    
+                                            /**************  SHOWS IMAGE IN NEW WINDOW *********************************/
+                                            @Override
+                                            public void handle(ActionEvent e){
+                    
+                    
+                                                    String UploadPath = label.getText();
+                                                    //File file = new File(UploadPath);
+                                                    
+                                                    HostServices hs = getHostServices();
+                                                    hs.showDocument(UploadPath);
+                                                    
+                                                    
+                                
+                    
+                                            }
+                                        });
+                    
                                     
                                 
+                                    Button ContinueOrderButton = new Button("Continue order");
+                                        ContinueOrderButton.setPrefHeight(42);
+                                        ContinueOrderButton.setPrefWidth(102);
+                                        ContinueOrderButton.setLayoutX(565);
+                                        ContinueOrderButton.setLayoutY(338);
+                                        ContinueOrderButton.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+                    
+                                    ContinueOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+                    
                                     @Override
                                     public void handle(ActionEvent event) {
 
-                                       Stage stage2 = (Stage) ContinueWithOrderButton.getScene().getWindow();
-                                        stage2.close();
-                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-
+                                        
+                    
+                                        if(label.getText() == "No file chosen" ){
+                    
+                                        }
+                            
+                                        else{
+                    
+                                            try {
+                                        
+                    
+                    
+                                            
+                                        
+                    
+                    
+                                            try {
+                    
+                                            
+                                                int index =  label.getText().lastIndexOf('.');
+                                        
+                                                if(index > 0) {
+                                                extension  = label.getText().substring(index + 1);
+                                            
+                                                } 
+                                                if(index > 0) {
+                                            
+                                                    java.nio.file.Path path = Paths.get(label.getText());         
+                                                fileName = path.getFileName().toString();
+                                                }
+                            
+                    
+                                                DatabaseConnection connectNow = new DatabaseConnection();
+                                                Connection connectDB = connectNow.getConnection();
+                            
+                                                /*String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
+                                                Statement statement = connectDB.createStatement();*/
+                                                PreparedStatement statement2 = null;
+                    
+                                                statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                                                statement2.setInt(1, Order_id);
+                                                statement2.setString(2, fileName);
+                                                statement2.setString(3, extension);
+                                                statement2.setBoolean(4, true);
+                                                statement2.setString(5, label.getText());
+                                                statement2.executeUpdate();
+                    
+                                                //statement.execute(UpdateAppointmentsTable); 
+                                                
+                                                Stage stage = (Stage) ContinueOrderButton.getScene().getWindow();
+                            
+                                                stage.close();
+                                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                    
+                    
+                                                //FXApp.setRoot("TECHNICIAN");
+                    
+                                            } catch (SQLException e1) {
+                            
+                                                e1.printStackTrace();
+                                            }
+                            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                                        
+                                        } catch (Exception e2) {
+                                                e2.printStackTrace();
+                                            }
+                    
+                                        }
+                    
+                    
+                    
                                         BlurBox.setEffect(new BoxBlur(5, 10, 10));
                                         
                                         Stage newWindow = new Stage();
@@ -1934,13 +2337,13 @@ e.printStackTrace();        }
                                         UploadFileButton.setOnAction(new EventHandler<ActionEvent>() {
                                             @Override
                                             public void handle(ActionEvent e) {
-
+                    
                                                 if(label.getText() == "No file chosen" ){
-
+                    
                                                 }
                                     
                                                 else{
-
+                    
                                                     try {
                                                 
                     
@@ -1949,67 +2352,66 @@ e.printStackTrace();        }
                                                 
                     
                     
-                                                        try {
-                        
-                                                        
-                                                            int index =  label.getText().lastIndexOf('.');
+                                                    try {
+                    
                                                     
-                                                            if(index > 0) {
-                                                            extension  = label.getText().substring(index + 1);
-                                                        
-                                                            } 
-                                                            if(index > 0) {
-                                                        
-                                                                java.nio.file.Path path = Paths.get(label.getText());         
-                                                            fileName = path.getFileName().toString();
-                                                            }
-                                        
-                        
-                                                            DatabaseConnection connectNow = new DatabaseConnection();
-                                                            Connection connectDB = connectNow.getConnection();
-                                        
-                                                            String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
-                                                            Statement statement = connectDB.createStatement();
-                                                            PreparedStatement statement2 = null;
-                        
-                                                            statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
-                                                            statement2.setInt(1, Order_id);
-                                                            statement2.setString(2, fileName);
-                                                            statement2.setString(3, extension);
-                                                            statement2.setBoolean(4, true);
-                                                            statement2.setString(5, label.getText());
-                                                            statement2.executeUpdate();
-                        
-                                                            statement.execute(UpdateAppointmentsTable); 
-                                                            
-                                                            Stage stage = (Stage) UploadFileButton.getScene().getWindow();
-                                        
-                                                            stage.close();
-                                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                        
-                        
-                                                            FXApp.setRoot("TECHNICIAN");
-                        
-                                                        } catch (SQLException e1) {
-                                        
-                                                            e1.printStackTrace();
-                                                        }
-                                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                                                        int index =  label.getText().lastIndexOf('.');
+                                                
+                                                        if(index > 0) {
+                                                        extension  = label.getText().substring(index + 1);
                                                     
-                                                    } catch (Exception e2) {
-                                                            e2.printStackTrace();
+                                                        } 
+                                                        if(index > 0) {
+                                                    
+                                                            java.nio.file.Path path = Paths.get(label.getText());         
+                                                        fileName = path.getFileName().toString();
                                                         }
-
+                                    
+                    
+                                                        DatabaseConnection connectNow = new DatabaseConnection();
+                                                        Connection connectDB = connectNow.getConnection();
+                                    
+                                                        String UpdateAppointmentsTable = "update appointments set closed = true where appointment_id = " + appointment_id + ";";
+                                                        Statement statement = connectDB.createStatement();
+                                                        PreparedStatement statement2 = null;
+                    
+                                                        statement2 = connectDB.prepareStatement("insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
+                                                        statement2.setInt(1, Order_id);
+                                                        statement2.setString(2, fileName);
+                                                        statement2.setString(3, extension);
+                                                        statement2.setBoolean(4, true);
+                                                        statement2.setString(5, label.getText());
+                                                        statement2.executeUpdate();
+                    
+                                                        statement.execute(UpdateAppointmentsTable); 
+                                                        
+                                                        Stage stage = (Stage) UploadFileButton.getScene().getWindow();
+                                    
+                                                        stage.close();
+                                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                    
+                    
+                                                        FXApp.setRoot("TECHNICIAN");
+                    
+                                                    } catch (SQLException e1) {
+                                    
+                                                        e1.printStackTrace();
+                                                    }
+                                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                                                
+                                                } catch (Exception e2) {
+                                                        e2.printStackTrace();
+                                                    }
+                    
                                                 }
-
-                                               
+                    
                                                 
                     
                                             }
@@ -2065,6 +2467,56 @@ e.printStackTrace();        }
                                         });
                                         newWindow.show();
                                     }
+                                 });
+                                 Button CancelButton = new Button("Cancel");
+                                        CancelButton.setPrefHeight(42);
+                                        CancelButton.setPrefWidth(102);
+                                        CancelButton.setLayoutX(680);
+                                        CancelButton.setLayoutY(338);
+                                        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                    
+                                        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                            @Override
+                                            public void handle(ActionEvent e) {
+                                                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                                stage.close();
+                                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                    
+                                            }
+                                        });
+                    
+                                                anchorpane.getChildren().add(CreateFileLabel);
+                                                anchorpane.getChildren().add(UploadLabel);
+                                            
+                                                anchorpane.getChildren().add(horizontalline);
+                                            
+                                                anchorpane.getChildren().add(button);
+                                                anchorpane.getChildren().add(label);
+                                                anchorpane.getChildren().add(CancelButton);
+                                                anchorpane.getChildren().add(ContinueOrderButton);
+                                                anchorpane.getChildren().add(showImage);
+                    
+                                        Scene scene = new Scene(anchorpane, 800, 400);
+                    
+                                        
+                                        newWindow.setScene(scene);
+                                        newWindow.initStyle(StageStyle.UNDECORATED);
+                                        newWindow.setResizable(false);
+                                        newWindow.initModality(Modality.APPLICATION_MODAL);
+                    
+                                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                            @Override
+                                            public void handle(KeyEvent t) {
+                                                KeyCode key = t.getCode();
+                                                if (key == KeyCode.ESCAPE) {
+                                                    newWindow.close();
+                                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                    
+                                                }
+                                            }
+                                        });
+                                        newWindow.show();
+                                     }
                                 });// CLOSES Complete Order 
 
 
@@ -3257,6 +3709,11 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 
         } catch (Exception e) {
 e.printStackTrace();        }
+
+    }
+
+    @Override
+    public void start(Stage arg0) throws Exception {
 
     }
 
