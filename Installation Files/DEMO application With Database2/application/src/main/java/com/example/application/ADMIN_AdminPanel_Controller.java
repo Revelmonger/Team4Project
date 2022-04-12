@@ -5292,15 +5292,12 @@ EstinatedCosts.setEditable(false);
     
                             String UpdateAppointmentsQuery = "update appointments set phone_number = '" + phoneNumberField.getText().trim() + "', email_address = '" + emailAddressField.getText().trim() + "', date_time = '" + AppointmentDatePicker.getValue() + " " + SelectedAppointmentTime.getValue() + "', order_id = '" + OrdersChoiceBox.getValue() + "', radiologist = '" + radiologistID + "', patient = '" + patientID + "', modality = '" + modalityID + "' where appointment_id = '" + appointmentIdquery + "';";
                             String UpdateOrdersQuery = "update orders set appointment = '" + appointmentIdquery + "' where order_id = '" + OrdersChoiceBox.getValue() + "';";
-                            String UpdateOrdersQuery2 = "update orders set appointment = null where order_id = '" + ordernumberquery + "';";
     
                             Statement statement3 = connectDB.createStatement();
                             Statement statement4 = connectDB.createStatement(); 
-                            Statement statement5 = connectDB.createStatement();
     
                             statement3.execute(UpdateAppointmentsQuery);
                             statement4.execute(UpdateOrdersQuery);
-                            statement5.execute(UpdateOrdersQuery2);
     
                             Stage stage = (Stage) SaveUserButton.getScene().getWindow();
         

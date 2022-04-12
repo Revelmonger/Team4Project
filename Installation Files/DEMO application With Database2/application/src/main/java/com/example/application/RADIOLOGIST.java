@@ -2920,7 +2920,7 @@ EstinatedCosts.setEditable(false);
          * Review Imaging Orders Table
          * 
          */
-        String ReviewImagingOrdersTableQuery = "select * from orders as o join patients as p on p.patient_id = o.patient join appointments as a on a.appointment_id = o.appointment join modalities as m on m.modality_id = o.modality join referralmds as rmd on rmd.id = o.referral_md where a.closed = true and report IS NULL;"; 
+        String ReviewImagingOrdersTableQuery = "select * from orders as o join patients as p on p.patient_id = o.patient join appointments as a on a.appointment_id = o.appointment join modalities as m on m.modality_id = o.modality join referralmds as rmd on rmd.id = o.referral_md join radiologists as r on r.id = a.radiologist where a.closed = true and report IS NULL and r.user_id = "+user_id1+";"; 
         try {
 
             Statement statement5 = connectDB.createStatement();
