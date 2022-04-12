@@ -20,45 +20,44 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class TECHNICIAN_UserInfo_Controller extends EncryptDecrypt implements Initializable {
+
     ObservableList<String> selectedItems;
-
     String userid = LOGIN.LoggedInUserID;
-    /*
-     * 
-     * Button Imports
-     * 
-     */
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private Button HomeButton;
-    @FXML
-    private Button UserInfoButton;
-    @FXML
-    private Button AppointmentsButton;
-    @FXML
-    private Button SaveButton;
-    @FXML
-    private TextField usernamefield;
-    @FXML
-    private TextField emailfield;
-    @FXML
-    private TextField displaynamefield;
-    @FXML
-    private TextField passwordfield;
-    @FXML
-    private ChoiceBox<String> userrollfield;
-    @FXML
-    private Label submitionresponcebutton;
-
     @FXML
     private AnchorPane BlurBox;
 
     /*
      * 
-     * Button Listener Events
+     * Button Functionality
      * 
      */
+    @FXML
+    private Button logoutButton;
+
+    public void logout(ActionEvent e) throws IOException {
+
+        FXApp.setRoot("LOGIN");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseEntered() {
+
+        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseExited() {
+
+        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
+    }
+
+    @FXML
+    private Button HomeButton;
+
+    public void home(ActionEvent e) throws IOException {
+        FXApp.setRoot("TECHNICIAN");
+    }
 
     @FXML
     public void HomeButtonEntered() {
@@ -71,6 +70,13 @@ public class TECHNICIAN_UserInfo_Controller extends EncryptDecrypt implements In
     public void HomeButtonExited() {
 
         HomeButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    private Button UserInfoButton;
+
+    public void userInfo(ActionEvent e) throws IOException {
+        FXApp.setRoot("TECHNICIAN_UserInfo");
     }
 
     @FXML
@@ -87,6 +93,13 @@ public class TECHNICIAN_UserInfo_Controller extends EncryptDecrypt implements In
     }
 
     @FXML
+    private Button AppointmentsButton;
+
+    public void appointments(ActionEvent e) throws IOException {
+        FXApp.setRoot("TECHNICIAN_Apppointments");
+    }
+
+    @FXML
     public void AppointentsButtonEntered() {
 
         AppointmentsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -98,41 +111,21 @@ public class TECHNICIAN_UserInfo_Controller extends EncryptDecrypt implements In
         AppointmentsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
     }
 
+    // FXML Page Elements
     @FXML
-    public void LogoutButtonOnMouseEntered() {
-
-        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
+    private Button SaveButton;
     @FXML
-    public void LogoutButtonOnMouseExited() {
-
-        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    /*
-     * 
-     * Button Logic
-     * 
-     */
-
-    public void logout(ActionEvent e) throws IOException {
-
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("TECHNICIAN");
-    }
-
-    public void userInfo(ActionEvent e) throws IOException {
-        FXApp.setRoot("TECHNICIAN_UserInfo");
-    }
-
-    public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("TECHNICIAN_Apppointments");
-    }
+    private TextField usernamefield;
+    @FXML
+    private TextField emailfield;
+    @FXML
+    private TextField displaynamefield;
+    @FXML
+    private TextField passwordfield;
+    @FXML
+    private ChoiceBox<String> userrollfield;
+    @FXML
+    private Label submitionresponcebutton;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

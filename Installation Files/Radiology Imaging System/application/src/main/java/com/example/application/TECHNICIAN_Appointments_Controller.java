@@ -7,9 +7,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
 import com.example.application.TableConstructors.TABLEAllAppointmentsTableController;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,23 +24,36 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
 
     /*
      * 
-     * Button Imports
+     * Button Functionality
      * 
      */
     @FXML
     private Button logoutButton;
+
+    public void logout(ActionEvent e) throws IOException {
+
+        FXApp.setRoot("LOGIN");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseEntered() {
+
+        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseExited() {
+
+        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
+    }
+
     @FXML
     private Button HomeButton;
-    @FXML
-    private Button UserInfoButton;
-    @FXML
-    private Button AppointmentsButton;
 
-    /*
-     * 
-     * Button Listener Events
-     * 
-     */
+    public void home(ActionEvent e) throws IOException {
+        FXApp.setRoot("TECHNICIAN");
+    }
 
     @FXML
     public void HomeButtonEntered() {
@@ -55,6 +66,13 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
     public void HomeButtonExited() {
 
         HomeButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    private Button UserInfoButton;
+
+    public void userInfo(ActionEvent e) throws IOException {
+        FXApp.setRoot("TECHNICIAN_UserInfo");
     }
 
     @FXML
@@ -71,6 +89,13 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
     }
 
     @FXML
+    private Button AppointmentsButton;
+
+    public void appointments(ActionEvent e) throws IOException {
+        FXApp.setRoot("TECHNICIAN_Apppointments");
+    }
+
+    @FXML
     public void AppointentsButtonEntered() {
 
         AppointmentsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -80,19 +105,6 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
     public void AppointmentsButtonExited() {
 
         AppointmentsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void LogoutButtonOnMouseEntered() {
-
-        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void LogoutButtonOnMouseExited() {
-
-        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
     }
 
     @FXML
@@ -195,31 +207,11 @@ public class TECHNICIAN_Appointments_Controller implements Initializable {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
+
+            e.printStackTrace();
+
         }
 
     }
 
-    /*
-     * 
-     * Button Logic
-     * 
-     */
-
-    public void logout(ActionEvent e) throws IOException {
-
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("TECHNICIAN");
-    }
-
-    public void userInfo(ActionEvent e) throws IOException {
-        FXApp.setRoot("TECHNICIAN_UserInfo");
-    }
-
-    public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("TECHNICIAN_Apppointments");
-    }
 }

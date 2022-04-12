@@ -163,23 +163,25 @@ public class RECEPTIONIST_AllOrders_Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
+    
         /*
          * 
          * Placed Orders Table
          * 
          */
-        String AllOrdersTableQuery = "select patients.patient_id, patients.first_name, patients.last_name, modalities.modality_id, modalities.name, orders.notes, orders.status,  order_status.order_name  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
-
+        String AllOrdersTableQuery = "select  *  from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id;";
+        System.out.println("Hello");
         try {
-
+            System.out.println("Hello2");
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(AllOrdersTableQuery);
+            System.out.println("Hello3");
+            System.out.println("queryOutput");
 
             while (queryOutput.next()) {
-
+                System.out.println("Hello4");
                 String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
                 String modalityquery = queryOutput.getString("name");
                 String notesquery = queryOutput.getString("notes").trim();
