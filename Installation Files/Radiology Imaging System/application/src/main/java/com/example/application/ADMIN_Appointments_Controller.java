@@ -265,6 +265,7 @@ public class ADMIN_Appointments_Controller implements Initializable {
 
             AllAppointmentsTable.setItems(AllPatientsSortedData);
             // Search Bar Functionality End
+            connectDB.close();
 
         } catch (Exception e) {
             e.printStackTrace();

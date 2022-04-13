@@ -267,7 +267,7 @@ public class Admin_AllOrders_Controller implements Initializable {
 
             AllAppointmentsTable.setItems(PlacedOrdersSortedData);
             // Search Bar Functionality End
-
+            connectDB.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
