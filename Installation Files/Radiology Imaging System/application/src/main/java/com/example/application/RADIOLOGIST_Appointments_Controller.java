@@ -7,9 +7,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
 import com.example.application.TableConstructors.TABLEAllAppointmentsTableController;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,29 +24,36 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
 
     /*
      * 
-     * Button Imports
+     * Button Functionality
      * 
      */
     @FXML
     private Button logoutButton;
+
+    public void logout(ActionEvent e) throws IOException {
+
+        FXApp.setRoot("LOGIN");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseEntered() {
+
+        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseExited() {
+
+        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
+    }
+
     @FXML
     private Button HomeButton;
-    @FXML
-    private Button UserInfoButton;
-    @FXML
-    private Button AdminButton;
-    @FXML
-    private Button ReferralsButton;
-    @FXML
-    private Button AppointmentsButton;
-    @FXML
-    private Button OrdersButton;
 
-    /*
-     * 
-     * Button Listener Events
-     * 
-     */
+    public void home(ActionEvent e) throws IOException {
+        FXApp.setRoot("RADIOLOGIST");
+    }
 
     @FXML
     public void HomeButtonEntered() {
@@ -61,6 +66,14 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
     public void HomeButtonExited() {
 
         HomeButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    private Button UserInfoButton;
+
+    public void userInfo(ActionEvent e) throws IOException {
+
+        FXApp.setRoot("RADIOLOGIST_UserInfo");
     }
 
     @FXML
@@ -77,29 +90,10 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
     }
 
     @FXML
-    public void AdminButtonEntered() {
+    private Button AppointmentsButton;
 
-        AdminButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void AdminButtonExited() {
-
-        AdminButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void ReferralsButtonEntered() {
-
-        ReferralsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void ReferralsButtonExited() {
-
-        ReferralsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    public void appointments(ActionEvent e) throws IOException {
+        FXApp.setRoot("RADIOLOGIST_Apppointments");
     }
 
     @FXML
@@ -115,6 +109,13 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
     }
 
     @FXML
+    private Button OrdersButton;
+
+    public void orders(ActionEvent e) throws IOException {
+        FXApp.setRoot("RADIOLOGIST_AllOrders");
+    }
+
+    @FXML
     public void OrdersButtonEntered() {
 
         OrdersButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -124,19 +125,6 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
     public void OrdersButtonExited() {
 
         OrdersButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void LogoutButtonOnMouseEntered() {
-
-        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void LogoutButtonOnMouseExited() {
-
-        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
 
     }
 
@@ -245,33 +233,4 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
 
     }
 
-    /*
-     * 
-     * Button Logic
-     * 
-     */
-
-    public void logout(ActionEvent e) throws IOException {
-
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("RADIOLOGIST");
-    }
-
-    public void userInfo(ActionEvent e) throws IOException {
-
-        FXApp.setRoot("RADIOLOGIST_UserInfo");
-    }
-
-
-
-    public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("RADIOLOGIST_AllOrders");
-    }
-
-    public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("RADIOLOGIST_Apppointments");
-    }
 }

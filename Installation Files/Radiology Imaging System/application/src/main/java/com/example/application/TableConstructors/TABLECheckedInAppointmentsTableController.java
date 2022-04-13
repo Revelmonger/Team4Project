@@ -3,7 +3,6 @@ package com.example.application.TableConstructors;
 
 import java.sql.Date;
 
-import javafx.scene.control.Button;
 
 public class TABLECheckedInAppointmentsTableController {
 

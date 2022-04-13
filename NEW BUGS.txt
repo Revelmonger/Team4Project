@@ -41,3 +41,8 @@ Technician Appointments = todays appointments table
 Do the same with the other users
 
 
+
+
+
+FIX APPEARANCE OF USER PAGE
+
