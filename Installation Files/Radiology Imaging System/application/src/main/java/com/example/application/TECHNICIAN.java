@@ -278,7 +278,7 @@ public class TECHNICIAN extends Application implements Initializable {
                                 };
                                 button.setOnAction(event1);
 
-                                Button showImage = new Button("Show Image");
+                                Button showImage = new Button("View Form");
                                 showImage.setPrefHeight(42);
                                 showImage.setPrefWidth(100);
                                 showImage.setLayoutX(170);

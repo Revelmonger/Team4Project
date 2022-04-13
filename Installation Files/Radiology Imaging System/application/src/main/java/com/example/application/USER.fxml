@@ -12,12 +12,12 @@
 
 <ScrollPane fx:id="BlurBox" focusTraversable="false" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.USER">
    <content>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4000.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1980.0" style="-fx-background-color: #212529;">
          <left>
             <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
          </left>
          <center>
-            <VBox prefHeight="4000.0" prefWidth="1480.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="1080.0" prefWidth="1480.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
                <children>
                   <HBox minHeight="-Infinity" prefHeight="130.0" prefWidth="1420.0" style="-fx-background-color: #cccccc;">
                      <children>

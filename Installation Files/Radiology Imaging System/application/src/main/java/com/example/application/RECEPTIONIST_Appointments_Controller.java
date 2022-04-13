@@ -35,10 +35,7 @@ public class RECEPTIONIST_Appointments_Controller implements Initializable {
     private Button HomeButton;
     @FXML
     private Button UserInfoButton;
-    @FXML
-    private Button AdminButton;
-    @FXML
-    private Button ReferralsButton;
+
     @FXML
     private Button AppointmentsButton;
     @FXML
@@ -74,32 +71,6 @@ public class RECEPTIONIST_Appointments_Controller implements Initializable {
 
         UserInfoButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
 
-    }
-
-    @FXML
-    public void AdminButtonEntered() {
-
-        AdminButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void AdminButtonExited() {
-
-        AdminButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void ReferralsButtonEntered() {
-
-        ReferralsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void ReferralsButtonExited() {
-
-        ReferralsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
     }
 
     @FXML
@@ -240,7 +211,7 @@ public class RECEPTIONIST_Appointments_Controller implements Initializable {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
 
     }
@@ -263,8 +234,6 @@ public class RECEPTIONIST_Appointments_Controller implements Initializable {
     public void userInfo(ActionEvent e) throws IOException {
         FXApp.setRoot("RECEPTIONIST_UserInfo");
     }
-
-
 
     public void orders(ActionEvent e) throws IOException {
         FXApp.setRoot("RECEPTIONIST_AllOrders");

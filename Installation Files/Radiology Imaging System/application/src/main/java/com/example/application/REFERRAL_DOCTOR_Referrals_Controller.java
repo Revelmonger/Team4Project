@@ -1147,7 +1147,7 @@ e.printStackTrace();        }
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
 
     }
@@ -1441,7 +1441,6 @@ e.printStackTrace();        }
                             
                             // If there are selections
                         } else {
-                            System.out.println(listviewContent);
     
                             while (PatientIDOutput.next()) {
                                 patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");

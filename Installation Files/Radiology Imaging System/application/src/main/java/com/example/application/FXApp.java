@@ -18,7 +18,7 @@ public class FXApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        scene = new Scene(loadFXML("LOGIN"), 640, 480);
+        scene = new Scene(loadFXML("LOGIN"), 1920, 1080);
 
         // THIS CODE CLOSES THE STAGE WHEN ESCAPE IS PRESSED ~Chase//
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

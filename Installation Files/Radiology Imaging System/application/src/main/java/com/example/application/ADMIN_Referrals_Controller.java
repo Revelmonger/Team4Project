@@ -7,36 +7,21 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
-import javax.persistence.criteria.Predicate.BooleanOperator;
-
 import com.example.application.Constructors.AllAlertsChoiceBoxController;
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
-import com.example.application.Constructors.Patient;
 import com.example.application.Constructors.ReferralDoctor;
 import com.example.application.TableConstructors.PatientsAlertsTableController;
 import com.example.application.TableConstructors.TABLEReferralsTableController;
-
-import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -47,10 +32,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Modality;
@@ -61,41 +43,45 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.application.*;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
 
 public class ADMIN_Referrals_Controller implements Initializable {
     ObservableList<String> selectedItems;
-    /*
-     * 
-     * Button Imports
-     * 
-     */
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private Button HomeButton;
-    @FXML
-    private Button UserInfoButton;
-    @FXML
-    private Button AdminButton;
-    @FXML
-    private Button ReferralsButton;
-    @FXML
-    private Button AppointmentsButton;
-    @FXML
-    private Button OrdersButton;
-
     @FXML
     private AnchorPane BlurBox;
 
     /*
      * 
-     * Button Listener Events
+     * Button Functionality
      * 
      */
+    @FXML
+    private Button logoutButton;
+
+    public void logout(ActionEvent e) throws IOException {
+
+        FXApp.setRoot("LOGIN");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseEntered() {
+
+        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    public void LogoutButtonOnMouseExited() {
+
+        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+
+    }
+
+    @FXML
+    private Button HomeButton;
+
+    public void home(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN");
+    }
 
     @FXML
     public void HomeButtonEntered() {
@@ -111,6 +97,13 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     @FXML
+    private Button UserInfoButton;
+
+    public void userInfo(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN_UserInfo");
+    }
+
+    @FXML
     public void UserInfoButtonEntered() {
 
         UserInfoButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -121,6 +114,13 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
         UserInfoButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
 
+    }
+
+    @FXML
+    private Button AdminButton;
+
+    public void admin(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN_AdminPanel");
     }
 
     @FXML
@@ -138,6 +138,13 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     @FXML
+    private Button ReferralsButton;
+
+    public void referrals(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN_Referrals");
+    }
+
+    @FXML
     public void ReferralsButtonEntered() {
 
         ReferralsButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -147,6 +154,13 @@ public class ADMIN_Referrals_Controller implements Initializable {
     public void ReferralsButtonExited() {
 
         ReferralsButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
+    }
+
+    @FXML
+    private Button AppointmentsButton;
+
+    public void appointments(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN_Apppointments");
     }
 
     @FXML
@@ -162,6 +176,13 @@ public class ADMIN_Referrals_Controller implements Initializable {
     }
 
     @FXML
+    private Button OrdersButton;
+
+    public void orders(ActionEvent e) throws IOException {
+        FXApp.setRoot("ADMIN_AllOrders");
+    }
+
+    @FXML
     public void OrdersButtonEntered() {
 
         OrdersButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
@@ -171,19 +192,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
     public void OrdersButtonExited() {
 
         OrdersButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
-
-    }
-
-    @FXML
-    public void LogoutButtonOnMouseEntered() {
-
-        logoutButton.setStyle("-fx-font: normal bold 24px 'arial'; -fx-background-color: transparent;");
-    }
-
-    @FXML
-    public void LogoutButtonOnMouseExited() {
-
-        logoutButton.setStyle("-fx-font: normal bold 23px 'arial'; -fx-background-color: transparent;");
 
     }
 
@@ -387,191 +395,139 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         SexPane.getChildren().add(RaceChange);
                         SexPane.getChildren().add(EthnicityChange);
 
-                        
                         Pane BottomPane = new Pane();
                         BottomPane.setPrefHeight(223);
                         BottomPane.setPrefWidth(800);
-/////////////
+                        /////////////
 
-try {
-    DatabaseConnection connectNow = new DatabaseConnection();
-    Connection connectDB = connectNow.getConnection();
-    
-    String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"+ patient_id+ "'";
-    
-    Statement statement = connectDB.createStatement();
-    ResultSet queryOutput2 = statement.executeQuery(DoesThisPatientHaveAnAlert);
-    while (queryOutput2.next()) {
-
-        Button button = new Button("Patient Alerts");
-        button.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-        button.setPrefHeight(42);
-        button.setPrefWidth(128);
-        button.setLayoutX(35);
-        button.setLayoutY(35);
-                BottomPane.getChildren().add(button);
-
-
-
-                button.setOnAction(new EventHandler<ActionEvent>() {
-
-
-                    @Override
-                    public void handle(ActionEvent event) {
-                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
-                
-                         
-                        Stage newWindow = new Stage();
-                     
-                        AnchorPane anchorpane = new AnchorPane();
-                       
-                
-                        Label CreateNewPatientAlertLabel = new Label("Patient Alert History");
-                        CreateNewPatientAlertLabel.setLayoutX(46);
-                        CreateNewPatientAlertLabel.setLayoutY(47);
-                        CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
-                 
-                
-                        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
-                        horizontalline.setOpacity(.3);
-                        horizontalline.setTranslateY(100);
-
-
-
-
-                        TableView tableView = new TableView();
-                        
-                        tableView.setPrefWidth(500);
-                        tableView.setPrefHeight(400);
-                        tableView.setLayoutX(47);
-                        tableView.setLayoutY(150);
-                        tableView.setEditable(false);
-                        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-                        
-                        TableColumn<PatientsAlertsTableController, String> column1 = new TableColumn<>("Alerts");
-                        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                        column1.setPrefWidth(500);                                
-                       
-                        
-                        
-                        tableView.getColumns().add(column1);
                         try {
-                        DatabaseConnection connectNow = new DatabaseConnection();
-                        Connection connectDB = connectNow.getConnection();
-                        
-                        String alert_nameTableQuery = " select * from patients_alerts as pa join alerts as a on a.alert_id = pa.alert_id where patient_id = " + patient_id + ";";
-                        
-                        
+                            DatabaseConnection connectNow = new DatabaseConnection();
+                            Connection connectDB = connectNow.getConnection();
+
+                            String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"
+                                    + patient_id + "'";
+
                             Statement statement = connectDB.createStatement();
-                            ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
-                        
-                            while (queryOutput.next()) {
-                                Integer AlertID = queryOutput.getInt("alert_id");
-                              String  AlertName = queryOutput.getString("alert_name");
+                            ResultSet queryOutput2 = statement.executeQuery(DoesThisPatientHaveAnAlert);
+                            while (queryOutput2.next()) {
 
+                                Button button = new Button("Patient Alerts");
+                                button.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                                button.setPrefHeight(42);
+                                button.setPrefWidth(128);
+                                button.setLayoutX(35);
+                                button.setLayoutY(35);
+                                BottomPane.getChildren().add(button);
 
-                              tableView.getItems().add(new PatientsAlertsTableController(AlertName));
-                            
+                                button.setOnAction(new EventHandler<ActionEvent>() {
+
+                                    @Override
+                                    public void handle(ActionEvent event) {
+                                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+
+                                        Stage newWindow = new Stage();
+
+                                        AnchorPane anchorpane = new AnchorPane();
+
+                                        Label CreateNewPatientAlertLabel = new Label("Patient Alert History");
+                                        CreateNewPatientAlertLabel.setLayoutX(46);
+                                        CreateNewPatientAlertLabel.setLayoutY(47);
+                                        CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+
+                                        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                                        horizontalline.setOpacity(.3);
+                                        horizontalline.setTranslateY(100);
+
+                                        TableView tableView = new TableView();
+
+                                        tableView.setPrefWidth(500);
+                                        tableView.setPrefHeight(400);
+                                        tableView.setLayoutX(47);
+                                        tableView.setLayoutY(150);
+                                        tableView.setEditable(false);
+                                        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+                                        TableColumn<PatientsAlertsTableController, String> column1 = new TableColumn<>(
+                                                "Alerts");
+                                        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+                                        column1.setPrefWidth(500);
+
+                                        tableView.getColumns().add(column1);
+                                        try {
+                                            DatabaseConnection connectNow = new DatabaseConnection();
+                                            Connection connectDB = connectNow.getConnection();
+
+                                            String alert_nameTableQuery = " select * from patients_alerts as pa join alerts as a on a.alert_id = pa.alert_id where patient_id = "
+                                                    + patient_id + ";";
+
+                                            Statement statement = connectDB.createStatement();
+                                            ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
+
+                                            while (queryOutput.next()) {
+                                                Integer AlertID = queryOutput.getInt("alert_id");
+                                                String AlertName = queryOutput.getString("alert_name");
+
+                                                tableView.getItems().add(new PatientsAlertsTableController(AlertName));
+
+                                            }
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        Button CancelButton = new Button("Close");
+                                        CancelButton.setPrefHeight(42);
+                                        CancelButton.setPrefWidth(102);
+                                        CancelButton.setLayoutX(447);
+                                        CancelButton.setLayoutY(585);
+                                        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+
+                                        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                            @Override
+                                            public void handle(ActionEvent e) {
+                                                Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                                stage.close();
+                                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+
+                                            }
+                                        });
+
+                                        anchorpane.getChildren().add(CreateNewPatientAlertLabel);
+
+                                        anchorpane.getChildren().add(horizontalline);
+
+                                        anchorpane.getChildren().add(CancelButton);
+                                        anchorpane.getChildren().add(tableView);
+                                        Scene scene = new Scene(anchorpane, 600, 700);
+
+                                        newWindow.setScene(scene);
+                                        newWindow.initStyle(StageStyle.UNDECORATED);
+                                        newWindow.setResizable(false);
+                                        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+                                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                            @Override
+                                            public void handle(KeyEvent t) {
+                                                KeyCode key = t.getCode();
+                                                if (key == KeyCode.ESCAPE) {
+                                                    newWindow.close();
+                                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                                                }
+                                            }
+                                        });
+                                        newWindow.show();
+                                    }
+                                });// Closes New Patient Alert
+
+                                /////////////////////////////
+
                             }
-                        
-                        
+
                         } catch (Exception e) {
-                        e.printStackTrace();        }
-                        
-                    
+                            e.printStackTrace();
+                        }
 
-                        Button CancelButton = new Button("Close");
-                        CancelButton.setPrefHeight(42);
-                        CancelButton.setPrefWidth(102);
-                        CancelButton.setLayoutX(447);
-                        CancelButton.setLayoutY(585);
-                        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-                
-                        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent e) {
-                                Stage stage = (Stage) CancelButton.getScene().getWindow();
-                                stage.close();
-                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                
-                            }
-                        });
-                
-                                anchorpane.getChildren().add(CreateNewPatientAlertLabel);
-                               
-                                anchorpane.getChildren().add(horizontalline);
-                             
-                                anchorpane.getChildren().add(CancelButton);
-                                anchorpane.getChildren().add(tableView);
-                        Scene scene = new Scene(anchorpane, 600, 700);
-                
-                        
-                        newWindow.setScene(scene);
-                        newWindow.initStyle(StageStyle.UNDECORATED);
-                        newWindow.setResizable(false);
-                        newWindow.initModality(Modality.APPLICATION_MODAL);
-                
-                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                            @Override
-                            public void handle(KeyEvent t) {
-                                KeyCode key = t.getCode();
-                                if (key == KeyCode.ESCAPE) {
-                                    newWindow.close();
-                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                                }
-                            }
-                        });
-                        newWindow.show();
-                      }
-                });// Closes New Patient Alert
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                /////////////////////////////
-                
-        
-
-
-     
-
-
-
-
-
-
-       
-    }
-
-   
-   
-
-} catch (Exception e) {
-e.printStackTrace();        }
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////
+                        ///////////////////////////////
                         Button StartOrderButton = new Button("Begin Order");
                         StartOrderButton.setPrefHeight(42);
                         StartOrderButton.setPrefWidth(102);
@@ -663,7 +619,7 @@ e.printStackTrace();        }
                                 SelectedStatusField.setPrefHeight(210);
                                 SelectedStatusField.setMaxHeight(35);
                                 SelectedStatusField.setPrefWidth(210);
-                                SelectedStatusField.setDisable(true);     
+                                SelectedStatusField.setDisable(true);
                                 SelectedStatusField.setValue("In Progress");
 
                                 NamesPane.getChildren().add(Username);
@@ -1003,26 +959,7 @@ e.printStackTrace();        }
                         });
                         newWindow.show();
                     }
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////////////////////
+
                 });
 
                 ReferralsTableObservableList
@@ -1086,45 +1023,9 @@ e.printStackTrace();        }
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
 
-    }
-
-    /*
-     * 
-     * Button Logic
-     * 
-     */
-
-    public void logout(ActionEvent e) throws IOException {
-
-        FXApp.setRoot("LOGIN");
-    }
-
-    public void home(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN");
-    }
-
-    public void userInfo(ActionEvent e) throws IOException {
-
-        FXApp.setRoot("ADMIN_UserInfo");
-    }
-
-    public void admin(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AdminPanel");
-    }
-
-    public void referrals(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Referrals");
-    }
-
-    public void orders(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_AllOrders");
-    }
-
-    public void appointments(ActionEvent e) throws IOException {
-        FXApp.setRoot("ADMIN_Apppointments");
     }
 
     public int patients_id;
@@ -1314,7 +1215,7 @@ e.printStackTrace();        }
                         AlertQueryOutput.getInt("alert_id"), AlertQueryOutput.getString("alert_name"));
 
                 listView.getItems().add(CurrentAlert.getalertName());
-                //alertid = AlertQueryOutput.getInt("alert_id");
+                // alertid = AlertQueryOutput.getInt("alert_id");
 
             }
 
@@ -1348,85 +1249,76 @@ e.printStackTrace();        }
             @Override
             public void handle(ActionEvent e) {
 
-                if(firstNameField.getText().isEmpty() || lastNamefield.getText().isEmpty() || dateofbirth.getValue() == null || sexChange.getValue().isEmpty() || RaceChange.getValue().isEmpty() || EthnicityChange.getValue().isEmpty())
-                {
+                if (firstNameField.getText().isEmpty() || lastNamefield.getText().isEmpty()
+                        || dateofbirth.getValue() == null || sexChange.getValue().isEmpty()
+                        || RaceChange.getValue().isEmpty() || EthnicityChange.getValue().isEmpty()) {
 
                 }
 
-                else{
+                else {
 
                     try {
                         DatabaseConnection connectNow = new DatabaseConnection();
                         Connection connectDB = connectNow.getConnection();
                         String InsertIntoPatientsTableQuery = "insert into patients (first_name, last_name, dob, sex, race, ethnicity) values ('"
                                 + firstNameField.getText().trim() + "', '" + lastNamefield.getText().trim() + "', '"
-                                + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '" + RaceChange.getValue()
+                                + dateofbirth.getValue() + "', '" + sexChange.getValue() + "', '"
+                                + RaceChange.getValue()
                                 + "', '" + EthnicityChange.getValue() + "');";
-    
-                        String listviewContent =   listView.getSelectionModel().getSelectedItems().toString();
+
+                        String listviewContent = listView.getSelectionModel().getSelectedItems().toString();
                         String FindPatientID = " SELECT LAST_INSERT_ID();";
-                        
-    
+
                         Statement statement = connectDB.createStatement();
                         Statement statement2 = connectDB.createStatement();
                         statement.execute(InsertIntoPatientsTableQuery);
                         ResultSet PatientIDOutput = statement.executeQuery(FindPatientID);
-                        
-    
-                     
-                        //IF the ListView Has no selections
-                        if (listviewContent.equals("[]")){
-    
-                            
+
+                        // IF the ListView Has no selections
+                        if (listviewContent.equals("[]")) {
+
                             // If there are selections
                         } else {
-                            System.out.println(listviewContent);
-    
+
                             while (PatientIDOutput.next()) {
                                 patients_id = PatientIDOutput.getInt("LAST_INSERT_ID()");
-                               
+
                             }
-        
-                                for (String name : selectedItems) {
-                                    connectNow = new DatabaseConnection();
-                                    connectDB = connectNow.getConnection();
-                                    
-                                    String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
-                                    ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
-    
-                                    while(AlertQueryOutput.next()){
-                                        alertid = AlertQueryOutput.getInt("alert_id");
-    
-                                        String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
+
+                            for (String name : selectedItems) {
+                                connectNow = new DatabaseConnection();
+                                connectDB = connectNow.getConnection();
+
+                                String GetAllAlerts = "select * from alerts where alert_name = '" + name + "';";
+                                ResultSet AlertQueryOutput = statement2.executeQuery(GetAllAlerts);
+
+                                while (AlertQueryOutput.next()) {
+                                    alertid = AlertQueryOutput.getInt("alert_id");
+
+                                    String InsertIntoAlertsTableQuery = "insert into patients_alerts (patient_id, alert_id) values ('"
                                             + patients_id + "', '" + alertid + "');";
-                                        statement = connectDB.createStatement();
-                                        statement.execute(InsertIntoAlertsTableQuery);
-                                    }
-    
+                                    statement = connectDB.createStatement();
+                                    statement.execute(InsertIntoAlertsTableQuery);
                                 }
+
+                            }
                         }
-    
-                        
-                    
-                      
-                    
+
                         Stage stage = (Stage) AddPatientButton.getScene().getWindow();
                         stage.close();
                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
-    
+
                         FXApp.setRoot("ADMIN_Referrals");
-    
+
                     } catch (SQLException e1) {
-    
+
                         e1.printStackTrace();
                     } catch (IOException e1) {
-    
+
                         e1.printStackTrace();
                     }
 
                 }
-
-                
 
             }
         });

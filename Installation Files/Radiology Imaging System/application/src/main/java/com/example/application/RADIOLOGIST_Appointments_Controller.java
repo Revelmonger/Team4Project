@@ -228,7 +228,7 @@ public class RADIOLOGIST_Appointments_Controller implements Initializable {
             // Search Bar Functionality End
 
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
 
     }
