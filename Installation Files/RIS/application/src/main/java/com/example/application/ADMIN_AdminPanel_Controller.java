@@ -3781,12 +3781,12 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                     PreparedStatement statement2 = null;
 
                                     statement2 = connectDB.prepareStatement(
-                                            "insert into file_uploads (order_id, file_name, file_type, is_active, upload_path) values (?, ?, ?, ?, ?)");
-                                    statement2.setInt(1, OrdersChoiceBox.getValue());
-                                    statement2.setString(2, fileName);
-                                    statement2.setString(3, extension);
-                                    statement2.setBoolean(4, true);
-                                    statement2.setString(5, label.getText());
+                                            "update file_uploads set file_name = ?, file_type = ?, upload_path = ? where order_id = ?");
+                                    
+                                    statement2.setString(1, fileName);
+                                    statement2.setString(2, extension);
+                                    statement2.setString(3, label.getText());
+                                    statement2.setInt(4, OrdersChoiceBox.getValue());
                                     statement2.executeUpdate();
 
                                     Stage stage = (Stage) FileModifyButton.getScene().getWindow();
@@ -3797,10 +3797,8 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                     FXApp.setRoot("ADMIN_AdminPanel");
 
                                 } catch (SQLException e2) {
-
                                     e2.printStackTrace();
                                 } catch (IOException e1) {
-                                    // TODO Auto-generated catch block
                                     e1.printStackTrace();
                                 }
 
