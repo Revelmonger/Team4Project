@@ -1,0 +1,1 @@
+Implement a patient's alerts feature where the alerts can be added to a Patient and the alerts can be seen by the Doctor and Technician.

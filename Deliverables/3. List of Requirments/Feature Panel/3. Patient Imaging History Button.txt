@@ -1,0 +1,1 @@
+A button for the Doctor use in patient overview that opens a page populated with closed orders related to the patient
