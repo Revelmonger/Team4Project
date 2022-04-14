@@ -10,9 +10,9 @@ public class DatabaseConnection {
     public Connection getConnection() {
         String datbaseName = "db_ris";
         String datbaseUser = "root";
-        String databasePassword = "1234";
+        String databasePassword = "doctor";
 
-        String url = "jdbc:mysql://localhost/" + datbaseName;
+        String url = "jdbc:mysql://34.75.6.139:3306/" + datbaseName;
 
         try {
 
