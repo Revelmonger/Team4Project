@@ -398,7 +398,7 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         Pane BottomPane = new Pane();
                         BottomPane.setPrefHeight(223);
                         BottomPane.setPrefWidth(800);
-                        
+                        /////////////
 
                         try {
                             DatabaseConnection connectNow = new DatabaseConnection();
@@ -470,7 +470,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                                 tableView.getItems().add(new PatientsAlertsTableController(AlertName));
 
                                             }
-                                            connectDB.close();
 
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -520,9 +519,9 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                     }
                                 });// Closes New Patient Alert
 
+                                /////////////////////////////
 
                             }
-                            connectDB.close();
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -667,7 +666,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                                 ModalitiesOutput.getString("name"));
                                         ModalityChoiceBox.getItems().add(currentitterationpatient.getModalityname());
                                     }
-                                    connectDB.close();
 
                                 } catch (SQLException e1) {
 
@@ -687,7 +685,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                                 OrderStatusOutput.getString("order_name"));
                                         SelectedStatusField.getItems().add(currentOrderStatusOutput.getOrderstatus());
                                     }
-                                    connectDB.close();
 
                                 } catch (SQLException e1) {
 
@@ -709,7 +706,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
                                         SelectedDoctorField.getItems().add(currentReferralDoctor.getReferraldoctor());
                                     }
-                                    connectDB.close();
 
                                 } catch (SQLException e1) {
 
@@ -762,7 +758,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                             while (StatusIDOutput.next()) {
                                                 Status_id = StatusIDOutput.getInt("order_status_id");
                                             }
-                                            connectDB.close();
 
                                         } catch (SQLException e1) {
 
@@ -783,7 +778,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                                 modality_id = modalityIDOutput.getInt("modality_id");
 
                                             }
-                                            connectDB.close();
 
                                         } catch (SQLException e1) {
 
@@ -804,7 +798,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                                 user_id = DoctorIDOutput.getInt("id");
 
                                             }
-                                            connectDB.close();
 
                                         } catch (SQLException e1) {
 
@@ -829,7 +822,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                                 patient_id = PatientIDOutput.getInt("patient_id");
 
                                             }
-                                            connectDB.close();
 
                                         } catch (SQLException e1) {
 
@@ -854,7 +846,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                                             BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                             FXApp.setRoot("ADMIN_Referrals");
-                                            connectDB.close();
 
                                         } catch (SQLException e1) {
 
@@ -1030,7 +1021,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
 
             AllPatientsTable.setItems(ReferralsSortedData);
             // Search Bar Functionality End
-            connectDB.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1228,7 +1218,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                 // alertid = AlertQueryOutput.getInt("alert_id");
 
             }
-            connectDB.close();
 
         } catch (SQLException e1) {
 
@@ -1320,7 +1309,6 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                         FXApp.setRoot("ADMIN_Referrals");
-                        connectDB.close();
 
                     } catch (SQLException e1) {
 
