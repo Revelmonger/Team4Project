@@ -868,47 +868,14 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                 OrderLabel.setLayoutX(22);
                 OrderLabel.setLayoutY(119);
 
-                Label ModalityLabel = new Label("Modality:");
-                ModalityLabel.setStyle("-fx-font: normal bold 16px 'arial';");
-                ModalityLabel.setMinHeight(27);
-                ModalityLabel.setMinWidth(128);
-                ModalityLabel.setLayoutX(260);
-                ModalityLabel.setLayoutY(119);
-
                 Label RadiologistLabel = new Label("Radiologist:");
                 RadiologistLabel.setStyle("-fx-font: normal bold 16px 'arial';");
                 RadiologistLabel.setMinHeight(27);
                 RadiologistLabel.setMinWidth(128);
-                RadiologistLabel.setLayoutX(522);
+                RadiologistLabel.setLayoutX(260);
                 RadiologistLabel.setLayoutY(119);
 
-                Label EstimatedCostsLabel = new Label("Estimated Costs:");
-                EstimatedCostsLabel.setStyle("-fx-font: normal bold 16px 'arial';");
-                EstimatedCostsLabel.setMinHeight(27);
-                EstimatedCostsLabel.setMinWidth(128);
-                EstimatedCostsLabel.setLayoutX(22);
-                EstimatedCostsLabel.setLayoutY(225);
 
-                Label PatientLabel = new Label("Patient:");
-                PatientLabel.setStyle("-fx-font: normal bold 16px 'arial';");
-                PatientLabel.setMinHeight(27);
-                PatientLabel.setMinWidth(128);
-                PatientLabel.setLayoutX(260);
-                PatientLabel.setLayoutY(225);
-
-                TextField ModalityField = new TextField();
-                ModalityField.setMinHeight(35);
-                ModalityField.setMinWidth(170);
-                ModalityField.setLayoutX(260);
-                ModalityField.setLayoutY(160);
-                ModalityField.setEditable(false);
-
-                TextField patientfortheorder = new TextField();
-                patientfortheorder.setPrefHeight(35);
-                patientfortheorder.setPrefWidth(170);
-                patientfortheorder.setLayoutX(260);
-                patientfortheorder.setLayoutY(270);
-                patientfortheorder.setEditable(false);
 
                 ChoiceBox<String> OrdersChoiceBox = new ChoiceBox<String>();
                 OrdersChoiceBox.setPrefHeight(35);
@@ -938,7 +905,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                 ChoiceBox<String> RadiologistChoiceBox = new ChoiceBox<String>();
                 RadiologistChoiceBox.setPrefHeight(35);
                 RadiologistChoiceBox.setPrefWidth(170);
-                RadiologistChoiceBox.setLayoutX(522);
+                RadiologistChoiceBox.setLayoutX(260);
                 RadiologistChoiceBox.setLayoutY(160);
 
                 // Adds Radiologists to the Box
@@ -961,49 +928,16 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                     e1.printStackTrace();
                 }
 
-                TextField EstinatedCosts = new TextField();
-                EstinatedCosts.setMinHeight(35);
-                EstinatedCosts.setMinWidth(170);
-                EstinatedCosts.setLayoutX(22);
-                EstinatedCosts.setLayoutY(270);
-                EstinatedCosts.setEditable(false);
+               
 
-                // Adds Costs to the Box
-                /*
-                 * try {
-                 * DatabaseConnection connectNow = new DatabaseConnection();
-                 * Connection connectDB = connectNow.getConnection();
-                 * 
-                 * String GetChoiceBoxQuery = "Select  price from modatlities where name = '"+ +
-                 * "'";
-                 * Statement statement = connectDB.createStatement();
-                 * ResultSet radiologistsQuery = statement.executeQuery(GetChoiceBoxQuery);
-                 * 
-                 * while (radiologistsQuery.next()) {
-                 * Radiologists currentRadiologist = new
-                 * Radiologists(radiologistsQuery.getInt("id"),
-                 * radiologistsQuery.getString("full_name"));
-                 * RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
-                 * }
-                 * 
-                 * } catch (SQLException e1) {
-                 * 
-                 * e1.printStackTrace();
-                 * }
-                 */
-
+            
                 OfficeInfoPane.getChildren().add(OrderLabel);
                 OfficeInfoPane.getChildren().add(OfficeInfoLabel);
                 OfficeInfoPane.getChildren().add(HorizontalLineOfficeIn);
-                OfficeInfoPane.getChildren().add(ModalityLabel);
                 OfficeInfoPane.getChildren().add(RadiologistLabel);
-                OfficeInfoPane.getChildren().add(EstimatedCostsLabel);
                 OfficeInfoPane.getChildren().add(OrdersChoiceBox);
                 OfficeInfoPane.getChildren().add(RadiologistChoiceBox);
-                OfficeInfoPane.getChildren().add(PatientLabel);
-                OfficeInfoPane.getChildren().add(patientfortheorder);
-                OfficeInfoPane.getChildren().add(EstinatedCosts);
-                OfficeInfoPane.getChildren().add(ModalityField);
+    
 
                 Pane BottomPane = new Pane();
                 BottomPane.setPrefHeight(70);
@@ -4356,7 +4290,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
          * 
          */
 
-        String AppointmentsTableQuery = "select a.appointment_id, p.first_name, p.last_name, a.order_id, a.date_time, r.full_name, a.phone_number, a.email_address, a.modality  from appointments as a join patients as p on p.patient_id = a.patient join radiologists as r on r.id = a.radiologist;";
+        String AppointmentsTableQuery = "select m.price a.appointment_id, p.first_name, p.last_name, a.order_id, a.date_time, r.full_name, a.phone_number, a.email_address, a.modality  from appointments as a join patients as p on p.patient_id = a.patient join radiologists as r on r.id = a.radiologist join modalities as m on a.modality = m.modality_id;";
 
         try {
 
@@ -4374,6 +4308,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                 String radiologistquery = queryOutput.getString("full_name");
                 String phoneNumbeQuery = queryOutput.getString("phone_number");
                 String email_addressQuery = queryOutput.getString("email_address");
+                String modalityprice = queryOutput.getString("name");
                 Button button = new Button("Select");
                 String modalityquery = queryOutput.getString("modality");
 
@@ -4579,6 +4514,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         ModalityField.setLayoutX(260);
                         ModalityField.setLayoutY(160);
                         ModalityField.setEditable(false);
+                        ModalityField.setText(modalityquery);
 
                         TextField patientfortheorder = new TextField();
                         patientfortheorder.setPrefHeight(35);
@@ -4647,6 +4583,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         EstinatedCosts.setLayoutX(22);
                         EstinatedCosts.setLayoutY(270);
                         EstinatedCosts.setEditable(false);
+                        EstinatedCosts.setText(modalityprice);
 
                         OfficeInfoPane.getChildren().add(OrderLabel);
                         OfficeInfoPane.getChildren().add(OfficeInfoLabel);
