@@ -446,15 +446,11 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
     @FXML
     private Button NewModalities;
 
-    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
-        
-
-      
 
         // Creates New Patient Alert
         NewPatientAlerts.setOnAction(new EventHandler<ActionEvent>() {
@@ -521,6 +517,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 e1.printStackTrace();
 
                             } catch (IOException e1) {
+                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
 
@@ -653,6 +650,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 e1.printStackTrace();
 
                             } catch (IOException e1) {
+                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                         }
@@ -931,13 +929,12 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
                         OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
                     }
-                    connectDB.close();
+
                 } catch (SQLException e1) {
 
-                    
                     e1.printStackTrace();
                 }
-               
+
                 ChoiceBox<String> RadiologistChoiceBox = new ChoiceBox<String>();
                 RadiologistChoiceBox.setPrefHeight(35);
                 RadiologistChoiceBox.setPrefWidth(170);
@@ -958,7 +955,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 radiologistsQuery.getString("full_name"));
                         RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -972,7 +968,29 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                 EstinatedCosts.setLayoutY(270);
                 EstinatedCosts.setEditable(false);
 
-          
+                // Adds Costs to the Box
+                /*
+                 * try {
+                 * DatabaseConnection connectNow = new DatabaseConnection();
+                 * Connection connectDB = connectNow.getConnection();
+                 * 
+                 * String GetChoiceBoxQuery = "Select  price from modatlities where name = '"+ +
+                 * "'";
+                 * Statement statement = connectDB.createStatement();
+                 * ResultSet radiologistsQuery = statement.executeQuery(GetChoiceBoxQuery);
+                 * 
+                 * while (radiologistsQuery.next()) {
+                 * Radiologists currentRadiologist = new
+                 * Radiologists(radiologistsQuery.getInt("id"),
+                 * radiologistsQuery.getString("full_name"));
+                 * RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
+                 * }
+                 * 
+                 * } catch (SQLException e1) {
+                 * 
+                 * e1.printStackTrace();
+                 * }
+                 */
 
                 OfficeInfoPane.getChildren().add(OrderLabel);
                 OfficeInfoPane.getChildren().add(OfficeInfoLabel);
@@ -1065,7 +1083,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                 FXApp.setRoot("ADMIN_AdminPanel");
-                                connectDB.close();
 
                             } catch (SQLException e1) {
 
@@ -1214,7 +1231,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
                         OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -1331,7 +1347,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                     BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                     FXApp.setRoot("ADMIN_AdminPanel");
-                                    connectDB.close();
 
                                 } catch (SQLException e1) {
 
@@ -1458,7 +1473,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 radiologistsQuery.getString("full_name"));
                         RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -1484,7 +1498,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
                         OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -1602,7 +1615,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                     FXApp.setRoot("ADMIN_AdminPanel");
 
                                 }
-                                connectDB.close();
 
                             } catch (SQLException e2) {
 
@@ -1899,7 +1911,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 stage.close();
 
                                 FXApp.setRoot("ADMIN_AdminPanel");
-                                connectDB.close();
 
                             } catch (SQLException e1) {
 
@@ -2089,7 +2100,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         SelectedPatientField.getItems().add(
                                 currentitterationpatient.getFirstname() + " " + currentitterationpatient.getLastname());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -2109,7 +2119,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 ModalitiesOutput.getString("name"));
                         ModalityChoiceBox.getItems().add(currentitterationpatient.getModalityname());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -2131,7 +2140,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         SelectedStatusField.setValue("In Progress");
                         SelectedStatusField.setDisable(true);
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -2152,7 +2160,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
 
                         SelectedDoctorField.getItems().add(currentReferralDoctor.getReferraldoctor());
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -2205,7 +2212,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                             while (StatusIDOutput.next()) {
                                 Status_id = StatusIDOutput.getInt("order_status_id");
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -2226,7 +2232,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 modality_id = modalityIDOutput.getInt("modality_id");
 
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -2247,7 +2252,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 user_id = DoctorIDOutput.getInt("id");
 
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -2270,7 +2274,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 patient_id = PatientIDOutput.getInt("patient_id");
 
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -2295,7 +2298,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                             BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                             FXApp.setRoot("ADMIN_AdminPanel");
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -2549,7 +2551,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         // alertid = AlertQueryOutput.getInt("alert_id");
 
                     }
-                    connectDB.close();
 
                 } catch (SQLException e1) {
 
@@ -2642,7 +2643,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                 FXApp.setRoot("ADMIN_AdminPanel");
-                                connectDB.close();
 
                             } catch (SQLException e1) {
 
@@ -3426,9 +3426,9 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                     }
                                 });// Closes New Patient Alert
 
+                                /////////////////////////////
 
                             }
-                            connectDB.close();
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -3465,7 +3465,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         stage.close();
                                         FXApp.setRoot("ADMIN_AdminPanel");
                                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                                        connectDB.close();
 
                                     } catch (SQLException e1) {
 
@@ -3695,7 +3694,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
                                 OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -3797,7 +3795,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                     BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                     FXApp.setRoot("ADMIN_AdminPanel");
-                                    connectDB.close();
 
                                 } catch (SQLException e2) {
 
@@ -4075,7 +4072,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         currentitterationpatient.getFirstname() + " "
                                                 + currentitterationpatient.getLastname());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -4096,7 +4092,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         ModalitiesOutput.getString("name"));
                                 ModalityChoiceBox.getItems().add(currentitterationpatient.getModalityname());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -4116,7 +4111,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         OrderStatusOutput.getString("order_name"));
                                 SelectedStatusField.getItems().add(currentOrderStatusOutput.getOrderstatus());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -4137,7 +4131,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
 
                                 SelectedDoctorField.getItems().add(currentReferralDoctor.getReferraldoctor());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -4615,7 +4608,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
                                 OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -4643,7 +4635,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         radiologistsQuery.getString("full_name"));
                                 RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -5073,7 +5064,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         BlurBox.setEffect(new BoxBlur(0, 0, 0));
 
                                         FXApp.setRoot("ADMIN_AdminPanel");
-                                        connectDB.close();
 
                                     } catch (SQLException e2) {
 
@@ -5288,7 +5278,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                         radiologistsQuery.getString("full_name"));
                                 RadiologistChoiceBox.getItems().add(currentRadiologist.getRadiologistName());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -5315,7 +5304,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                 Orders currentitterationpatient = new Orders(OrdersOutput.getInt("order_id"));
                                 OrdersChoiceBox.getItems().add(currentitterationpatient.getOrders().toString());
                             }
-                            connectDB.close();
 
                         } catch (SQLException e1) {
 
@@ -5434,7 +5422,6 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                                             FXApp.setRoot("ADMIN_AdminPanel");
 
                                         }
-                                        connectDB.close();
 
                                     } catch (SQLException e2) {
 
@@ -5551,11 +5538,11 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
 
             DiagnosticReportsTable.setItems(DiagnosticReportSortedData);
             // Search Bar Functionality End
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    
     }
 
 }
