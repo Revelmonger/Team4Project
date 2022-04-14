@@ -1,48 +1,7 @@
-ERROR WHEN CREATING NEW USERS PASSWORD
-FIX IN ALL USERS
-
-
-
-Attempting to fix doc user so that placed / completed and old orders only show orders that that doctor placed
-But because the insert statment for create orders uses the referralmds table pk the userid gained from logging in no longer works
-Cole will need to add a query to the referral mds home page to convert the userid into the id needed to track the current user.
-Then we can add a filter to orders Where ID = referralmds.id
-
-
-
-Feature 2
-Medical Concent Form
-Concent form to be added to the TECH button with an additional pop up where you must select a pdf
-the button will not work unless you have selected a concent form
-
-Desk paperwork
-A form to be filled out when making a new patient
-will have fields to be uploaded to a file location on the drive
-
-
-Feature 3
-Help Feature
-each user type will have a button on the page somewhere walking them through the steps they will use from start to finish 
-
-
-
-Disable Button while item not selected This might fix the add concent for page from not closing
-Fix Size issue of submitting files pathways names that are to big for datbase
-Fix Cancel button issue on complete order where the submit concent page isnt closing
-Add New Table and change queries for the consent forms this should stop radio from having multiple pop ups
 
 
 
 
 Limit Radiologist View to Orders Selected for that radiologist
 Radiologist Doesnt Need Orders Tab
-
-Technician Appointments = todays appointments table
-Do the same with the other users
-
-
-
-
-
-FIX APPEARANCE OF USER PAGE
 

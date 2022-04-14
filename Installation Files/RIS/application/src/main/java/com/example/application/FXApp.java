@@ -11,7 +11,13 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+
 public class FXApp extends Application {
+
+
+
+    
+
 
     private static Scene scene;
 
@@ -502,4 +508,6 @@ public class FXApp extends Application {
         scene.setRoot(loadFXML(fxml));
 
     }
+
+
 }
