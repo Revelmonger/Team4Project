@@ -550,7 +550,7 @@ public void handle(ActionEvent event) {
                     AnchorPane anchorpane = new AnchorPane();
 
                     Label CreateFileLabel = new Label("View Old Report");
-                    CreateFileLabel.setLayoutX(46);
+                    CreateFileLabel.setLayoutX(195);
                     CreateFileLabel.setLayoutY(47);
                     CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
 
@@ -561,7 +561,7 @@ public void handle(ActionEvent event) {
 
                     TextArea ReportArea = new TextArea();
                     ReportArea.setPrefHeight(400);
-                    ReportArea.setPrefWidth(600);
+                    ReportArea.setPrefWidth(800);
                     ReportArea.setLayoutX(200);
                     ReportArea.setLayoutY(120);
                     ReportArea.setEditable(false);
@@ -582,14 +582,14 @@ public void handle(ActionEvent event) {
                         e2.printStackTrace();
                     }
 
-                    Line horizontalline = new Line(50.0f, 0.0f, 850.0f, 0.0f);
+                    Line horizontalline = new Line(200.0f, 0.0f, 1000.0f, 0.0f);
                     horizontalline.setOpacity(.3);
                     horizontalline.setTranslateY(100);
 
                     Button showImage = new Button("Show Image");
                     showImage.setPrefHeight(42);
                     showImage.setPrefWidth(100);
-                    showImage.setLayoutX(560);
+                    showImage.setLayoutX(750);
                     showImage.setLayoutY(560);
                     showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
@@ -658,7 +658,7 @@ public void handle(ActionEvent event) {
                     Button CancelButton = new Button("Cancel");
                     CancelButton.setPrefHeight(42);
                     CancelButton.setPrefWidth(102);
-                    CancelButton.setLayoutX(700);
+                    CancelButton.setLayoutX(900);
                     CancelButton.setLayoutY(560);
                     CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
 
