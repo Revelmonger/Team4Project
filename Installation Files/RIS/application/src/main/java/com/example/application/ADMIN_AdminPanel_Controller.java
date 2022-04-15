@@ -4288,7 +4288,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
          * 
          */
 
-        String AppointmentsTableQuery = "select m.price a.appointment_id, p.first_name, p.last_name, a.order_id, a.date_time, r.full_name, a.phone_number, a.email_address, a.modality  from appointments as a join patients as p on p.patient_id = a.patient join radiologists as r on r.id = a.radiologist join modalities as m on a.modality = m.modality_id;";
+        String AppointmentsTableQuery = "select m.price, a.appointment_id, p.first_name, p.last_name, a.order_id, a.date_time, r.full_name, m.name, a.phone_number, a.email_address, a.modality  from appointments as a join patients as p on p.patient_id = a.patient join radiologists as r on r.id = a.radiologist join modalities as m on a.modality = m.modality_id;";
 
         try {
 
@@ -4306,9 +4306,9 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                 String radiologistquery = queryOutput.getString("full_name");
                 String phoneNumbeQuery = queryOutput.getString("phone_number");
                 String email_addressQuery = queryOutput.getString("email_address");
-                String modalityprice = queryOutput.getString("name");
+                String  modalityname= queryOutput.getString("name");
                 Button button = new Button("Select");
-                String modalityquery = queryOutput.getString("modality");
+                String modalityprice = queryOutput.getString("price");
 
                 button.setStyle(
                         "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
@@ -4512,7 +4512,7 @@ public class ADMIN_AdminPanel_Controller extends EncryptDecrypt implements Initi
                         ModalityField.setLayoutX(260);
                         ModalityField.setLayoutY(160);
                         ModalityField.setEditable(false);
-                        ModalityField.setText(modalityquery);
+                        ModalityField.setText(modalityname);
 
                         TextField patientfortheorder = new TextField();
                         patientfortheorder.setPrefHeight(35);

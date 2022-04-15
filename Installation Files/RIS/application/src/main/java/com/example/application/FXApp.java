@@ -34,7 +34,11 @@ public class FXApp extends Application {
 
                 switch (event.getCode()) {
                     case ESCAPE:
-                        stage.close();
+                        try {
+                            FXApp.setRoot("LOGIN");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case A:
                         break;
