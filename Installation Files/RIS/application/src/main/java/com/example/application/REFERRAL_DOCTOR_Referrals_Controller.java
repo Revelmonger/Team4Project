@@ -463,6 +463,7 @@ public void handle(ActionEvent event) {
     BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
     Stage newWindow = new Stage();
+    newWindow.setWidth(1000);
 
     AnchorPane anchorpane = new AnchorPane();
 
@@ -477,7 +478,7 @@ public void handle(ActionEvent event) {
 
     TableView tableView = new TableView();
 
-    tableView.setPrefWidth(500);
+    tableView.setPrefWidth(800);
     tableView.setPrefHeight(400);
     tableView.setLayoutX(47);
     tableView.setLayoutY(150);
@@ -711,10 +712,10 @@ public void handle(ActionEvent event) {
         e.printStackTrace();
     }
 
-    Button CancelButton = new Button("Close");
+    Button CancelButton = new Button("Cancel");
     CancelButton.setPrefHeight(42);
     CancelButton.setPrefWidth(102);
-    CancelButton.setLayoutX(447);
+    CancelButton.setLayoutX(740);
     CancelButton.setLayoutY(585);
     CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
 
