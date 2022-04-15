@@ -589,7 +589,7 @@ public void handle(ActionEvent event) {
                     Button showImage = new Button("Show Image");
                     showImage.setPrefHeight(42);
                     showImage.setPrefWidth(100);
-                    showImage.setLayoutX(750);
+                    showImage.setLayoutX(600);
                     showImage.setLayoutY(560);
                     showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
@@ -658,7 +658,7 @@ public void handle(ActionEvent event) {
                     Button CancelButton = new Button("Cancel");
                     CancelButton.setPrefHeight(42);
                     CancelButton.setPrefWidth(102);
-                    CancelButton.setLayoutX(900);
+                    CancelButton.setLayoutX(750);
                     CancelButton.setLayoutY(560);
                     CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
 
