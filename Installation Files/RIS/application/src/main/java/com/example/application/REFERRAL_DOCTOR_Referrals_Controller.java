@@ -55,6 +55,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -472,7 +473,7 @@ public void handle(ActionEvent event) {
     CreateNewPatientAlertLabel.setLayoutY(47);
     CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
 
-    Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+    Line horizontalline = new Line(50.0f, 0.0f, 850.0f, 0.0f);
     horizontalline.setOpacity(.3);
     horizontalline.setTranslateY(100);
 
@@ -542,6 +543,9 @@ public void handle(ActionEvent event) {
                     BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
                     Stage newWindow = new Stage();
+                    newWindow.setWidth(1000);
+                    newWindow.setHeight(800);
+                    
 
                     AnchorPane anchorpane = new AnchorPane();
 
@@ -552,13 +556,13 @@ public void handle(ActionEvent event) {
 
                     Label ReportLabel = new Label("Report:");
                     ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
-                    ReportLabel.setLayoutX(275);
+                    ReportLabel.setLayoutX(120);
                     ReportLabel.setLayoutY(120);
 
                     TextArea ReportArea = new TextArea();
-                    ReportArea.setPrefHeight(200);
-                    ReportArea.setPrefWidth(400);
-                    ReportArea.setLayoutX(350);
+                    ReportArea.setPrefHeight(400);
+                    ReportArea.setPrefWidth(600);
+                    ReportArea.setLayoutX(200);
                     ReportArea.setLayoutY(120);
                     ReportArea.setEditable(false);
 
@@ -578,15 +582,15 @@ public void handle(ActionEvent event) {
                         e2.printStackTrace();
                     }
 
-                    Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                    Line horizontalline = new Line(50.0f, 0.0f, 850.0f, 0.0f);
                     horizontalline.setOpacity(.3);
                     horizontalline.setTranslateY(100);
 
                     Button showImage = new Button("Show Image");
                     showImage.setPrefHeight(42);
                     showImage.setPrefWidth(100);
-                    showImage.setLayoutX(70);
-                    showImage.setLayoutY(120);
+                    showImage.setLayoutX(560);
+                    showImage.setLayoutY(560);
                     showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
 
                     showImage.setOnAction(new EventHandler<ActionEvent>() {
@@ -654,8 +658,8 @@ public void handle(ActionEvent event) {
                     Button CancelButton = new Button("Cancel");
                     CancelButton.setPrefHeight(42);
                     CancelButton.setPrefWidth(102);
-                    CancelButton.setLayoutX(680);
-                    CancelButton.setLayoutY(338);
+                    CancelButton.setLayoutX(700);
+                    CancelButton.setLayoutY(560);
                     CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
 
                     CancelButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -663,7 +667,7 @@ public void handle(ActionEvent event) {
                         public void handle(ActionEvent e) {
                             Stage stage = (Stage) CancelButton.getScene().getWindow();
                             stage.close();
-                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                            BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
                         }
                     });
@@ -724,7 +728,7 @@ public void handle(ActionEvent event) {
         public void handle(ActionEvent e) {
             Stage stage = (Stage) CancelButton.getScene().getWindow();
             stage.close();
-            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+            BlurBox.setEffect(new BoxBlur(5, 10, 10));
 
         }
     });
@@ -859,7 +863,7 @@ public void handle(ActionEvent event) {
                             public void handle(ActionEvent e) {
                                 Stage stage = (Stage) CancelButton.getScene().getWindow();
                                 stage.close();
-                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                                BlurBox.setEffect(new BoxBlur(5, 10, 10));
                 
                             }
                         });
