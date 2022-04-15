@@ -473,13 +473,13 @@ public void handle(ActionEvent event) {
     CreateNewPatientAlertLabel.setLayoutY(47);
     CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
 
-    Line horizontalline = new Line(50.0f, 0.0f, 850.0f, 0.0f);
+    Line horizontalline = new Line(50.0f, 0.0f, 950.0f, 0.0f);
     horizontalline.setOpacity(.3);
     horizontalline.setTranslateY(100);
 
     TableView tableView = new TableView();
 
-    tableView.setPrefWidth(800);
+    tableView.setPrefWidth(900);
     tableView.setPrefHeight(400);
     tableView.setLayoutX(47);
     tableView.setLayoutY(150);
@@ -544,7 +544,7 @@ public void handle(ActionEvent event) {
 
                     Stage newWindow = new Stage();
                     newWindow.setWidth(1000);
-                    newWindow.setHeight(800);
+                    newWindow.setHeight(700);
                     
 
                     AnchorPane anchorpane = new AnchorPane();
@@ -719,7 +719,7 @@ public void handle(ActionEvent event) {
     Button CancelButton = new Button("Cancel");
     CancelButton.setPrefHeight(42);
     CancelButton.setPrefWidth(102);
-    CancelButton.setLayoutX(740);
+    CancelButton.setLayoutX(850);
     CancelButton.setLayoutY(585);
     CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
 
