@@ -561,7 +561,7 @@ public void handle(ActionEvent event) {
 
                     TextArea ReportArea = new TextArea();
                     ReportArea.setPrefHeight(400);
-                    ReportArea.setPrefWidth(800);
+                    ReportArea.setPrefWidth(650);
                     ReportArea.setLayoutX(200);
                     ReportArea.setLayoutY(120);
                     ReportArea.setEditable(false);
@@ -582,7 +582,7 @@ public void handle(ActionEvent event) {
                         e2.printStackTrace();
                     }
 
-                    Line horizontalline = new Line(200.0f, 0.0f, 1000.0f, 0.0f);
+                    Line horizontalline = new Line(200.0f, 0.0f, 850.0f, 0.0f);
                     horizontalline.setOpacity(.3);
                     horizontalline.setTranslateY(100);
 
