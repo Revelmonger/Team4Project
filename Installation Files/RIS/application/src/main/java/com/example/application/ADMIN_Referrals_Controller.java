@@ -1,5 +1,6 @@
 package com.example.application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -12,7 +13,9 @@ import com.example.application.Constructors.AllAlertsChoiceBoxController;
 import com.example.application.Constructors.Modalities;
 import com.example.application.Constructors.OrderStatuses;
 import com.example.application.Constructors.ReferralDoctor;
+import com.example.application.TableConstructors.ClosedOrders;
 import com.example.application.TableConstructors.PatientsAlertsTableController;
+import com.example.application.TableConstructors.TABLEPlacedOrdersTableController;
 import com.example.application.TableConstructors.TABLEReferralsTableController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,6 +32,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -403,129 +408,487 @@ public class ADMIN_Referrals_Controller implements Initializable {
                         try {
                             DatabaseConnection connectNow = new DatabaseConnection();
                             Connection connectDB = connectNow.getConnection();
-
-                            String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"
-                                    + patient_id + "'";
-
+                            
+                            String DoesThisPatientHaveAnAlert = "Select * from patients_alerts where patient_id = '"+ patient_id+ "'";
+                            
                             Statement statement = connectDB.createStatement();
                             ResultSet queryOutput2 = statement.executeQuery(DoesThisPatientHaveAnAlert);
+                        
+                        
+                            Button button2 = new Button("History");
+                            button2.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+                            button2.setPrefHeight(42);
+                            button2.setPrefWidth(128);
+                            button2.setLayoutX(200);
+                            button2.setLayoutY(35);
+                            BottomPane.getChildren().add(button2);
+                            button2.setOnAction(new EventHandler<ActionEvent>() {
+                        
+                        @Override
+                        public void handle(ActionEvent event) {
+                            BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                        
+                            Stage newWindow = new Stage();
+                            newWindow.setWidth(1000);
+                        
+                            AnchorPane anchorpane = new AnchorPane();
+                        
+                            Label CreateNewPatientAlertLabel = new Label("Imaging History");
+                            CreateNewPatientAlertLabel.setLayoutX(46);
+                            CreateNewPatientAlertLabel.setLayoutY(47);
+                            CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                        
+                            Line horizontalline = new Line(50.0f, 0.0f, 950.0f, 0.0f);
+                            horizontalline.setOpacity(.3);
+                            horizontalline.setTranslateY(100);
+                        
+                            TableView tableView = new TableView();
+                        
+                            tableView.setPrefWidth(900);
+                            tableView.setPrefHeight(400);
+                            tableView.setLayoutX(47);
+                            tableView.setLayoutY(150);
+                            tableView.setEditable(false);
+                            tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+                        
+                         
+                                        TableColumn<TABLEPlacedOrdersTableController, String> column1 = new TableColumn<>(
+                                            "Patient");
+                                        TableColumn<TABLEPlacedOrdersTableController, Integer> column2 = new TableColumn<>(
+                                            "Modality");
+                                            TableColumn<TABLEPlacedOrdersTableController, Integer> column3 = new TableColumn<>(
+                                            "Notes");
+                                            TableColumn<TABLEPlacedOrdersTableController, Integer> column4 = new TableColumn<>(
+                                            "Status");
+                                            TableColumn<TABLEPlacedOrdersTableController, Integer> column5 = new TableColumn<>(
+                                            "Results");
+                                       
+                            column1.setCellValueFactory(new PropertyValueFactory<>("patient"));
+                            column1.setPrefWidth(500);
+                            column2.setCellValueFactory(new PropertyValueFactory<>("modality"));
+                            column2.setPrefWidth(500);
+                            column3.setCellValueFactory(new PropertyValueFactory<>("notes"));
+                            column3.setPrefWidth(500);
+                            column4.setCellValueFactory(new PropertyValueFactory<>("status"));
+                            column4.setPrefWidth(500);
+                            column5.setCellValueFactory(new PropertyValueFactory<>("button"));
+                            column5.setPrefWidth(500);
+                           
+                        
+                        
+                            tableView.getColumns().add(column1);
+                            tableView.getColumns().add(column2);
+                            tableView.getColumns().add(column3);
+                            tableView.getColumns().add(column4);
+                            tableView.getColumns().add(column5);
+                        
+                            try {
+                                DatabaseConnection connectNow = new DatabaseConnection();
+                                Connection connectDB = connectNow.getConnection();
+                        
+                                String alert_nameTableQuery = "select * from orders  join patients on orders.patient = patients.patient_id  join modalities on orders.modality = modalities.modality_id join order_status on orders.status = order_status.order_status_id where patient_id = '"+ patient_id+ "' and orders.status = 2";
+                        
+                                Statement statement = connectDB.createStatement();
+                                ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
+                        
+                                while (queryOutput.next()) {
+                                    String patientquery = queryOutput.getString("first_name") + " " + queryOutput.getString("last_name");
+                                    String modalityquery = queryOutput.getString("name");
+                                    String notesquery = queryOutput.getString("notes").trim();
+                                    String statusquery = queryOutput.getString("order_name");
+                                    Button button = new Button("Review Order");
+                                    button.setStyle(
+                                        "-fx-font: normal bold 16px 'arial'; -fx-background-color: transparent; -fx-text-fill: #001eff;");
+                                    Integer OrderID = queryOutput.getInt("order_id");
+                        
+                                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        
+                                        @Override
+                                        public void handle(ActionEvent event) {
+                                            BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                        
+                                            Stage newWindow = new Stage();
+                                            newWindow.setWidth(1000);
+                                            newWindow.setHeight(700);
+                                            
+                        
+                                            AnchorPane anchorpane = new AnchorPane();
+                        
+                                            Label CreateFileLabel = new Label("View Old Report");
+                                            CreateFileLabel.setLayoutX(195);
+                                            CreateFileLabel.setLayoutY(47);
+                                            CreateFileLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                        
+                                            Label ReportLabel = new Label("Report:");
+                                            ReportLabel.setStyle("-fx-font: normal bold 16px 'arial';");
+                                            ReportLabel.setLayoutX(120);
+                                            ReportLabel.setLayoutY(120);
+                        
+                                            TextArea ReportArea = new TextArea();
+                                            ReportArea.setPrefHeight(400);
+                                            ReportArea.setPrefWidth(650);
+                                            ReportArea.setLayoutX(200);
+                                            ReportArea.setLayoutY(120);
+                                            ReportArea.setEditable(false);
+                        
+                                            String DiagnosticQuery = "select diagnostic from diagnostic_reports where order_id = " + OrderID
+                                                    + ";";
+                        
+                                            try {
+                                                ResultSet DiagnosticReport = statement.executeQuery(DiagnosticQuery);
+                        
+                                                while (DiagnosticReport.next()) {
+                                                    String diagnostic = DiagnosticReport.getString("diagnostic");
+                                                    ReportArea.setText(diagnostic);
+                                                    ReportArea.setEditable(false);
+                                                }
+                                            } catch (SQLException e2) {
+                        
+                                                e2.printStackTrace();
+                                            }
+                        
+                                            Line horizontalline = new Line(200.0f, 0.0f, 850.0f, 0.0f);
+                                            horizontalline.setOpacity(.3);
+                                            horizontalline.setTranslateY(100);
+                        
+                                            Button showImage = new Button("Show Image");
+                                            showImage.setPrefHeight(42);
+                                            showImage.setPrefWidth(100);
+                                            showImage.setLayoutX(600);
+                                            showImage.setLayoutY(560);
+                                            showImage.setStyle("-fx-background-color: #566aff; -fx-text-fill: white;");
+                        
+                                            showImage.setOnAction(new EventHandler<ActionEvent>() {
+                        
+                                                /************** SHOWS IMAGE IN NEW WINDOW *********************************/
+                                                @Override
+                                                public void handle(ActionEvent e) {
+                        
+                                                    String ImagePathStatement = "SELECT upload_path FROM db_ris.file_uploads WHERE order_id ='"
+                                                            + OrderID + "'";
+                        
+                                                    try {
+                        
+                                                        Statement statement5 = connectDB.createStatement();
+                                                        ResultSet queryOutput;
+                                                        queryOutput = statement5.executeQuery(ImagePathStatement);
+                        
+                                                        while (queryOutput.next()) {
+                        
+                                                            String UploadPath = queryOutput.getString("upload_path");
+                                                            File file = new File(UploadPath);
+                                                            Image img = new Image(file.toURI().toString());
+                                                            double width = img.getWidth();
+                                                            double height = img.getHeight();
+                                                            ;
+                        
+                                                            Stage stage = new Stage();
+                                                            AnchorPane pane = new AnchorPane();
+                                                            ImageView imgView = new ImageView(img);
+                        
+                                                            imgView.setFitHeight(height);
+                                                            imgView.setFitWidth(width);
+                                                            pane.getChildren().add(imgView);
+                        
+                                                            Scene scene = new Scene(pane, width, height);
+                        
+                                                            stage.setScene(scene);
+                        
+                                                            stage.setResizable(false);
+                                                            stage.initModality(Modality.APPLICATION_MODAL);
+                        
+                                                            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                                                @Override
+                                                                public void handle(KeyEvent t) {
+                                                                    KeyCode key = t.getCode();
+                                                                    if (key == KeyCode.ESCAPE) {
+                                                                        stage.close();
+                                                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                        
+                                                                    }
+                                                                }
+                                                            });
+                                                            stage.show();
+                        
+                                                        }
+                                                    } catch (SQLException e1) {
+                        
+                                                        e1.printStackTrace();
+                                                    }
+                        
+                                                }
+                                            });
+                                            // WORKING HERE
+                        
+                                            Button CancelButton = new Button("Cancel");
+                                            CancelButton.setPrefHeight(42);
+                                            CancelButton.setPrefWidth(102);
+                                            CancelButton.setLayoutX(750);
+                                            CancelButton.setLayoutY(560);
+                                            CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                        
+                                            CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                                @Override
+                                                public void handle(ActionEvent e) {
+                                                    Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                                    stage.close();
+                                                    BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                        
+                                                }
+                                            });
+                        
+                                            anchorpane.getChildren().add(CreateFileLabel);
+                        
+                                            anchorpane.getChildren().add(horizontalline);
+                        
+                                            anchorpane.getChildren().add(CancelButton);
+                                            anchorpane.getChildren().add(showImage);
+                                            anchorpane.getChildren().add(ReportArea);
+                                            anchorpane.getChildren().add(ReportLabel);
+                        
+                                            Scene scene = new Scene(anchorpane, 800, 400);
+                        
+                                            newWindow.setScene(scene);
+                                            newWindow.initStyle(StageStyle.UNDECORATED);
+                                            newWindow.setResizable(false);
+                                            newWindow.initModality(Modality.APPLICATION_MODAL);
+                        
+                                            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                                @Override
+                                                public void handle(KeyEvent t) {
+                                                    KeyCode key = t.getCode();
+                                                    if (key == KeyCode.ESCAPE) {
+                                                        newWindow.close();
+                                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                        
+                                                    }
+                                                }
+                                            });
+                                            newWindow.show();
+                                        }
+                                    });//
+                        
+                                    tableView.getItems().add(new ClosedOrders(patientquery, modalityquery,notesquery,statusquery,button));
+                                    
+                        
+                                }
+                        
+                                
+                        
+                                
+                        
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        
+                            Button CancelButton = new Button("Cancel");
+                            CancelButton.setPrefHeight(42);
+                            CancelButton.setPrefWidth(102);
+                            CancelButton.setLayoutX(850);
+                            CancelButton.setLayoutY(585);
+                            CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                        
+                            CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent e) {
+                                    Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                    stage.close();
+                                    BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                        
+                                }
+                            });
+                        
+                            anchorpane.getChildren().add(CreateNewPatientAlertLabel);
+                        
+                            anchorpane.getChildren().add(horizontalline);
+                        
+                            anchorpane.getChildren().add(CancelButton);
+                            anchorpane.getChildren().add(tableView);
+                            Scene scene = new Scene(anchorpane, 600, 700);
+                        
+                            newWindow.setScene(scene);
+                            newWindow.initStyle(StageStyle.UNDECORATED);
+                            newWindow.setResizable(false);
+                            newWindow.initModality(Modality.APPLICATION_MODAL);
+                        
+                            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                @Override
+                                public void handle(KeyEvent t) {
+                                    KeyCode key = t.getCode();
+                                    if (key == KeyCode.ESCAPE) {
+                                        newWindow.close();
+                                        BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                                    }
+                                }
+                            });
+                            newWindow.show();
+                        }
+                        });// Closes New Patient Alert
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                             while (queryOutput2.next()) {
-
+                        
+                        
                                 Button button = new Button("Patient Alerts");
                                 button.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
                                 button.setPrefHeight(42);
                                 button.setPrefWidth(128);
                                 button.setLayoutX(35);
                                 button.setLayoutY(35);
-                                BottomPane.getChildren().add(button);
-
-                                button.setOnAction(new EventHandler<ActionEvent>() {
-
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
-
-                                        Stage newWindow = new Stage();
-
-                                        AnchorPane anchorpane = new AnchorPane();
-
-                                        Label CreateNewPatientAlertLabel = new Label("Patient Alert History");
-                                        CreateNewPatientAlertLabel.setLayoutX(46);
-                                        CreateNewPatientAlertLabel.setLayoutY(47);
-                                        CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
-
-                                        Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
-                                        horizontalline.setOpacity(.3);
-                                        horizontalline.setTranslateY(100);
-
-                                        TableView tableView = new TableView();
-
-                                        tableView.setPrefWidth(500);
-                                        tableView.setPrefHeight(400);
-                                        tableView.setLayoutX(47);
-                                        tableView.setLayoutY(150);
-                                        tableView.setEditable(false);
-                                        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-                                        TableColumn<PatientsAlertsTableController, String> column1 = new TableColumn<>(
-                                                "Alerts");
-                                        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                                        column1.setPrefWidth(500);
-
-                                        tableView.getColumns().add(column1);
-                                        try {
-                                            DatabaseConnection connectNow = new DatabaseConnection();
-                                            Connection connectDB = connectNow.getConnection();
-
-                                            String alert_nameTableQuery = " select * from patients_alerts as pa join alerts as a on a.alert_id = pa.alert_id where patient_id = "
-                                                    + patient_id + ";";
-
-                                            Statement statement = connectDB.createStatement();
-                                            ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
-
-                                            while (queryOutput.next()) {
-                                                Integer AlertID = queryOutput.getInt("alert_id");
-                                                String AlertName = queryOutput.getString("alert_name");
-
-                                                tableView.getItems().add(new PatientsAlertsTableController(AlertName));
-
-                                            }
-
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        Button CancelButton = new Button("Close");
-                                        CancelButton.setPrefHeight(42);
-                                        CancelButton.setPrefWidth(102);
-                                        CancelButton.setLayoutX(447);
-                                        CancelButton.setLayoutY(585);
-                                        CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
-
-                                        CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                        BottomPane.getChildren().add(button);
+                        
+                        
+                        
+                                        button.setOnAction(new EventHandler<ActionEvent>() {
+                        
+                        
                                             @Override
-                                            public void handle(ActionEvent e) {
-                                                Stage stage = (Stage) CancelButton.getScene().getWindow();
-                                                stage.close();
-                                                BlurBox.setEffect(new BoxBlur(0, 0, 0));
-
-                                            }
-                                        });
-
-                                        anchorpane.getChildren().add(CreateNewPatientAlertLabel);
-
-                                        anchorpane.getChildren().add(horizontalline);
-
-                                        anchorpane.getChildren().add(CancelButton);
-                                        anchorpane.getChildren().add(tableView);
-                                        Scene scene = new Scene(anchorpane, 600, 700);
-
-                                        newWindow.setScene(scene);
-                                        newWindow.initStyle(StageStyle.UNDECORATED);
-                                        newWindow.setResizable(false);
-                                        newWindow.initModality(Modality.APPLICATION_MODAL);
-
-                                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                                            @Override
-                                            public void handle(KeyEvent t) {
-                                                KeyCode key = t.getCode();
-                                                if (key == KeyCode.ESCAPE) {
-                                                    newWindow.close();
-                                                    BlurBox.setEffect(new BoxBlur(0, 0, 0));
-                                                }
-                                            }
-                                        });
-                                        newWindow.show();
-                                    }
-                                });// Closes New Patient Alert
-
-                                /////////////////////////////
-
+                                            public void handle(ActionEvent event) {
+                                                BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                                        
+                                                 
+                                                Stage newWindow = new Stage();
+                                             
+                                                AnchorPane anchorpane = new AnchorPane();
+                                               
+                                        
+                                                Label CreateNewPatientAlertLabel = new Label("Patient Alert History");
+                                                CreateNewPatientAlertLabel.setLayoutX(46);
+                                                CreateNewPatientAlertLabel.setLayoutY(47);
+                                                CreateNewPatientAlertLabel.setStyle("-fx-font: normal bold 36px 'arial';");
+                                         
+                                        
+                                                Line horizontalline = new Line(50.0f, 0.0f, 750.0f, 0.0f);
+                                                horizontalline.setOpacity(.3);
+                                                horizontalline.setTranslateY(100);
+                        
+                        
+                        
+                        
+                                                TableView tableView = new TableView();
+                                                
+                                                tableView.setPrefWidth(500);
+                                                tableView.setPrefHeight(400);
+                                                tableView.setLayoutX(47);
+                                                tableView.setLayoutY(150);
+                                                tableView.setEditable(false);
+                                                tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+                        
+                                                
+                                                TableColumn<PatientsAlertsTableController, String> column1 = new TableColumn<>("Alerts");
+                                                column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+                                                column1.setPrefWidth(500);                                
+                                               
+                                                
+                                                
+                                                tableView.getColumns().add(column1);
+                                                try {
+                                                DatabaseConnection connectNow = new DatabaseConnection();
+                                                Connection connectDB = connectNow.getConnection();
+                                                
+                                                String alert_nameTableQuery = " select * from patients_alerts as pa join alerts as a on a.alert_id = pa.alert_id where patient_id = " + patient_id + ";";
+                                                
+                                                
+                                                    Statement statement = connectDB.createStatement();
+                                                    ResultSet queryOutput = statement.executeQuery(alert_nameTableQuery);
+                                                
+                                                    while (queryOutput.next()) {
+                                                        Integer AlertID = queryOutput.getInt("alert_id");
+                                                      String  AlertName = queryOutput.getString("alert_name");
+                        
+                        
+                                                      tableView.getItems().add(new PatientsAlertsTableController(AlertName));
+                                                    
+                                                    }
+                                                
+                                                
+                                                } catch (Exception e) {
+                                                e.printStackTrace();        }
+                                                
+                                            
+                        
+                                                Button CancelButton = new Button("Close");
+                                                CancelButton.setPrefHeight(42);
+                                                CancelButton.setPrefWidth(102);
+                                                CancelButton.setLayoutX(447);
+                                                CancelButton.setLayoutY(585);
+                                                CancelButton.setStyle("-fx-background-color: #d32525; -fx-text-fill: white;");
+                                        
+                                                CancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                                                    @Override
+                                                    public void handle(ActionEvent e) {
+                                                        Stage stage = (Stage) CancelButton.getScene().getWindow();
+                                                        stage.close();
+                                                        BlurBox.setEffect(new BoxBlur(5, 10, 10));
+                                        
+                                                    }
+                                                });
+                                        
+                                                        anchorpane.getChildren().add(CreateNewPatientAlertLabel);
+                                                       
+                                                        anchorpane.getChildren().add(horizontalline);
+                                                     
+                                                        anchorpane.getChildren().add(CancelButton);
+                                                        anchorpane.getChildren().add(tableView);
+                                                Scene scene = new Scene(anchorpane, 600, 700);
+                                        
+                                                
+                                                newWindow.setScene(scene);
+                                                newWindow.initStyle(StageStyle.UNDECORATED);
+                                                newWindow.setResizable(false);
+                                                newWindow.initModality(Modality.APPLICATION_MODAL);
+                                        
+                                                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                                    @Override
+                                                    public void handle(KeyEvent t) {
+                                                        KeyCode key = t.getCode();
+                                                        if (key == KeyCode.ESCAPE) {
+                                                            newWindow.close();
+                                                            BlurBox.setEffect(new BoxBlur(0, 0, 0));
+                                                        }
+                                                    }
+                                                });
+                                                newWindow.show();
+                                              }
+                                        });// Closes New Patient Alert
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                                
+                        
+                        
+                             
+                        
+                        
+                        
+                        
+                        
+                        
+                               
                             }
-
+                        
+                           
+                           
+                        
                         } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        e.printStackTrace();        }
 
                         ///////////////////////////////
                         Button StartOrderButton = new Button("Begin Order");
