@@ -1,0 +1,11 @@
+Create a Human Input Device that when plugged into the computer installs all required software onto the machine to enable the Radiology Information System to run.
+
+
+List of required software:
+  - Maven
+  - ...
+  - ...
+  
+  
+  Implementation:
+   - Using a Raspberry Pi Pico with ______ program a Pyhton Script to install thr reuqired sotware.
