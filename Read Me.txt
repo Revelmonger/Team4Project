@@ -1,8 +1,0 @@
-Hello Team 4,
-  I have remodeled the Repository for better workflow when using the desktop application. 
-  
-  
-  --------------------------------------------------------------------------------------------------------
- Our current goal is to apply what we have learned with JavaFX and convert to desktop application
-  --------------------------------------------------------------------------------------------------------
-  

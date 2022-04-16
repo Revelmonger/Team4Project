@@ -1,7 +1,0 @@
-
-
-
-
-Limit Radiologist View to Orders Selected for that radiologist
-Radiologist Doesnt Need Orders Tab
-
