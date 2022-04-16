@@ -772,7 +772,7 @@ public class ADMIN extends Application implements Initializable {
                             }
                         });
 
-                        Button CloseOrderButton = new Button("Complete Order");
+                        Button CloseOrderButton = new Button("Close Order");
                         CloseOrderButton.setPrefHeight(42);
                         CloseOrderButton.setPrefWidth(102);
                         CloseOrderButton.setLayoutX(558);
